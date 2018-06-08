@@ -1,0 +1,30 @@
+{
+  "name": "megalodon",
+  "version": "0.1.0",
+  "description": "Mastodon client for node.js",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "postinstall-build dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h3poteto/megalodon.git"
+  },
+  "keywords": [
+    "mastodon"
+  ],
+  "author": "h3poteto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/h3poteto/megalodon/issues"
+  },
+  "homepage": "https://github.com/h3poteto/megalodon#readme",
+  "dependencies": {
+    "typescript": "^2.9.1"
+  },
+  "devDependencies": {
+    "postinstall-build": "^5.0.1"
+  }
+}
