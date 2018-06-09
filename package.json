@@ -23,8 +23,10 @@
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
     "@types/oauth": "^0.9.0",
+    "@types/request": "^2.47.0",
     "axios": "^0.18.0",
     "oauth": "^0.9.15",
+    "request": "^2.87.0",
     "typescript": "^2.9.1"
   },
   "devDependencies": {}

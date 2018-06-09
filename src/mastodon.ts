@@ -1,7 +1,7 @@
 import { OAuth2 } from 'oauth'
 import axios from 'axios'
 
-// import StreamListener from './streamlistener'
+import StreamListener from './stream_listener'
 
 import OAuth from './oauth'
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
@@ -240,15 +240,19 @@ class Mastodon {
    * @param reconnectInterval interval of reconnect
    * @returns streamListener, which inherits from EventEmitter and has event, 'update', 'notification', 'delete', and so on.
    */
-  // public stream(path: string, reconnectInterval = 1000) {
-  //   const headers = {
-  //     'Cache-Control': 'no-cache',
-  //     'Accept': 'text/event-stream',
-  //     'Authorization': `Bearer ${this.accessToken}`
-  //   }
-  //   const url = resolveUrl(this.baseUrl, path)
-  //   return new StreamListener(url, headers, reconnectInterval)
-  // }
+  public stream(path: string, reconnectInterval = 1000): StreamListener {
+    const headers = {
+      'Cache-Control': 'no-cache',
+      'Accept': 'text/event-stream',
+      'Authorization': `Bearer ${this.accessToken}`
+    }
+    const url = this.baseUrl + path
+    const streaming = new StreamListener(url, headers, reconnectInterval)
+    process.nextTick(() => {
+      streaming.start()
+    })
+    return streaming
+  }
 }
 
 module.exports = Mastodon
