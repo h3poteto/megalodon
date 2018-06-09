@@ -11,15 +11,16 @@ const rl = readline.createInterface({
 })
 
 const SCOPES = 'read write follow'
+const BASE_URL = 'https://friends.nico'
 
 let clientId
 let clientSecret
 
 Mastodon.registerApp('Test App', {
   scopes: SCOPES
-}).then(appData => {
+}, BASE_URL).then(appData => {
   clientId = appData.clientId,
-    clientSecret = appData.clientSecret
+  clientSecret = appData.clientSecret
   console.log('Authorization URL is generated.')
   console.log(appData.url)
   console.log()
@@ -29,7 +30,7 @@ Mastodon.registerApp('Test App', {
       rl.close()
     })
   })
-}).then(code => Mastodon.fetchAccessToken(clientId, clientSecret, code))
+}).then(code => Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL))
   .then(tokenData => {
     console.log('\naccess_token:')
     console.log(tokenData.accessToken)
