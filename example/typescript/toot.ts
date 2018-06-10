@@ -1,4 +1,4 @@
-import readline from 'readline'
+import * as readline from 'readline'
 import Mastodon from '../../src/mastodon'
 
 const rl: readline.ReadLine = readline.createInterface({
@@ -14,7 +14,7 @@ const client = new Mastodon(
   access_token,
   BASE_URL + '/api/v1'
 )
-new Promise<object>(resolve => {
+new Promise(resolve => {
   rl.question('Toot: ', status => {
     client.post('/statuses', {
       status: status

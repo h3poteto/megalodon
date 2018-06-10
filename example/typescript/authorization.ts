@@ -1,4 +1,4 @@
-import readline from 'readline'
+import * as readline from 'readline'
 import Mastodon from '../../src/mastodon'
 
 const rl: readline.ReadLine = readline.createInterface({
