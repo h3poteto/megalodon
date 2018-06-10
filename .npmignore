@@ -2,4 +2,7 @@ node_modules
 src
 *.log
 .gitignore
-.tsconfig.json
+.travis.yml
+sideci.yml
+tsconfig.json
+tslint.json
