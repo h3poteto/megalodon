@@ -1,4 +1,6 @@
 # Megalodon
+[![NPM Downloads](https://img.shields.io/npm/dt/megalodon.svg)](https://www.npmjs.com/package/megalodon)
+[![NPM Version](https://img.shields.io/npm/v/megalodon.svg)](https://www.npmjs.com/package/megalodon)
 
 A Mastodon API Client library for node.js. It provides REST API and streaming methods.
 
