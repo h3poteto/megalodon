@@ -19,7 +19,7 @@ let clientSecret
 Mastodon.registerApp('Test App', {
   scopes: SCOPES
 }, BASE_URL).then(appData => {
-  clientId = appData.clientId,
+  clientId = appData.clientId
   clientSecret = appData.clientSecret
   console.log('Authorization URL is generated.')
   console.log(appData.url)
