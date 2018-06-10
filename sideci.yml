@@ -1,0 +1,8 @@
+linter:
+  tslint:
+    npm_install: true
+    dir:
+      - src
+    options:
+      config: 'tslint.json'
+      ext: '.ts'

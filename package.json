@@ -6,6 +6,7 @@
   "typings": "./lib/mastodon.d.ts",
   "scripts": {
     "build": "tsc -p ./",
+    "lint": "tslint './src/*.ts'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,5 +30,8 @@
     "request": "^2.87.0",
     "typescript": "^2.9.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "tslint": "^5.10.0",
+    "tslint-config-standard": "^7.0.0"
+  }
 }
