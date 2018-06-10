@@ -1,5 +1,9 @@
 import { EventEmitter } from 'events'
 
+/**
+ * Parser
+ * Parse response data in streaming.
+ **/
 class Parser extends EventEmitter {
   private message: string
 
@@ -34,7 +38,6 @@ class Parser extends EventEmitter {
         offset += 2
         start = offset
 
-        /* eslint-disable no-continue */
         if (!piece.length) continue // empty object
 
         const root: Array<string> = piece.split('\n')
@@ -54,7 +57,6 @@ class Parser extends EventEmitter {
           if (data) { // filter
             this.emit('element', { event, data })
           }
-          // eslint-disable-next-line no-unsafe-finally
           continue
         }
       }

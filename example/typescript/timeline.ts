@@ -1,8 +1,8 @@
-const Mastodon = require( '../lib/mastodon')
+import Mastodon from '../../src/mastodon'
 
-const BASE_URL = 'https://friends.nico'
+const BASE_URL: string = 'https://friends.nico'
 
-const access_token = '...'
+const access_token: string = '...'
 
 const client = new Mastodon(
   access_token,

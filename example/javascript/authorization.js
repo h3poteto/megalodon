@@ -1,9 +1,5 @@
-/**
- * simple authorizaion tool via command line
- */
-
 const readline = require('readline')
-const Mastodon = require( '../lib/mastodon')
+const Mastodon = require( '../../lib/mastodon')
 
 const rl = readline.createInterface({
   input: process.stdin,

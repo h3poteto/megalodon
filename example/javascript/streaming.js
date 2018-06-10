@@ -1,4 +1,4 @@
-const Mastodon = require( '../lib/mastodon')
+const Mastodon = require( '../../lib/mastodon')
 
 const BASE_URL = 'https://friends.nico'
 

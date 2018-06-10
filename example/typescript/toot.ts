@@ -1,20 +1,20 @@
-const readline = require('readline')
-const Mastodon = require('../lib/mastodon')
+import readline from 'readline'
+import Mastodon from '../../src/mastodon'
 
-const rl = readline.createInterface({
+const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 })
 
-const BASE_URL = 'https://friends.nico'
+const BASE_URL: string = 'https://friends.nico'
 
-const access_token = '...'
+const access_token: string = '...'
 
 const client = new Mastodon(
   access_token,
   BASE_URL + '/api/v1'
 )
-new Promise(resolve => {
+new Promise<object>(resolve => {
   rl.question('Toot: ', status => {
     client.post('/statuses', {
       status: status
@@ -22,6 +22,7 @@ new Promise(resolve => {
       .then(res => {
         console.log(res)
         rl.close()
+        resolve(res)
       })
       .catch(err => {
         console.error(err)
