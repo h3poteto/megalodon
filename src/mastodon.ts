@@ -13,7 +13,7 @@ const DEFAULT_SCOPE = 'read write follow'
  *
  * using superagent for request, you will handle promises
  */
-class Mastodon {
+export default class Mastodon {
   static DEFAULT_SCOPE = DEFAULT_SCOPE
   static DEFAULT_URL = DEFAULT_URL
   static NO_REDIRECT = NO_REDIRECT
