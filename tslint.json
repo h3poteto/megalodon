@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "tslint-config-standard"
+  ],
+  "defaultSeverity": "error",
+  "jsRules": {},
+  "rules": {
+    "variable-name": [
+      true,
+      "ban-keywords"
+    ]
+  },
+  "rulesDirectory": []
+}
