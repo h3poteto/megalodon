@@ -14,6 +14,11 @@ class StreamingError {
   }
 }
 
+
+/**
+ * StreamListener
+ * Listener of streaming. It receives data, and parse when streaming.
+ **/
 class StreamListener extends EventEmitter {
   public reconnectInterval = 1000
   public url: string
@@ -28,9 +33,9 @@ class StreamListener extends EventEmitter {
 
 
   /**
-   * @param url
-   * @param headers
-   * @param reconnectInterval [ms]
+   * @param url full url of streaming: e.g. https://mastodon.social/api/v1/streaming/user
+   * @param headers headers of streaming request
+   * @param reconnectInterval reconnection interval[ms]
    */
   constructor(url: string, headers: object, reconnectInterval?: number) {
     super()
@@ -79,7 +84,7 @@ class StreamListener extends EventEmitter {
   }
 
   /**
-   * Resets the parameters used in determining the next reconnect time
+   * Resets the parameters used in determining the next reconnect time.
    */
   private _resetRetryParams() {
     // delay for next reconnection attempt
@@ -218,8 +223,6 @@ class StreamListener extends EventEmitter {
   /**
    * Computes the next time a reconnect should occur (based on the last HTTP response received)
    * and starts a timeout handle to begin reconnecting after `self._connectInterval` passes.
-   *
-   * @return {Undefined}
    */
   private _scheduleReconnect() {
     if (this.response && this.response.statusCode === 420) {
@@ -263,6 +266,9 @@ class StreamListener extends EventEmitter {
     this.emit('reconnect', this.request, this.response, this._connectInterval)
   }
 
+  /**
+   * Set up parser when receive some data.
+   **/
   private _setupParser() {
     this.parser.on('element', (msg) => {
       this.emit('message', msg)

@@ -1,3 +1,7 @@
+/**
+ * OAuth
+ * Response data when oauth request.
+ **/
 namespace OAuth {
   export interface AppDataFromServer {
     id: number,
