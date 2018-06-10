@@ -1,7 +1,7 @@
 {
   "name": "megalodon",
-  "version": "0.1.0",
-  "description": "Mastodon client for node.js",
+  "version": "0.1.1",
+  "description": "Mastodon API client for node.js",
   "main": "./lib/mastodon.js",
   "typings": "./lib/mastodon.d.ts",
   "scripts": {
@@ -14,7 +14,11 @@
     "url": "git+https://github.com/h3poteto/megalodon.git"
   },
   "keywords": [
-    "mastodon"
+    "mastodon",
+    "client",
+    "api",
+    "streaming",
+    "rest"
   ],
   "author": "h3poteto",
   "license": "MIT",
