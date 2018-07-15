@@ -1,5 +1,4 @@
-import Mastodon from 'megalodon'
-import { Status } from 'megalodon'
+import Mastodon, { Status } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
 

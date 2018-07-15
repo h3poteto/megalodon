@@ -5,7 +5,6 @@ import Notification from './entities/notification'
 import Status from './entities/status'
 import Tag from './entities/tag'
 
-
 export { Application, Mention, Notification, Status, Tag }
 
 export default Mastodon

@@ -1,6 +1,5 @@
 import * as readline from 'readline'
-import Mastodon from 'megalodon'
-import { Status } from 'megalodon'
+import Mastodon, { Status } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
