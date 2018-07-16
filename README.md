@@ -70,7 +70,7 @@ const client = new Mastodon(
 )
 
 client.get<[Status]>('/timelines/home')
-  .then((resp: Status) => {
+  .then((resp: [Status]) => {
     console.log(resp)
   })
 ```
@@ -103,7 +103,7 @@ client.post<Status>('/statuses', {
 ## Streaming
 
 ```typescript
-import Mastodon from 'megalodon'
+import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
 
 const BASE_URL: string = 'https://friends.nico'
 
@@ -114,12 +114,21 @@ const client = new Mastodon(
   BASE_URL + '/api/v1'
 )
 
-const stream = client.stream('/streaming/public')
-stream.on('message', (data) => {
-  console.log(data)
+
+const stream: StreamListener = client.stream('/streaming/public')
+stream.on('update', (status: Status) => {
+  console.log(status)
 })
 
-stream.on('error', (err) => {
+stream.on('notification', (notification: Notification) => {
+  console.log(notification)
+})
+
+stream.on('delete', (id: number) => {
+  console.log(id)
+})
+
+stream.on('error', (err: Error) => {
   console.error(err)
 })
 

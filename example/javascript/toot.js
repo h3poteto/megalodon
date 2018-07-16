@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout
 })
 
-const BASE_URL = 'https://friends.nico'
+const BASE_URL = 'https://mastodon.social'
 
 const access_token = '...'
 

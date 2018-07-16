@@ -7,7 +7,7 @@ const rl = readline.createInterface({
 })
 
 const SCOPES = 'read write follow'
-const BASE_URL = 'https://friends.nico'
+const BASE_URL = 'https://mastodon.social'
 
 let clientId
 let clientSecret

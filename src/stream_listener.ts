@@ -1,16 +1,19 @@
 import Request from 'request'
 import { EventEmitter } from 'events'
 import Parser from './parser'
+import Status from './entities/status'
+import Notification from './entities/notification'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
-class StreamingError {
+class StreamingError extends Error {
   public statusCode: number
   public message: string
 
   constructor(statusCode: number, message: string) {
-    this.statusCode = statusCode,
-      this.message = message
+    super()
+    this.statusCode = statusCode
+    this.message = message
   }
 }
 
@@ -270,13 +273,19 @@ class StreamListener extends EventEmitter {
    * Set up parser when receive some data.
    **/
   private _setupParser() {
-    this.parser.on('element', (msg) => {
-      this.emit('message', msg)
+    this.parser.on('update', (status: Status) => {
+      this.emit('update', status)
     })
-    this.parser.on('error', (err) => {
+    this.parser.on('notification', (notification: Notification) => {
+      this.emit('notification', notification)
+    })
+    this.parser.on('delete', (id: number) => {
+      this.emit('delete', id)
+    })
+    this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)
     })
-    this.parser.on('connection-limit-exceeded', (err) => {
+    this.parser.on('connection-limit-exceeded', (err: Error) => {
       this.emit('error', err)
     })
   }

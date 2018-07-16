@@ -1,4 +1,6 @@
 import { EventEmitter } from 'events'
+import Status from './entities/status'
+import Notification from './entities/notification'
 
 /**
  * Parser
@@ -47,16 +49,28 @@ class Parser extends EventEmitter {
 
         // remove event and data markers
         const event: string = root[0].substr(7)
-        let data: string = root[1].substr(6)
+        const data: string = root[1].substr(6)
 
         try {
-          data = JSON.parse(data)
+          const obj = JSON.parse(data)
+          switch (event) {
+            case 'update':
+              this.emit('update', obj as Status)
+              break
+            case 'notification':
+              this.emit('notification', obj as Notification)
+              break
+            case 'delete':
+              // When delete, data is an ID of the deleted status
+              this.emit('delete', obj as number)
+              break
+            default:
+              this.emit('error', new Error(`Unknown event has received: ${event}`))
+              break
+          }
         } catch (err) {
           this.emit('error', new Error(`Error parsing API reply: '${piece}', error message: '${err}'`))
         } finally {
-          if (data) { // filter
-            this.emit('element', { event, data })
-          }
           continue
         }
       }

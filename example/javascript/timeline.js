@@ -1,6 +1,6 @@
 const Mastodon = require( '../../lib/mastodon')
 
-const BASE_URL = 'https://friends.nico'
+const BASE_URL = 'https://mastodon.social'
 
 const access_token = '...'
 
