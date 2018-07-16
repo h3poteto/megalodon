@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import Mastodon from '../../src/mastodon'
+import Mastodon from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -7,7 +7,7 @@ const rl: readline.ReadLine = readline.createInterface({
 })
 
 const SCOPES: string = 'read write follow'
-const BASE_URL: string = 'https://friends.nico'
+const BASE_URL: string = 'https://mastodon.social'
 
 let clientId: string
 let clientSecret: string

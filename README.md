@@ -58,7 +58,7 @@ Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
 ## Get timeline
 
 ```typescript
-import Mastodon from 'megalodon'
+import Mastodon, { Status } from 'megalodon'
 
 const BASE_URL: string = 'https://friends.nico'
 
@@ -69,14 +69,16 @@ const client = new Mastodon(
   BASE_URL + '/api/v1'
 )
 
-client.get('/timelines/home')
-  .then(resp => console.log(resp))
+client.get<[Status]>('/timelines/home')
+  .then((resp: Status) => {
+    console.log(resp)
+  })
 ```
 
 ## Post toot
 
 ```typescript
-import Mastodon from 'megalodon'
+import Mastodon, { Status } from 'megalodon'
 
 const BASE_URL: string = 'https://friends.nico'
 
@@ -89,10 +91,10 @@ const client = new Mastodon(
   BASE_URL + '/api/v1'
 )
 
-client.post('/statuses', {
+client.post<Status>('/statuses', {
   status: toot
 })
-  .then(res => {
+  .then((res: Status) => {
     console.log(res)
   })
 

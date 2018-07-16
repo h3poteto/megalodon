@@ -1,6 +1,6 @@
-import Mastodon from '../../src/mastodon'
+import Mastodon, { Status } from 'megalodon'
 
-const BASE_URL: string = 'https://friends.nico'
+const BASE_URL: string = 'https://mastodon.social'
 
 const access_token: string = '...'
 
@@ -9,5 +9,7 @@ const client = new Mastodon(
   BASE_URL + '/api/v1'
 )
 
-client.get('/timelines/home')
-  .then(resp => console.log(resp))
+client.get<[Status]>('/timelines/home')
+  .then((resp: [Status]) => {
+    console.log(resp)
+  })

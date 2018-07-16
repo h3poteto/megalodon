@@ -1,6 +1,6 @@
-import Mastodon from '../../src/mastodon'
+import Mastodon from 'megalodon'
 
-const BASE_URL: string = 'https://friends.nico'
+const BASE_URL: string = 'https://mastodon.social'
 
 const access_token: string = '...'
 
