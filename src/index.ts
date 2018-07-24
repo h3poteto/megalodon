@@ -10,4 +10,3 @@ import Response from './response'
 export { Application, Mention, Notification, Status, Tag, StreamListener, Response }
 
 export default Mastodon
-

@@ -32,28 +32,6 @@ export default class Mastodon {
   }
 
   /**
-   * Unauthorized GET request to mastodon REST API.
-   * @param path relative path from baseUrl
-   * @param params Query parameters
-   * @param baseUrl base URL of the target
-   */
-  public static get(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
-    const apiUrl = baseUrl
-    return axios
-      .get(apiUrl + path, {
-        params
-      })
-      .then(resp => resp.data)
-  }
-
-  private static _post(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
-    const apiUrl = baseUrl
-    return axios
-      .post(apiUrl + path, params)
-      .then(resp => resp.data)
-  }
-
-  /**
    * First, call createApp to get client_id and client_secret.
    * Next, call generateAuthUrl to get authorization url.
    * @param client_name Form Data, which is sent to /api/v1/apps
@@ -80,7 +58,6 @@ export default class Mastodon {
           })
       })
   }
-
 
   /**
    * Create an application
@@ -170,6 +147,28 @@ export default class Mastodon {
       redirect_uri,
       grant_type: 'authorization_code'
     }, baseUrl).then(data => OAuth.TokenData.from(data as OAuth.TokenDataFromServer))
+  }
+
+  /**
+   * Unauthorized GET request to mastodon REST API.
+   * @param path relative path from baseUrl
+   * @param params Query parameters
+   * @param baseUrl base URL of the target
+   */
+  public static get(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
+    const apiUrl = baseUrl
+    return axios
+      .get(apiUrl + path, {
+        params
+      })
+      .then(resp => resp.data)
+  }
+
+  private static _post(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
+    const apiUrl = baseUrl
+    return axios
+      .post(apiUrl + path, params)
+      .then(resp => resp.data)
   }
 
   /**
