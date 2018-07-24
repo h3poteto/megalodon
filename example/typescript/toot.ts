@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import Mastodon, { Status } from 'megalodon'
+import Mastodon, { Status, Response } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -19,7 +19,7 @@ new Promise(resolve => {
     client.post<Status>('/statuses', {
       status: status
     })
-      .then((res: Status) => {
+      .then((res: Response<Status>) => {
         console.log(res)
         rl.close()
         resolve(res)
