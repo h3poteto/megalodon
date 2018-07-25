@@ -10,4 +10,4 @@ const client = new Mastodon(
 )
 
 client.get('/timelines/home')
-  .then(res => console.log(res.headers))
+  .then(res => console.log(res.data))
