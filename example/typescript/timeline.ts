@@ -1,4 +1,4 @@
-import Mastodon, { Status } from 'megalodon'
+import Mastodon, { Status, Response } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
 
@@ -10,6 +10,6 @@ const client = new Mastodon(
 )
 
 client.get<[Status]>('/timelines/home')
-  .then((resp: [Status]) => {
-    console.log(resp)
+  .then((resp: Response<[Status]>) => {
+    console.log(resp.data)
   })

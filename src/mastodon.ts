@@ -1,9 +1,10 @@
 import { OAuth2 } from 'oauth'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import StreamListener from './stream_listener'
-
 import OAuth from './oauth'
+import Response from './response'
+
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
 const DEFAULT_SCOPE = 'read write follow'
@@ -28,28 +29,6 @@ export default class Mastodon {
   constructor(accessToken: string, baseUrl = DEFAULT_URL) {
     this.accessToken = accessToken
     this.baseUrl = baseUrl
-  }
-
-  /**
-   * Unauthorized GET request to mastodon REST API.
-   * @param path relative path from baseUrl
-   * @param params Query parameters
-   * @param baseUrl base URL of the target
-   */
-  public static get(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
-    const apiUrl = baseUrl
-    return axios
-      .get(apiUrl + path, {
-        params
-      })
-      .then(resp => resp.data)
-  }
-
-  private static _post(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
-    const apiUrl = baseUrl
-    return axios
-      .post(apiUrl + path, params)
-      .then(resp => resp.data)
   }
 
   /**
@@ -79,7 +58,6 @@ export default class Mastodon {
           })
       })
   }
-
 
   /**
    * Create an application
@@ -172,19 +150,49 @@ export default class Mastodon {
   }
 
   /**
+   * Unauthorized GET request to mastodon REST API.
+   * @param path relative path from baseUrl
+   * @param params Query parameters
+   * @param baseUrl base URL of the target
+   */
+  public static get(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
+    const apiUrl = baseUrl
+    return axios
+      .get(apiUrl + path, {
+        params
+      })
+      .then(resp => resp.data)
+  }
+
+  private static _post(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
+    const apiUrl = baseUrl
+    return axios
+      .post(apiUrl + path, params)
+      .then(resp => resp.data)
+  }
+
+  /**
    * GET request to mastodon REST API.
    * @param path relative path from baseUrl
    * @param params Query parameters
    */
-  public get<T>(path: string, params = {}): Promise<T> {
+  public get<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
-      .get(this.baseUrl + path, {
+      .get<T>(this.baseUrl + path, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`
         },
         params
       })
-      .then(resp => resp.data as T)
+      .then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
   }
 
   /**
@@ -192,14 +200,22 @@ export default class Mastodon {
    * @param path relative path from baseUrl
    * @param params Form data. If you want to post file, please use FormData()
    */
-  public patch<T>(path: string, params = {}): Promise<T> {
+  public patch<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
-      .patch(this.baseUrl + path, params, {
+      .patch<T>(this.baseUrl + path, params, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`
         }
       })
-      .then(resp => resp.data as T)
+      .then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
   }
 
   /**
@@ -207,28 +223,44 @@ export default class Mastodon {
    * @param path relative path from baseUrl
    * @param params Form data
    */
-  public post<T>(path: string, params = {}): Promise<T> {
+  public post<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
-      .post(this.baseUrl + path, params, {
+      .post<T>(this.baseUrl + path, params, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`
         }
       })
-      .then(resp => resp.data as T)
+      .then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
   }
 
   /**
    * DELETE request to mastodon REST API.
    * @param path relative path from baseUrl
    */
-  public del(path: string): Promise<{}> {
+  public del(path: string): Promise<Response<{}>> {
     return axios
       .delete(this.baseUrl + path, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`
         }
       })
-      .then(resp => resp.data as {})
+      .then((resp: AxiosResponse) => {
+        const res: Response<{}> = {
+          data: resp.data as {},
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
   }
 
   /**

@@ -8,6 +8,9 @@
     "variable-name": [
       true,
       "ban-keywords"
+    ],
+    "space-before-function-paren": [
+      "never"
     ]
   },
   "rulesDirectory": []
