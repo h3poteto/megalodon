@@ -17,7 +17,7 @@ or
 $ yarn add megalodon
 ```
 
-## Useage
+## Usage
 I prepared [examples](example).
 
 ## Authorization
