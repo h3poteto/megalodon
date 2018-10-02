@@ -119,6 +119,9 @@ class StreamListener extends EventEmitter {
       // start a stall abort timeout handle
       this._resetStallAbortTimeout()
       this.response = response
+      if (response.headers['content-type'] !== 'text/event-stream') {
+        this.emit('not-event-stream', 'no event')
+      }
       if (STATUS_CODES_TO_ABORT_ON.indexOf(response.statusCode) > -1) {
         let body: string = ''
         this.response.on('data', (chunk) => {
@@ -287,6 +290,9 @@ class StreamListener extends EventEmitter {
     })
     this.parser.on('connection-limit-exceeded', (err: Error) => {
       this.emit('error', err)
+    })
+    this.parser.on('heartbeat', _ => {
+      this.emit('heartbeat', 'heartbeat')
     })
   }
 }
