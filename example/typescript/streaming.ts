@@ -2,7 +2,7 @@ import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
 
-const access_token: string = '7112db7030fee4267acfe861bcf5b287544ea031490fd5662a6f0c99703fafd5'
+const access_token: string = '...'
 
 const client = new Mastodon(
   access_token,
@@ -10,6 +10,14 @@ const client = new Mastodon(
 )
 
 const stream: StreamListener = client.stream('/streaming/public')
+stream.on('connect', _ => {
+  console.log('connect')
+})
+
+stream.on('not-event-stream', (mes: string) => {
+  console.log(mes)
+})
+
 stream.on('update', (status: Status) => {
   console.log(status)
 })
@@ -28,4 +36,8 @@ stream.on('error', (err: Error) => {
 
 stream.on('heartbeat', () => {
   console.log('thump.')
+})
+
+stream.on('connection-limit-exceeded', (err: Error) => {
+  console.error(err)
 })

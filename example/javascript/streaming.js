@@ -10,6 +10,14 @@ const client = new Mastodon(
 )
 
 const stream = client.stream('/streaming/public')
+stream.on('connect', event => {
+  console.log('connect')
+})
+
+stream.on('not-event-stream', mes => {
+  console.log(mes)
+})
+
 stream.on('update', (status) => {
   console.log(status)
 })
@@ -28,5 +36,9 @@ stream.on('error', (err) => {
 
 stream.on('heartbeat', (msg) => {
   console.log('thump.')
+})
+
+stream.on('connection-limit-exceeded', err => {
+  console.error(err)
 })
 
