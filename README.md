@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/h3poteto/megalodon.svg)](https://travis-ci.org/h3poteto/megalodon)
 [![NPM Version](https://img.shields.io/npm/v/megalodon.svg)](https://www.npmjs.com/package/megalodon)
 
-A Mastodon API Client library for node.js. It provides REST API and streaming methods.
+A Mastodon and Pleroma API Client library for node.js. It provides REST API and streaming methods.
 
 
 ## Install
@@ -100,7 +100,8 @@ client.post<Status>('/statuses', {
 
 ```
 
-## Streaming
+## Streaming for Mastodon
+This method provides streaming method for Mastodon. If you want to use Pleroma, please use WebSocket.
 
 ```typescript
 import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
@@ -134,6 +135,54 @@ stream.on('error', (err: Error) => {
 
 stream.on('heartbeat', () => {
   console.log('thump.')
+})
+```
+## WebSocket for Pleroma
+This method provides streaming method for Pleroma.
+
+```typescript
+import Mastodon, { Status, Notification, WebSocket } from 'megalodon'
+
+const BASE_URL: string = 'https://pleroma.io'
+
+const access_token: string = '...'
+
+const client = new Mastodon(
+  access_token,
+  BASE_URL + '/api/v1'
+)
+
+const stream: WebSocket = client.socket('/streaming', 'user')
+stream.on('connect', () => {
+  console.log('connect')
+})
+
+stream.on('update', (status: Status) => {
+  console.log(status)
+})
+
+stream.on('notification', (notification: Notification) => {
+  console.log(notification)
+})
+
+stream.on('delete', (id: number) => {
+  console.log(id)
+})
+
+stream.on('error', (err: Error) => {
+  console.error(err)
+})
+
+stream.on('heartbeat', () => {
+  console.log('thump.')
+})
+
+stream.on('close', () => {
+  console.log('close')
+})
+
+stream.on('parser-error', (err: Error) => {
+  console.error(err)
 })
 ```
 
