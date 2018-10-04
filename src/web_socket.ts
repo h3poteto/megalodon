@@ -98,7 +98,9 @@ export default class WebSocket extends EventEmitter {
     if (accessToken !== null) {
       params.push(`access_token=${accessToken}`)
     }
-    connection.connect(`${url}/?${params.join('&')}`)
+    const req_url: string = `${url}/?${params.join('&')}`
+    console.log(req_url)
+    connection.connect(req_url)
 
     return connection
   }
@@ -150,15 +152,17 @@ class Parser extends EventEmitter {
 
     try {
       const obj = JSON.parse(data)
+      const payload: string = obj.payload
+      const mes = JSON.parse(payload)
       switch (obj.event) {
         case 'update':
-          this.emit('update', obj.payload as Status)
+          this.emit('update', mes as Status)
           break
         case 'notification':
-          this.emit('notification', obj.payload as Notification)
+          this.emit('notification', mes as Notification)
           break
         case 'delete':
-          this.emit('delete', obj.payload as number)
+          this.emit('delete', mes as number)
           break
         default:
           this.emit('error', new Error(`Unknown event has received: ${obj}`))
