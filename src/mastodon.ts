@@ -2,6 +2,7 @@ import { OAuth2 } from 'oauth'
 import axios, { AxiosResponse } from 'axios'
 
 import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 import OAuth from './oauth'
 import Response from './response'
 
@@ -279,6 +280,22 @@ export default class Mastodon {
     }
     const url = this.baseUrl + path
     const streaming = new StreamListener(url, headers, reconnectInterval)
+    process.nextTick(() => {
+      streaming.start()
+    })
+    return streaming
+  }
+
+  /**
+   * Get connection and receive websocket connection for Pleroma API.
+   *
+   * @param path relative path from baseUrl: normally it is `/streaming`.
+   * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
+   * @returns WebSocket, which inherits from EventEmitter
+   */
+  public socket(path: string, stream: string): WebSocket {
+    const url = this.baseUrl + path
+    const streaming = new WebSocket(url, stream, this.accessToken)
     process.nextTick(() => {
       streaming.start()
     })
