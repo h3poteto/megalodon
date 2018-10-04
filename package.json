@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc -p ./",
     "lint": "tslint './src/*.ts'",
+    "publish": "yarn install && yarn run build && yarn publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
