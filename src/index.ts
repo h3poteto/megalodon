@@ -5,8 +5,9 @@ import Notification from './entities/notification'
 import Status from './entities/status'
 import Tag from './entities/tag'
 import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 import Response from './response'
 
-export { Application, Mention, Notification, Status, Tag, StreamListener, Response }
+export { Application, Mention, Notification, Status, Tag, StreamListener, WebSocket, Response }
 
 export default Mastodon
