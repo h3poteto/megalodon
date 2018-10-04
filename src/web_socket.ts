@@ -99,7 +99,6 @@ export default class WebSocket extends EventEmitter {
       params.push(`access_token=${accessToken}`)
     }
     const req_url: string = `${url}/?${params.join('&')}`
-    console.log(req_url)
     connection.connect(req_url)
 
     return connection
