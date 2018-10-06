@@ -44,3 +44,7 @@ stream.on('close', () => {
 stream.on('parser-error', (err) => {
   console.error(err)
 })
+
+setTimeout(() => {
+  stream.stop()
+}, 10000)
