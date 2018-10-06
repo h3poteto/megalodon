@@ -143,7 +143,7 @@ This method provides streaming method for Pleroma.
 ```typescript
 import Mastodon, { Status, Notification, WebSocket } from 'megalodon'
 
-const BASE_URL: string = 'https://pleroma.io'
+const BASE_URL: string = 'wss://pleroma.io'
 
 const access_token: string = '...'
 

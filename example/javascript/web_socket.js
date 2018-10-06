@@ -1,6 +1,6 @@
 const Mastodon = require('../../lib/mastodon')
 
-const BASE_URL = 'https://pleroma.io'
+const BASE_URL = 'wss://pleroma.io'
 
 const access_token = '...'
 
