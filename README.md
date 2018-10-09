@@ -101,7 +101,7 @@ client.post<Status>('/statuses', {
 ```
 
 ## Streaming for Mastodon
-This method provides streaming method for Mastodon. If you want to use Pleroma, please use WebSocket.
+This method provides streaming method for Mastodon. If you want to use Pleroma, [please use WebSocket](#websocket-for-pleroma).
 
 ```typescript
 import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
