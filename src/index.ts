@@ -7,7 +7,8 @@ import Tag from './entities/tag'
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import Response from './response'
+import OAuth from './oauth'
 
-export { Application, Mention, Notification, Status, Tag, StreamListener, WebSocket, Response }
+export { Application, Mention, Notification, Status, Tag, StreamListener, WebSocket, Response, OAuth }
 
 export default Mastodon

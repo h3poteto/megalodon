@@ -16,7 +16,8 @@ namespace OAuth {
     access_token: string,
     token_type: string,
     scope: string,
-    created_at: number
+    created_at: number,
+    refresh_token: string | null
   }
 
   export class AppData {
@@ -57,7 +58,8 @@ namespace OAuth {
       public access_token: string,
       public token_type: string,
       scope: string,
-      public created_at: number
+      public created_at: number,
+      public refresh_token: string | null = null
     ) {
       this._scope = scope
     }
@@ -67,7 +69,7 @@ namespace OAuth {
      * @param raw from server
      */
     static from(raw: TokenDataFromServer) {
-      return new this(raw.access_token, raw.token_type, raw.scope, raw.created_at)
+      return new this(raw.access_token, raw.token_type, raw.scope, raw.created_at, raw.refresh_token)
     }
 
     /**
@@ -87,6 +89,12 @@ namespace OAuth {
      */
     get createdAt() {
       return this.created_at
+    }
+    /**
+     * OAuth Refresh Token
+     */
+    get refreshToken() {
+      return this.refresh_token
     }
   }
 }

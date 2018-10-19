@@ -30,6 +30,8 @@ Mastodon.registerApp('Test App', {
   .then(tokenData => {
     console.log('\naccess_token:')
     console.log(tokenData.accessToken)
+    console.log('\nrefresh_token:')
+    console.log(tokenData.refreshToken)
     console.log()
   })
   .catch(err => console.error(err))
