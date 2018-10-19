@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import Mastodon from 'megalodon'
+import Mastodon, { OAuth } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -29,9 +29,11 @@ Mastodon.registerApp('Test App', {
 }).then((code: string) => {
   return Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
 })
-  .then((tokenData: Partial<{ accessToken: string }>) => {
+  .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')
     console.log(tokenData.accessToken)
+    console.log('\nrefresh_token:')
+    console.log(tokenData.refreshToken)
     console.log()
   })
   .catch((err: Error) => console.error(err))
