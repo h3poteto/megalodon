@@ -1,8 +1,8 @@
 linter:
   tslint:
     npm_install: true
-    dir:
-      - src
-    options:
-      config: 'tslint.json'
-      ext: '.ts'
+    config: 'tslint.json'
+    exclude: 'node_modules/**'
+    project: 'tsconfig.json'
+    type-check: true
+    glob: '**/*.ts{,x}'

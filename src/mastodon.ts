@@ -197,6 +197,29 @@ export default class Mastodon {
   }
 
   /**
+   * PUT request to mastodon REST API.
+   * @param path relative path from baseUrl
+   * @param params Form data. If you want to post file, please use FormData()
+   */
+  public put<T>(path: string, params = {}): Promise<Response<T>> {
+    return axios
+      .put<T>(this.baseUrl + path, params, {
+        headers: {
+          'Authorization': `Bearer ${this.accessToken}`
+        }
+      })
+      .then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
+  }
+
+  /**
    * PATCH request to mastodon REST API.
    * @param path relative path from baseUrl
    * @param params Form data. If you want to post file, please use FormData()
