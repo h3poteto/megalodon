@@ -17,6 +17,7 @@ export default class WebSocket extends EventEmitter {
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number
   private _reconnectCurrentAttempts: number
+  private _connectionClosed: boolean
 
   /**
    * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
@@ -33,12 +34,14 @@ export default class WebSocket extends EventEmitter {
     this._reconnectInterval = 1000
     this._reconnectMaxAttempts = Infinity
     this._reconnectCurrentAttempts = 0
+    this._connectionClosed = false
   }
 
   /**
    * Start websocket connection.
    */
   public start() {
+    this._connectionClosed = false
     this._resetRetryParams()
     this._startWebSocketConnection()
   }
@@ -58,6 +61,7 @@ export default class WebSocket extends EventEmitter {
    */
   public stop() {
     if (this._socketConnection) {
+      this._connectionClosed = true
       this._socketConnection.close()
     }
     this._resetRetryParams()
@@ -133,7 +137,10 @@ export default class WebSocket extends EventEmitter {
           this.emit('close', {})
         } else {
           console.log(`Closed connection with ${code}`)
-          this._reconnect(cli)
+          // If already called close method, it does not retry.
+          if (!this._connectionClosed) {
+            this._reconnect(cli)
+          }
         }
       })
       conn.on('message', (message: IMessage) => {
