@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events'
 import Status from './entities/status'
 import Notification from './entities/notification'
+import Conversation from './entities/conversation'
 
 /**
  * Parser
@@ -59,6 +60,9 @@ class Parser extends EventEmitter {
               break
             case 'notification':
               this.emit('notification', obj as Notification)
+              break
+            case 'conversation':
+              this.emit('conversation', obj as Conversation)
               break
             case 'delete':
               // When delete, data is an ID of the deleted status

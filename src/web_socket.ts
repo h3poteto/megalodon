@@ -2,6 +2,7 @@ import { client, connection, IMessage } from 'websocket'
 import { EventEmitter } from 'events'
 import Status from './entities/status'
 import Notification from './entities/notification'
+import Conversation from './entities/conversation'
 
 /**
  * WebSocket
@@ -164,6 +165,9 @@ export default class WebSocket extends EventEmitter {
     this.parser.on('delete', (id: number) => {
       this.emit('delete', id)
     })
+    this.parser.on('conversation', (conversation: Conversation) => {
+      this.emit('conversation', conversation)
+    })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)
     })
@@ -209,6 +213,9 @@ class Parser extends EventEmitter {
           break
         case 'delete':
           this.emit('delete', mes as number)
+          break
+        case 'conversation':
+          this.emit('conversation', mes as Conversation)
           break
         default:
           this.emit('error', new Error(`Unknown event has received: ${obj}`))
