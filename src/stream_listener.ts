@@ -3,6 +3,7 @@ import { EventEmitter } from 'events'
 import Parser from './parser'
 import Status from './entities/status'
 import Notification from './entities/notification'
+import Conversation from './entities/conversation'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
@@ -281,6 +282,9 @@ class StreamListener extends EventEmitter {
     })
     this.parser.on('notification', (notification: Notification) => {
       this.emit('notification', notification)
+    })
+    this.parser.on('conversation', (conversation: Conversation) => {
+      this.emit('conversation', conversation)
     })
     this.parser.on('delete', (id: number) => {
       this.emit('delete', id)
