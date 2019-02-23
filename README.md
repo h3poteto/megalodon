@@ -100,6 +100,36 @@ client.post<Status>('/statuses', {
 
 ```
 
+## Post medias
+The POST method is wrapper of [axios](https://github.com/axios/axios): https://github.com/h3poteto/megalodon/blob/master/src/mastodon.ts#L245-L266
+
+So you can use the same way of axios to post medias.
+
+```typescript
+import Mastodon, { Status, Response } from 'megalodon'
+import fs from 'fs'
+
+const BASE_URL: string = 'https://friends.nico'
+
+const access_token: string = '...'
+
+const client = new Mastodon(
+  access_token,
+  BASE_URL + '/api/v1'
+)
+
+const image = fs.readFileSync("test.image")
+const formData = new FormData()
+formData.append('file', image)
+
+client.post<Attachment>('/media', formData)
+  .then((res: Response<Attachment>) => {
+    console.log(res.data)
+  })
+```
+
+
+
 ## Streaming for Mastodon
 This method provides streaming method for Mastodon. If you want to use Pleroma, [please use WebSocket](#websocket-for-pleroma).
 

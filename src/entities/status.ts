@@ -2,6 +2,7 @@ import Account from './account'
 import Application from './application'
 import Mention from './mention'
 import Tag from './tag'
+import Attachment from './attachment'
 
 export default interface Status {
   account: Account,
@@ -14,7 +15,7 @@ export default interface Status {
   in_reply_to_account_id: number | null,
   in_reply_to_id: number | null,
   language: string | null,
-  media_attachments: object[], // Attachments
+  media_attachments: Attachment[],
   mentions: Mention[],
   muted: boolean | null,
   reblog: Status | null,
