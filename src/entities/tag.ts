@@ -1,4 +1,7 @@
+import History from './history'
+
 export default interface Tag {
   name: string,
-  url: string
+  url: string,
+  history: History[] | null
 }
