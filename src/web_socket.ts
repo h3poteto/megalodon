@@ -221,7 +221,7 @@ class Parser extends EventEmitter {
           this.emit('error', new Error(`Unknown event has received: ${obj}`))
       }
     } catch (err) {
-      this.emit('error', new Error(`Error parsing websocket reply: ${err}`))
+      this.emit('error', new Error(`Error parsing websocket reply: ${data}, error message: ${err}`))
     }
     return
   }
