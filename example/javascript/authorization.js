@@ -7,7 +7,7 @@ const rl = readline.createInterface({
 })
 
 const SCOPES = 'read write follow'
-const BASE_URL = 'https://mastodon.social'
+const BASE_URL = 'https://pleroma.io'
 
 let clientId
 let clientSecret
@@ -17,7 +17,11 @@ Mastodon.registerApp('Test App', {
 }, BASE_URL).then(appData => {
   clientId = appData.clientId
   clientSecret = appData.clientSecret
-  console.log('Authorization URL is generated.')
+  console.log('\nclient_id:')
+  console.log(clientId)
+  console.log('\nclient_secret:')
+  console.log(clientSecret)
+  console.log('\nAuthorization URL is generated.')
   console.log(appData.url)
   console.log()
   return new Promise(resolve => {
