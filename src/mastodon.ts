@@ -11,11 +11,24 @@ const DEFAULT_URL = 'https://mastodon.social'
 const DEFAULT_SCOPE = 'read write follow'
 
 /**
+ * Interface
+ */
+export interface MegalodonInstance {
+  get<T = any>(path: string, params: object): Promise<Response<T>>
+  put<T = any>(path: string, params: object): Promise<Response<T>>
+  patch<T = any>(path: string, params: object): Promise<Response<T>>
+  post<T = any>(path: string, params: object): Promise<Response<T>>
+  del(path: string, params: object): Promise<Response<{}>>
+  stream(path: string, reconnectInterval: number): StreamListener
+  socket(path: string, strea: string): WebSocket
+}
+
+/**
  * Mastodon API client.
  *
  * Using axios for request, you will handle promises.
  */
-export default class Mastodon {
+export default class Mastodon implements MegalodonInstance {
   static DEFAULT_SCOPE = DEFAULT_SCOPE
   static DEFAULT_URL = DEFAULT_URL
   static NO_REDIRECT = NO_REDIRECT
