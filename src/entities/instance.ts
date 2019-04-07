@@ -12,6 +12,8 @@ export default interface Instance {
   urls: URLs,
   stats: Stats,
   languages: string[],
-  contact_account: Account | null
+  contact_account: Account | null,
+  max_toot_chars?: number,
+  registrations?: boolean
 }
 
