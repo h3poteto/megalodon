@@ -104,8 +104,8 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (options.website) params.website = options.website
 
-    return this._post('/api/v1/apps', params, baseUrl)
-      .then(data => OAuth.AppData.from(data as OAuth.AppDataFromServer))
+    return this._post<OAuth.AppDataFromServer>('/api/v1/apps', params, baseUrl)
+      .then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
   }
 
   /**
@@ -154,13 +154,13 @@ export default class Mastodon implements MegalodonInstance {
     baseUrl = DEFAULT_URL,
     redirect_uri = NO_REDIRECT
   ): Promise<OAuth.TokenData> {
-    return this._post('/oauth/token', {
+    return this._post<OAuth.TokenDataFromServer>('/oauth/token', {
       client_id,
       client_secret,
       code,
       redirect_uri,
       grant_type: 'authorization_code'
-    }, baseUrl).then(data => OAuth.TokenData.from(data as OAuth.TokenDataFromServer))
+    }, baseUrl).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
   /**
@@ -178,12 +178,12 @@ export default class Mastodon implements MegalodonInstance {
     refresh_token: string,
     baseUrl = DEFAULT_URL
   ): Promise<OAuth.TokenData> {
-    return this._post('/oauth/token', {
+    return this._post<OAuth.TokenDataFromServer>('/oauth/token', {
       client_id,
       client_secret,
       refresh_token,
       grant_type: 'refresh_token'
-    }, baseUrl).then(data => OAuth.TokenData.from(data as OAuth.TokenDataFromServer))
+    }, baseUrl).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
   /**
@@ -192,20 +192,36 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Query parameters
    * @param baseUrl base URL of the target
    */
-  public static get(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
+  public static get<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
     const apiUrl = baseUrl
     return axios
-      .get(apiUrl + path, {
+      .get<T>(apiUrl + path, {
         params
       })
-      .then(resp => resp.data)
+      .then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
   }
 
-  private static _post(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<object> {
+  private static _post<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
     const apiUrl = baseUrl
     return axios
-      .post(apiUrl + path, params)
-      .then(resp => resp.data)
+      .post<T>(apiUrl + path, params)
+      .then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
   }
 
   /**
