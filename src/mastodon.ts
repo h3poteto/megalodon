@@ -320,17 +320,19 @@ export default class Mastodon implements MegalodonInstance {
   /**
    * DELETE request to mastodon REST API.
    * @param path relative path from baseUrl
+   * @param params Form data
    */
-  public del(path: string): Promise<Response<{}>> {
+  public del<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .delete(this.baseUrl + path, {
+        data: params,
         headers: {
           'Authorization': `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse) => {
-        const res: Response<{}> = {
-          data: resp.data as {},
+        const res: Response<T> = {
+          data: resp.data,
           status: resp.status,
           statusText: resp.statusText,
           headers: resp.headers
