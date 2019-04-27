@@ -1,6 +1,7 @@
 # Megalodon
 [![Build Status](https://travis-ci.org/h3poteto/megalodon.svg)](https://travis-ci.org/h3poteto/megalodon)
 [![NPM Version](https://img.shields.io/npm/v/megalodon.svg)](https://www.npmjs.com/package/megalodon)
+![GitHub release](https://img.shields.io/github/release/h3poteto/megalodon.svg)
 
 A Mastodon and Pleroma API Client library for node.js. It provides REST API and streaming methods.
 
