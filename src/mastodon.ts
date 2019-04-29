@@ -63,7 +63,7 @@ export default class Mastodon implements MegalodonInstance {
     return this.createApp(client_name, options, baseUrl)
       .then(appData => {
         return this.generateAuthUrl(appData.client_id, appData.client_secret, {
-          redirect_uri: NO_REDIRECT,
+          redirect_uri: appData.redirect_uri,
           scope: options.scopes
         }, baseUrl)
           .then(url => {
