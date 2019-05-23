@@ -52,30 +52,33 @@ class Parser extends EventEmitter {
         const event: string = root[0].substr(7)
         const data: string = root[1].substr(6)
 
+        let jsonObj = {}
         try {
-          const obj = JSON.parse(data)
-          switch (event) {
-            case 'update':
-              this.emit('update', obj as Status)
-              break
-            case 'notification':
-              this.emit('notification', obj as Notification)
-              break
-            case 'conversation':
-              this.emit('conversation', obj as Conversation)
-              break
-            case 'delete':
-              // When delete, data is an ID of the deleted status
-              this.emit('delete', obj as number)
-              break
-            default:
-              this.emit('error', new Error(`Unknown event has received: ${event}`))
-              break
-          }
+          jsonObj = JSON.parse(data)
         } catch (err) {
-          this.emit('error', new Error(`Error parsing API reply: '${piece}', error message: '${err}'`))
-        } finally {
-          continue
+          // delete event does not have json object
+          if (event !== 'delete') {
+            this.emit('error', new Error(`Error parsing API reply: '${piece}', error message: '${err}'`))
+            continue
+          }
+        }
+        switch (event) {
+          case 'update':
+            this.emit('update', jsonObj as Status)
+            break
+          case 'notification':
+            this.emit('notification', jsonObj as Notification)
+            break
+          case 'conversation':
+            this.emit('conversation', jsonObj as Conversation)
+            break
+          case 'delete':
+            // When delete, data is an ID of the deleted status
+            this.emit('delete', data as string)
+            break
+          default:
+            this.emit('error', new Error(`Unknown event has received: ${event}`))
+            continue
         }
       }
       offset++

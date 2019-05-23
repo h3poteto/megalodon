@@ -122,17 +122,17 @@ export default class WebSocket extends EventEmitter {
    */
   private _getClient(): client {
     const cli = new client()
-    cli.on('connectFailed', (err) => {
+    cli.on('connectFailed', err => {
       console.error(err)
       this._reconnect(cli)
     })
-    cli.on('connect', (conn) => {
+    cli.on('connect', conn => {
       this._socketConnection = conn
       this.emit('connect', {})
-      conn.on('error', (err) => {
+      conn.on('error', err => {
         this.emit('error', err)
       })
-      conn.on('close', (code) => {
+      conn.on('close', code => {
         // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
         if (code === 1000) {
           this.emit('close', {})
@@ -162,7 +162,7 @@ export default class WebSocket extends EventEmitter {
     this.parser.on('notification', (notification: Notification) => {
       this.emit('notification', notification)
     })
-    this.parser.on('delete', (id: number) => {
+    this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
     })
     this.parser.on('conversation', (conversation: Conversation) => {
@@ -200,28 +200,37 @@ class Parser extends EventEmitter {
       return
     }
 
+    let event = ''
+    let payload = ''
+    let mes = {}
     try {
       const obj = JSON.parse(data)
-      const payload: string = obj.payload
-      const mes = JSON.parse(payload)
-      switch (obj.event) {
-        case 'update':
-          this.emit('update', mes as Status)
-          break
-        case 'notification':
-          this.emit('notification', mes as Notification)
-          break
-        case 'delete':
-          this.emit('delete', mes as number)
-          break
-        case 'conversation':
-          this.emit('conversation', mes as Conversation)
-          break
-        default:
-          this.emit('error', new Error(`Unknown event has received: ${obj}`))
-      }
+      event = obj.event
+      payload = obj.payload
+      mes = JSON.parse(payload)
     } catch (err) {
-      this.emit('error', new Error(`Error parsing websocket reply: ${data}, error message: ${err}`))
+      // delete event does not have json object
+      if (event !== 'delete') {
+        this.emit('error', new Error(`Error parsing websocket reply: ${data}, error message: ${err}`))
+        return
+      }
+    }
+
+    switch (event) {
+      case 'update':
+        this.emit('update', mes as Status)
+        break
+      case 'notification':
+        this.emit('notification', mes as Notification)
+        break
+      case 'conversation':
+        this.emit('conversation', mes as Conversation)
+        break
+      case 'delete':
+        this.emit('delete', payload as string)
+        break
+      default:
+        this.emit('error', new Error(`Unknown event has received: ${data}`))
     }
     return
   }

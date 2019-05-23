@@ -18,7 +18,6 @@ class StreamingError extends Error {
   }
 }
 
-
 /**
  * StreamListener
  * Listener of streaming. It receives data, and parse when streaming.
@@ -34,7 +33,6 @@ class StreamListener extends EventEmitter {
   private _connectInterval: number
   private _usedFirstReconnect: boolean
   private _stallAbortTimeout: NodeJS.Timer | undefined
-
 
   /**
    * @param url full url of streaming: e.g. https://mastodon.social/api/v1/streaming/user
@@ -113,7 +111,7 @@ class StreamListener extends EventEmitter {
 
     this.request = Request.get(this._buildRequestOption())
     this.emit('connect', this.request)
-    this.request.on('response', (response) => {
+    this.request.on('response', response => {
       // reset our reconnection attempt flag so next attempt goes through with 0 delay
       // if we get a transport-level error
       this._usedFirstReconnect = false
@@ -125,7 +123,7 @@ class StreamListener extends EventEmitter {
       }
       if (STATUS_CODES_TO_ABORT_ON.indexOf(response.statusCode) > -1) {
         let body: string = ''
-        this.response.on('data', (chunk) => {
+        this.response.on('data', chunk => {
           body += chunk.toString()
 
           try {
@@ -141,14 +139,14 @@ class StreamListener extends EventEmitter {
           body = ''
         })
       } else {
-        this.response.on('data', (chunk) => {
+        this.response.on('data', chunk => {
           this._connectInterval = 0
 
           this._resetStallAbortTimeout()
           this.parser.parse(chunk.toString())
         })
 
-        this.response.on('error', (err) => {
+        this.response.on('error', err => {
           // expose response errors on twit instance
           this.emit('error', err)
         })
@@ -286,7 +284,7 @@ class StreamListener extends EventEmitter {
     this.parser.on('conversation', (conversation: Conversation) => {
       this.emit('conversation', conversation)
     })
-    this.parser.on('delete', (id: number) => {
+    this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
     })
     this.parser.on('error', (err: Error) => {
