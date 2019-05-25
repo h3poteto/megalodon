@@ -227,7 +227,7 @@ class Parser extends EventEmitter {
         this.emit('conversation', mes as Conversation)
         break
       case 'delete':
-        this.emit('delete', payload as string)
+        this.emit('delete', payload)
         break
       default:
         this.emit('error', new Error(`Unknown event has received: ${data}`))

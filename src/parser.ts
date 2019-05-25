@@ -74,7 +74,7 @@ class Parser extends EventEmitter {
             break
           case 'delete':
             // When delete, data is an ID of the deleted status
-            this.emit('delete', data as string)
+            this.emit('delete', data)
             break
           default:
             this.emit('error', new Error(`Unknown event has received: ${event}`))
