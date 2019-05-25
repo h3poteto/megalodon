@@ -1,6 +1,6 @@
 import Status from './status'
 
 export default interface Context {
-  ancestors: Status[],
-  descendants: Status[]
+  ancestors: Array<Status>
+  descendants: Array<Status>
 }

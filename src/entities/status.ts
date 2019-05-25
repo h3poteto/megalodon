@@ -11,8 +11,8 @@ export default interface Status {
   uri: string
   url: string
   account: Account
-  in_reply_to_id: number | null
-  in_reply_to_account_id: number | null
+  in_reply_to_id: string | null
+  in_reply_to_account_id: string | null
   reblog: Status | null
   content: string
   created_at: string
@@ -26,9 +26,9 @@ export default interface Status {
   sensitive: boolean
   spoiler_text: string
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
-  media_attachments: Attachment[]
-  mentions: Mention[]
-  tags: Tag[]
+  media_attachments: Array<Attachment>
+  mentions: Array<Mention>
+  tags: Array<Tag>
   card: Card | null
   application: Application
   language: string | null
