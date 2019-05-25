@@ -26,9 +26,9 @@ export default interface Status {
   sensitive: boolean
   spoiler_text: string
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
-  media_attachments: Attachment[]
-  mentions: Mention[]
-  tags: Tag[]
+  media_attachments: Array<Attachment>
+  mentions: Array<Mention>
+  tags: Array<Tag>
   card: Card | null
   application: Application
   language: string | null

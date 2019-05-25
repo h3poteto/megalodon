@@ -104,7 +104,7 @@ export default class WebSocket extends EventEmitter {
   }
 
   private _connect(cli: client, url: string, stream: string, accessToken: string) {
-    const params = [`stream=${stream}`]
+    const params: Array<string> = [`stream=${stream}`]
 
     if (accessToken !== null) {
       params.push(`access_token=${accessToken}`)
