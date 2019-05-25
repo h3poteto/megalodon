@@ -1,4 +1,13 @@
 linter:
+  eslint:
+    npm_install: true
+    dir:
+      - src
+    config: '.eslintrc.js'
+    ext: '.js,.ts'
+    ignore-path: .gitignore
+    ignore-pattern: /node_modules/*
+
   tslint:
     npm_install: true
     config: 'tslint.json'
