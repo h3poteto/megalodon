@@ -1,4 +1,4 @@
 export default interface List {
-  id: number
+  id: string
   title: string
 }

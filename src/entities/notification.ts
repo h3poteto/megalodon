@@ -4,7 +4,7 @@ import Status from './status'
 export default interface Notification {
   account: Account
   created_at: string
-  id: number
+  id: string
   status: Status | null
   type: 'mention' | 'reblog' | 'favourite' | 'follow'
 }

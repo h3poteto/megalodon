@@ -1,5 +1,5 @@
 export default interface Filter {
-  id: number
+  id: string
   phrase: string
   context: Array<string>
   expires_at: string | null

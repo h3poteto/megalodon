@@ -1,5 +1,5 @@
 export default interface Relationship {
-  id: number
+  id: string
   following: boolean
   followed_by: boolean
   blocking: boolean

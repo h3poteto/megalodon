@@ -1,5 +1,5 @@
 export default interface PushSubscription {
-  id: number
+  id: string
   endpoint: string
   server_key: string
   alerts: object

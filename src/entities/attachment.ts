@@ -1,5 +1,5 @@
 export default interface Attachment {
-  id: number
+  id: string
   type: 'unknown' | 'image' | 'gifv' | 'video'
   url: string
   remote_url: string | null

@@ -2,7 +2,7 @@ import Emoji from './emoji'
 import Source from './source'
 
 export default interface Account {
-  id: number
+  id: string
   username: string
   acct: string
   display_name: string

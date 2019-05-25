@@ -11,8 +11,8 @@ export default interface Status {
   uri: string
   url: string
   account: Account
-  in_reply_to_id: number | null
-  in_reply_to_account_id: number | null
+  in_reply_to_id: string | null
+  in_reply_to_account_id: string | null
   reblog: Status | null
   content: string
   created_at: string
