@@ -1,4 +1,4 @@
-export default interface Mention {
+export type Mention = {
   id: string
   username: string
   url: string

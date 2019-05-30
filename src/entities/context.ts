@@ -1,6 +1,6 @@
-import Status from './status'
+import { Status } from './status'
 
-export default interface Context {
+export type Context = {
   ancestors: Array<Status>
   descendants: Array<Status>
 }

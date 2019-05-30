@@ -1,4 +1,4 @@
-export default interface Application {
+export type Application = {
   name: string
   website: string | null
 }

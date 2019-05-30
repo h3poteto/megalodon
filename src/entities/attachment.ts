@@ -1,4 +1,4 @@
-export default interface Attachment {
+export type Attachment = {
   id: string
   type: 'unknown' | 'image' | 'gifv' | 'video'
   url: string

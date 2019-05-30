@@ -1,4 +1,4 @@
-export default interface Filter {
+export type Filter = {
   id: string
   phrase: string
   context: Array<string>

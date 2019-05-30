@@ -1,8 +1,8 @@
 import { client, connection, IMessage } from 'websocket'
 import { EventEmitter } from 'events'
-import Status from './entities/status'
-import Notification from './entities/notification'
-import Conversation from './entities/conversation'
+import { Status } from './entities/status'
+import { Notification } from './entities/notification'
+import { Conversation } from './entities/conversation'
 
 /**
  * WebSocket

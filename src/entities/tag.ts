@@ -1,6 +1,6 @@
-import History from './history'
+import { History } from './history'
 
-export default interface Tag {
+export type Tag = {
   name: string
   url: string
   history: Array<History> | null

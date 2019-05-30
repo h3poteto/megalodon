@@ -1,12 +1,12 @@
-import Account from './account'
-import Application from './application'
-import Mention from './mention'
-import Tag from './tag'
-import Attachment from './attachment'
-import Emoji from './emoji'
-import Card from './card'
+import { Account } from './account'
+import { Application } from './application'
+import { Mention } from './mention'
+import { Tag } from './tag'
+import { Attachment } from './attachment'
+import { Emoji } from './emoji'
+import { Card } from './card'
 
-export default interface Status {
+export type Status = {
   id: string
   uri: string
   url: string

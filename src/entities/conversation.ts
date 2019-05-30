@@ -1,7 +1,7 @@
-import Account from './account'
-import Status from './status'
+import { Account } from './account'
+import { Status } from './status'
 
-export default interface Conversation {
+export type Conversation = {
   id: string
   accounts: Array<Account>
   last_status: Status | null

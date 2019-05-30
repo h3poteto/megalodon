@@ -1,4 +1,4 @@
-export default interface Relationship {
+export type Relationship = {
   id: string
   following: boolean
   followed_by: boolean

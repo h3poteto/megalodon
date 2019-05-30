@@ -1,8 +1,8 @@
-import Account from './account'
-import URLs from './urls'
-import Stats from './stats'
+import { Account } from './account'
+import { URLs } from './urls'
+import { Stats } from './stats'
 
-export default interface Instance {
+export type Instance = {
   uri: string
   title: string
   description: string

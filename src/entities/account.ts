@@ -1,7 +1,7 @@
-import Emoji from './emoji'
-import Source from './source'
+import { Emoji } from './emoji'
+import { Source } from './source'
 
-export default interface Account {
+export type Account = {
   id: string
   username: string
   acct: string
