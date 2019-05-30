@@ -1,4 +1,4 @@
-export default interface List {
+export type List = {
   id: string
   title: string
 }

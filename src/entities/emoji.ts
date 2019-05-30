@@ -1,4 +1,4 @@
-export default interface Emoji {
+export type Emoji = {
   shortcode: string
   static_url: string
   url: string

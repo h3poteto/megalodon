@@ -3,21 +3,21 @@
  * Response data when oauth request.
  **/
 namespace OAuth {
-  export interface AppDataFromServer {
-    id: number,
-    name: string,
-    website: string | null,
-    redirect_uri: string,
-    client_id: string,
+  export type AppDataFromServer = {
+    id: number
+    name: string
+    website: string | null
+    redirect_uri: string
+    client_id: string
     client_secret: string
   }
 
-  export interface TokenDataFromServer {
-    access_token: string,
-    token_type: string,
-    scope: string,
-    created_at: number,
-    expires_in: number | null,
+  export type TokenDataFromServer = {
+    access_token: string
+    token_type: string
+    scope: string
+    created_at: number
+    expires_in: number | null
     refresh_token: string | null
   }
 

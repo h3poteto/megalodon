@@ -1,3 +1,3 @@
-export default interface URLs {
+export type URLs = {
   streaming_api: string
 }

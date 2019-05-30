@@ -1,4 +1,4 @@
-export default interface History {
+export type History = {
   day: string
   uses: number
   accounts: number

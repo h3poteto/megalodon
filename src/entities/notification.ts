@@ -1,7 +1,7 @@
-import Account from './account'
-import Status from './status'
+import { Account } from './account'
+import { Status } from './status'
 
-export default interface Notification {
+export type Notification = {
   account: Account
   created_at: string
   id: string

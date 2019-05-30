@@ -1,6 +1,6 @@
-import Attachment from './attachment'
+import { Attachment } from './attachment'
 
-export default interface ScheduledStatus {
+export type ScheduledStatus = {
   id: string
   scheduled_at: string
   params: object

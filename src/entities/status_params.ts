@@ -1,4 +1,4 @@
-export default interface StatusParams {
+export type StatusParams = {
   text: string
   in_reply_to_id: string | null
   media_ids: Array<string> | null

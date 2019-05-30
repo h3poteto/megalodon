@@ -1,4 +1,4 @@
-export default interface PushSubscription {
+export type PushSubscription = {
   id: string
   endpoint: string
   server_key: string

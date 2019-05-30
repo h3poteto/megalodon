@@ -52,25 +52,28 @@ export default class Mastodon implements MegalodonInstance {
    * @param options Form Data, which is sent to /api/v1/apps. and properties should be **snake_case**
    * @param baseUrl base URL of the target
    */
-  public static registerApp(
+  public static async registerApp(
     client_name: string,
-    options: Partial<{ scopes: string, redirect_uris: string, website: string }> = {
+    options: Partial<{ scopes: string; redirect_uris: string; website: string }> = {
       scopes: DEFAULT_SCOPE,
       redirect_uris: NO_REDIRECT
     },
     baseUrl = DEFAULT_URL
   ): Promise<OAuth.AppData> {
-    return this.createApp(client_name, options, baseUrl)
-      .then(appData => {
-        return this.generateAuthUrl(appData.client_id, appData.client_secret, {
+    return this.createApp(client_name, options, baseUrl).then(async appData => {
+      return this.generateAuthUrl(
+        appData.client_id,
+        appData.client_secret,
+        {
           redirect_uri: appData.redirect_uri,
           scope: options.scopes
-        }, baseUrl)
-          .then(url => {
-            appData.url = url
-            return appData
-          })
+        },
+        baseUrl
+      ).then(url => {
+        appData.url = url
+        return appData
       })
+    })
   }
 
   /**
@@ -81,9 +84,9 @@ export default class Mastodon implements MegalodonInstance {
    * @param options Form Data
    * @param baseUrl target of base URL
    */
-  public static createApp(
+  public static async createApp(
     client_name: string,
-    options: Partial<{ redirect_uris: string, scopes: string, website: string }> = {
+    options: Partial<{ redirect_uris: string; scopes: string; website: string }> = {
       redirect_uris: NO_REDIRECT,
       scopes: DEFAULT_SCOPE
     },
@@ -93,9 +96,9 @@ export default class Mastodon implements MegalodonInstance {
     const scopes = options.scopes || DEFAULT_SCOPE
 
     const params: {
-      client_name: string,
-      redirect_uris: string,
-      scopes: string,
+      client_name: string
+      redirect_uris: string
+      scopes: string
       website?: string
     } = {
       client_name,
@@ -104,8 +107,9 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (options.website) params.website = options.website
 
-    return this._post<OAuth.AppDataFromServer>('/api/v1/apps', params, baseUrl)
-      .then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
+    return this._post<OAuth.AppDataFromServer>('/api/v1/apps', params, baseUrl).then((res: Response<OAuth.AppDataFromServer>) =>
+      OAuth.AppData.from(res.data)
+    )
   }
 
   /**
@@ -119,13 +123,13 @@ export default class Mastodon implements MegalodonInstance {
   public static generateAuthUrl(
     clientId: string,
     clientSecret: string,
-    options: Partial<{ redirect_uri: string, scope: string }> = {
+    options: Partial<{ redirect_uri: string; scope: string }> = {
       redirect_uri: NO_REDIRECT,
       scope: DEFAULT_SCOPE
     },
     baseUrl = DEFAULT_URL
   ): Promise<string> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const oauth = new OAuth2(clientId, clientSecret, baseUrl, undefined, '/oauth/token')
       const url = oauth.getAuthorizeUrl({
         redirect_uri: options.redirect_uri,
@@ -147,20 +151,24 @@ export default class Mastodon implements MegalodonInstance {
    * @param baseUrl base URL of the target
    * @param redirect_uri must be the same uri as the time when you register your OAuth application
    */
-  public static fetchAccessToken(
+  public static async fetchAccessToken(
     client_id: string,
     client_secret: string,
     code: string,
     baseUrl = DEFAULT_URL,
     redirect_uri = NO_REDIRECT
   ): Promise<OAuth.TokenData> {
-    return this._post<OAuth.TokenDataFromServer>('/oauth/token', {
-      client_id,
-      client_secret,
-      code,
-      redirect_uri,
-      grant_type: 'authorization_code'
-    }, baseUrl).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+    return this._post<OAuth.TokenDataFromServer>(
+      '/oauth/token',
+      {
+        client_id,
+        client_secret,
+        code,
+        redirect_uri,
+        grant_type: 'authorization_code'
+      },
+      baseUrl
+    ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
   /**
@@ -172,18 +180,22 @@ export default class Mastodon implements MegalodonInstance {
    * @param refresh_token will be get #fetchAccessToken
    * @param baseUrl base URL or the target
    */
-  public static refreshToken(
+  public static async refreshToken(
     client_id: string,
     client_secret: string,
     refresh_token: string,
     baseUrl = DEFAULT_URL
   ): Promise<OAuth.TokenData> {
-    return this._post<OAuth.TokenDataFromServer>('/oauth/token', {
-      client_id,
-      client_secret,
-      refresh_token,
-      grant_type: 'refresh_token'
-    }, baseUrl).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+    return this._post<OAuth.TokenDataFromServer>(
+      '/oauth/token',
+      {
+        client_id,
+        client_secret,
+        refresh_token,
+        grant_type: 'refresh_token'
+      },
+      baseUrl
+    ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
   /**
@@ -192,7 +204,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Query parameters
    * @param baseUrl base URL of the target
    */
-  public static get<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
+  public static async get<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
     const apiUrl = baseUrl
     return axios
       .get<T>(apiUrl + path, {
@@ -209,19 +221,17 @@ export default class Mastodon implements MegalodonInstance {
       })
   }
 
-  private static _post<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
+  private static async _post<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
     const apiUrl = baseUrl
-    return axios
-      .post<T>(apiUrl + path, params)
-      .then((resp: AxiosResponse<T>) => {
-        const res: Response<T> = {
-          data: resp.data,
-          status: resp.status,
-          statusText: resp.statusText,
-          headers: resp.headers
-        }
-        return res
-      })
+    return axios.post<T>(apiUrl + path, params).then((resp: AxiosResponse<T>) => {
+      const res: Response<T> = {
+        data: resp.data,
+        status: resp.status,
+        statusText: resp.statusText,
+        headers: resp.headers
+      }
+      return res
+    })
   }
 
   /**
@@ -229,11 +239,11 @@ export default class Mastodon implements MegalodonInstance {
    * @param path relative path from baseUrl
    * @param params Query parameters
    */
-  public get<T>(path: string, params = {}): Promise<Response<T>> {
+  public async get<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .get<T>(this.baseUrl + path, {
         headers: {
-          'Authorization': `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`
         },
         params
       })
@@ -253,11 +263,11 @@ export default class Mastodon implements MegalodonInstance {
    * @param path relative path from baseUrl
    * @param params Form data. If you want to post file, please use FormData()
    */
-  public put<T>(path: string, params = {}): Promise<Response<T>> {
+  public async put<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .put<T>(this.baseUrl + path, params, {
         headers: {
-          'Authorization': `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -276,11 +286,11 @@ export default class Mastodon implements MegalodonInstance {
    * @param path relative path from baseUrl
    * @param params Form data. If you want to post file, please use FormData()
    */
-  public patch<T>(path: string, params = {}): Promise<Response<T>> {
+  public async patch<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .patch<T>(this.baseUrl + path, params, {
         headers: {
-          'Authorization': `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -299,11 +309,11 @@ export default class Mastodon implements MegalodonInstance {
    * @param path relative path from baseUrl
    * @param params Form data
    */
-  public post<T>(path: string, params = {}): Promise<Response<T>> {
+  public async post<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .post<T>(this.baseUrl + path, params, {
         headers: {
-          'Authorization': `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -322,12 +332,12 @@ export default class Mastodon implements MegalodonInstance {
    * @param path relative path from baseUrl
    * @param params Form data
    */
-  public del<T>(path: string, params = {}): Promise<Response<T>> {
+  public async del<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .delete(this.baseUrl + path, {
         data: params,
         headers: {
-          'Authorization': `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse) => {
@@ -352,8 +362,8 @@ export default class Mastodon implements MegalodonInstance {
   public stream(path: string, reconnectInterval = 1000): StreamListener {
     const headers = {
       'Cache-Control': 'no-cache',
-      'Accept': 'text/event-stream',
-      'Authorization': `Bearer ${this.accessToken}`
+      Accept: 'text/event-stream',
+      Authorization: `Bearer ${this.accessToken}`
     }
     const url = this.baseUrl + path
     const streaming = new StreamListener(url, headers, reconnectInterval)
