@@ -246,8 +246,7 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .get<T>(this.baseUrl + path, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          'User-Agent': this.userAgent
+          Authorization: `Bearer ${this.accessToken}`
         },
         params
       })
@@ -271,8 +270,7 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .put<T>(this.baseUrl + path, params, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          'User-Agent': this.userAgent
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -295,8 +293,7 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .patch<T>(this.baseUrl + path, params, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          'User-Agent': this.userAgent
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -319,8 +316,7 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .post<T>(this.baseUrl + path, params, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          'User-Agent': this.userAgent
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -344,8 +340,7 @@ export default class Mastodon implements MegalodonInstance {
       .delete(this.baseUrl + path, {
         data: params,
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          'User-Agent': this.userAgent
+          Authorization: `Bearer ${this.accessToken}`
         }
       })
       .then((resp: AxiosResponse) => {
