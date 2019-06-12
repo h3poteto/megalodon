@@ -13,6 +13,7 @@ export default class WebSocket extends EventEmitter {
   public url: string
   public stream: string
   public parser: Parser
+  public headers: {}
   private _accessToken: string
   private _socketConnection: connection | null
   private _reconnectInterval: number
@@ -25,11 +26,14 @@ export default class WebSocket extends EventEmitter {
    * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
    * @param accessToken The access token.
    */
-  constructor(url: string, stream: string, accessToken: string) {
+  constructor(url: string, stream: string, accessToken: string, userAgent: string) {
     super()
     this.url = url
     this.stream = stream
     this.parser = new Parser()
+    this.headers = {
+      'User-Agent': userAgent
+    }
     this._accessToken = accessToken
     this._socketConnection = null
     this._reconnectInterval = 1000
@@ -54,7 +58,7 @@ export default class WebSocket extends EventEmitter {
     this._resetConnection()
     this._setupParser()
     const cli = this._getClient()
-    this._connect(cli, this.url, this.stream, this._accessToken)
+    this._connect(cli, this.url, this.stream, this._accessToken, this.headers)
   }
 
   /**
@@ -98,19 +102,19 @@ export default class WebSocket extends EventEmitter {
         this._reconnectCurrentAttempts++
         // Call connect methods
         console.log('Reconnecting')
-        this._connect(cli, this.url, this.stream, this._accessToken)
+        this._connect(cli, this.url, this.stream, this._accessToken, this.headers)
       }
     }, this._reconnectInterval)
   }
 
-  private _connect(cli: client, url: string, stream: string, accessToken: string) {
+  private _connect(cli: client, url: string, stream: string, accessToken: string, headers: {}) {
     const params: Array<string> = [`stream=${stream}`]
 
     if (accessToken !== null) {
       params.push(`access_token=${accessToken}`)
     }
     const req_url: string = `${url}/?${params.join('&')}`
-    cli.connect(req_url)
+    cli.connect(req_url, undefined, undefined, headers)
   }
 
   /**
