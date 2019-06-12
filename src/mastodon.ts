@@ -9,6 +9,7 @@ import Response from './response'
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
 const DEFAULT_SCOPE = 'read write follow'
+const DEFAULT_UA = 'megalodon'
 
 /**
  * Interface
@@ -35,14 +36,16 @@ export default class Mastodon implements MegalodonInstance {
 
   private accessToken: string
   private baseUrl: string
+  private userAgent: string
 
   /**
    * @param accessToken access token from OAuth2 authorization
    * @param baseUrl hostname or base URL
    */
-  constructor(accessToken: string, baseUrl = DEFAULT_URL) {
+  constructor(accessToken: string, baseUrl = DEFAULT_URL, userAgent = DEFAULT_UA) {
     this.accessToken = accessToken
     this.baseUrl = baseUrl
+    this.userAgent = userAgent
   }
 
   /**
@@ -243,7 +246,8 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .get<T>(this.baseUrl + path, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`,
+          'User-Agent': this.userAgent
         },
         params
       })
@@ -267,7 +271,8 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .put<T>(this.baseUrl + path, params, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`,
+          'User-Agent': this.userAgent
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -290,7 +295,8 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .patch<T>(this.baseUrl + path, params, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`,
+          'User-Agent': this.userAgent
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -313,7 +319,8 @@ export default class Mastodon implements MegalodonInstance {
     return axios
       .post<T>(this.baseUrl + path, params, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`,
+          'User-Agent': this.userAgent
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -337,7 +344,8 @@ export default class Mastodon implements MegalodonInstance {
       .delete(this.baseUrl + path, {
         data: params,
         headers: {
-          Authorization: `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`,
+          'User-Agent': this.userAgent
         }
       })
       .then((resp: AxiosResponse) => {
@@ -363,7 +371,8 @@ export default class Mastodon implements MegalodonInstance {
     const headers = {
       'Cache-Control': 'no-cache',
       Accept: 'text/event-stream',
-      Authorization: `Bearer ${this.accessToken}`
+      Authorization: `Bearer ${this.accessToken}`,
+      'User-Agent': this.userAgent
     }
     const url = this.baseUrl + path
     const streaming = new StreamListener(url, headers, reconnectInterval)
@@ -382,7 +391,7 @@ export default class Mastodon implements MegalodonInstance {
    */
   public socket(path: string, stream: string): WebSocket {
     const url = this.baseUrl + path
-    const streaming = new WebSocket(url, stream, this.accessToken)
+    const streaming = new WebSocket(url, stream, this.accessToken, this.userAgent)
     process.nextTick(() => {
       streaming.start()
     })
