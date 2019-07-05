@@ -5,7 +5,6 @@ node_js:
   - "10"
   - "11"
 cache:
-  directories:
-    "node_modules"
+  yarn: true
 script:
-  - npm run build
+  - yarn run build
