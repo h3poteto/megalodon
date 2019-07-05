@@ -1,4 +1,4 @@
-import ws from 'ws'
+import WS from 'ws'
 import { EventEmitter } from 'events'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
@@ -19,7 +19,7 @@ export default class WebSocket extends EventEmitter {
   private _reconnectMaxAttempts: number
   private _reconnectCurrentAttempts: number
   private _connectionClosed: boolean
-  private _client: ws | null
+  private _client: WS | null
 
   /**
    * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
@@ -116,18 +116,18 @@ export default class WebSocket extends EventEmitter {
    * @param headers The specified headers.
    * @return A WebSocket instance.
    */
-  private _connect(url: string, stream: string, accessToken: string, headers: { [key: string]: string }): ws {
+  private _connect(url: string, stream: string, accessToken: string, headers: { [key: string]: string }): WS {
     const params: Array<string> = [`stream=${stream}`]
 
     if (accessToken !== null) {
       params.push(`access_token=${accessToken}`)
     }
     const requestURL: string = `${url}/?${params.join('&')}`
-    const options: ws.ClientOptions = {
+    const options: WS.ClientOptions = {
       headers: headers
     }
 
-    const cli: ws = new ws(requestURL, options)
+    const cli: WS = new WS(requestURL, options)
     return cli
   }
 
@@ -135,7 +135,7 @@ export default class WebSocket extends EventEmitter {
    * Bind event for web socket client.
    * @param client A WebSocket instance.
    */
-  private _bindSocket(client: ws) {
+  private _bindSocket(client: WS) {
     client.on('close', (code: number, _reason: string) => {
       // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
       if (code === 1000) {
@@ -151,7 +151,7 @@ export default class WebSocket extends EventEmitter {
     client.on('open', () => {
       this.emit('connect', {})
     })
-    client.on('message', (data: ws.Data) => {
+    client.on('message', (data: WS.Data) => {
       this.parser.parse(data)
     })
     client.on('error', (err: Error) => {
@@ -196,7 +196,7 @@ class Parser extends EventEmitter {
   /**
    * @param message Message body of websocket.
    */
-  public parse(message: ws.Data) {
+  public parse(message: WS.Data) {
     if (typeof message !== 'string') {
       this.emit('heartbeat', {})
       return
