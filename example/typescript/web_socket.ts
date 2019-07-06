@@ -1,13 +1,17 @@
 import Mastodon, { Status, Notification, WebSocket } from 'megalodon'
 
-const BASE_URL: string = 'wss://pleroma.io'
+declare var process: {
+  env: {
+    PLEROMA_HOST: string
+    PLEROMA_ACCESS_TOKEN: string
+  }
+}
 
-const access_token: string = '...'
+const BASE_URL: string = process.env.PLEROMA_HOST
 
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
+const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
+
+const client = new Mastodon(access_token, BASE_URL + '/api/v1')
 
 const stream: WebSocket = client.socket('/streaming', 'user')
 stream.on('connect', () => {
@@ -41,4 +45,3 @@ stream.on('close', () => {
 stream.on('parser-error', (err: Error) => {
   console.error(err)
 })
-

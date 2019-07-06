@@ -1,4 +1,4 @@
-import { client, connection, IMessage } from 'websocket'
+import WS from 'ws'
 import { EventEmitter } from 'events'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
@@ -13,18 +13,19 @@ export default class WebSocket extends EventEmitter {
   public url: string
   public stream: string
   public parser: Parser
-  public headers: {}
+  public headers: { [key: string]: string }
   private _accessToken: string
-  private _socketConnection: connection | null
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number
   private _reconnectCurrentAttempts: number
   private _connectionClosed: boolean
+  private _client: WS | null
 
   /**
    * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
    * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
    * @param accessToken The access token.
+   * @param userAgent The specified User Agent.
    */
   constructor(url: string, stream: string, accessToken: string, userAgent: string) {
     super()
@@ -35,11 +36,11 @@ export default class WebSocket extends EventEmitter {
       'User-Agent': userAgent
     }
     this._accessToken = accessToken
-    this._socketConnection = null
     this._reconnectInterval = 1000
     this._reconnectMaxAttempts = Infinity
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
+    this._client = null
   }
 
   /**
@@ -57,18 +58,15 @@ export default class WebSocket extends EventEmitter {
   private _startWebSocketConnection() {
     this._resetConnection()
     this._setupParser()
-    const cli = this._getClient()
-    this._connect(cli, this.url, this.stream, this._accessToken, this.headers)
+    this._client = this._connect(this.url, this.stream, this._accessToken, this.headers)
+    this._bindSocket(this._client)
   }
 
   /**
    * Stop current connection.
    */
   public stop() {
-    if (this._socketConnection) {
-      this._connectionClosed = true
-      this._socketConnection.close()
-    }
+    this._resetConnection()
     this._resetRetryParams()
   }
 
@@ -76,9 +74,10 @@ export default class WebSocket extends EventEmitter {
    * Clean up current connection, and listeners.
    */
   private _resetConnection() {
-    if (this._socketConnection) {
-      this._socketConnection.removeAllListeners()
-      this._socketConnection.close()
+    if (this._client) {
+      this._client.removeAllListeners()
+      this._client.close(1000)
+      this._client = null
     }
 
     if (this.parser) {
@@ -96,64 +95,68 @@ export default class WebSocket extends EventEmitter {
   /**
    * Reconnects to the same endpoint.
    */
-  private _reconnect(cli: client) {
-    setTimeout(() => {
-      if (this._reconnectCurrentAttempts < this._reconnectMaxAttempts) {
-        this._reconnectCurrentAttempts++
-        // Call connect methods
-        console.log('Reconnecting')
-        this._connect(cli, this.url, this.stream, this._accessToken, this.headers)
-      }
-    }, this._reconnectInterval)
+  private _reconnect() {
+    if (this._client) {
+      setTimeout(() => {
+        if (this._reconnectCurrentAttempts < this._reconnectMaxAttempts) {
+          this._reconnectCurrentAttempts++
+          // Call connect methods
+          console.log('Reconnecting')
+          this._client = this._connect(this.url, this.stream, this._accessToken, this.headers)
+          this._bindSocket(this._client)
+        }
+      }, this._reconnectInterval)
+    }
   }
 
-  private _connect(cli: client, url: string, stream: string, accessToken: string, headers: {}) {
+  /**
+   * @param url Base url of streaming endpoint.
+   * @param stream The specified stream name.
+   * @param accessToken Access token.
+   * @param headers The specified headers.
+   * @return A WebSocket instance.
+   */
+  private _connect(url: string, stream: string, accessToken: string, headers: { [key: string]: string }): WS {
     const params: Array<string> = [`stream=${stream}`]
 
     if (accessToken !== null) {
       params.push(`access_token=${accessToken}`)
     }
-    const req_url: string = `${url}/?${params.join('&')}`
-    cli.connect(req_url, undefined, undefined, headers)
+    const requestURL: string = `${url}/?${params.join('&')}`
+    const options: WS.ClientOptions = {
+      headers: headers
+    }
+
+    const cli: WS = new WS(requestURL, options)
+    return cli
   }
 
   /**
-   * Prepare websocket client.
-   * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
-   * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
-   * @param accessToken The access token.
-   * @returns A Client instance of websocket.
+   * Bind event for web socket client.
+   * @param client A WebSocket instance.
    */
-  private _getClient(): client {
-    const cli = new client()
-    cli.on('connectFailed', err => {
-      console.error(err)
-      this._reconnect(cli)
-    })
-    cli.on('connect', conn => {
-      this._socketConnection = conn
-      this.emit('connect', {})
-      conn.on('error', err => {
-        this.emit('error', err)
-      })
-      conn.on('close', code => {
-        // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
-        if (code === 1000) {
-          this.emit('close', {})
-        } else {
-          console.log(`Closed connection with ${code}`)
-          // If already called close method, it does not retry.
-          if (!this._connectionClosed) {
-            this._reconnect(cli)
-          }
+  private _bindSocket(client: WS) {
+    client.on('close', (code: number, _reason: string) => {
+      // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
+      if (code === 1000) {
+        this.emit('close', {})
+      } else {
+        console.log(`Closed connection with ${code}`)
+        // If already called close method, it does not retry.
+        if (!this._connectionClosed) {
+          this._reconnect()
         }
-      })
-      conn.on('message', (message: IMessage) => {
-        this.parser.parser(message)
-      })
+      }
     })
-
-    return cli
+    client.on('open', () => {
+      this.emit('connect', {})
+    })
+    client.on('message', (data: WS.Data) => {
+      this.parser.parse(data)
+    })
+    client.on('error', (err: Error) => {
+      this.emit('error', err)
+    })
   }
 
   /**
@@ -193,13 +196,13 @@ class Parser extends EventEmitter {
   /**
    * @param message Message body of websocket.
    */
-  public parser(message: IMessage) {
-    if (!message.utf8Data) {
+  public parse(message: WS.Data) {
+    if (typeof message !== 'string') {
       this.emit('heartbeat', {})
       return
     }
-    const data = message.utf8Data
-    if (data === '') {
+
+    if (message === '') {
       this.emit('heartbeat', {})
       return
     }
@@ -208,14 +211,14 @@ class Parser extends EventEmitter {
     let payload = ''
     let mes = {}
     try {
-      const obj = JSON.parse(data)
+      const obj = JSON.parse(message)
       event = obj.event
       payload = obj.payload
       mes = JSON.parse(payload)
     } catch (err) {
       // delete event does not have json object
       if (event !== 'delete') {
-        this.emit('error', new Error(`Error parsing websocket reply: ${data}, error message: ${err}`))
+        this.emit('error', new Error(`Error parsing websocket reply: ${message}, error message: ${err}`))
         return
       }
     }
@@ -234,7 +237,7 @@ class Parser extends EventEmitter {
         this.emit('delete', payload)
         break
       default:
-        this.emit('error', new Error(`Unknown event has received: ${data}`))
+        this.emit('error', new Error(`Unknown event has received: ${message}`))
     }
     return
   }
