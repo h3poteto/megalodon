@@ -7,11 +7,3 @@ linter:
     ext: '.js,.ts'
     ignore-path: .gitignore
     ignore-pattern: /node_modules/*
-
-  tslint:
-    npm_install: true
-    config: 'tslint.json'
-    exclude: 'node_modules/**'
-    project: 'tsconfig.json'
-    type-check: true
-    glob: '**/*.ts{,x}'
