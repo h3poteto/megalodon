@@ -189,10 +189,6 @@ export default class WebSocket extends EventEmitter {
  * This class provides parser for websocket message.
  */
 class Parser extends EventEmitter {
-  constructor() {
-    super()
-  }
-
   /**
    * @param message Message body of websocket.
    */
@@ -239,6 +235,5 @@ class Parser extends EventEmitter {
       default:
         this.emit('error', new Error(`Unknown event has received: ${message}`))
     }
-    return
   }
 }
