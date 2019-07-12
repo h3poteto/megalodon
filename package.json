@@ -1,12 +1,13 @@
 {
   "name": "megalodon",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Mastodon API client for node.js",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src",
+    "release": "yarn install && yarn run build && yarn publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
