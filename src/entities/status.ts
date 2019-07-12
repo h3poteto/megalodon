@@ -5,6 +5,7 @@ import { Tag } from './tag'
 import { Attachment } from './attachment'
 import { Emoji } from './emoji'
 import { Card } from './card'
+import { Poll } from './poll'
 
 export type Status = {
   id: string
@@ -30,6 +31,7 @@ export type Status = {
   mentions: Array<Mention>
   tags: Array<Tag>
   card: Card | null
+  poll: Poll | null
   application: Application
   language: string | null
   pinned: boolean | null
