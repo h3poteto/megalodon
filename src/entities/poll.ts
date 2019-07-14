@@ -6,6 +6,6 @@ export type Poll = {
   expired: boolean
   multiple: boolean
   votes_count: number
-  options: PollOption
+  options: Array<PollOption>
   voted: boolean
 }
