@@ -20,6 +20,8 @@ import { Instance } from './entities/instance'
 import { List } from './entities/list'
 import { Mention } from './entities/mention'
 import { Notification } from './entities/notification'
+import { Poll } from './entities/poll'
+import { PollOption } from './entities/poll_option'
 import { PushSubscription } from './entities/push_subscription'
 import { Relationship } from './entities/relationship'
 import { Results } from './entities/results'
@@ -55,6 +57,8 @@ export {
   List,
   Mention,
   Notification,
+  Poll,
+  PollOption,
   PushSubscription,
   Relationship,
   Results,
@@ -65,7 +69,7 @@ export {
   StatusParams,
   Tag,
   Token,
-  URLs
+  URLs,
 }
 
 export default Mastodon
