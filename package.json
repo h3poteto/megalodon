@@ -8,7 +8,7 @@
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src",
     "release": "yarn install && yarn run build && yarn publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test jest -u --maxWorkers=3"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,24 @@
   "bugs": {
     "url": "https://github.com/h3poteto/megalodon/issues"
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testMatch": [
+      "**/test/**/*.spec.ts"
+    ],
+    "preset": "ts-jest/presets/default",
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    }
+  },
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
     "@types/oauth": "^0.9.0",
@@ -39,8 +57,9 @@
   },
   "devDependencies": {
     "@types/core-js": "^2.5.0",
-    "@typescript-eslint/eslint-plugin": "^1.12.0",
-    "@typescript-eslint/parser": "^1.12.0",
+    "@types/jest": "^24.0.15",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^4.3.0",
     "eslint-config-standard": "^12.0.0",
@@ -50,6 +69,10 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "lodash": "^4.17.14",
-    "prettier": "^1.17.1"
+    "prettier": "^1.17.1",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.10.0",
+    "tslint-config-standard": "^7.0.0"
   }
 }
