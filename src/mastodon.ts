@@ -1,5 +1,5 @@
 import { OAuth2 } from 'oauth'
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse, CancelTokenSource } from 'axios'
 
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
@@ -20,6 +20,7 @@ export interface MegalodonInstance {
   patch<T = any>(path: string, params: object): Promise<Response<T>>
   post<T = any>(path: string, params: object): Promise<Response<T>>
   del(path: string, params: object): Promise<Response<{}>>
+  cancel(): void
   stream(path: string, reconnectInterval: number): StreamListener
   socket(path: string, strea: string): WebSocket
 }
@@ -37,6 +38,7 @@ export default class Mastodon implements MegalodonInstance {
   private accessToken: string
   private baseUrl: string
   private userAgent: string
+  private cancelTokenSource: CancelTokenSource
 
   /**
    * @param accessToken access token from OAuth2 authorization
@@ -46,6 +48,7 @@ export default class Mastodon implements MegalodonInstance {
     this.accessToken = accessToken
     this.baseUrl = baseUrl
     this.userAgent = userAgent
+    this.cancelTokenSource = axios.CancelToken.source()
   }
 
   /**
@@ -245,6 +248,7 @@ export default class Mastodon implements MegalodonInstance {
   public async get<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .get<T>(this.baseUrl + path, {
+        cancelToken: this.cancelTokenSource.token,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
         },
@@ -269,6 +273,7 @@ export default class Mastodon implements MegalodonInstance {
   public async put<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .put<T>(this.baseUrl + path, params, {
+        cancelToken: this.cancelTokenSource.token,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
         }
@@ -292,6 +297,7 @@ export default class Mastodon implements MegalodonInstance {
   public async patch<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .patch<T>(this.baseUrl + path, params, {
+        cancelToken: this.cancelTokenSource.token,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
         }
@@ -315,6 +321,7 @@ export default class Mastodon implements MegalodonInstance {
   public async post<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .post<T>(this.baseUrl + path, params, {
+        cancelToken: this.cancelTokenSource.token,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
         }
@@ -338,6 +345,7 @@ export default class Mastodon implements MegalodonInstance {
   public async del<T>(path: string, params = {}): Promise<Response<T>> {
     return axios
       .delete(this.baseUrl + path, {
+        cancelToken: this.cancelTokenSource.token,
         data: params,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
@@ -352,6 +360,14 @@ export default class Mastodon implements MegalodonInstance {
         }
         return res
       })
+  }
+
+  /**
+   * Cancel all requests in this instance.
+   * @returns void
+   */
+  public cancel(): void {
+    return this.cancelTokenSource.cancel('Request is canceled by user')
   }
 
   /**
