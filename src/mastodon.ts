@@ -5,6 +5,7 @@ import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import OAuth from './oauth'
 import Response from './response'
+import { RequestCanceledError } from './cancel'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -254,6 +255,13 @@ export default class Mastodon implements MegalodonInstance {
         },
         params
       })
+      .catch((err: Error) => {
+        if (axios.isCancel(err)) {
+          throw new RequestCanceledError(err.message)
+        } else {
+          throw err
+        }
+      })
       .then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
@@ -278,6 +286,13 @@ export default class Mastodon implements MegalodonInstance {
           Authorization: `Bearer ${this.accessToken}`
         }
       })
+      .catch((err: Error) => {
+        if (axios.isCancel(err)) {
+          throw new RequestCanceledError(err.message)
+        } else {
+          throw err
+        }
+      })
       .then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
@@ -300,6 +315,13 @@ export default class Mastodon implements MegalodonInstance {
         cancelToken: this.cancelTokenSource.token,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
+        }
+      })
+      .catch((err: Error) => {
+        if (axios.isCancel(err)) {
+          throw new RequestCanceledError(err.message)
+        } else {
+          throw err
         }
       })
       .then((resp: AxiosResponse<T>) => {
@@ -349,6 +371,13 @@ export default class Mastodon implements MegalodonInstance {
         data: params,
         headers: {
           Authorization: `Bearer ${this.accessToken}`
+        }
+      })
+      .catch((err: Error) => {
+        if (axios.isCancel(err)) {
+          throw new RequestCanceledError(err.message)
+        } else {
+          throw err
         }
       })
       .then((resp: AxiosResponse) => {
@@ -409,5 +438,3 @@ export default class Mastodon implements MegalodonInstance {
     return streaming
   }
 }
-
-module.exports = Mastodon

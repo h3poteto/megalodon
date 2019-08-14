@@ -33,6 +33,7 @@ import { StatusParams } from './entities/status_params'
 import { Tag } from './entities/tag'
 import { Token } from './entities/token'
 import { URLs } from './entities/urls'
+import { isCancel, RequestCanceledError } from './cancel'
 
 export {
   StreamListener,
@@ -40,6 +41,8 @@ export {
   Response,
   OAuth,
   MegalodonInstance,
+  RequestCanceledError,
+  isCancel,
   /**
    * Entities
    */
@@ -69,7 +72,7 @@ export {
   StatusParams,
   Tag,
   Token,
-  URLs,
+  URLs
 }
 
 export default Mastodon
