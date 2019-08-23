@@ -31,6 +31,10 @@
       "ts",
       "js"
     ],
+    "moduleNameMapper": {
+      "^@/(.+)": "<rootDir>/src/$1",
+      "^~/(.+)": "<rootDir>/$1"
+    },
     "testMatch": [
       "**/test/**/*.spec.ts"
     ],
