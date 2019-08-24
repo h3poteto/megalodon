@@ -1,4 +1,4 @@
-const Mastodon = require('../../lib/src/mastodon')
+import Mastodon from 'megalodon'
 
 const BASE_URL = 'https://mastodon.social'
 

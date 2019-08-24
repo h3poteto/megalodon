@@ -1,5 +1,5 @@
-const readline = require('readline')
-const Mastodon = require('../../lib/src/mastodon')
+import readline from 'readline'
+import Mastodon from 'megalodon'
 
 const rl = readline.createInterface({
   input: process.stdin,

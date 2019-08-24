@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "author": "h3poteto",
+  "scripts": {
+    "build": "babel -d ./dist . -s --ignore 'node_modules/**/*.js' --ignore 'dist/*'"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "megalodon": "file:../../"
+  }
+}
