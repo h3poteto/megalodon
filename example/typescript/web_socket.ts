@@ -2,12 +2,11 @@ import Mastodon, { Status, Notification, WebSocket } from 'megalodon'
 
 declare var process: {
   env: {
-    PLEROMA_HOST: string
     PLEROMA_ACCESS_TOKEN: string
   }
 }
 
-const BASE_URL: string = process.env.PLEROMA_HOST
+const BASE_URL: string = 'wss://pleroma.io'
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
 

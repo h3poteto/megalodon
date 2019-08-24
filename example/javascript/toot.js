@@ -1,5 +1,5 @@
 const readline = require('readline')
-const Mastodon = require('../../lib/mastodon')
+const Mastodon = require('../../lib/src/mastodon')
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -8,17 +8,15 @@ const rl = readline.createInterface({
 
 const BASE_URL = 'https://mastodon.social'
 
-const access_token = '...'
+const access_token = process.env.MASTODON_ACCESS_TOKEN
 
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
+const client = new Mastodon(access_token, BASE_URL + '/api/v1')
 new Promise(resolve => {
   rl.question('Toot: ', status => {
-    client.post('/statuses', {
-      status: status
-    })
+    client
+      .post('/statuses', {
+        status: status
+      })
       .then(res => {
         console.log(res)
         rl.close()

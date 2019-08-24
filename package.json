@@ -2,8 +2,8 @@
   "name": "megalodon",
   "version": "0.9.0",
   "description": "Mastodon API client for node.js",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
+  "main": "./lib/src/index.js",
+  "typings": "./lib/src/index.d.ts",
   "scripts": {
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src",
