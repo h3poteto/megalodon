@@ -1,7 +1,7 @@
 // Please use this function after authorization.js
 // Now mastodon and pleroma don't have refersh token method.
 // So this example is failed.
-const Mastodon = require( '../../lib/mastodon')
+import Mastodon from 'megalodon'
 
 const BASE_URL = 'https://pleroma.io'
 

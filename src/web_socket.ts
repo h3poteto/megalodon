@@ -188,7 +188,7 @@ export default class WebSocket extends EventEmitter {
  * Parser
  * This class provides parser for websocket message.
  */
-class Parser extends EventEmitter {
+export class Parser extends EventEmitter {
   /**
    * @param message Message body of websocket.
    */

@@ -1,6 +1,6 @@
-const Mastodon = require('../../lib/mastodon')
+import Mastodon from 'megalodon'
 
-const BASE_URL = 'https://mstdn.jp'
+const BASE_URL = 'https://mastodon.social'
 
 const access_token = process.env.MASTODON_ACCESS_TOKEN
 

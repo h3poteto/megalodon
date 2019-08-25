@@ -1,4 +1,4 @@
-const Mastodon = require('../../lib/mastodon')
+import Mastodon from 'megalodon'
 
 const BASE_URL = 'wss://pleroma.io'
 
