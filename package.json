@@ -1,6 +1,6 @@
 {
   "name": "megalodon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mastodon API client for node.js",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
