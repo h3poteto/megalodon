@@ -26,6 +26,7 @@ const account: Account = {
   fields: null,
   bot: false
 }
+
 const status: Status = {
   id: '1',
   uri: 'http://example.com',
