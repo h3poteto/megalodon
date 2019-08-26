@@ -1,7 +1,10 @@
 node_modules
-src
+./src
+./example
 *.log
+.eslintrc.js
 .gitignore
+.prettierrc
 .travis.yml
 sideci.yml
 tsconfig.json
