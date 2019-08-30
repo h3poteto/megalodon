@@ -66,6 +66,7 @@ export default class WebSocket extends EventEmitter {
    * Stop current connection.
    */
   public stop() {
+    this._connectionClosed = true
     this._resetConnection()
     this._resetRetryParams()
   }
@@ -75,8 +76,8 @@ export default class WebSocket extends EventEmitter {
    */
   private _resetConnection() {
     if (this._client) {
-      this._client.removeAllListeners()
       this._client.close(1000)
+      this._client.removeAllListeners()
       this._client = null
     }
 
