@@ -144,6 +144,7 @@ export default class WebSocket extends EventEmitter {
   private _clearBinding() {
     if (this._client) {
       this._client.removeAllListeners('close')
+      this._client.removeAllListeners('pong')
       this._client.removeAllListeners('open')
       this._client.removeAllListeners('message')
       this._client.removeAllListeners('error')
@@ -171,6 +172,7 @@ export default class WebSocket extends EventEmitter {
       this._pongWaiting = false
       this.emit('pong', {})
       this._pongReceivedTimestamp = moment()
+      // It is required to anonymous function since get this scope in checkAlive.
       setTimeout(() => this._checkAlive(this._pongReceivedTimestamp), this._heartbeatInterval)
     })
     client.on('open', () => {
@@ -219,7 +221,7 @@ export default class WebSocket extends EventEmitter {
     const now: Moment = moment()
     // Block multiple calling, if multiple pong event occur.
     // It the duration is less than interval, through ping.
-    if (now.diff(timestamp) > this._heartbeatInterval - 1000) {
+    if (now.diff(timestamp) > this._heartbeatInterval - 1000 && !this._connectionClosed) {
       if (this._client) {
         this._pongWaiting = true
         this._client.ping('')
