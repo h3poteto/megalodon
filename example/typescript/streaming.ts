@@ -12,7 +12,7 @@ const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
 const client = new Mastodon(access_token, BASE_URL + '/api/v1')
 
-const stream: StreamListener = client.stream('/streaming/public')
+const stream: StreamListener = client.stream('/streaming/user')
 stream.on('connect', _ => {
   console.log('connect')
 })

@@ -21,8 +21,9 @@ export default class WebSocket extends EventEmitter {
   private _reconnectCurrentAttempts: number
   private _connectionClosed: boolean
   private _client: WS | null
-  private _messageReceivedTimestamp: Moment
-  private _heartbeatTimeout: number = 60000
+  private _pongReceivedTimestamp: Moment
+  private _heartbeatInterval: number = 60000
+  private _pongWaiting: boolean = false
 
   /**
    * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
@@ -44,7 +45,7 @@ export default class WebSocket extends EventEmitter {
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
     this._client = null
-    this._messageReceivedTimestamp = moment()
+    this._pongReceivedTimestamp = moment()
   }
 
   /**
@@ -166,18 +167,20 @@ export default class WebSocket extends EventEmitter {
         }
       }
     })
+    client.on('pong', () => {
+      this._pongWaiting = false
+      this.emit('pong', {})
+      this._pongReceivedTimestamp = moment()
+      setTimeout(() => this._checkAlive(this._pongReceivedTimestamp), this._heartbeatInterval)
+    })
     client.on('open', () => {
       this.emit('connect', {})
+      setTimeout(() => {
+        client.ping('')
+      }, 10000)
     })
     client.on('message', (data: WS.Data) => {
       this.parser.parse(data)
-      this._messageReceivedTimestamp = moment()
-      setTimeout(() => {
-        const now: Moment = moment()
-        if (now.diff(this._messageReceivedTimestamp) > this._heartbeatTimeout - 1000) {
-          this._reconnect()
-        }
-      }, this._heartbeatTimeout)
     })
     client.on('error', (err: Error) => {
       this.emit('error', err)
@@ -206,6 +209,22 @@ export default class WebSocket extends EventEmitter {
     this.parser.on('heartbeat', _ => {
       this.emit('heartbeat', 'heartbeat')
     })
+  }
+
+  private _checkAlive(timestamp: Moment) {
+    const now: Moment = moment()
+    if (now.diff(timestamp) > this._heartbeatInterval - 1000) {
+      if (this._client) {
+        this._pongWaiting = true
+        this._client.ping('')
+      }
+      setTimeout(() => {
+        if (this._pongWaiting) {
+          this._pongWaiting = false
+          this._reconnect()
+        }
+      }, 10000)
+    }
   }
 }
 

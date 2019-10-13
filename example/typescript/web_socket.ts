@@ -4,6 +4,7 @@ import log4js from 'log4js'
 declare var process: {
   env: {
     PLEROMA_ACCESS_TOKEN: string
+    MASTODON_ACCESS_TOKEN: string
   }
 }
 
@@ -19,6 +20,10 @@ const logger = log4js.getLogger()
 logger.level = 'debug'
 stream.on('connect', () => {
   logger.debug('connect')
+})
+
+stream.on('pong', () => {
+  logger.debug('pong')
 })
 
 stream.on('update', (status: Status) => {
