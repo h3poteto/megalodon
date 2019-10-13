@@ -175,6 +175,7 @@ export default class WebSocket extends EventEmitter {
     })
     client.on('open', () => {
       this.emit('connect', {})
+      // Call first ping event.
       setTimeout(() => {
         client.ping('')
       }, 10000)
@@ -211,8 +212,13 @@ export default class WebSocket extends EventEmitter {
     })
   }
 
+  /**
+   * Call ping and wait to pong.
+   */
   private _checkAlive(timestamp: Moment) {
     const now: Moment = moment()
+    // Block multiple calling, if multiple pong event occur.
+    // It the duration is less than interval, through ping.
     if (now.diff(timestamp) > this._heartbeatInterval - 1000) {
       if (this._client) {
         this._pongWaiting = true
