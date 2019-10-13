@@ -1,4 +1,5 @@
 import WS from 'ws'
+import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
@@ -20,6 +21,8 @@ export default class WebSocket extends EventEmitter {
   private _reconnectCurrentAttempts: number
   private _connectionClosed: boolean
   private _client: WS | null
+  private _messageReceivedTimestamp: Moment
+  private _heartbeatTimeout: number = 60000
 
   /**
    * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
@@ -41,6 +44,7 @@ export default class WebSocket extends EventEmitter {
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
     this._client = null
+    this._messageReceivedTimestamp = moment()
   }
 
   /**
@@ -104,6 +108,7 @@ export default class WebSocket extends EventEmitter {
           // Call connect methods
           console.log('Reconnecting')
           this._client = this._connect(this.url, this.stream, this._accessToken, this.headers)
+          this._clearBinding()
           this._bindSocket(this._client)
         }
       }, this._reconnectInterval)
@@ -133,6 +138,18 @@ export default class WebSocket extends EventEmitter {
   }
 
   /**
+   * Clear binding event for web socket client.
+   */
+  private _clearBinding() {
+    if (this._client) {
+      this._client.removeAllListeners('close')
+      this._client.removeAllListeners('open')
+      this._client.removeAllListeners('message')
+      this._client.removeAllListeners('error')
+    }
+  }
+
+  /**
    * Bind event for web socket client.
    * @param client A WebSocket instance.
    */
@@ -154,6 +171,13 @@ export default class WebSocket extends EventEmitter {
     })
     client.on('message', (data: WS.Data) => {
       this.parser.parse(data)
+      this._messageReceivedTimestamp = moment()
+      setTimeout(() => {
+        const now: Moment = moment()
+        if (now.diff(this._messageReceivedTimestamp) > this._heartbeatTimeout - 1000) {
+          this._reconnect()
+        }
+      }, this._heartbeatTimeout)
     })
     client.on('error', (err: Error) => {
       this.emit('error', err)

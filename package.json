@@ -54,6 +54,7 @@
     "@types/request": "^2.47.0",
     "@types/ws": "^6.0.1",
     "axios": "^0.18.1",
+    "moment": "^2.24.0",
     "oauth": "^0.9.15",
     "request": "^2.87.0",
     "typescript": "^3.4.5",
