@@ -6,7 +6,10 @@
   "author": "h3poteto",
   "license": "MIT",
   "dependencies": {
-    "typescript": "^3.4.5",
-    "megalodon": "file:../../"
+    "megalodon": "file:../../",
+    "typescript": "^3.4.5"
+  },
+  "devDependencies": {
+    "log4js": "^5.2.2"
   }
 }

@@ -1,4 +1,5 @@
 import WS from 'ws'
+import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
@@ -20,6 +21,9 @@ export default class WebSocket extends EventEmitter {
   private _reconnectCurrentAttempts: number
   private _connectionClosed: boolean
   private _client: WS | null
+  private _pongReceivedTimestamp: Moment
+  private _heartbeatInterval: number = 60000
+  private _pongWaiting: boolean = false
 
   /**
    * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
@@ -41,6 +45,7 @@ export default class WebSocket extends EventEmitter {
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
     this._client = null
+    this._pongReceivedTimestamp = moment()
   }
 
   /**
@@ -104,6 +109,7 @@ export default class WebSocket extends EventEmitter {
           // Call connect methods
           console.log('Reconnecting')
           this._client = this._connect(this.url, this.stream, this._accessToken, this.headers)
+          this._clearBinding()
           this._bindSocket(this._client)
         }
       }, this._reconnectInterval)
@@ -133,6 +139,19 @@ export default class WebSocket extends EventEmitter {
   }
 
   /**
+   * Clear binding event for web socket client.
+   */
+  private _clearBinding() {
+    if (this._client) {
+      this._client.removeAllListeners('close')
+      this._client.removeAllListeners('pong')
+      this._client.removeAllListeners('open')
+      this._client.removeAllListeners('message')
+      this._client.removeAllListeners('error')
+    }
+  }
+
+  /**
    * Bind event for web socket client.
    * @param client A WebSocket instance.
    */
@@ -149,8 +168,19 @@ export default class WebSocket extends EventEmitter {
         }
       }
     })
+    client.on('pong', () => {
+      this._pongWaiting = false
+      this.emit('pong', {})
+      this._pongReceivedTimestamp = moment()
+      // It is required to anonymous function since get this scope in checkAlive.
+      setTimeout(() => this._checkAlive(this._pongReceivedTimestamp), this._heartbeatInterval)
+    })
     client.on('open', () => {
       this.emit('connect', {})
+      // Call first ping event.
+      setTimeout(() => {
+        client.ping('')
+      }, 10000)
     })
     client.on('message', (data: WS.Data) => {
       this.parser.parse(data)
@@ -182,6 +212,27 @@ export default class WebSocket extends EventEmitter {
     this.parser.on('heartbeat', _ => {
       this.emit('heartbeat', 'heartbeat')
     })
+  }
+
+  /**
+   * Call ping and wait to pong.
+   */
+  private _checkAlive(timestamp: Moment) {
+    const now: Moment = moment()
+    // Block multiple calling, if multiple pong event occur.
+    // It the duration is less than interval, through ping.
+    if (now.diff(timestamp) > this._heartbeatInterval - 1000 && !this._connectionClosed) {
+      if (this._client) {
+        this._pongWaiting = true
+        this._client.ping('')
+      }
+      setTimeout(() => {
+        if (this._pongWaiting) {
+          this._pongWaiting = false
+          this._reconnect()
+        }
+      }, 10000)
+    }
   }
 }
 
