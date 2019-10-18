@@ -4,6 +4,7 @@ import Parser from './parser'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
 import { Conversation } from './entities/conversation'
+import proxyAgent, { ProxyConfig } from './proxy_config'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
@@ -29,6 +30,7 @@ class StreamListener extends EventEmitter {
   public request: Request.Request | null
   public response: Request.Response | null
   public parser: Parser
+  public proxyConfig: ProxyConfig | false = false
   private _scheduledReconnect: NodeJS.Timer | undefined
   private _connectInterval: number
   private _usedFirstReconnect: boolean
@@ -39,10 +41,11 @@ class StreamListener extends EventEmitter {
    * @param headers headers of streaming request
    * @param reconnectInterval reconnection interval[ms]
    */
-  constructor(url: string, headers: object, reconnectInterval?: number) {
+  constructor(url: string, headers: object, proxyConfig: ProxyConfig | false = false, reconnectInterval?: number) {
     super()
     this.url = url
     this.headers = headers
+    this.proxyConfig = proxyConfig
     if (reconnectInterval) this.reconnectInterval = reconnectInterval
     this.parser = new Parser()
     this.request = null
@@ -96,12 +99,19 @@ class StreamListener extends EventEmitter {
   }
 
   private _buildRequestOption(): Request.OptionsWithUrl {
-    return {
+    let options = {
       headers: this.headers,
       gzip: true,
       encoding: null,
       url: this.url
     }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        agent: proxyAgent(this.proxyConfig)
+      })
+    }
+
+    return options
   }
 
   private _startPersistentConnection() {
