@@ -39,7 +39,7 @@ class StreamListener extends EventEmitter {
   /**
    * @param url full url of streaming: e.g. https://mastodon.social/api/v1/streaming/user
    * @param headers headers of streaming request
-   * @param proxyConfig Proxy setting or false.
+   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    * @param reconnectInterval reconnection interval[ms]
    */
   constructor(url: string, headers: object, proxyConfig: ProxyConfig | false = false, reconnectInterval?: number) {

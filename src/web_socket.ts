@@ -32,7 +32,7 @@ export default class WebSocket extends EventEmitter {
    * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
    * @param accessToken The access token.
    * @param userAgent The specified User Agent.
-   * @param proxyConfig Proxy setting or false.
+   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
   constructor(url: string, stream: string, accessToken: string, userAgent: string, proxyConfig: ProxyConfig | false = false) {
     super()
@@ -125,7 +125,7 @@ export default class WebSocket extends EventEmitter {
    * @param stream The specified stream name.
    * @param accessToken Access token.
    * @param headers The specified headers.
-   * @param proxyConfig Proxy setting or false.
+   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    * @return A WebSocket instance.
    */
   private _connect(
