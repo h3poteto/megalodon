@@ -1,4 +1,4 @@
-import Mastodon, { MegalodonInstance, ProxyConfig } from './mastodon'
+import Mastodon, { MegalodonInstance } from './mastodon'
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import Response from './response'
@@ -34,6 +34,7 @@ import { Tag } from './entities/tag'
 import { Token } from './entities/token'
 import { URLs } from './entities/urls'
 import { isCancel, RequestCanceledError } from './cancel'
+import { ProxyConfig } from './proxy_config'
 
 export {
   StreamListener,

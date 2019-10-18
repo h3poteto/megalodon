@@ -1,12 +1,12 @@
 import { OAuth2 } from 'oauth'
 import axios, { AxiosResponse, CancelTokenSource } from 'axios'
-import HttpsProxyAgent from 'https-proxy-agent'
 
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import OAuth from './oauth'
 import Response from './response'
 import { RequestCanceledError } from './cancel'
+import proxyAgent, { ProxyConfig } from './proxy_config'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -25,16 +25,6 @@ export interface MegalodonInstance {
   cancel(): void
   stream(path: string, reconnectInterval: number): StreamListener
   socket(path: string, strea: string): WebSocket
-}
-
-export type ProxyConfig = {
-  host: string
-  port: number
-  auth?: {
-    username: string
-    password: string
-  }
-  protocol: string
 }
 
 /**
@@ -247,7 +237,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: this._proxyAgent(proxyConfig)
+        httpsAgent: proxyAgent(proxyConfig)
       })
     }
     return axios.get<T>(apiUrl + path, options).then((resp: AxiosResponse<T>) => {
@@ -270,7 +260,7 @@ export default class Mastodon implements MegalodonInstance {
     let options = {}
     if (proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: this._proxyAgent(proxyConfig)
+        httpsAgent: proxyAgent(proxyConfig)
       })
     }
     const apiUrl = baseUrl
@@ -300,7 +290,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (this.proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
+        httpsAgent: proxyAgent(this.proxyConfig)
       })
     }
     return axios
@@ -337,7 +327,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (this.proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
+        httpsAgent: proxyAgent(this.proxyConfig)
       })
     }
     return axios
@@ -374,7 +364,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (this.proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
+        httpsAgent: proxyAgent(this.proxyConfig)
       })
     }
     return axios
@@ -411,7 +401,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (this.proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
+        httpsAgent: proxyAgent(this.proxyConfig)
       })
     }
     return axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
@@ -440,7 +430,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (this.proxyConfig) {
       options = Object.assign(options, {
-        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
+        httpsAgent: proxyAgent(this.proxyConfig)
       })
     }
     return axios
@@ -487,7 +477,7 @@ export default class Mastodon implements MegalodonInstance {
       'User-Agent': this.userAgent
     }
     const url = this.baseUrl + path
-    const streaming = new StreamListener(url, headers, reconnectInterval)
+    const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
     process.nextTick(() => {
       streaming.start()
     })
@@ -508,14 +498,5 @@ export default class Mastodon implements MegalodonInstance {
       streaming.start()
     })
     return streaming
-  }
-
-  private static _proxyAgent(proxyConfig: ProxyConfig): HttpsProxyAgent {
-    let auth = ''
-    if (proxyConfig.auth) {
-      auth = `${proxyConfig.auth.username}:${proxyConfig.auth.password}@`
-    }
-    const agent = new HttpsProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
-    return agent
   }
 }
