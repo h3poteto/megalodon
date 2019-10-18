@@ -493,7 +493,7 @@ export default class Mastodon implements MegalodonInstance {
    */
   public socket(path: string, stream: string): WebSocket {
     const url = this.baseUrl + path
-    const streaming = new WebSocket(url, stream, this.accessToken, this.userAgent)
+    const streaming = new WebSocket(url, stream, this.accessToken, this.userAgent, this.proxyConfig)
     process.nextTick(() => {
       streaming.start()
     })
