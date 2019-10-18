@@ -1,5 +1,6 @@
 import { OAuth2 } from 'oauth'
 import axios, { AxiosResponse, CancelTokenSource } from 'axios'
+import HttpsProxyAgent from 'https-proxy-agent'
 
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
@@ -26,6 +27,16 @@ export interface MegalodonInstance {
   socket(path: string, strea: string): WebSocket
 }
 
+export type ProxyConfig = {
+  host: string
+  port: number
+  auth?: {
+    username: string
+    password: string
+  }
+  protocol: string
+}
+
 /**
  * Mastodon API client.
  *
@@ -40,16 +51,23 @@ export default class Mastodon implements MegalodonInstance {
   private baseUrl: string
   private userAgent: string
   private cancelTokenSource: CancelTokenSource
+  private proxyConfig: ProxyConfig | false = false
 
   /**
    * @param accessToken access token from OAuth2 authorization
    * @param baseUrl hostname or base URL
    */
-  constructor(accessToken: string, baseUrl = DEFAULT_URL, userAgent = DEFAULT_UA) {
+  constructor(
+    accessToken: string,
+    baseUrl: string = DEFAULT_URL,
+    userAgent: string = DEFAULT_UA,
+    proxyConfig: ProxyConfig | false = false
+  ) {
     this.accessToken = accessToken
     this.baseUrl = baseUrl
     this.userAgent = userAgent
     this.cancelTokenSource = axios.CancelToken.source()
+    this.proxyConfig = proxyConfig
   }
 
   /**
@@ -211,26 +229,46 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Query parameters
    * @param baseUrl base URL of the target
    */
-  public static async get<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
+  public static async get<T>(
+    path: string,
+    params = {},
+    baseUrl = DEFAULT_URL,
+    proxyConfig: ProxyConfig | false = false
+  ): Promise<Response<T>> {
     const apiUrl = baseUrl
-    return axios
-      .get<T>(apiUrl + path, {
-        params
+    let options = {
+      params: params
+    }
+    if (proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: this._proxyAgent(proxyConfig)
       })
-      .then((resp: AxiosResponse<T>) => {
-        const res: Response<T> = {
-          data: resp.data,
-          status: resp.status,
-          statusText: resp.statusText,
-          headers: resp.headers
-        }
-        return res
-      })
+    }
+    return axios.get<T>(apiUrl + path, options).then((resp: AxiosResponse<T>) => {
+      const res: Response<T> = {
+        data: resp.data,
+        status: resp.status,
+        statusText: resp.statusText,
+        headers: resp.headers
+      }
+      return res
+    })
   }
 
-  private static async _post<T>(path: string, params = {}, baseUrl = DEFAULT_URL): Promise<Response<T>> {
+  private static async _post<T>(
+    path: string,
+    params = {},
+    baseUrl = DEFAULT_URL,
+    proxyConfig: ProxyConfig | false = false
+  ): Promise<Response<T>> {
+    let options = {}
+    if (proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: this._proxyAgent(proxyConfig)
+      })
+    }
     const apiUrl = baseUrl
-    return axios.post<T>(apiUrl + path, params).then((resp: AxiosResponse<T>) => {
+    return axios.post<T>(apiUrl + path, params, options).then((resp: AxiosResponse<T>) => {
       const res: Response<T> = {
         data: resp.data,
         status: resp.status,
@@ -247,14 +285,20 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Query parameters
    */
   public async get<T>(path: string, params = {}): Promise<Response<T>> {
-    return axios
-      .get<T>(this.baseUrl + path, {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        },
-        params
+    let options = {
+      cancelToken: this.cancelTokenSource.token,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      },
+      params: params
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
       })
+    }
+    return axios
+      .get<T>(this.baseUrl + path, options)
       .catch((err: Error) => {
         if (axios.isCancel(err)) {
           throw new RequestCanceledError(err.message)
@@ -279,13 +323,19 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data. If you want to post file, please use FormData()
    */
   public async put<T>(path: string, params = {}): Promise<Response<T>> {
-    return axios
-      .put<T>(this.baseUrl + path, params, {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+    let options = {
+      cancelToken: this.cancelTokenSource.token,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
       })
+    }
+    return axios
+      .put<T>(this.baseUrl + path, params, options)
       .catch((err: Error) => {
         if (axios.isCancel(err)) {
           throw new RequestCanceledError(err.message)
@@ -310,13 +360,19 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data. If you want to post file, please use FormData()
    */
   public async patch<T>(path: string, params = {}): Promise<Response<T>> {
-    return axios
-      .patch<T>(this.baseUrl + path, params, {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+    let options = {
+      cancelToken: this.cancelTokenSource.token,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
       })
+    }
+    return axios
+      .patch<T>(this.baseUrl + path, params, options)
       .catch((err: Error) => {
         if (axios.isCancel(err)) {
           throw new RequestCanceledError(err.message)
@@ -341,22 +397,26 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data
    */
   public async post<T>(path: string, params = {}): Promise<Response<T>> {
-    return axios
-      .post<T>(this.baseUrl + path, params, {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+    let options = {
+      cancelToken: this.cancelTokenSource.token,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
       })
-      .then((resp: AxiosResponse<T>) => {
-        const res: Response<T> = {
-          data: resp.data,
-          status: resp.status,
-          statusText: resp.statusText,
-          headers: resp.headers
-        }
-        return res
-      })
+    }
+    return axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
+      const res: Response<T> = {
+        data: resp.data,
+        status: resp.status,
+        statusText: resp.statusText,
+        headers: resp.headers
+      }
+      return res
+    })
   }
 
   /**
@@ -365,14 +425,20 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data
    */
   public async del<T>(path: string, params = {}): Promise<Response<T>> {
-    return axios
-      .delete(this.baseUrl + path, {
-        cancelToken: this.cancelTokenSource.token,
-        data: params,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+    let options = {
+      cancelToken: this.cancelTokenSource.token,
+      data: params,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: Mastodon._proxyAgent(this.proxyConfig)
       })
+    }
+    return axios
+      .delete(this.baseUrl + path, options)
       .catch((err: Error) => {
         if (axios.isCancel(err)) {
           throw new RequestCanceledError(err.message)
@@ -436,5 +502,14 @@ export default class Mastodon implements MegalodonInstance {
       streaming.start()
     })
     return streaming
+  }
+
+  private static _proxyAgent(proxyConfig: ProxyConfig): HttpsProxyAgent {
+    let auth = ''
+    if (proxyConfig.auth) {
+      auth = `${proxyConfig.auth.username}:${proxyConfig.auth.password}@`
+    }
+    const agent = new HttpsProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
+    return agent
   }
 }
