@@ -83,9 +83,10 @@ export default class Mastodon implements MegalodonInstance {
       scopes: DEFAULT_SCOPE,
       redirect_uris: NO_REDIRECT
     },
-    baseUrl = DEFAULT_URL
+    baseUrl = DEFAULT_URL,
+    proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.AppData> {
-    return this.createApp(client_name, options, baseUrl).then(async appData => {
+    return this.createApp(client_name, options, baseUrl, proxyConfig).then(async appData => {
       return this.generateAuthUrl(
         appData.client_id,
         appData.client_secret,
@@ -115,7 +116,8 @@ export default class Mastodon implements MegalodonInstance {
       redirect_uris: NO_REDIRECT,
       scopes: DEFAULT_SCOPE
     },
-    baseUrl = DEFAULT_URL
+    baseUrl = DEFAULT_URL,
+    proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.AppData> {
     const redirect_uris = options.redirect_uris || NO_REDIRECT
     const scopes = options.scopes || DEFAULT_SCOPE
@@ -132,8 +134,8 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (options.website) params.website = options.website
 
-    return this._post<OAuth.AppDataFromServer>('/api/v1/apps', params, baseUrl).then((res: Response<OAuth.AppDataFromServer>) =>
-      OAuth.AppData.from(res.data)
+    return this._post<OAuth.AppDataFromServer>('/api/v1/apps', params, baseUrl, proxyConfig).then(
+      (res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data)
     )
   }
 
@@ -181,7 +183,8 @@ export default class Mastodon implements MegalodonInstance {
     client_secret: string,
     code: string,
     baseUrl = DEFAULT_URL,
-    redirect_uri = NO_REDIRECT
+    redirect_uri = NO_REDIRECT,
+    proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.TokenData> {
     return this._post<OAuth.TokenDataFromServer>(
       '/oauth/token',
@@ -192,7 +195,8 @@ export default class Mastodon implements MegalodonInstance {
         redirect_uri,
         grant_type: 'authorization_code'
       },
-      baseUrl
+      baseUrl,
+      proxyConfig
     ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
@@ -209,7 +213,8 @@ export default class Mastodon implements MegalodonInstance {
     client_id: string,
     client_secret: string,
     refresh_token: string,
-    baseUrl = DEFAULT_URL
+    baseUrl = DEFAULT_URL,
+    proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.TokenData> {
     return this._post<OAuth.TokenDataFromServer>(
       '/oauth/token',
@@ -219,7 +224,8 @@ export default class Mastodon implements MegalodonInstance {
         refresh_token,
         grant_type: 'refresh_token'
       },
-      baseUrl
+      baseUrl,
+      proxyConfig
     ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
