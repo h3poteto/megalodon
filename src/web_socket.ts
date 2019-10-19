@@ -4,6 +4,7 @@ import { EventEmitter } from 'events'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
 import { Conversation } from './entities/conversation'
+import proxyAgent, { ProxyConfig } from './proxy_config'
 
 /**
  * WebSocket
@@ -15,6 +16,7 @@ export default class WebSocket extends EventEmitter {
   public stream: string
   public parser: Parser
   public headers: { [key: string]: string }
+  public proxyConfig: ProxyConfig | false = false
   private _accessToken: string
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number
@@ -30,8 +32,9 @@ export default class WebSocket extends EventEmitter {
    * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
    * @param accessToken The access token.
    * @param userAgent The specified User Agent.
+   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(url: string, stream: string, accessToken: string, userAgent: string) {
+  constructor(url: string, stream: string, accessToken: string, userAgent: string, proxyConfig: ProxyConfig | false = false) {
     super()
     this.url = url
     this.stream = stream
@@ -39,6 +42,7 @@ export default class WebSocket extends EventEmitter {
     this.headers = {
       'User-Agent': userAgent
     }
+    this.proxyConfig = proxyConfig
     this._accessToken = accessToken
     this._reconnectInterval = 1000
     this._reconnectMaxAttempts = Infinity
@@ -63,7 +67,7 @@ export default class WebSocket extends EventEmitter {
   private _startWebSocketConnection() {
     this._resetConnection()
     this._setupParser()
-    this._client = this._connect(this.url, this.stream, this._accessToken, this.headers)
+    this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
     this._bindSocket(this._client)
   }
 
@@ -108,7 +112,7 @@ export default class WebSocket extends EventEmitter {
           this._reconnectCurrentAttempts++
           // Call connect methods
           console.log('Reconnecting')
-          this._client = this._connect(this.url, this.stream, this._accessToken, this.headers)
+          this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
           this._clearBinding()
           this._bindSocket(this._client)
         }
@@ -121,17 +125,29 @@ export default class WebSocket extends EventEmitter {
    * @param stream The specified stream name.
    * @param accessToken Access token.
    * @param headers The specified headers.
+   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    * @return A WebSocket instance.
    */
-  private _connect(url: string, stream: string, accessToken: string, headers: { [key: string]: string }): WS {
+  private _connect(
+    url: string,
+    stream: string,
+    accessToken: string,
+    headers: { [key: string]: string },
+    proxyConfig: ProxyConfig | false
+  ): WS {
     const params: Array<string> = [`stream=${stream}`]
 
     if (accessToken !== null) {
       params.push(`access_token=${accessToken}`)
     }
     const requestURL: string = `${url}/?${params.join('&')}`
-    const options: WS.ClientOptions = {
+    let options: WS.ClientOptions = {
       headers: headers
+    }
+    if (proxyConfig) {
+      options = Object.assign(proxyConfig, {
+        agent: proxyAgent(proxyConfig)
+      })
     }
 
     const cli: WS = new WS(requestURL, options)
