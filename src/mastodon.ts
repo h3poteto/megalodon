@@ -1,5 +1,5 @@
 import { OAuth2 } from 'oauth'
-import axios, { AxiosResponse, CancelTokenSource } from 'axios'
+import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
 
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
@@ -239,7 +239,7 @@ export default class Mastodon implements MegalodonInstance {
     proxyConfig: ProxyConfig | false = false
   ): Promise<Response<T>> {
     const apiUrl = baseUrl
-    let options = {
+    let options: AxiosRequestConfig = {
       params: params
     }
     if (proxyConfig) {
@@ -264,7 +264,7 @@ export default class Mastodon implements MegalodonInstance {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<Response<T>> {
-    let options = {}
+    let options: AxiosRequestConfig = {}
     if (proxyConfig) {
       options = Object.assign(options, {
         httpsAgent: proxyAgent(proxyConfig)
@@ -288,7 +288,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Query parameters
    */
   public async get<T>(path: string, params = {}): Promise<Response<T>> {
-    let options = {
+    let options: AxiosRequestConfig = {
       cancelToken: this.cancelTokenSource.token,
       headers: {
         Authorization: `Bearer ${this.accessToken}`
@@ -326,7 +326,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data. If you want to post file, please use FormData()
    */
   public async put<T>(path: string, params = {}): Promise<Response<T>> {
-    let options = {
+    let options: AxiosRequestConfig = {
       cancelToken: this.cancelTokenSource.token,
       headers: {
         Authorization: `Bearer ${this.accessToken}`
@@ -363,7 +363,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data. If you want to post file, please use FormData()
    */
   public async patch<T>(path: string, params = {}): Promise<Response<T>> {
-    let options = {
+    let options: AxiosRequestConfig = {
       cancelToken: this.cancelTokenSource.token,
       headers: {
         Authorization: `Bearer ${this.accessToken}`
@@ -400,7 +400,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data
    */
   public async post<T>(path: string, params = {}): Promise<Response<T>> {
-    let options = {
+    let options: AxiosRequestConfig = {
       cancelToken: this.cancelTokenSource.token,
       headers: {
         Authorization: `Bearer ${this.accessToken}`
@@ -428,7 +428,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param params Form data
    */
   public async del<T>(path: string, params = {}): Promise<Response<T>> {
-    let options = {
+    let options: AxiosRequestConfig = {
       cancelToken: this.cancelTokenSource.token,
       data: params,
       headers: {
