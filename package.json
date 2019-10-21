@@ -1,6 +1,6 @@
 {
   "name": "megalodon",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Mastodon API client for node.js",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
@@ -19,7 +19,8 @@
     "client",
     "api",
     "streaming",
-    "rest"
+    "rest",
+    "proxy"
   ],
   "author": "h3poteto",
   "license": "MIT",
