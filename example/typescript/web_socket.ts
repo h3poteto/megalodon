@@ -27,7 +27,7 @@ stream.on('pong', () => {
 })
 
 stream.on('update', (status: Status) => {
-  logger.debug(status)
+  logger.debug(status.url)
 })
 
 stream.on('notification', (notification: Notification) => {
