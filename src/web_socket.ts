@@ -110,10 +110,15 @@ export default class WebSocket extends EventEmitter {
       setTimeout(() => {
         if (this._reconnectCurrentAttempts < this._reconnectMaxAttempts) {
           this._reconnectCurrentAttempts++
+          this._clearBinding()
+          if (this._client) {
+            // In reconnect, we want to close the connection immediately,
+            // because recoonect is necessary when some problems occur.
+            this._client.terminate()
+          }
           // Call connect methods
           console.log('Reconnecting')
           this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
-          this._clearBinding()
           this._bindSocket(this._client)
         }
       }, this._reconnectInterval)

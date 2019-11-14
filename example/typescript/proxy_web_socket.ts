@@ -7,7 +7,7 @@ declare var process: {
     MASTODON_ACCESS_TOKEN: string
     PROXY_HOST: string
     PROXY_PORT: number
-    PROXY_PROTOCOL: string
+    PROXY_PROTOCOL: 'http' | 'https' | 'socks4' | 'socks4a' | 'socks5' | 'socks5h' | 'socks'
   }
 }
 
