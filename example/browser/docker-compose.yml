@@ -1,0 +1,12 @@
+version: '3.0'
+
+services:
+  node:
+    image: node:10.16.3-alpine
+    working_dir: /var/opt/app
+    volumes:
+      - .:/var/opt/app
+      - ../../:/var/opt/megalodon
+    ports:
+      - "8000:8000"
+    command: /bin/sh
