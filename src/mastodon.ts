@@ -1,7 +1,8 @@
 import { OAuth2 } from 'oauth'
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
 
-import StreamListener from './stream_listener'
+// import StreamListener from './stream_listener'
+import EventStream from './event_stream'
 import WebSocket from './web_socket'
 import OAuth from './oauth'
 import Response from './response'
@@ -23,7 +24,7 @@ export interface MegalodonInstance {
   post<T = any>(path: string, params: object): Promise<Response<T>>
   del(path: string, params: object): Promise<Response<{}>>
   cancel(): void
-  stream(path: string, reconnectInterval: number): StreamListener
+  stream(path: string, reconnectInterval: number): EventStream
   socket(path: string, strea: string): WebSocket
 }
 
@@ -128,9 +129,12 @@ export default class Mastodon implements MegalodonInstance {
     }
     if (options.website) params.website = options.website
 
-    return this._post<OAuth.AppDataFromServer>('/api/v1/apps', params, baseUrl, proxyConfig).then(
-      (res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data)
-    )
+    return this._post<OAuth.AppDataFromServer>(
+      '/api/v1/apps',
+      params,
+      baseUrl,
+      proxyConfig
+    ).then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
   }
 
   /**
@@ -476,15 +480,17 @@ export default class Mastodon implements MegalodonInstance {
    * @param reconnectInterval interval of reconnect
    * @returns streamListener, which inherits from EventEmitter
    */
-  public stream(path: string, reconnectInterval = 1000): StreamListener {
+  public stream(path: string, reconnectInterval = 1000): EventStream {
     const headers = {
       'Cache-Control': 'no-cache',
       Accept: 'text/event-stream',
+      'Content-Type': 'text/event-stream',
       Authorization: `Bearer ${this.accessToken}`,
       'User-Agent': this.userAgent
     }
-    const url = this.baseUrl + path
-    const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
+    const url = this.baseUrl + path + `?access_token=${this.accessToken}`
+    // const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
+    const streaming = new EventStream(url, headers, reconnectInterval)
     process.nextTick(() => {
       streaming.start()
     })
