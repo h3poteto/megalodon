@@ -44,3 +44,7 @@ stream.on('heartbeat', () => {
 stream.on('connection-limit-exceeded', (err: Error) => {
   console.error(err)
 })
+
+setTimeout(() => {
+  stream.stop()
+}, 10000)
