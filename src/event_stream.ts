@@ -1,10 +1,11 @@
 import { EventEmitter } from 'events'
-import axios, { CancelTokenSource } from 'axios'
+import axios, { CancelTokenSource, AxiosRequestConfig } from 'axios'
 import httpAdapter from 'axios/lib/adapters/http'
 import Parser from './parser'
 import { Status } from './entities/status'
 import { Notification } from './entities/notification'
 import { Conversation } from './entities/conversation'
+import proxyAgent, { ProxyConfig } from './proxy_config'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
@@ -29,6 +30,7 @@ class EventStream extends EventEmitter {
   public url: string
   public headers: object
   public parser: Parser
+  public proxyConfig: ProxyConfig | false = false
   private _connectionClosed: boolean = false
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number = Infinity
@@ -40,11 +42,12 @@ class EventStream extends EventEmitter {
    * @param headers headers object of streaming request
    * @param reconnectInterval reconnection interval[ms] when the connection is unexpectedly closed
    */
-  constructor(url: string, headers: object, reconnectInterval: number) {
+  constructor(url: string, headers: object, proxyConfig: ProxyConfig | false = false, reconnectInterval: number) {
     super()
     this.url = url
     this.headers = headers
     this.parser = new Parser()
+    this.proxyConfig = proxyConfig
     this._reconnectInterval = reconnectInterval
     this._cancelSource = axios.CancelToken.source()
   }
@@ -61,7 +64,17 @@ class EventStream extends EventEmitter {
    * Request the url and get response, and start streaming.
    */
   private _connect() {
-    axios.get(this.url, { responseType: 'stream', adapter: httpAdapter, cancelToken: this._cancelSource.token }).then(response => {
+    let options: AxiosRequestConfig = {
+      responseType: 'stream',
+      adapter: httpAdapter,
+      cancelToken: this._cancelSource.token
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        httpsAgent: proxyAgent(this.proxyConfig)
+      })
+    }
+    axios.get(this.url, options).then(response => {
       const stream = response.data
       if (response.headers['content-type'] !== 'text/event-stream') {
         this.emit('no-event-stream', 'no event')

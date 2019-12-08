@@ -490,7 +490,7 @@ export default class Mastodon implements MegalodonInstance {
     }
     const url = this.baseUrl + path + `?access_token=${this.accessToken}`
     // const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
-    const streaming = new EventStream(url, headers, reconnectInterval)
+    const streaming = new EventStream(url, headers, this.proxyConfig, reconnectInterval)
     process.nextTick(() => {
       streaming.start()
     })
