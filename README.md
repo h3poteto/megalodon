@@ -5,8 +5,17 @@
 [![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
 [![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
 
-A Mastodon and Pleroma API Client library for node.js. It provides REST API and streaming methods.
+A Mastodon and Pleroma API Client library for node.js and browser. It provides REST API and streaming methods.
 
+## Features
+
+- REST API
+- Streaming with Server-Sent Event
+- Streaming with WebSocket
+- Promisified methods
+- Proxy support
+- Support node.js and browser
+- Written in typescript
 
 ## Install
 
@@ -20,10 +29,31 @@ or
 $ yarn add megalodon
 ```
 
+### Build for browser
+**Important**: In browser, you can not use proxy.
+
+If you want to build for browser, please use Webpack and set empty value for these libraries.
+
+- net
+- tls
+- dns
+
+```javascript
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
+  }
+```
+
+These libraries are for node.js, so can not use in browser.
+
+[Here](example/browser/webpack.config.js) is example Webpack configuration.
+
 ## Usage
 I prepared [examples](example).
 
-## Authorization
+### Authorization
 First, you should register the application.
 
 ```typescript
@@ -58,7 +88,7 @@ Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
   .catch((err: Error) => console.error(err))
 ```
 
-## Get timeline
+### Get timeline
 
 ```typescript
 import Mastodon, { Status, Response } from 'megalodon'
@@ -78,7 +108,7 @@ client.get<[Status]>('/timelines/home')
   })
 ```
 
-## Post toot
+### Post toot
 
 ```typescript
 import Mastodon, { Status, Response } from 'megalodon'
@@ -103,7 +133,7 @@ client.post<Status>('/statuses', {
 
 ```
 
-## Post medias
+### Post medias
 The POST method is wrapper of [axios](https://github.com/axios/axios): https://github.com/h3poteto/megalodon/blob/master/src/mastodon.ts#L245-L266
 
 So you can use the same way of axios to post medias.
@@ -133,7 +163,7 @@ client.post<Attachment>('/media', formData)
 
 
 
-## Streaming for Mastodon
+### Streaming for Mastodon
 This method provides streaming method for Mastodon. If you want to use Pleroma, [please use WebSocket](#websocket-for-pleroma).
 
 ```typescript
@@ -170,7 +200,7 @@ stream.on('heartbeat', () => {
   console.log('thump.')
 })
 ```
-## WebSocket for Pleroma
+### WebSocket for Pleroma
 This method provides streaming method for Pleroma.
 
 ```typescript
