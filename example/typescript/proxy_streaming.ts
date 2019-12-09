@@ -1,4 +1,4 @@
-import Mastodon, { Status, Notification, StreamListener, ProxyConfig } from 'megalodon'
+import Mastodon, { Status, Notification, EventStream, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
@@ -21,7 +21,7 @@ const proxy: ProxyConfig = {
 
 const client = new Mastodon(access_token, BASE_URL + '/api/v1', 'megalodon', proxy)
 
-const stream: StreamListener = client.stream('/streaming/public')
+const stream: EventStream = client.stream('/streaming/public')
 stream.on('connect', _ => {
   console.log('connect')
 })

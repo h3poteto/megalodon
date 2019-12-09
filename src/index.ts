@@ -3,6 +3,7 @@ import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import Response from './response'
 import OAuth from './oauth'
+import EventStream from './event_stream'
 /**
  * Entities
  */
@@ -45,6 +46,7 @@ export {
   RequestCanceledError,
   isCancel,
   ProxyConfig,
+  EventStream,
   /**
    * Entities
    */

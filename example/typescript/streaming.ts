@@ -1,4 +1,4 @@
-import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
+import Mastodon, { Status, Notification, EventStream } from 'megalodon'
 
 declare var process: {
   env: {
@@ -12,7 +12,7 @@ const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
 const client = new Mastodon(access_token, BASE_URL + '/api/v1')
 
-const stream: StreamListener = client.stream('/streaming/public')
+const stream: EventStream = client.stream('/streaming/public')
 stream.on('connect', _ => {
   console.log('connect')
 })
@@ -44,3 +44,7 @@ stream.on('heartbeat', () => {
 stream.on('connection-limit-exceeded', (err: Error) => {
   console.error(err)
 })
+
+setTimeout(() => {
+  stream.stop()
+}, 10000)
