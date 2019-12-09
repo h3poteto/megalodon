@@ -1,9 +1,8 @@
 import Mastodon, { MegalodonInstance } from './mastodon'
-import StreamListener from './stream_listener'
+import StreamListener, { StreamListenerError } from './stream_listener'
 import WebSocket from './web_socket'
 import Response from './response'
 import OAuth from './oauth'
-import EventStream from './event_stream'
 /**
  * Entities
  */
@@ -39,6 +38,7 @@ import { ProxyConfig } from './proxy_config'
 
 export {
   StreamListener,
+  StreamListenerError,
   WebSocket,
   Response,
   OAuth,
@@ -46,7 +46,6 @@ export {
   RequestCanceledError,
   isCancel,
   ProxyConfig,
-  EventStream,
   /**
    * Entities
    */

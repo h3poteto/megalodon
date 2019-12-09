@@ -21,8 +21,9 @@ module.exports = {
     ]
   },
   plugins: [],
+  // https-proxy-agent and socks-proxy-agent is node library, so can't compile for browser.
+  // So replace net, tls and dns which are node libraries.
   node: {
-    fs: 'empty',
     net: 'empty',
     tls: 'empty',
     dns: 'empty'
