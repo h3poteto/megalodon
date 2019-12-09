@@ -1,8 +1,7 @@
 import { OAuth2 } from 'oauth'
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
 
-// import StreamListener from './stream_listener'
-import EventStream from './event_stream'
+import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import OAuth from './oauth'
 import Response from './response'
@@ -24,7 +23,7 @@ export interface MegalodonInstance {
   post<T = any>(path: string, params: object): Promise<Response<T>>
   del(path: string, params: object): Promise<Response<{}>>
   cancel(): void
-  stream(path: string, reconnectInterval: number): EventStream
+  stream(path: string, reconnectInterval: number): StreamListener
   socket(path: string, strea: string): WebSocket
 }
 
@@ -480,7 +479,7 @@ export default class Mastodon implements MegalodonInstance {
    * @param reconnectInterval interval of reconnect
    * @returns streamListener, which inherits from EventEmitter
    */
-  public stream(path: string, reconnectInterval = 1000): EventStream {
+  public stream(path: string, reconnectInterval = 1000): StreamListener {
     const headers = {
       'Cache-Control': 'no-cache',
       Accept: 'text/event-stream',
@@ -489,8 +488,7 @@ export default class Mastodon implements MegalodonInstance {
       'User-Agent': this.userAgent
     }
     const url = this.baseUrl + path + `?access_token=${this.accessToken}`
-    // const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
-    const streaming = new EventStream(url, headers, this.proxyConfig, reconnectInterval)
+    const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
     process.nextTick(() => {
       streaming.start()
     })
