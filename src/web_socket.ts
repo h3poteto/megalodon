@@ -44,7 +44,7 @@ export default class WebSocket extends EventEmitter {
     }
     this.proxyConfig = proxyConfig
     this._accessToken = accessToken
-    this._reconnectInterval = 1000
+    this._reconnectInterval = 10000
     this._reconnectMaxAttempts = Infinity
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
@@ -106,23 +106,27 @@ export default class WebSocket extends EventEmitter {
    * Reconnects to the same endpoint.
    */
   private _reconnect() {
-    if (this._client) {
-      setTimeout(() => {
-        if (this._reconnectCurrentAttempts < this._reconnectMaxAttempts) {
-          this._reconnectCurrentAttempts++
-          this._clearBinding()
-          if (this._client) {
-            // In reconnect, we want to close the connection immediately,
-            // because recoonect is necessary when some problems occur.
-            this._client.terminate()
-          }
-          // Call connect methods
-          console.log('Reconnecting')
-          this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
-          this._bindSocket(this._client)
+    setTimeout(() => {
+      // Skip reconnect when client is connecting.
+      // https://github.com/websockets/ws/blob/7.2.1/lib/websocket.js#L365
+      if (this._client && this._client.readyState === WS.CONNECTING) {
+        return
+      }
+
+      if (this._reconnectCurrentAttempts < this._reconnectMaxAttempts) {
+        this._reconnectCurrentAttempts++
+        this._clearBinding()
+        if (this._client) {
+          // In reconnect, we want to close the connection immediately,
+          // because recoonect is necessary when some problems occur.
+          this._client.terminate()
         }
-      }, this._reconnectInterval)
-    }
+        // Call connect methods
+        console.log('Reconnecting')
+        this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
+        this._bindSocket(this._client)
+      }
+    }, this._reconnectInterval)
   }
 
   /**
@@ -243,16 +247,18 @@ export default class WebSocket extends EventEmitter {
     // Block multiple calling, if multiple pong event occur.
     // It the duration is less than interval, through ping.
     if (now.diff(timestamp) > this._heartbeatInterval - 1000 && !this._connectionClosed) {
-      if (this._client) {
+      // Skip ping when client is connecting.
+      // https://github.com/websockets/ws/blob/7.2.1/lib/websocket.js#L289
+      if (this._client && this._client.readyState !== WS.CONNECTING) {
         this._pongWaiting = true
         this._client.ping('')
+        setTimeout(() => {
+          if (this._pongWaiting) {
+            this._pongWaiting = false
+            this._reconnect()
+          }
+        }, 10000)
       }
-      setTimeout(() => {
-        if (this._pongWaiting) {
-          this._pongWaiting = false
-          this._reconnect()
-        }
-      }, 10000)
     }
   }
 }
