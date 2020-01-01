@@ -10,6 +10,6 @@
     "typescript": "3.5.3"
   },
   "devDependencies": {
-    "log4js": "^5.2.2"
+    "log4js": "^6.1.0"
   }
 }
