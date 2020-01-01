@@ -8,3 +8,6 @@ cache:
 script:
   - yarn run build
   - yarn run test
+  - cd example/browser && yarn install && yarn build
+  - cd ../../example/javascript && yarn install && yarn build
+  - cd ../../example/typescript && yarn install && yarn build
