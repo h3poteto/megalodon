@@ -1,4 +1,4 @@
-import Mastodon, { MegalodonInstance } from './mastodon'
+import API from './api_client'
 import StreamListener, { StreamListenerError } from './stream_listener'
 import WebSocket from './web_socket'
 import Response from './response'
@@ -42,7 +42,6 @@ export {
   WebSocket,
   Response,
   OAuth,
-  MegalodonInstance,
   RequestCanceledError,
   isCancel,
   ProxyConfig,
@@ -78,4 +77,4 @@ export {
   URLs
 }
 
-export default Mastodon
+export default API
