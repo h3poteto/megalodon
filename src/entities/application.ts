@@ -1,4 +1,5 @@
 export type Application = {
   name: string
-  website: string | null
+  website?: string | null
+  vapid_key?: string | null
 }
