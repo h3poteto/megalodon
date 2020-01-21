@@ -1,4 +1,3 @@
-import { OAuth2 } from 'oauth'
 import APIClient from './api_client'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
@@ -41,20 +40,7 @@ export default class Mastodon implements MastodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.AppData> {
-    return this.createApp(clientName, options, baseUrl, proxyConfig).then(async appData => {
-      return this.generateAuthUrl(
-        appData.client_id,
-        appData.client_secret,
-        {
-          redirect_uri: appData.redirect_uri,
-          scope: options.scopes
-        },
-        baseUrl
-      ).then(url => {
-        appData.url = url
-        return appData
-      })
-    })
+    return APIClient.registerApp(clientName, options, baseUrl, proxyConfig)
   }
 
   /**
@@ -75,27 +61,7 @@ export default class Mastodon implements MastodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.AppData> {
-    const redirect_uris = options.redirect_uris || NO_REDIRECT
-    const scopes = options.scopes || DEFAULT_SCOPE
-
-    const params: {
-      client_name: string
-      redirect_uris: string
-      scopes: string
-      website?: string
-    } = {
-      client_name,
-      redirect_uris,
-      scopes
-    }
-    if (options.website) params.website = options.website
-
-    return APIClient.post<OAuth.AppDataFromServer>(
-      '/api/v1/apps',
-      params,
-      baseUrl,
-      proxyConfig
-    ).then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
+    return APIClient.createApp(client_name, options, baseUrl, proxyConfig)
   }
 
   /**
@@ -115,16 +81,7 @@ export default class Mastodon implements MastodonInterface {
     },
     baseUrl = DEFAULT_URL
   ): Promise<string> {
-    return new Promise(resolve => {
-      const oauth = new OAuth2(clientId, clientSecret, baseUrl, undefined, '/oauth/token')
-      const url = oauth.getAuthorizeUrl({
-        redirect_uri: options.redirect_uri,
-        response_type: 'code',
-        client_id: clientId,
-        scope: options.scope
-      })
-      resolve(url)
-    })
+    return APIClient.generateAuthUrl(clientId, clientSecret, options, baseUrl)
   }
 
   /**
@@ -155,18 +112,7 @@ export default class Mastodon implements MastodonInterface {
     redirect_uri = NO_REDIRECT,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.TokenData> {
-    return APIClient.post<OAuth.TokenDataFromServer>(
-      '/oauth/token',
-      {
-        client_id,
-        client_secret,
-        code,
-        redirect_uri,
-        grant_type: 'authorization_code'
-      },
-      baseUrl,
-      proxyConfig
-    ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+    return APIClient.fetchAccessToken(client_id, client_secret, code, baseUrl, redirect_uri, proxyConfig)
   }
 
   /**
@@ -187,17 +133,7 @@ export default class Mastodon implements MastodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.TokenData> {
-    return APIClient.post<OAuth.TokenDataFromServer>(
-      '/oauth/token',
-      {
-        client_id,
-        client_secret,
-        refresh_token,
-        grant_type: 'refresh_token'
-      },
-      baseUrl,
-      proxyConfig
-    ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+    return APIClient.refreshToken(client_id, client_secret, refresh_token, baseUrl, proxyConfig)
   }
 
   /**
