@@ -3,6 +3,11 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
 import { Application } from './entities/application'
+import { Account } from './entities/account'
+import { Status } from './entities/status'
+import { List } from './entities/list'
+import { IdentityProof } from './entities/identity_proof'
+import { Relationship } from './entities/relationship'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -86,9 +91,10 @@ export default class Mastodon implements MastodonInterface {
 
   /**
    * Call /api/v1/apps/verify_credentials
+   *
+   * @return An Application
    */
-  // TODO response
-  public verifyCredentails(): Promise<Response<Application>> {
+  public verifyAppCredentails(): Promise<Response<Application>> {
     return this.client.get<Application>('/api/v1/apps/verify_credentials')
   }
 
@@ -163,5 +169,349 @@ export default class Mastodon implements MastodonInterface {
       baseUrl,
       proxyConfig
     )
+  }
+
+  /**
+   * Call /api/v1/accounts
+   *
+   * @param username Username for the account.
+   * @param email Email for the account.
+   * @param password Password for the account.
+   * @param agreement Whether the user agrees to the local rules, terms, and policies.
+   * @param locale The language of the confirmation email that will be sent
+   * @param reason Text that will be reviewed by moderators if registrations require manual approval.
+   * @return An account token.
+   */
+  public registerAccount(
+    username: string,
+    email: string,
+    password: string,
+    agreement: boolean,
+    locale: string,
+    reason: string | null
+  ): Promise<Response<string>> {
+    let params = {
+      username: username,
+      email: email,
+      password: password,
+      agreement: agreement,
+      locale: locale
+    }
+    if (reason) {
+      params = Object.assign(params, {
+        reason: reason
+      })
+    }
+    return this.client.post<string>('/api/v1/accounts', params)
+  }
+
+  /**
+   * Call /api/v1/accounts/verify_credentials
+   *
+   * @return An account.
+   */
+  public verifyAccountCredentials(): Promise<Response<Account>> {
+    return this.client.get<Account>('/api/v1/accounts/verify_credentials')
+  }
+
+  /**
+   * Call /api/v1/accounts/update_credentials
+   *
+   * @return An account.
+   */
+  public updateCredentials(
+    discoverable: string | null,
+    bot: boolean | null,
+    display_name: string | null,
+    note: string | null,
+    avatar: string | null,
+    header: string | null,
+    locked: boolean | null,
+    source: {
+      privacy?: string
+      sensitive?: boolean
+      language?: string
+    } | null,
+    fields_attributes: Array<{ name: string; value: string }>
+  ): Promise<Response<Account>> {
+    let params = {}
+    if (discoverable) {
+      params = Object.assign(params, {
+        discoverable: discoverable
+      })
+    }
+    if (bot !== null) {
+      params = Object.assign(params, {
+        bot: bot
+      })
+    }
+    if (display_name) {
+      params = Object.assign(params, {
+        display_name: display_name
+      })
+    }
+    if (note) {
+      params = Object.assign(params, {
+        note: note
+      })
+    }
+    if (avatar) {
+      params = Object.assign(params, {
+        avatar: avatar
+      })
+    }
+    if (header) {
+      params = Object.assign(params, {
+        header: header
+      })
+    }
+    if (locked !== null) {
+      params = Object.assign(params, {
+        locked: locked
+      })
+    }
+    if (source) {
+      params = Object.assign(params, {
+        source: source
+      })
+    }
+    if (fields_attributes) {
+      params = Object.assign(params, {
+        fields_attributes: fields_attributes
+      })
+    }
+    return this.client.patch<Account>('/api/v1/accounts/update_credentials', params)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id
+   *
+   * @param id The account ID.
+   * @return An account.
+   */
+  public getAccount(id: string): Promise<Response<Account>> {
+    return this.client.get<Account>(`/api/v1/accounts/${id}`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/statuses
+   *
+   * @param id The account ID.
+   * @return Account's statuses.
+   */
+  public getAccountStatuses(id: string): Promise<Response<Array<Status>>> {
+    return this.client.get<Array<Status>>(`/api/v1/accounts/${id}/statuses`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/followers
+   *
+   * @param id The account ID.
+   * @param query Query parameter for the get request.
+   * @return The array of accounts.
+   */
+  public getAccountFollowers(
+    id: string,
+    query?: { max_id?: string; since_id?: string; limit?: string }
+  ): Promise<Response<Array<Account>>> {
+    if (query) {
+      let params = {}
+      if (query.max_id) {
+        params = Object.assign(params, {
+          max_id: query.max_id
+        })
+      }
+      if (query.since_id) {
+        params = Object.assign(params, {
+          since_id: query.since_id
+        })
+      }
+      if (query.limit) {
+        params = Object.assign(params, {
+          limit: query.limit
+        })
+      }
+      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`, params)
+    } else {
+      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`)
+    }
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/following
+   *
+   * @param id The account ID.
+   * @param query Query parameter for the get request.
+   * @return The array of accounts.
+   */
+  public getAccountFollowing(
+    id: string,
+    query?: { max_id?: string; since_id?: string; limit?: string }
+  ): Promise<Response<Array<Account>>> {
+    if (query) {
+      let params = {}
+      if (query.max_id) {
+        params = Object.assign(params, {
+          max_id: query.max_id
+        })
+      }
+      if (query.since_id) {
+        params = Object.assign(params, {
+          since_id: query.since_id
+        })
+      }
+      if (query.limit) {
+        params = Object.assign(params, {
+          limit: query.limit
+        })
+      }
+      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`, params)
+    } else {
+      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`)
+    }
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/lists
+   *
+   * @param id The account ID.
+   * @return The array of lists.
+   */
+  public getAccountLists(id: string): Promise<Response<Array<List>>> {
+    return this.client.get<Array<List>>(`/api/v1/accounts/${id}/lists`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/identity_proofs
+   *
+   * @param id The account ID.
+   * @return Array of IdentityProof
+   */
+  public getIdentifyProof(id: string): Promise<Response<Array<IdentityProof>>> {
+    return this.client.get<Array<IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/follow
+   *
+   * @param id The account ID.
+   * @param reblog Receive this account's reblogs in home timeline.
+   * @return Relationship
+   */
+  public followAccount(id: string, reblog: boolean = true): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/follow`, {
+      reblog: reblog
+    })
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/unfollow
+   *
+   * @param id The account ID.
+   * @return Relationship
+   */
+  public unfollowAccount(id: string): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unfollow`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/block
+   *
+   * @param id The account ID.
+   * @return Relationship
+   */
+  public blockAccount(id: string): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/block`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/unblock
+   *
+   * @param id The account ID.
+   * @return RElationship
+   */
+  public unblockAccount(id: string): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unblock`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/mute
+   *
+   * @param id The account ID.
+   * @param notifications Mute notifications in addition to statuses.
+   * @return Relationship
+   */
+  public muteAccount(id: string, notifications: boolean = true): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/mute`, {
+      notifications: notifications
+    })
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/unmute
+   *
+   * @param id The account ID.
+   * @return Relationship
+   */
+  public unmuteAccount(id: string): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unmute`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/pin
+   *
+   * @param id The account ID.
+   * @return Relationship
+   */
+  public pinAccount(id: string): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/pin`)
+  }
+
+  /**
+   * Call /api/v1/accounts/:id/unpin
+   *
+   * @param id The account ID.
+   * @return Relationship
+   */
+  public unpinAccount(id: string): Promise<Response<Relationship>> {
+    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unpin`)
+  }
+
+  /**
+   * Call /api/v1/accounts/relationships
+   *
+   * @return Relationship
+   */
+  public getRelationship(): Promise<Response<Relationship>> {
+    return this.client.get<Relationship>('/api/v1/accounts/relationships')
+  }
+
+  /**
+   * Call /api/v1/accounts/search
+   *
+   * @param q Search query.
+   * @param query Query parameter for the get request.
+   * @return The array of accounts.
+   */
+  public searchAccount(q: string, query?: { max_id?: string; since_id?: string; limit?: string }): Promise<Response<Array<Account>>> {
+    let params = { q: q }
+    if (query) {
+      if (query.max_id) {
+        params = Object.assign(params, {
+          max_id: query.max_id
+        })
+      }
+      if (query.since_id) {
+        params = Object.assign(params, {
+          since_id: query.since_id
+        })
+      }
+      if (query.limit) {
+        params = Object.assign(params, {
+          limit: query.limit
+        })
+      }
+    }
+    return this.client.get<Array<Account>>('/api/v1/accounts/search', params)
   }
 }
