@@ -13,6 +13,7 @@ import { Report } from './entities/report'
 import { FeaturedTag } from './entities/featured_tag'
 import { Tag } from './entities/tag'
 import { Preferences } from './entities/preferences'
+import { Context } from './entities/context'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -1009,5 +1010,243 @@ export default class Mastodon implements MastodonInterface {
     } else {
       return this.client.get<Array<Account>>('/api/v1/suggestions')
     }
+  }
+
+  // ======================================
+  // statuses
+  // ======================================
+  /**
+   * POST /api/v1/statuses
+   *
+   * @param status Text content of status.
+   * @param media_ids Array of Attachment ids.
+   * @param poll Poll object.
+   * @param in_reply_to_id ID of the status being replied to, if status is a reply.
+   * @param sensitive Mark status and attached media as sensitive?
+   * @param spoiler_text Text to be shown as a warning or subject before the actual content.
+   * @param visibility Visibility of the posted status.
+   * @param scheduled_at ISO 8601 Datetime at which to schedule a status.
+   * @param language ISO 639 language code for this status.
+   * @return Status
+   */
+  public postStatus(
+    status: string,
+    media_ids: Array<string> = [],
+    poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean } | null,
+    in_reply_to_id?: string | null,
+    sensitive?: boolean | null,
+    spoiler_text?: string | null,
+    visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
+    scheduled_at?: string | null,
+    language?: string | null
+  ): Promise<Response<Status>> {
+    let params = {
+      status: status
+    }
+    if (media_ids.length > 0) {
+      params = Object.assign(params, {
+        media_ids: media_ids
+      })
+    }
+    if (poll) {
+      let pollParam = {
+        options: poll.options,
+        expires_in: poll.expires_in
+      }
+      if (poll.multiple) {
+        pollParam = Object.assign(pollParam, {
+          multiple: poll.multiple
+        })
+      }
+      if (poll.hide_totals) {
+        pollParam = Object.assign(pollParam, {
+          hide_totals: poll.hide_totals
+        })
+      }
+      params = Object.assign(params, {
+        poll: pollParam
+      })
+    }
+    if (in_reply_to_id) {
+      params = Object.assign(params, {
+        in_reply_to_id: in_reply_to_id
+      })
+    }
+    if (sensitive) {
+      params = Object.assign(params, {
+        sensitive: sensitive
+      })
+    }
+    if (spoiler_text) {
+      params = Object.assign(params, {
+        spoiler_text: spoiler_text
+      })
+    }
+    if (visibility) {
+      params = Object.assign(params, {
+        visibility: visibility
+      })
+    }
+    if (scheduled_at) {
+      params = Object.assign(params, {
+        scheduled_at: scheduled_at
+      })
+    }
+    if (language) {
+      params = Object.assign(params, {
+        language: language
+      })
+    }
+    return this.client.post<Status>('/api/v1/statuses', params)
+  }
+
+  /**
+   * GET /api/v1/statuses/:id
+   *
+   * @param id The target status id.
+   * @return Status
+   */
+  public getStatus(id: string): Promise<Response<Status>> {
+    return this.client.get<Status>(`/api/v1/statuses/${id}`)
+  }
+
+  /**
+   * DELETE /api/v1/statuses/:id
+   *
+   * @param id The target status id.
+   * @return Status
+   */
+  public deleteStatus(id: string): Promise<Response<Status>> {
+    return this.client.del<Status>(`/api/v1/statuses/${id}`)
+  }
+
+  /**
+   * GET /api/v1/statuses/:id/context
+   *
+   * Get parent and child statuses.
+   * @param id The target status id.
+   * @return Context
+   */
+  public getStatusContext(id: string): Promise<Response<Context>> {
+    return this.client.get<Context>(`/api/v1/statuses/${id}/context`)
+  }
+
+  /**
+   * GET /api/v1/statuses/:id/reblogged_by
+   *
+   * @param id The target status id.
+   * @return Array of accounts.
+   */
+  public getStatusRebloggedBy(id: string): Promise<Response<Array<Account>>> {
+    return this.client.get<Array<Account>>(`/api/v1/statuses/${id}/reblogged_by`)
+  }
+
+  /**
+   * GET /api/v1/statuses/:id/favourited_by
+   *
+   * @param id The target status id.
+   * @return Array of accounts.
+   */
+  public getStatusFavouritedBy(id: string): Promise<Response<Array<Account>>> {
+    return this.client.get<Array<Account>>(`/api/v1/statuses/${id}/favourited_by`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/favourite
+   *
+   * @param id The target status id.
+   * @return Status.
+   */
+  public favouriteStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/favourite`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/unfavourite
+   *
+   * @param id The target status id.
+   * @return Status.
+   */
+  public unfavouriteStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/unfavourite`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/reblog
+   *
+   * @param id The target status id.
+   * @return Status.
+   */
+  public reblogStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/reblog`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/unreblog
+   *
+   * @param id The target status id.
+   * @return Status.
+   */
+  public unreblogStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/unreblog`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/bookmark
+   *
+   * @param id The target status id.
+   * @return Status.
+   */
+  public bookmarkStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/bookmark`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/unbookmark
+   *
+   * @param id The target status id.
+   * @return Status.
+   */
+  public unbookmarkStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/unbookmark`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/mute
+   *
+   * @param id The target status id.
+   * @return Status
+   */
+  public muteStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/mute`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/unmute
+   *
+   * @param id The target status id.
+   * @return Status
+   */
+  public unmuteStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/unmute`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/pin
+   * @param id The target status id.
+   * @return Status
+   */
+  public pinStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/pin`)
+  }
+
+  /**
+   * POST /api/v1/statuses/:id/unpin
+   *
+   * @param id The target status id.
+   * @return Status
+   */
+  public unpinStatus(id: string): Promise<Response<Status>> {
+    return this.client.post<Status>(`/api/v1/statuses/${id}/unpin`)
   }
 }
