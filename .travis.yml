@@ -4,7 +4,7 @@ node_js:
   - "10"
   - "12"
 cache:
-  yarn: true
+  yarn: false
 script:
   - yarn run build
   - yarn run test
