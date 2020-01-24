@@ -774,12 +774,12 @@ export default class Mastodon implements MastodonInterface {
       phrase: phrase,
       context: context
     }
-    if (irreversible) {
+    if (irreversible !== null) {
       params = Object.assign(params, {
         irreversible: irreversible
       })
     }
-    if (whole_word) {
+    if (whole_word !== null) {
       params = Object.assign(params, {
         whole_word: whole_word
       })
@@ -815,12 +815,12 @@ export default class Mastodon implements MastodonInterface {
       phrase: phrase,
       context: context
     }
-    if (irreversible) {
+    if (irreversible !== null) {
       params = Object.assign(params, {
         irreversible: irreversible
       })
     }
-    if (whole_word) {
+    if (whole_word !== null) {
       params = Object.assign(params, {
         whole_word: whole_word
       })
@@ -874,7 +874,7 @@ export default class Mastodon implements MastodonInterface {
         comment: comment
       })
     }
-    if (forward) {
+    if (forward !== null) {
       params = Object.assign(params, {
         forward: forward
       })
@@ -1067,7 +1067,7 @@ export default class Mastodon implements MastodonInterface {
         options: poll.options,
         expires_in: poll.expires_in
       }
-      if (poll.multiple) {
+      if (poll.multiple !== undefined) {
         pollParam = Object.assign(pollParam, {
           multiple: poll.multiple
         })
@@ -1086,7 +1086,7 @@ export default class Mastodon implements MastodonInterface {
         in_reply_to_id: in_reply_to_id
       })
     }
-    if (sensitive) {
+    if (sensitive !== null) {
       params = Object.assign(params, {
         sensitive: sensitive
       })
@@ -1423,5 +1423,242 @@ export default class Mastodon implements MastodonInterface {
    */
   public cancelScheduledStatus(id: string): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/scheduled_statuses/${id}`)
+  }
+
+  // ======================================
+  // timelines
+  // ======================================
+  /**
+   * GET /api/v1/timelines/public
+   *
+   * @param local Show only local statuses? Defaults to false.
+   * @param only_media Show only statuses with media attached? Defaults to false.
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  public getPublicTimeline(
+    local?: boolean | null,
+    only_media?: boolean | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    limit?: number | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (local !== null) {
+      params = Object.assign(params, {
+        local: local
+      })
+    }
+    if (only_media !== null) {
+      params = Object.assign(params, {
+        only_media: only_media
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>('/api/v1/timelines/public', params)
+  }
+
+  /**
+   * GET /api/v1/timelines/tag/:hashtag
+   *
+   * @param hashtag Content of a #hashtag, not including # symbol.
+   * @param local Show only local statuses? Defaults to false.
+   * @param only_media Show only statuses with media attached? Defaults to false.
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  public getTagTimeline(
+    hashtag: string,
+    local?: boolean | null,
+    only_media?: boolean | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    limit?: number | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (local !== null) {
+      params = Object.assign(params, {
+        local: local
+      })
+    }
+    if (only_media !== null) {
+      params = Object.assign(params, {
+        only_media: only_media
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>(`/api/v1/timelines/tag/${hashtag}`, params)
+  }
+
+  /**
+   * GET /api/v1/timelines/home
+   *
+   * @param local Show only local statuses? Defaults to false.
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  public getHomeTimeline(
+    local?: boolean | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    limit?: number | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (local !== null) {
+      params = Object.assign(params, {
+        local: local
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>('/api/v1/timelines/home', params)
+  }
+
+  /**
+   * GET /api/v1/timelines/list/:list_id
+   *
+   * @param list_id Local ID of the list in the database.
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  public getListTimeline(
+    list_id: string,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    limit?: number | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>(`/api/v1/timelines/list/${list_id}`, params)
+  }
+
+  /**
+   * GET /api/v1/timelines/direct
+   *
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  public getDirectTimeline(
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    limit?: number | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>('/api/v1/timelines/direct', params)
   }
 }
