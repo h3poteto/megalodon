@@ -333,7 +333,7 @@ export default class Mastodon implements MastodonInterface {
    */
   public getAccountFollowers(
     id: string,
-    query?: { max_id?: string; since_id?: string; limit?: string }
+    query?: { max_id?: string; since_id?: string; limit?: number }
   ): Promise<Response<Array<Account>>> {
     if (query) {
       let params = {}
@@ -367,7 +367,7 @@ export default class Mastodon implements MastodonInterface {
    */
   public getAccountFollowing(
     id: string,
-    query?: { max_id?: string; since_id?: string; limit?: string }
+    query?: { max_id?: string; since_id?: string; limit?: number }
   ): Promise<Response<Array<Account>>> {
     if (query) {
       let params = {}
@@ -514,7 +514,7 @@ export default class Mastodon implements MastodonInterface {
    * @param query Query parameter for the get request.
    * @return The array of accounts.
    */
-  public searchAccount(q: string, query?: { max_id?: string; since_id?: string; limit?: string }): Promise<Response<Array<Account>>> {
+  public searchAccount(q: string, query?: { max_id?: string; since_id?: string; limit?: number }): Promise<Response<Array<Account>>> {
     let params = { q: q }
     if (query) {
       if (query.max_id) {
@@ -546,7 +546,7 @@ export default class Mastodon implements MastodonInterface {
    * @param query Query parameter for the get request.
    * @return Array of statuses.
    */
-  public getBookmarks(query?: { max_id?: string; since_id?: string; limit?: string; min_id?: string }): Promise<Response<Array<Status>>> {
+  public getBookmarks(query?: { max_id?: string; since_id?: string; limit?: number; min_id?: string }): Promise<Response<Array<Status>>> {
     if (query) {
       let params = {}
       if (query.max_id) {
@@ -585,7 +585,7 @@ export default class Mastodon implements MastodonInterface {
    * @param query Query parameter for the get request.
    * @return Array of statuses.
    */
-  public getFavourites(query?: { min_id?: string; max_id?: string; limit?: string }): Promise<Response<Array<Status>>> {
+  public getFavourites(query?: { min_id?: string; max_id?: string; limit?: number }): Promise<Response<Array<Status>>> {
     if (query) {
       let params = {}
       if (query.min_id) {
@@ -616,7 +616,7 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/mutes
    */
-  public getMutes(query?: { max_id?: string; min_id?: string; limit?: string }): Promise<Response<Array<Account>>> {
+  public getMutes(query?: { max_id?: string; min_id?: string; limit?: number }): Promise<Response<Array<Account>>> {
     if (query) {
       let params = {}
       if (query.min_id) {
@@ -647,7 +647,7 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/blocks
    */
-  public getBlocks(query?: { max_id?: string; min_id?: string; limit?: string }): Promise<Response<Array<Account>>> {
+  public getBlocks(query?: { max_id?: string; min_id?: string; limit?: number }): Promise<Response<Array<Account>>> {
     if (query) {
       let params = {}
       if (query.min_id) {
@@ -678,7 +678,7 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/domain_blocks
    */
-  public getDomainBlocks(query?: { max_id?: string; min_id?: string; limit?: string }): Promise<Response<Array<string>>> {
+  public getDomainBlocks(query?: { max_id?: string; min_id?: string; limit?: number }): Promise<Response<Array<string>>> {
     if (query) {
       let params = {}
       if (query.min_id) {
@@ -881,7 +881,7 @@ export default class Mastodon implements MastodonInterface {
    * @param limit Maximum number of results.
    * @return Array of account.
    */
-  public getFollowRequests(limit?: string): Promise<Response<Array<Account>>> {
+  public getFollowRequests(limit?: number): Promise<Response<Array<Account>>> {
     if (limit) {
       return this.client.get<Array<Account>>('/api/v1/follow_requests', {
         limit: limit
@@ -917,7 +917,7 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/endorsements
    */
-  public getEndorsements(query?: { limit?: string; max_id?: string; since_id: string }): Promise<Response<Array<Account>>> {
+  public getEndorsements(query?: { limit?: number; max_id?: string; since_id: string }): Promise<Response<Array<Account>>> {
     if (query) {
       let params = {}
       if (query.limit) {
@@ -1005,7 +1005,7 @@ export default class Mastodon implements MastodonInterface {
    * @param limit Maximum number of results.
    * @return Array of accounts.
    */
-  public getSuggestions(limit?: string): Promise<Response<Array<Account>>> {
+  public getSuggestions(limit?: number): Promise<Response<Array<Account>>> {
     if (limit) {
       return this.client.get<Array<Account>>('/api/v1/suggestions', {
         limit: limit
