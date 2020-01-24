@@ -328,68 +328,68 @@ export default class Mastodon implements MastodonInterface {
    * GET /api/v1/accounts/:id/followers
    *
    * @param id The account ID.
-   * @param query Query parameter for the get request.
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
    * @return The array of accounts.
    */
   public getAccountFollowers(
     id: string,
-    query?: { max_id?: string; since_id?: string; limit?: number }
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
   ): Promise<Response<Array<Account>>> {
-    if (query) {
-      let params = {}
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.since_id) {
-        params = Object.assign(params, {
-          since_id: query.since_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`, params)
-    } else {
-      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`)
+    let params = {}
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
     }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`, params)
   }
 
   /**
    * GET /api/v1/accounts/:id/following
    *
    * @param id The account ID.
-   * @param query Query parameter for the get request.
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
    * @return The array of accounts.
    */
   public getAccountFollowing(
     id: string,
-    query?: { max_id?: string; since_id?: string; limit?: number }
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
   ): Promise<Response<Array<Account>>> {
-    if (query) {
-      let params = {}
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.since_id) {
-        params = Object.assign(params, {
-          since_id: query.since_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`, params)
-    } else {
-      return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`)
+    let params = {}
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
     }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`, params)
   }
 
   /**
@@ -511,27 +511,32 @@ export default class Mastodon implements MastodonInterface {
    * GET /api/v1/accounts/search
    *
    * @param q Search query.
-   * @param query Query parameter for the get request.
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
    * @return The array of accounts.
    */
-  public searchAccount(q: string, query?: { max_id?: string; since_id?: string; limit?: number }): Promise<Response<Array<Account>>> {
+  public searchAccount(
+    q: string,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
+  ): Promise<Response<Array<Account>>> {
     let params = { q: q }
-    if (query) {
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.since_id) {
-        params = Object.assign(params, {
-          since_id: query.since_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
     }
     return this.client.get<Array<Account>>('/api/v1/accounts/search', params)
   }
@@ -543,36 +548,40 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/bookmarks
    *
-   * @param query Query parameter for the get request.
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  public getBookmarks(query?: { max_id?: string; since_id?: string; limit?: number; min_id?: string }): Promise<Response<Array<Status>>> {
-    if (query) {
-      let params = {}
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.since_id) {
-        params = Object.assign(params, {
-          since_id: query.since_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      if (query.min_id) {
-        params = Object.assign(params, {
-          min_id: query.min_id
-        })
-      }
-      return this.client.get<Array<Status>>('/api/v1/bookmarks', params)
-    } else {
-      return this.client.get<Array<Status>>('/api/v1/bookmarks')
+  public getBookmarks(
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
     }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    return this.client.get<Array<Status>>('/api/v1/bookmarks', params)
   }
 
   // ======================================
@@ -582,31 +591,29 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/favourites
    *
-   * @param query Query parameter for the get request.
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  public getFavourites(query?: { min_id?: string; max_id?: string; limit?: number }): Promise<Response<Array<Status>>> {
-    if (query) {
-      let params = {}
-      if (query.min_id) {
-        params = Object.assign(params, {
-          min_id: query.min_id
-        })
-      }
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      return this.client.get<Array<Status>>('/api/v1/favourites', params)
-    } else {
-      return this.client.get<Array<Status>>('/api/v1/favourites')
+  public getFavourites(limit?: number | null, min_id?: string | null, max_id?: string | null): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
     }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>('/api/v1/favourites', params)
   }
 
   // ======================================
@@ -615,29 +622,30 @@ export default class Mastodon implements MastodonInterface {
 
   /**
    * GET /api/v1/mutes
+   *
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of accounts.
    */
-  public getMutes(query?: { max_id?: string; min_id?: string; limit?: number }): Promise<Response<Array<Account>>> {
-    if (query) {
-      let params = {}
-      if (query.min_id) {
-        params = Object.assign(params, {
-          min_id: query.min_id
-        })
-      }
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      return this.client.get<Array<Account>>('/api/v1/mutes', params)
-    } else {
-      return this.client.get<Array<Account>>('/api/v1/mutes')
+  public getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>> {
+    let params = {}
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
     }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Account>>('/api/v1/mutes', params)
   }
 
   // ======================================
@@ -646,29 +654,30 @@ export default class Mastodon implements MastodonInterface {
 
   /**
    * GET /api/v1/blocks
+   *
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of accounts.
    */
-  public getBlocks(query?: { max_id?: string; min_id?: string; limit?: number }): Promise<Response<Array<Account>>> {
-    if (query) {
-      let params = {}
-      if (query.min_id) {
-        params = Object.assign(params, {
-          min_id: query.min_id
-        })
-      }
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      return this.client.get<Array<Account>>('/api/v1/blocks', params)
-    } else {
-      return this.client.get<Array<Account>>('/api/v1/blocks')
+  public getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>> {
+    let params = {}
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
     }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Account>>('/api/v1/blocks', params)
   }
 
   // ======================================
@@ -677,29 +686,30 @@ export default class Mastodon implements MastodonInterface {
 
   /**
    * GET /api/v1/domain_blocks
+   *
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of domain name.
    */
-  public getDomainBlocks(query?: { max_id?: string; min_id?: string; limit?: number }): Promise<Response<Array<string>>> {
-    if (query) {
-      let params = {}
-      if (query.min_id) {
-        params = Object.assign(params, {
-          min_id: query.min_id
-        })
-      }
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      return this.client.get<Array<string>>('/api/v1/domain_blocks', params)
-    } else {
-      return this.client.get<Array<string>>('/api/v1/domain_blocks')
+  public getDomainBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<string>>> {
+    let params = {}
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
     }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<string>>('/api/v1/domain_blocks', params)
   }
 
   /**
@@ -916,29 +926,30 @@ export default class Mastodon implements MastodonInterface {
   // ======================================
   /**
    * GET /api/v1/endorsements
+   *
+   * @param limit Max number of results to return. Defaults to 40.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @return Array of accounts.
    */
-  public getEndorsements(query?: { limit?: number; max_id?: string; since_id: string }): Promise<Response<Array<Account>>> {
-    if (query) {
-      let params = {}
-      if (query.limit) {
-        params = Object.assign(params, {
-          limit: query.limit
-        })
-      }
-      if (query.max_id) {
-        params = Object.assign(params, {
-          max_id: query.max_id
-        })
-      }
-      if (query.since_id) {
-        params = Object.assign(params, {
-          since_id: query.since_id
-        })
-      }
-      return this.client.get<Array<Account>>('/api/v1/endorsements', params)
-    } else {
-      return this.client.get<Array<Account>>('/api/v1/endorsements')
+  public getEndorsements(limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Account>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
     }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    return this.client.get<Array<Account>>('/api/v1/endorsements', params)
   }
 
   // ======================================
