@@ -14,6 +14,9 @@ import { FeaturedTag } from './entities/featured_tag'
 import { Tag } from './entities/tag'
 import { Preferences } from './entities/preferences'
 import { Context } from './entities/context'
+import { Attachment } from './entities/attachment'
+import { Poll } from './entities/poll'
+import { ScheduledStatus } from './entities/scheduled_status'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -1248,5 +1251,166 @@ export default class Mastodon implements MastodonInterface {
    */
   public unpinStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/unpin`)
+  }
+
+  // ======================================
+  // statuses/media
+  // ======================================
+  /**
+   * POST /api/v1/media
+   *
+   * @param file The file to be attached, using multipart form data.
+   * @param description A plain-text description of the media.
+   * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+   * @return Attachment
+   */
+  public uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>> {
+    let params = {
+      file: file
+    }
+    if (description) {
+      params = Object.assign(params, {
+        description: description
+      })
+    }
+    if (focus) {
+      params = Object.assign(params, {
+        focus: focus
+      })
+    }
+    return this.client.post<Attachment>('/api/v1/media', params)
+  }
+
+  /**
+   * PUT /api/v1/media/:id
+   *
+   * @param id Target media ID.
+   * @param file The file to be attached, using multipart form data.
+   * @param description A plain-text description of the media.
+   * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+   * @return Attachment
+   */
+  public updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>> {
+    let params = {}
+    if (file) {
+      params = Object.assign(params, {
+        file: file
+      })
+    }
+    if (description) {
+      params = Object.assign(params, {
+        description: description
+      })
+    }
+    if (focus) {
+      params = Object.assign(params, {
+        focus: focus
+      })
+    }
+    return this.client.put<Attachment>(`/api/v1/media/${id}`, params)
+  }
+
+  // ======================================
+  // statuses/polls
+  // ======================================
+  /**
+   * GET /api/v1/polls/:id
+   *
+   * @param id Target poll ID.
+   * @return Poll
+   */
+  public getPoll(id: string): Promise<Response<Poll>> {
+    return this.client.get<Poll>(`/api/v1/polls/${id}`)
+  }
+
+  /**
+   * POST /api/v1/polls/:id/votes
+   *
+   * @param id Target poll ID.
+   * @param choices Array of own votes containing index for each option (starting from 0).
+   * @return Poll
+   */
+  public votePoll(id: string, choices: Array<number>): Promise<Response<Poll>> {
+    return this.client.post<Poll>(`/api/v1/polls/${id}/votes`, {
+      choices: choices
+    })
+  }
+
+  // ======================================
+  // statuses/scheduled_statuses
+  // ======================================
+  /**
+   * GET /api/v1/scheduled_statuses
+   *
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of scheduled statuses.
+   */
+  public getScheduledStatuses(
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null
+  ): Promise<Response<Array<ScheduledStatus>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    return this.client.get<Array<ScheduledStatus>>('/api/v1/scheduled_statuses', params)
+  }
+
+  /**
+   * GET /api/v1/scheduled_statuses/:id
+   *
+   * @param id Target status ID.
+   * @return ScheduledStatus.
+   */
+  public getScheduledStatus(id: string): Promise<Response<ScheduledStatus>> {
+    return this.client.get<ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`)
+  }
+
+  /**
+   * PUT /api/v1/scheduled_statuses/:id
+   *
+   * @param id Target scheduled status ID.
+   * @param scheduled_at ISO 8601 Datetime at which the status will be published.
+   * @return ScheduledStatus.
+   */
+  public scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<ScheduledStatus>> {
+    let params = {}
+    if (scheduled_at) {
+      params = Object.assign(params, {
+        scheduled_at: scheduled_at
+      })
+    }
+    return this.client.put<ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`, params)
+  }
+
+  /**
+   * DELETE /api/v1/scheduled_statuses/:id
+   *
+   * @param id Target scheduled status ID.
+   */
+  public cancelScheduledStatus(id: string): Promise<Response<{}>> {
+    return this.client.del<{}>(`/api/v1/scheduled_statuses/${id}`)
   }
 }
