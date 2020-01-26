@@ -1622,43 +1622,4 @@ export default class Mastodon implements MastodonInterface {
     }
     return this.client.get<Array<Status>>(`/api/v1/timelines/list/${list_id}`, params)
   }
-
-  /**
-   * GET /api/v1/timelines/direct
-   *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public getDirectTimeline(
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null,
-    limit?: number | null
-  ): Promise<Response<Array<Status>>> {
-    let params = {}
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    return this.client.get<Array<Status>>('/api/v1/timelines/direct', params)
-  }
 }
