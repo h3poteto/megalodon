@@ -20,6 +20,7 @@ import { ScheduledStatus } from './entities/scheduled_status'
 import { Conversation } from './entities/conversation'
 import { Marker } from './entities/marker'
 import { Notification } from './entities/notification'
+import { Results } from './entities/results'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -1903,5 +1904,81 @@ export default class Mastodon implements MastodonInterface {
    */
   public dismissNotification(id: string): Promise<Response<{}>> {
     return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
+  }
+
+  // ======================================
+  // search
+  // ======================================
+  /**
+   * GET /api/v2/search
+   *
+   * @param q The search query.
+   * @param type Enum of search target.
+   * @param limit Maximum number of results to load, per type. Defaults to 20. Max 40.
+   * @param max_id Return results older than this id.
+   * @param min_id Return results immediately newer than this id.
+   * @param resolve Attempt WebFinger lookup. Defaults to false.
+   * @param following Only include accounts that the user is following. Defaults to false.
+   * @param account_id If provided, statuses returned will be authored only by this account.
+   * @param exclude_unreviewed Filter out unreviewed tags? Defaults to false.
+   * @return Results.
+   */
+  public search(
+    q: string,
+    type: 'accounts' | 'hashtags' | 'statuses',
+    limit?: number | null,
+    max_id?: string | null,
+    min_id?: string | null,
+    resolve?: boolean | null,
+    offset?: number | null,
+    following?: boolean | null,
+    account_id?: string | null,
+    exclude_unreviewed?: boolean | null
+  ): Promise<Response<Results>> {
+    let params = {
+      q,
+      type
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id
+      })
+    }
+    if (resolve) {
+      params = Object.assign(params, {
+        resolve
+      })
+    }
+    if (offset) {
+      params = Object.assign(params, {
+        offset
+      })
+    }
+    if (following) {
+      params = Object.assign(params, {
+        following
+      })
+    }
+    if (account_id) {
+      params = Object.assign(params, {
+        account_id
+      })
+    }
+    if (exclude_unreviewed) {
+      params = Object.assign(params, {
+        exclude_unreviewed
+      })
+    }
+    return this.client.get<Results>('/api/v2/search', params)
   }
 }
