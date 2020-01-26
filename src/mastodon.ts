@@ -17,6 +17,9 @@ import { Context } from './entities/context'
 import { Attachment } from './entities/attachment'
 import { Poll } from './entities/poll'
 import { ScheduledStatus } from './entities/scheduled_status'
+import { Conversation } from './entities/conversation'
+import { Marker } from './entities/marker'
+import { Notification } from './entities/notification'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -1621,5 +1624,202 @@ export default class Mastodon implements MastodonInterface {
       })
     }
     return this.client.get<Array<Status>>(`/api/v1/timelines/list/${list_id}`, params)
+  }
+
+  // ======================================
+  // timelines/conversations
+  // ======================================
+  /**
+   * GET /api/v1/conversations
+   *
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  public getConversationTimeline(
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    limit?: number | null
+  ): Promise<Response<Array<Status>>> {
+    let params = {}
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<Status>>('/api/v1/conversations', params)
+  }
+
+  /**
+   * DELETE /api/v1/conversations/:id
+   *
+   * @param id Target conversation ID.
+   */
+  public deleteConversation(id: string): Promise<Response<{}>> {
+    return this.client.del<{}>(`/api/v1/conversations/${id}`)
+  }
+
+  /**
+   * POST /api/v1/conversations/:id/read
+   *
+   * @param id Target conversation ID.
+   * @return Conversation.
+   */
+  public readConversation(id: string): Promise<Response<Conversation>> {
+    return this.client.post<Conversation>(`/api/v1/conversations/${id}/read`)
+  }
+
+  // ======================================
+  // timelines/lists
+  // ======================================
+  /**
+   * GET /api/v1/lists
+   */
+  public getLists(): Promise<Response<Array<List>>> {
+    return this.client.get<Array<List>>('/api/v1/lists')
+  }
+
+  /**
+   * GET /api/v1/lists/:id
+   *
+   * @param id Target list ID.
+   */
+  public getList(id: string): Promise<Response<List>> {
+    return this.client.get<List>(`/api/v1/lists/${id}`)
+  }
+
+  /**
+   * POST /api/v1/lists
+   *
+   * @param title List name.
+   */
+  public createList(title: string): Promise<Response<List>> {
+    return this.client.post<List>('/api/v1/lists', {
+      title: title
+    })
+  }
+
+  /**
+   * PUT /api/v1/lists/:id
+   *
+   * @param id Target list ID.
+   * @param title New list name.
+   */
+  public updateList(id: string, title: string): Promise<Response<List>> {
+    return this.client.put<List>(`/api/v1/lists/${id}`, {
+      title: title
+    })
+  }
+
+  /**
+   * DELETE /api/v1/lists/:id
+   *
+   * @param id Target list ID.
+   */
+  public deleteList(id: string): Promise<Response<{}>> {
+    return this.client.del<{}>(`/api/v1/lists/${id}`)
+  }
+
+  /**
+   * GET /api/v1/lists/:id/accounts
+   */
+  public getAccountsInList(
+    id: string,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
+  ): Promise<Response<Array<Account>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    return this.client.get<Array<Account>>(`/api/v1/lists/${id}/accounts`, params)
+  }
+
+  /**
+   * POST /api/v1/lists/:id/accounts
+   *
+   * @param id Target list ID.
+   * @param account_ids Array of account IDs to add to the list.
+   */
+  public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
+    return this.client.post<{}>(`/api/v1/lists/${id}/accounts`, {
+      account_ids: account_ids
+    })
+  }
+
+  /**
+   * DELETE /api/v1/lists/:id/accounts
+   *
+   * @param id Target list ID.
+   * @param account_ids Array of account IDs to add to the list.
+   */
+  public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
+    return this.client.del<{}>(`/api/v1/lists/${id}/accounts`, {
+      account_ids: account_ids
+    })
+  }
+
+  // ======================================
+  // timelines/markers
+  // ======================================
+  /**
+   * GET /api/v1/markers
+   *
+   * @param timelines Array of timeline names, String enum anyOf home, notifications.
+   * @return Marker or empty object.
+   */
+  public getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Marker | {}>> {
+    return this.client.get<Marker | {}>('/api/v1/markers', {
+      timeline: timeline
+    })
+  }
+
+  /**
+   * POST /api/v1/markers
+   */
+  public saveMarker(home?: { last_read_id: string } | null, notifications?: { last_read_id: string } | null): Promise<Response<Marker>> {
+    let params = {}
+    if (home) {
+      params = Object.assign(params, {
+        home: home
+      })
+    }
+    if (notifications) {
+      params = Object.assign(params, {
+        notifications: notifications
+      })
+    }
+    return this.client.post<Marker>('/api/v1/markers', params)
   }
 }
