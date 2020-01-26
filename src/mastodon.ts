@@ -23,6 +23,7 @@ import { Notification } from './entities/notification'
 import { Results } from './entities/results'
 import { Instance } from './entities/instance'
 import { Activity } from './entities/activity'
+import { Emoji } from './entities/emoji'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -2006,5 +2007,75 @@ export default class Mastodon implements MastodonInterface {
    */
   public static getInstanceActivity(): Promise<Response<Array<Activity>>> {
     return APIClient.get<Array<Activity>>('/api/v1/instance/activity')
+  }
+
+  // ======================================
+  // instance/trends
+  // ======================================
+  /**
+   * GET /api/v1/trends
+   *
+   * @param limit Maximum number of results to return. Defaults to 10.
+   */
+  public static getInstanceTrends(limit?: number | null): Promise<Response<Array<Tag>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit
+      })
+    }
+    return APIClient.get<Array<Tag>>('/api/v1/trends', params)
+  }
+
+  // ======================================
+  // instance/directory
+  // ======================================
+  /**
+   * GET /api/v1/directory
+   *
+   * @param limit How many accounts to load. Default 40.
+   * @param offset How many accounts to skip before returning results. Default 0.
+   * @param order Order of results.
+   * @param local Only return local accounts.
+   * @return Array of accounts.
+   */
+  public static getInstanceDirectory(
+    limit?: number | null,
+    offset?: number | null,
+    order?: 'active' | 'new' | null,
+    local?: boolean | null
+  ): Promise<Response<Array<Account>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit
+      })
+    }
+    if (offset) {
+      params = Object.assign(params, {
+        offset
+      })
+    }
+    if (order) {
+      params = Object.assign(params, {
+        order
+      })
+    }
+    if (local) {
+      params = Object.assign(params, {
+        local
+      })
+    }
+    return APIClient.get<Array<Account>>('/api/v1/directory', params)
+  }
+
+  // ======================================
+  // instance/custom_emojis
+  // ======================================
+  /**
+   * GET /api/v1/custom_emojis
+   */
+  public static getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
+    return APIClient.get<Array<Emoji>>('/api/v1/custom_emojis')
   }
 }
