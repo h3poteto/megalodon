@@ -1445,10 +1445,10 @@ export default class Mastodon implements MastodonInterface {
   public getPublicTimeline(
     local?: boolean | null,
     only_media?: boolean | null,
+    limit?: number | null,
     max_id?: string | null,
     since_id?: string | null,
-    min_id?: string | null,
-    limit?: number | null
+    min_id?: string | null
   ): Promise<Response<Array<Status>>> {
     let params = {}
     if (local !== null) {
@@ -1500,10 +1500,10 @@ export default class Mastodon implements MastodonInterface {
     hashtag: string,
     local?: boolean | null,
     only_media?: boolean | null,
+    limit?: number | null,
     max_id?: string | null,
     since_id?: string | null,
-    min_id?: string | null,
-    limit?: number | null
+    min_id?: string | null
   ): Promise<Response<Array<Status>>> {
     let params = {}
     if (local !== null) {
@@ -1551,10 +1551,10 @@ export default class Mastodon implements MastodonInterface {
    */
   public getHomeTimeline(
     local?: boolean | null,
+    limit?: number | null,
     max_id?: string | null,
     since_id?: string | null,
-    min_id?: string | null,
-    limit?: number | null
+    min_id?: string | null
   ): Promise<Response<Array<Status>>> {
     let params = {}
     if (local !== null) {
@@ -1597,10 +1597,10 @@ export default class Mastodon implements MastodonInterface {
    */
   public getListTimeline(
     list_id: string,
+    limit?: number | null,
     max_id?: string | null,
     since_id?: string | null,
-    min_id?: string | null,
-    limit?: number | null
+    min_id?: string | null
   ): Promise<Response<Array<Status>>> {
     let params = {}
     if (max_id) {
@@ -1639,10 +1639,10 @@ export default class Mastodon implements MastodonInterface {
    * @return Array of statuses.
    */
   public getConversationTimeline(
+    limit?: number | null,
     max_id?: string | null,
     since_id?: string | null,
-    min_id?: string | null,
-    limit?: number | null
+    min_id?: string | null
   ): Promise<Response<Array<Status>>> {
     let params = {}
     if (max_id) {
@@ -1882,7 +1882,7 @@ export default class Mastodon implements MastodonInterface {
   /**
    * GET /api/v1/notifications/:id
    *
-   * @param id Target notificaiton ID.
+   * @param id Target notification ID.
    * @return Notification.
    */
   public getNotification(id: string): Promise<Response<Notification>> {
