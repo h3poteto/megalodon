@@ -24,6 +24,7 @@ import { Results } from './entities/results'
 import { Instance } from './entities/instance'
 import { Activity } from './entities/activity'
 import { Emoji } from './entities/emoji'
+import { PushSubscription } from './entities/push_subscription'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -1907,6 +1908,72 @@ export default class Mastodon implements MastodonInterface {
    */
   public dismissNotification(id: string): Promise<Response<{}>> {
     return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
+  }
+
+  // ======================================
+  // notifications/push
+  // ======================================
+  /**
+   * POST /api/v1/push/subscription
+   *
+   * @param subscription[endpoint] Endpoint URL that is called when a notification event occurs.
+   * @param subscription[keys][p256dh] User agent public key. Base64 encoded string of public key of ECDH key using prime256v1 curve.
+   * @param subscription[keys] Auth secret. Base64 encoded string of 16 bytes of random data.
+   * @param data[alerts][follow] Receive follow notifications?
+   * @param data[alerts][favourite] Receive favourite notifications?
+   * @param data[alerts][reblog] Receive reblog notifictaions?
+   * @param data[alerts][mention] Receive mention notifications?
+   * @param data[alerts][poll] Receive poll notifications?
+   * @return PushSubscription.
+   */
+  public subscribePushNotification(
+    subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
+    data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
+  ): Promise<Response<PushSubscription>> {
+    let params = {
+      subscription
+    }
+    if (data) {
+      params = Object.assign(params, {
+        data
+      })
+    }
+    return this.client.post<PushSubscription>('/api/v1/push/subscription', params)
+  }
+
+  /**
+   * GET /api/v1/push/subscription
+   */
+  public getPushSubscription(): Promise<Response<PushSubscription>> {
+    return this.client.get<PushSubscription>('/api/v1/push/subscription')
+  }
+
+  /**
+   * PUT /api/v1/push/subscription
+   *
+   * @param data[alerts][follow] Receive follow notifications?
+   * @param data[alerts][favourite] Receive favourite notifications?
+   * @param data[alerts][reblog] Receive reblog notifictaions?
+   * @param data[alerts][mention] Receive mention notifications?
+   * @param data[alerts][poll] Receive poll notifications?
+   */
+  public updatePushSubscription(
+    data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
+  ): Promise<Response<PushSubscription>> {
+    let params = {}
+    if (data) {
+      params = Object.assign(params, {
+        data
+      })
+    }
+    return this.client.put<PushSubscription>('/api/v1/push/subscription', params)
+  }
+
+  /**
+   * DELETE /api/v1/push/subscription
+   */
+  public deletePushSubscription(): Promise<Response<{}>> {
+    return this.client.del<{}>('/api/v1/push/subscription')
   }
 
   // ======================================
