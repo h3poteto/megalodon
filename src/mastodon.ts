@@ -21,6 +21,8 @@ import { Conversation } from './entities/conversation'
 import { Marker } from './entities/marker'
 import { Notification } from './entities/notification'
 import { Results } from './entities/results'
+import { Instance } from './entities/instance'
+import { Activity } from './entities/activity'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -1980,5 +1982,29 @@ export default class Mastodon implements MastodonInterface {
       })
     }
     return this.client.get<Results>('/api/v2/search', params)
+  }
+
+  // ======================================
+  // instance
+  // ======================================
+  /**
+   * GET /api/v1/instance
+   */
+  public static getInstance(): Promise<Response<Instance>> {
+    return APIClient.get<Instance>('/api/v1/instance')
+  }
+
+  /**
+   * GET /api/v1/instance/peers
+   */
+  public static getInstancePeers(): Promise<Response<Array<string>>> {
+    return APIClient.get<Array<string>>('/api/v1/instance/peers')
+  }
+
+  /**
+   * GET /api/v1/instance/activity
+   */
+  public static getInstanceActivity(): Promise<Response<Array<Activity>>> {
+    return APIClient.get<Array<Activity>>('/api/v1/instance/activity')
   }
 }
