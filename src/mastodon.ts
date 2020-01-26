@@ -1822,4 +1822,86 @@ export default class Mastodon implements MastodonInterface {
     }
     return this.client.post<Marker>('/api/v1/markers', params)
   }
+
+  // ======================================
+  // notifications
+  // ======================================
+  /**
+   * GET /api/v1/notifications
+   *
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @param exclude_type Array of types to exclude.
+   * @param account_id Return only notifications received from this account.
+   * @return Array of notifications.
+   */
+  public getNotifications(
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null,
+    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
+    account_id?: string | null
+  ): Promise<Response<Array<Notification>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id
+      })
+    }
+    if (exclude_type) {
+      params = Object.assign(params, {
+        exclude_type
+      })
+    }
+    if (account_id) {
+      params = Object.assign(params, {
+        account_id
+      })
+    }
+    return this.client.get<Array<Notification>>('/api/v1/notifications', params)
+  }
+
+  /**
+   * GET /api/v1/notifications/:id
+   *
+   * @param id Target notificaiton ID.
+   * @return Notification.
+   */
+  public getNotification(id: string): Promise<Response<Notification>> {
+    return this.client.get<Notification>(`/api/v1/notifications/${id}`)
+  }
+
+  /**
+   * POST /api/v1/notifications/clear
+   */
+  public dismissNotifications(): Promise<Response<{}>> {
+    return this.client.post<{}>('/api/v1/notifications/clear')
+  }
+
+  /**
+   * POST /api/v1/notifications/:id/dismiss
+   *
+   * @param id Target notification ID.
+   */
+  public dismissNotification(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
+  }
 }
