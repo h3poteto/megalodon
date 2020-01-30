@@ -1,4 +1,4 @@
-import Mastodon from '@/mastodon'
+import APIClient from '@/api_client'
 import Worker from 'jest-worker'
 
 jest.mock('axios', () => {
@@ -20,7 +20,7 @@ jest.mock('axios', () => {
   return mockAxios
 })
 
-const worker = async (client: Mastodon) => {
+const worker = async (client: APIClient) => {
   const w: any = new Worker(require.resolve('./cancelWorker.ts'))
   await w.cancel(client)
 }
@@ -29,7 +29,7 @@ const worker = async (client: Mastodon) => {
 // I'm waiting for resolve this issue.
 // https://github.com/facebook/jest/issues/8872
 describe.skip('cancel', () => {
-  const client = new Mastodon('testToken', 'https://pleroma.io/api/v1')
+  const client = new APIClient('testToken', 'https://pleroma.io/api/v1')
   it('should be raised', async () => {
     const getPromise = client.get<{}>('/timelines/home')
     worker(client)

@@ -1,5 +1,5 @@
-import Mastodon from '@/mastodon'
+import APIClient from '@/api_client'
 
-export function cancel(client: Mastodon) {
+export function cancel(client: APIClient) {
   return client.cancel()
 }
