@@ -14,6 +14,7 @@ import proxyAgent, { ProxyConfig } from './proxy_config'
 export default class WebSocket extends EventEmitter {
   public url: string
   public stream: string
+  public params: string | null
   public parser: Parser
   public headers: { [key: string]: string }
   public proxyConfig: ProxyConfig | false = false
@@ -34,10 +35,18 @@ export default class WebSocket extends EventEmitter {
    * @param userAgent The specified User Agent.
    * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(url: string, stream: string, accessToken: string, userAgent: string, proxyConfig: ProxyConfig | false = false) {
+  constructor(
+    url: string,
+    stream: string,
+    params: string | null,
+    accessToken: string,
+    userAgent: string,
+    proxyConfig: ProxyConfig | false = false
+  ) {
     super()
     this.url = url
     this.stream = stream
+    this.params = params
     this.parser = new Parser()
     this.headers = {
       'User-Agent': userAgent
@@ -67,7 +76,7 @@ export default class WebSocket extends EventEmitter {
   private _startWebSocketConnection() {
     this._resetConnection()
     this._setupParser()
-    this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
+    this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers, this.proxyConfig)
     this._bindSocket(this._client)
   }
 
@@ -123,7 +132,7 @@ export default class WebSocket extends EventEmitter {
         }
         // Call connect methods
         console.log('Reconnecting')
-        this._client = this._connect(this.url, this.stream, this._accessToken, this.headers, this.proxyConfig)
+        this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers, this.proxyConfig)
         this._bindSocket(this._client)
       }
     }, this._reconnectInterval)
@@ -140,16 +149,21 @@ export default class WebSocket extends EventEmitter {
   private _connect(
     url: string,
     stream: string,
+    params: string | null,
     accessToken: string,
     headers: { [key: string]: string },
     proxyConfig: ProxyConfig | false
   ): WS {
-    const params: Array<string> = [`stream=${stream}`]
+    const parameter: Array<string> = [`stream=${stream}`]
+
+    if (params) {
+      parameter.push(params)
+    }
 
     if (accessToken !== null) {
-      params.push(`access_token=${accessToken}`)
+      parameter.push(`access_token=${accessToken}`)
     }
-    const requestURL: string = `${url}/?${params.join('&')}`
+    const requestURL: string = `${url}/?${parameter.join('&')}`
     let options: WS.ClientOptions = {
       headers: headers
     }

@@ -26,6 +26,8 @@ import { Activity } from './entities/activity'
 import { Emoji } from './entities/emoji'
 import { PushSubscription } from './entities/push_subscription'
 import { Token } from './entities/token'
+import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -249,6 +251,18 @@ export interface MastodonInterface {
     account_id?: string | null,
     exclude_unreviewed?: boolean | null
   ): Promise<Response<Results>>
+  userStream(): StreamListener
+  publicStream(): StreamListener
+  localStream(): StreamListener
+  tagStream(tag: string): StreamListener
+  listStream(list_id: string): StreamListener
+  directStream(): StreamListener
+  userSocket(): WebSocket
+  publicSocket(): WebSocket
+  localSocket(): WebSocket
+  tagSocket(tag: string): WebSocket
+  listSocket(list_id: string): WebSocket
+  directSocket(): WebSocket
 }
 
 export default class Mastodon implements MastodonInterface {
@@ -2365,5 +2379,59 @@ export default class Mastodon implements MastodonInterface {
    */
   public static getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
     return APIClient.get<Array<Emoji>>('/api/v1/custom_emojis')
+  }
+
+  // ======================================
+  // HTTP Streaming
+  // ======================================
+  public userStream(): StreamListener {
+    return this.client.stream('/api/v1/streaming/user')
+  }
+
+  public publicStream(): StreamListener {
+    return this.client.stream('/api/v1/streaming/public')
+  }
+
+  public localStream(): StreamListener {
+    return this.client.stream('/api/v1/streaming/public/local')
+  }
+
+  public tagStream(tag: string): StreamListener {
+    return this.client.stream(`/api/v1/streaming/hashtag?tag=${tag}`)
+  }
+
+  public listStream(list_id: string): StreamListener {
+    return this.client.stream(`/api/v1/streaming/list?list=${list_id}`)
+  }
+
+  public directStream(): StreamListener {
+    return this.client.stream('/api/v1/streaming/direct')
+  }
+
+  // ======================================
+  // WebSocket
+  // ======================================
+  public userSocket(): WebSocket {
+    return this.client.socket('/api/v1/streaming', 'user')
+  }
+
+  public publicSocket(): WebSocket {
+    return this.client.socket('/api/v1/streaming', 'public')
+  }
+
+  public localSocket(): WebSocket {
+    return this.client.socket('/api/v1/streaming', 'public:local')
+  }
+
+  public tagSocket(tag: string): WebSocket {
+    return this.client.socket('/api/v1/streaming', 'hashtag', `tag=${tag}`)
+  }
+
+  public listSocket(list_id: string): WebSocket {
+    return this.client.socket('/api/v1/streaming', 'list', `list=${list_id}`)
+  }
+
+  public directSocket(): WebSocket {
+    return this.client.socket('/api/v1/streaming', 'direct')
   }
 }

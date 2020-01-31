@@ -457,9 +457,9 @@ export default class MastodonAPIClient implements ApiInterface {
    * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
    * @returns WebSocket, which inherits from EventEmitter
    */
-  public socket(path: string, stream: string): WebSocket {
+  public socket(path: string, stream: string, params: string | null = null): WebSocket {
     const url = this.baseUrl + path
-    const streaming = new WebSocket(url, stream, this.accessToken, this.userAgent, this.proxyConfig)
+    const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
     process.nextTick(() => {
       streaming.start()
     })
