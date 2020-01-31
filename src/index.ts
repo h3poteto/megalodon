@@ -3,6 +3,11 @@ import StreamListener, { StreamListenerError } from './mastodon/stream_listener'
 import WebSocket from './mastodon/web_socket'
 import Response from './response'
 import OAuth from './oauth'
+import { isCancel, RequestCanceledError } from './cancel'
+import { ProxyConfig } from './proxy_config'
+//
+import MegalodonInterface from './megalodon'
+import Mastodon from './mastodon'
 /**
  * Entities
  */
@@ -33,8 +38,6 @@ import { StatusParams } from './entities/status_params'
 import { Tag } from './entities/tag'
 import { Token } from './entities/token'
 import { URLs } from './entities/urls'
-import { isCancel, RequestCanceledError } from './cancel'
-import { ProxyConfig } from './proxy_config'
 
 export {
   StreamListener,
@@ -45,6 +48,9 @@ export {
   RequestCanceledError,
   isCancel,
   ProxyConfig,
+  //
+  MegalodonInterface,
+  Mastodon,
   /**
    * Entities
    */
