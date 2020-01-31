@@ -1,6 +1,6 @@
-import API from './api_client'
-import StreamListener, { StreamListenerError } from './stream_listener'
-import WebSocket from './web_socket'
+import API from './mastodon/api_client'
+import StreamListener, { StreamListenerError } from './mastodon/stream_listener'
+import WebSocket from './mastodon/web_socket'
 import Response from './response'
 import OAuth from './oauth'
 /**

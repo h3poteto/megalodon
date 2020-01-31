@@ -1,4 +1,4 @@
-import { Parser } from '@/web_socket'
+import { Parser } from '@/mastodon/web_socket'
 import { Account } from '@/entities/account'
 import { Status } from '@/entities/status'
 import { Application } from '@/entities/application'
