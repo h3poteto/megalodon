@@ -1,4 +1,4 @@
-import APIClient from '@/api_client'
+import APIClient from '@/mastodon/api_client'
 import Worker from 'jest-worker'
 
 jest.mock('axios', () => {

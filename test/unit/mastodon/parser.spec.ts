@@ -1,4 +1,4 @@
-import Parser from '@/parser'
+import Parser from '@/mastodon/parser'
 import { Account } from '@/entities/account'
 import { Status } from '@/entities/status'
 import { Application } from '@/entities/application'

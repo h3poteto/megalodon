@@ -1,4 +1,4 @@
-import APIClient from '@/api_client'
+import APIClient from '@/mastodon/api_client'
 import { Account } from '@/entities/account'
 import { Status } from '@/entities/status'
 import { Application } from '@/entities/application'
