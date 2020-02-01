@@ -9,15 +9,6 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
   // ======================================
   // accounts
   // ======================================
-  /**
-   * GET /api/v1/pleroma/accounts/:id/favourites
-   *
-   * @param id Target account ID.
-   * @param limit Max number of results to return.
-   * @param max_id Return results order than ID.
-   * @param since_id Return results newer than ID.
-   * @return Array of statuses.
-   */
   public getAccountFavourites(
     id: string,
     limit?: number | null,
@@ -43,22 +34,10 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
     return this.client.get<Array<Status>>(`/api/v1/pleroma/accounts/${id}/favourites`, params)
   }
 
-  /**
-   * POST /api/v1/pleroma/accounts/:id/subscribe
-   *
-   * @param id Target account ID.
-   * @return Relationship.
-   */
   public subscribeAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/pleroma/accounts/${id}/subscribe`)
   }
 
-  /**
-   * POST /api/v1/pleroma/accounts/:id/unsubscribe
-   *
-   * @param id Target account ID.
-   * @return Relationship.
-   */
   public unsubscribeAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`)
   }

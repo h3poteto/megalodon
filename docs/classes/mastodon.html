@@ -241,22 +241,44 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L39">src/mastodon.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L39">src/mastodon.ts:39</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>accessToken: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>access token from OAuth2 authorization</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> baseUrl: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = DEFAULT_URL</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>hostname or base URL</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> userAgent: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = DEFAULT_UA</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>UserAgent is specified in header on request.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> proxyConfig: <a href="../globals.html#proxyconfig" class="tsd-signature-type">ProxyConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Proxy setting, or set false if don&#39;t use proxy.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="mastodon.html" class="tsd-signature-type">Mastodon</a></h4>
@@ -272,7 +294,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">APIClient</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L39">src/mastodon.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L39">src/mastodon.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -290,25 +312,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#acceptfollowrequest">acceptFollowRequest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L949">src/mastodon.ts:949</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L713">src/mastodon.ts:713</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/follow_requests/:id/authorize</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship.</p>
 						</li>
 					</ul>
 				</section>
@@ -323,27 +336,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#addaccountstolist">addAccountsToList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1811">src/mastodon.ts:1811</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1271">src/mastodon.ts:1271</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/lists/:id/accounts</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target list ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5>account_ids: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of account IDs to add to the list.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -361,25 +363,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#blockaccount">blockAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L480">src/mastodon.ts:480</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L397">src/mastodon.ts:397</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/block</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -394,21 +387,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#blockdomain">blockDomain</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L759">src/mastodon.ts:759</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L583">src/mastodon.ts:583</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST/api/v1/domain_blocks</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>domain: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Domain to block.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -426,25 +411,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#bookmarkstatus">bookmarkStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1253">src/mastodon.ts:1253</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L895">src/mastodon.ts:895</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/bookmark</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status.</p>
 						</li>
 					</ul>
 				</section>
@@ -459,21 +435,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#cancelscheduledstatus">cancelScheduledStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1463">src/mastodon.ts:1463</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1019">src/mastodon.ts:1019</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/scheduled_statuses/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target scheduled status ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -491,25 +459,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createfeaturedtag">createFeaturedTag</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1012">src/mastodon.ts:1012</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L751">src/mastodon.ts:751</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/featured_tags</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target hashtag name.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#featuredtag" class="tsd-signature-type">FeaturedTag</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>FeaturedTag.</p>
 						</li>
 					</ul>
 				</section>
@@ -524,49 +483,28 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createfilter">createFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L805">src/mastodon.ts:805</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L607">src/mastodon.ts:607</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/filters</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>phrase: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Text to be filtered.</p>
-									</div>
 								</li>
 								<li>
 									<h5>context: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"home"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"notifications"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"public"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"thread"</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of enumerable strings home, notifications, public, thread. At least one context must be specified.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> irreversible: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Should the server irreversibly drop matching entities from home and notifications?</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> whole_word: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Consider word boundaries?</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> expires_in: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>ISO 8601 Datetime for when the filter expires.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Filter</p>
 						</li>
 					</ul>
 				</section>
@@ -581,21 +519,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createlist">createList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1750">src/mastodon.ts:1750</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1230">src/mastodon.ts:1230</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/lists</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>title: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>List name.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#list" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -613,27 +543,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deleteaccountsfromlist">deleteAccountsFromList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1823">src/mastodon.ts:1823</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1277">src/mastodon.ts:1277</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/lists/:id/accounts</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target list ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5>account_ids: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of account IDs to add to the list.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -651,21 +570,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deleteconversation">deleteConversation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1712">src/mastodon.ts:1712</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1211">src/mastodon.ts:1211</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/conversations/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target conversation ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -683,25 +594,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletefeaturedtag">deleteFeaturedTag</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1024">src/mastodon.ts:1024</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L757">src/mastodon.ts:757</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/featured_tags/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target featured tag id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Empty</p>
 						</li>
 					</ul>
 				</section>
@@ -716,25 +618,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletefilter">deleteFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L881">src/mastodon.ts:881</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L666">src/mastodon.ts:666</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/filters/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The filter ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Removed filter.</p>
 						</li>
 					</ul>
 				</section>
@@ -749,21 +642,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletelist">deleteList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1773">src/mastodon.ts:1773</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1242">src/mastodon.ts:1242</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/lists/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target list ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -781,14 +666,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletepushsubscription">deletePushSubscription</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2006">src/mastodon.ts:2006</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1398">src/mastodon.ts:1398</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/push/subscription</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -804,25 +684,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletestatus">deleteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1172">src/mastodon.ts:1172</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L863">src/mastodon.ts:863</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/statuses/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -837,7 +708,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#directsocket">directSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2230">src/mastodon.ts:2230</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1610">src/mastodon.ts:1610</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
@@ -855,7 +726,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#directstream">directStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2203">src/mastodon.ts:2203</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1583">src/mastodon.ts:1583</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistener.html" class="tsd-signature-type">StreamListener</a></h4>
@@ -871,22 +742,15 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#dismissnotification">dismissNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1940">src/mastodon.ts:1940</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1360">src/mastodon.ts:1360</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/notifications/:id/dismiss</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target notification ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -904,14 +768,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#dismissnotifications">dismissNotifications</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1931">src/mastodon.ts:1931</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1356">src/mastodon.ts:1356</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/notifications/clear</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -927,25 +786,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#favouritestatus">favouriteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1213">src/mastodon.ts:1213</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L879">src/mastodon.ts:879</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/favourite</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status.</p>
 						</li>
 					</ul>
 				</section>
@@ -960,31 +810,19 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#followaccount">followAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L458">src/mastodon.ts:458</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L387">src/mastodon.ts:387</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/follow</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> reblog: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Receive this account&#39;s reblogs in home timeline.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -999,25 +837,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccount">getAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L323">src/mastodon.ts:323</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L295">src/mastodon.ts:295</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An account.</p>
 						</li>
 					</ul>
 				</section>
@@ -1032,7 +861,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountfavourites">getAccountFavourites</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L351">src/mastodon.ts:351</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L317">src/mastodon.ts:317</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1065,43 +894,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountfollowers">getAccountFollowers</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L372">src/mastodon.ts:372</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L329">src/mastodon.ts:329</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/:id/followers</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>The array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -1116,43 +927,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountfollowing">getAccountFollowing</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L406">src/mastodon.ts:406</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L354">src/mastodon.ts:354</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/:id/following</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>The array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -1167,25 +960,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountlists">getAccountLists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L437">src/mastodon.ts:437</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L379">src/mastodon.ts:379</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/:id/lists</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#list" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>The array of lists.</p>
 						</li>
 					</ul>
 				</section>
@@ -1200,25 +984,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountstatuses">getAccountStatuses</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L333">src/mastodon.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L299">src/mastodon.ts:299</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/:id/statuses</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Account&#39;s statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -1233,14 +1008,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountsinlist">getAccountsInList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1780">src/mastodon.ts:1780</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1246">src/mastodon.ts:1246</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/lists/:id/accounts</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1271,37 +1041,22 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getblocks">getBlocks</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L702">src/mastodon.ts:702</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L540">src/mastodon.ts:540</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/blocks</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -1316,43 +1071,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getbookmarks">getBookmarks</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L596">src/mastodon.ts:596</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L458">src/mastodon.ts:458</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/bookmarks</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -1367,43 +1104,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getconversationtimeline">getConversationTimeline</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1677">src/mastodon.ts:1677</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1181">src/mastodon.ts:1181</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/conversations</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -1418,37 +1137,22 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getdomainblocks">getDomainBlocks</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L734">src/mastodon.ts:734</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L563">src/mastodon.ts:563</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/domain_blocks</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of domain name.</p>
 						</li>
 					</ul>
 				</section>
@@ -1463,37 +1167,22 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getendorsements">getEndorsements</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L974">src/mastodon.ts:974</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L724">src/mastodon.ts:724</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/endorsements</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -1508,37 +1197,22 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfavourites">getFavourites</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L638">src/mastodon.ts:638</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L492">src/mastodon.ts:492</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/favourites</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -1553,16 +1227,10 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfeaturedtags">getFeaturedTags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1002">src/mastodon.ts:1002</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L747">src/mastodon.ts:747</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/featured_tags</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#featuredtag" class="tsd-signature-type">FeaturedTag</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of featured tag.</p>
 						</li>
 					</ul>
 				</section>
@@ -1577,21 +1245,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfilter">getFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L791">src/mastodon.ts:791</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L603">src/mastodon.ts:603</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/filters/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The filter ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1609,14 +1269,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfilters">getFilters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L783">src/mastodon.ts:783</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L599">src/mastodon.ts:599</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/filters</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -1632,25 +1287,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfollowrequests">getFollowRequests</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L933">src/mastodon.ts:933</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L703">src/mastodon.ts:703</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/follow_requests</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Maximum number of results.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of account.</p>
 						</li>
 					</ul>
 				</section>
@@ -1665,49 +1311,28 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#gethometimeline">getHomeTimeline</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1588">src/mastodon.ts:1588</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1111">src/mastodon.ts:1111</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/timelines/home</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> local: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Show only local statuses? Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -1722,25 +1347,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getidentityproof">getIdentityProof</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L447">src/mastodon.ts:447</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L383">src/mastodon.ts:383</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/:id/identity_proofs</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#identityproof" class="tsd-signature-type">IdentityProof</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of IdentityProof</p>
 						</li>
 					</ul>
 				</section>
@@ -1755,21 +1371,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getlist">getList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1741">src/mastodon.ts:1741</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1226">src/mastodon.ts:1226</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/lists/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target list ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#list" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1787,49 +1395,28 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getlisttimeline">getListTimeline</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1634">src/mastodon.ts:1634</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1147">src/mastodon.ts:1147</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/timelines/list/:list_id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>list_id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Local ID of the list in the database.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -1844,14 +1431,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getlists">getLists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1732">src/mastodon.ts:1732</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1222">src/mastodon.ts:1222</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/lists</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#list" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -1867,14 +1449,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getmarker">getMarker</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1838">src/mastodon.ts:1838</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1286">src/mastodon.ts:1286</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/markers</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1882,7 +1459,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#marker" class="tsd-signature-type">Marker</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Marker or empty object.</p>
 						</li>
 					</ul>
 				</section>
@@ -1897,37 +1473,22 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getmutes">getMutes</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L670">src/mastodon.ts:670</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L516">src/mastodon.ts:516</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/mutes</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -1942,25 +1503,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getnotification">getNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1924">src/mastodon.ts:1924</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1352">src/mastodon.ts:1352</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/notifications/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target notification ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#notification" class="tsd-signature-type">Notification</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Notification.</p>
 						</li>
 					</ul>
 				</section>
@@ -1975,55 +1527,31 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getnotifications">getNotifications</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1876">src/mastodon.ts:1876</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1310">src/mastodon.ts:1310</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/notifications</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> exclude_type: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"follow"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"favourite"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"reblog"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"mention"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"poll"</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of types to exclude.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> account_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return only notifications received from this account.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#notification" class="tsd-signature-type">Notification</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of notifications.</p>
 						</li>
 					</ul>
 				</section>
@@ -2038,25 +1566,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpoll">getPoll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1372">src/mastodon.ts:1372</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L962">src/mastodon.ts:962</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/polls/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target poll ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#poll" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Poll</p>
 						</li>
 					</ul>
 				</section>
@@ -2071,16 +1590,10 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpreferences">getPreferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1045">src/mastodon.ts:1045</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L768">src/mastodon.ts:768</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/preferences</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#preferences" class="tsd-signature-type">Preferences</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Preferences.</p>
 						</li>
 					</ul>
 				</section>
@@ -2095,55 +1608,31 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpublictimeline">getPublicTimeline</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1481">src/mastodon.ts:1481</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1026">src/mastodon.ts:1026</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/timelines/public</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> local: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Show only local statuses? Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> only_media: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Show only statuses with media attached? Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -2158,14 +1647,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpushsubscription">getPushSubscription</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1978">src/mastodon.ts:1978</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1382">src/mastodon.ts:1382</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/push/subscription</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#pushsubscription" class="tsd-signature-type">PushSubscription</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -2181,25 +1665,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getrelationship">getRelationship</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L543">src/mastodon.ts:543</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L423">src/mastodon.ts:423</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/relationships</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>ids: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of account IDs.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -2214,25 +1689,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getscheduledstatus">getScheduledStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1437">src/mastodon.ts:1437</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1005">src/mastodon.ts:1005</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/scheduled_statuses/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target status ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#scheduledstatus" class="tsd-signature-type">ScheduledStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>ScheduledStatus.</p>
 						</li>
 					</ul>
 				</section>
@@ -2247,43 +1713,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getscheduledstatuses">getScheduledStatuses</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1401">src/mastodon.ts:1401</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L975">src/mastodon.ts:975</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/scheduled_statuses</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#scheduledstatus" class="tsd-signature-type">ScheduledStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of scheduled statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -2298,25 +1746,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatus">getStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1162">src/mastodon.ts:1162</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L859">src/mastodon.ts:859</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/statuses/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -2331,26 +1770,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatuscontext">getStatusContext</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1183">src/mastodon.ts:1183</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L867">src/mastodon.ts:867</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/statuses/:id/context</p>
-								</div>
-								<p>Get parent and child statuses.</p>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#context" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Context</p>
 						</li>
 					</ul>
 				</section>
@@ -2365,25 +1794,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatusfavouritedby">getStatusFavouritedBy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1203">src/mastodon.ts:1203</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L875">src/mastodon.ts:875</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/statuses/:id/favourited_by</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -2398,25 +1818,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatusrebloggedby">getStatusRebloggedBy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1193">src/mastodon.ts:1193</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L871">src/mastodon.ts:871</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/statuses/:id/reblogged_by</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -2431,16 +1842,10 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getsuggestedtags">getSuggestedTags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1033">src/mastodon.ts:1033</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L761">src/mastodon.ts:761</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/featured_tags/suggestions</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#tag" class="tsd-signature-type">Tag</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of tag.</p>
 						</li>
 					</ul>
 				</section>
@@ -2455,25 +1860,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getsuggestions">getSuggestions</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1058">src/mastodon.ts:1058</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L775">src/mastodon.ts:775</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/suggestions</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Maximum number of results.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -2488,61 +1884,34 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#gettagtimeline">getTagTimeline</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1535">src/mastodon.ts:1535</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1068">src/mastodon.ts:1068</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/timelines/tag/:hashtag</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>hashtag: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Content of a #hashtag, not including # symbol.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> local: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Show only local statuses? Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> only_media: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Show only statuses with media attached? Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 20.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Array of statuses.</p>
 						</li>
 					</ul>
 				</section>
@@ -2557,7 +1926,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#listsocket">listSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2226">src/mastodon.ts:2226</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1606">src/mastodon.ts:1606</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2581,7 +1950,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#liststream">listStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2199">src/mastodon.ts:2199</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1579">src/mastodon.ts:1579</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2605,7 +1974,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#localsocket">localSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2218">src/mastodon.ts:2218</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1598">src/mastodon.ts:1598</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
@@ -2623,7 +1992,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#localstream">localStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2191">src/mastodon.ts:2191</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1571">src/mastodon.ts:1571</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistener.html" class="tsd-signature-type">StreamListener</a></h4>
@@ -2641,31 +2010,19 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#muteaccount">muteAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L501">src/mastodon.ts:501</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L405">src/mastodon.ts:405</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/mute</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> notifications: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Mute notifications in addition to statuses.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -2680,25 +2037,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#mutestatus">muteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1273">src/mastodon.ts:1273</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L903">src/mastodon.ts:903</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/mute</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -2713,25 +2061,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#pinaccount">pinAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L523">src/mastodon.ts:523</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L415">src/mastodon.ts:415</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/pin</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -2746,25 +2085,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#pinstatus">pinStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1292">src/mastodon.ts:1292</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L911">src/mastodon.ts:911</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/pin</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -2778,73 +2108,40 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1085">src/mastodon.ts:1085</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L788">src/mastodon.ts:788</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>status: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Text content of status.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> media_ids: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = []</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of Attachment ids.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> poll: <span class="tsd-signature-symbol">{ </span>expires_in<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>hide_totals<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>multiple<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Poll object.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> in_reply_to_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>ID of the status being replied to, if status is a reply.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sensitive: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Mark status and attached media as sensitive?</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> spoiler_text: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Text to be shown as a warning or subject before the actual content.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> visibility: <span class="tsd-signature-type">"public"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"unlisted"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"private"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"direct"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Visibility of the posted status.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scheduled_at: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>ISO 8601 Datetime at which to schedule a status.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> language: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>ISO 639 language code for this status.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -2859,7 +2156,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#publicsocket">publicSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2214">src/mastodon.ts:2214</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1594">src/mastodon.ts:1594</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
@@ -2877,7 +2174,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#publicstream">publicStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2187">src/mastodon.ts:2187</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1567">src/mastodon.ts:1567</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistener.html" class="tsd-signature-type">StreamListener</a></h4>
@@ -2895,25 +2192,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#readconversation">readConversation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1722">src/mastodon.ts:1722</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1215">src/mastodon.ts:1215</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/conversations/:id/read</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target conversation ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#conversation" class="tsd-signature-type">Conversation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Conversation.</p>
 						</li>
 					</ul>
 				</section>
@@ -2928,25 +2216,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#reblogstatus">reblogStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1233">src/mastodon.ts:1233</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L887">src/mastodon.ts:887</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/reblog</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status.</p>
 						</li>
 					</ul>
 				</section>
@@ -2961,55 +2240,31 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#registeraccount">registerAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L216">src/mastodon.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L204">src/mastodon.ts:204</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>username: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Username for the account.</p>
-									</div>
 								</li>
 								<li>
 									<h5>email: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Email for the account.</p>
-									</div>
 								</li>
 								<li>
 									<h5>password: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Password for the account.</p>
-									</div>
 								</li>
 								<li>
 									<h5>agreement: <span class="tsd-signature-type">boolean</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Whether the user agrees to the local rules, terms, and policies.</p>
-									</div>
 								</li>
 								<li>
 									<h5>locale: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The language of the confirmation email that will be sent</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Text that will be reviewed by moderators if registrations require manual approval.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#token" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An account token.</p>
 						</li>
 					</ul>
 				</section>
@@ -3024,25 +2279,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#rejectfollowrequest">rejectFollowRequest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L959">src/mastodon.ts:959</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L717">src/mastodon.ts:717</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/follow_requests/:id/reject</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship.</p>
 						</li>
 					</ul>
 				</section>
@@ -3057,43 +2303,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#report">report</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L897">src/mastodon.ts:897</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L673">src/mastodon.ts:673</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/reports</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>account_id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target account ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> status_ids: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of Statuses ids to attach to the report.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> comment: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Reason of the report.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> forward: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>If the account is remote, should the report be forwarded to the remote admin?</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#report" class="tsd-signature-type">Report</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Report</p>
 						</li>
 					</ul>
 				</section>
@@ -3107,14 +2335,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1847">src/mastodon.ts:1847</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1292">src/mastodon.ts:1292</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/markers</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -3139,31 +2362,19 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#schedulestatus">scheduleStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1448">src/mastodon.ts:1448</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1009">src/mastodon.ts:1009</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>PUT /api/v1/scheduled_statuses/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target scheduled status ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scheduled_at: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>ISO 8601 Datetime at which the status will be published.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#scheduledstatus" class="tsd-signature-type">ScheduledStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>ScheduledStatus.</p>
 						</li>
 					</ul>
 				</section>
@@ -3178,76 +2389,43 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#search">search</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2027">src/mastodon.ts:2027</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1405">src/mastodon.ts:1405</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v2/search</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>q: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The search query.</p>
-									</div>
 								</li>
 								<li>
 									<h5>type: <span class="tsd-signature-type">"accounts"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hashtags"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"statuses"</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Enum of search target.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Maximum number of results to load, per type. Defaults to 20. Max 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than this id.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> min_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results immediately newer than this id.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> resolve: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Attempt WebFinger lookup. Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> offset: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> following: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Only include accounts that the user is following. Defaults to false.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> account_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>If provided, statuses returned will be authored only by this account.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> exclude_unreviewed: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Filter out unreviewed tags? Defaults to false.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#results" class="tsd-signature-type">Results</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Results.</p>
 						</li>
 					</ul>
 				</section>
@@ -3262,43 +2440,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#searchaccount">searchAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L558">src/mastodon.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L429">src/mastodon.ts:429</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/search</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>q: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Search query.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Max number of results to return. Defaults to 40.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> max_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results older than ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> since_id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Return results newer than ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>The array of accounts.</p>
 						</li>
 					</ul>
 				</section>
@@ -3313,7 +2473,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#subscribeaccount">subscribeAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L337">src/mastodon.ts:337</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L303">src/mastodon.ts:303</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3336,14 +2496,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1960">src/mastodon.ts:1960</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1367">src/mastodon.ts:1367</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/push/subscription</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -3370,7 +2525,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#pushsubscription" class="tsd-signature-type">PushSubscription</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>PushSubscription.</p>
 						</li>
 					</ul>
 				</section>
@@ -3385,7 +2539,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#tagsocket">tagSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2222">src/mastodon.ts:2222</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1602">src/mastodon.ts:1602</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3409,7 +2563,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#tagstream">tagStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2195">src/mastodon.ts:2195</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1575">src/mastodon.ts:1575</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3433,25 +2587,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unblockaccount">unblockAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L490">src/mastodon.ts:490</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L401">src/mastodon.ts:401</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/unblock</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>RElationship</p>
 						</li>
 					</ul>
 				</section>
@@ -3466,21 +2611,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unblockdomain">unblockDomain</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L770">src/mastodon.ts:770</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L589">src/mastodon.ts:589</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>DELETE /api/v1/domain_blocks</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>domain: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Domain to unblock</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3498,25 +2635,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unbookmarkstatus">unbookmarkStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1263">src/mastodon.ts:1263</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L899">src/mastodon.ts:899</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/unbookmark</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status.</p>
 						</li>
 					</ul>
 				</section>
@@ -3531,25 +2659,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unfavouritestatus">unfavouriteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1223">src/mastodon.ts:1223</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L883">src/mastodon.ts:883</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/unfavourite</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status.</p>
 						</li>
 					</ul>
 				</section>
@@ -3564,25 +2683,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unfollowaccount">unfollowAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L470">src/mastodon.ts:470</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L393">src/mastodon.ts:393</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/unfollow</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -3597,25 +2707,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unmuteaccount">unmuteAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L513">src/mastodon.ts:513</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L411">src/mastodon.ts:411</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/unmute</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -3630,25 +2731,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unmutestatus">unmuteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1283">src/mastodon.ts:1283</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L907">src/mastodon.ts:907</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/unmute</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -3663,25 +2755,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unpinaccount">unpinAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L533">src/mastodon.ts:533</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L419">src/mastodon.ts:419</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/accounts/:id/unpin</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The account ID.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#relationship" class="tsd-signature-type">Relationship</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Relationship</p>
 						</li>
 					</ul>
 				</section>
@@ -3696,25 +2779,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unpinstatus">unpinStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1302">src/mastodon.ts:1302</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L915">src/mastodon.ts:915</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/unpin</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status</p>
 						</li>
 					</ul>
 				</section>
@@ -3729,25 +2803,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unreblogstatus">unreblogStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1243">src/mastodon.ts:1243</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L891">src/mastodon.ts:891</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/statuses/:id/unreblog</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The target status id.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#status" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Status.</p>
 						</li>
 					</ul>
 				</section>
@@ -3762,7 +2827,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unsubscribeaccount">unsubscribeAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L344">src/mastodon.ts:344</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L310">src/mastodon.ts:310</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3785,14 +2850,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L253">src/mastodon.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L231">src/mastodon.ts:231</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>PATCH /api/v1/accounts/update_credentials</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -3824,7 +2884,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An account.</p>
 						</li>
 					</ul>
 				</section>
@@ -3839,55 +2898,31 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#updatefilter">updateFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L845">src/mastodon.ts:845</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L636">src/mastodon.ts:636</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>PUT /api/v1/filters/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The filter ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5>phrase: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Text to be filtered.</p>
-									</div>
 								</li>
 								<li>
 									<h5>context: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"home"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"notifications"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"public"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"thread"</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of enumerable strings home, notifications, public, thread. At least one context must be specified.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> irreversible: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Should the server irreversibly drop matching entities from home and notifications?</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> whole_word: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Consider word boundaries?</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> expires_in: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>ISO 8601 Datetime for when the filter expires.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Filter</p>
 						</li>
 					</ul>
 				</section>
@@ -3902,27 +2937,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#updatelist">updateList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1762">src/mastodon.ts:1762</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1236">src/mastodon.ts:1236</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>PUT /api/v1/lists/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target list ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5>title: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>New list name.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#list" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3940,43 +2964,25 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#updatemedia">updateMedia</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1343">src/mastodon.ts:1343</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L939">src/mastodon.ts:939</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>PUT /api/v1/media/:id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target media ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> file: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The file to be attached, using multipart form data.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> description: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A plain-text description of the media.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> focus: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#attachment" class="tsd-signature-type">Attachment</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Attachment</p>
 						</li>
 					</ul>
 				</section>
@@ -3990,14 +2996,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1991">src/mastodon.ts:1991</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1386">src/mastodon.ts:1386</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>PUT /api/v1/push/subscription</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -4019,37 +3020,22 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#uploadmedia">uploadMedia</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1317">src/mastodon.ts:1317</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L922">src/mastodon.ts:922</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/media</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>file: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The file to be attached, using multipart form data.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> description: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A plain-text description of the media.</p>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> focus: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#attachment" class="tsd-signature-type">Attachment</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Attachment</p>
 						</li>
 					</ul>
 				</section>
@@ -4064,7 +3050,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#usersocket">userSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2210">src/mastodon.ts:2210</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1590">src/mastodon.ts:1590</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
@@ -4082,7 +3068,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#userstream">userStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2183">src/mastodon.ts:2183</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1563">src/mastodon.ts:1563</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistener.html" class="tsd-signature-type">StreamListener</a></h4>
@@ -4100,16 +3086,10 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#verifyaccountcredentials">verifyAccountCredentials</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L244">src/mastodon.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L227">src/mastodon.ts:227</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/accounts/verify_credentials</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An account.</p>
 						</li>
 					</ul>
 				</section>
@@ -4124,16 +3104,10 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#verifyappcredentials">verifyAppCredentials</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L120">src/mastodon.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L120">src/mastodon.ts:120</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>GET /api/v1/apps/verify_credentials</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#application" class="tsd-signature-type">Application</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An Application</p>
 						</li>
 					</ul>
 				</section>
@@ -4148,31 +3122,19 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#votepoll">votePoll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L1383">src/mastodon.ts:1383</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L966">src/mastodon.ts:966</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>POST /api/v1/polls/:id/votes</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target poll ID.</p>
-									</div>
 								</li>
 								<li>
 									<h5>choices: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Array of own votes containing index for each option (starting from 0).</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#poll" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Poll</p>
 						</li>
 					</ul>
 				</section>
@@ -4186,7 +3148,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L79">src/mastodon.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L85">src/mastodon.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4236,7 +3198,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L140">src/mastodon.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L140">src/mastodon.ts:140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4299,7 +3261,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L99">src/mastodon.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L105">src/mastodon.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4348,7 +3310,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2092">src/mastodon.ts:2092</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1470">src/mastodon.ts:1470</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4370,7 +3332,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2106">src/mastodon.ts:2106</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1484">src/mastodon.ts:1484</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4392,7 +3354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2176">src/mastodon.ts:2176</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1556">src/mastodon.ts:1556</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4401,6 +3363,7 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#emoji" class="tsd-signature-type">Emoji</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Array of emojis.</p>
 						</li>
 					</ul>
 				</section>
@@ -4414,7 +3377,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2140">src/mastodon.ts:2140</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1518">src/mastodon.ts:1518</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4464,7 +3427,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2099">src/mastodon.ts:2099</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1477">src/mastodon.ts:1477</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4486,7 +3449,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L2118">src/mastodon.ts:2118</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L1496">src/mastodon.ts:1496</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4517,7 +3480,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L162">src/mastodon.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L162">src/mastodon.ts:162</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4574,7 +3537,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L58">src/mastodon.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L64">src/mastodon.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4624,7 +3587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/87edd45/src/mastodon.ts#L182">src/mastodon.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/9055932/src/mastodon.ts#L182">src/mastodon.ts:182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

@@ -38,6 +38,12 @@ const DEFAULT_UA = 'megalodon'
 export default class Mastodon implements MegalodonInterface {
   public client: APIClient
 
+  /**
+   * @param accessToken access token from OAuth2 authorization
+   * @param baseUrl hostname or base URL
+   * @param userAgent UserAgent is specified in header on request.
+   * @param proxyConfig Proxy setting, or set false if don't use proxy.
+   */
   constructor(
     accessToken: string,
     baseUrl: string = DEFAULT_URL,
@@ -111,12 +117,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // apps
   // ======================================
-
-  /**
-   * GET /api/v1/apps/verify_credentials
-   *
-   * @return An Application
-   */
   public verifyAppCredentials(): Promise<Response<Application>> {
     return this.client.get<Application>('/api/v1/apps/verify_credentials')
   }
@@ -201,18 +201,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts
   // ======================================
-
-  /**
-   * POST /api/v1/accounts
-   *
-   * @param username Username for the account.
-   * @param email Email for the account.
-   * @param password Password for the account.
-   * @param agreement Whether the user agrees to the local rules, terms, and policies.
-   * @param locale The language of the confirmation email that will be sent
-   * @param reason Text that will be reviewed by moderators if registrations require manual approval.
-   * @return An account token.
-   */
   public registerAccount(
     username: string,
     email: string,
@@ -236,20 +224,10 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<Token>('/api/v1/accounts', params)
   }
 
-  /**
-   * GET /api/v1/accounts/verify_credentials
-   *
-   * @return An account.
-   */
   public verifyAccountCredentials(): Promise<Response<Account>> {
     return this.client.get<Account>('/api/v1/accounts/verify_credentials')
   }
 
-  /**
-   * PATCH /api/v1/accounts/update_credentials
-   *
-   * @return An account.
-   */
   public updateCredentials(
     discoverable?: string | null,
     bot?: boolean | null,
@@ -314,22 +292,10 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.patch<Account>('/api/v1/accounts/update_credentials', params)
   }
 
-  /**
-   * GET /api/v1/accounts/:id
-   *
-   * @param id The account ID.
-   * @return An account.
-   */
   public getAccount(id: string): Promise<Response<Account>> {
     return this.client.get<Account>(`/api/v1/accounts/${id}`)
   }
 
-  /**
-   * GET /api/v1/accounts/:id/statuses
-   *
-   * @param id The account ID.
-   * @return Account's statuses.
-   */
   public getAccountStatuses(id: string): Promise<Response<Array<Status>>> {
     return this.client.get<Array<Status>>(`/api/v1/accounts/${id}/statuses`)
   }
@@ -360,15 +326,6 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  /**
-   * GET /api/v1/accounts/:id/followers
-   *
-   * @param id The account ID.
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @return The array of accounts.
-   */
   public getAccountFollowers(
     id: string,
     limit?: number | null,
@@ -394,15 +351,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`, params)
   }
 
-  /**
-   * GET /api/v1/accounts/:id/following
-   *
-   * @param id The account ID.
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @return The array of accounts.
-   */
   public getAccountFollowing(
     id: string,
     limit?: number | null,
@@ -428,133 +376,56 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`, params)
   }
 
-  /**
-   * GET /api/v1/accounts/:id/lists
-   *
-   * @param id The account ID.
-   * @return The array of lists.
-   */
   public getAccountLists(id: string): Promise<Response<Array<List>>> {
     return this.client.get<Array<List>>(`/api/v1/accounts/${id}/lists`)
   }
 
-  /**
-   * GET /api/v1/accounts/:id/identity_proofs
-   *
-   * @param id The account ID.
-   * @return Array of IdentityProof
-   */
   public getIdentityProof(id: string): Promise<Response<Array<IdentityProof>>> {
     return this.client.get<Array<IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`)
   }
 
-  /**
-   * POST /api/v1/accounts/:id/follow
-   *
-   * @param id The account ID.
-   * @param reblog Receive this account's reblogs in home timeline.
-   * @return Relationship
-   */
   public followAccount(id: string, reblog: boolean = true): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/follow`, {
       reblog: reblog
     })
   }
 
-  /**
-   * POST /api/v1/accounts/:id/unfollow
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
   public unfollowAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/unfollow`)
   }
 
-  /**
-   * POST /api/v1/accounts/:id/block
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
   public blockAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/block`)
   }
 
-  /**
-   * POST /api/v1/accounts/:id/unblock
-   *
-   * @param id The account ID.
-   * @return RElationship
-   */
   public unblockAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/unblock`)
   }
 
-  /**
-   * POST /api/v1/accounts/:id/mute
-   *
-   * @param id The account ID.
-   * @param notifications Mute notifications in addition to statuses.
-   * @return Relationship
-   */
   public muteAccount(id: string, notifications: boolean = true): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/mute`, {
       notifications: notifications
     })
   }
 
-  /**
-   * POST /api/v1/accounts/:id/unmute
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
   public unmuteAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/unmute`)
   }
 
-  /**
-   * POST /api/v1/accounts/:id/pin
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
   public pinAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/pin`)
   }
 
-  /**
-   * POST /api/v1/accounts/:id/unpin
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
   public unpinAccount(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/accounts/${id}/unpin`)
   }
 
-  /**
-   * GET /api/v1/accounts/relationships
-   *
-   * @param ids Array of account IDs.
-   * @return Relationship
-   */
   public getRelationship(ids: Array<string>): Promise<Response<Relationship>> {
     return this.client.get<Relationship>('/api/v1/accounts/relationships', {
       id: ids
     })
   }
 
-  /**
-   * GET /api/v1/accounts/search
-   *
-   * @param q Search query.
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @return The array of accounts.
-   */
   public searchAccount(
     q: string,
     limit?: number | null,
@@ -584,15 +455,6 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/bookmarks
   // ======================================
 
-  /**
-   * GET /api/v1/bookmarks
-   *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getBookmarks(
     limit?: number | null,
     max_id?: string | null,
@@ -627,14 +489,6 @@ export default class Mastodon implements MegalodonInterface {
   //  accounts/favourites
   // ======================================
 
-  /**
-   * GET /api/v1/favourites
-   *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getFavourites(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Status>>> {
     let params = {}
     if (min_id) {
@@ -659,14 +513,6 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/mutes
   // ======================================
 
-  /**
-   * GET /api/v1/mutes
-   *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of accounts.
-   */
   public getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>> {
     let params = {}
     if (min_id) {
@@ -691,14 +537,6 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/blocks
   // ======================================
 
-  /**
-   * GET /api/v1/blocks
-   *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of accounts.
-   */
   public getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>> {
     let params = {}
     if (min_id) {
@@ -722,15 +560,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/domain_blocks
   // ======================================
-
-  /**
-   * GET /api/v1/domain_blocks
-   *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of domain name.
-   */
   public getDomainBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<string>>> {
     let params = {}
     if (min_id) {
@@ -751,22 +580,12 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<string>>('/api/v1/domain_blocks', params)
   }
 
-  /**
-   * POST/api/v1/domain_blocks
-   *
-   * @param domain Domain to block.
-   */
   public blockDomain(domain: string): Promise<Response<{}>> {
     return this.client.post<{}>('/api/v1/domain_blocks', {
       domain: domain
     })
   }
 
-  /**
-   * DELETE /api/v1/domain_blocks
-   *
-   * @param domain Domain to unblock
-   */
   public unblockDomain(domain: string): Promise<Response<{}>> {
     return this.client.del<{}>('/api/v1/domain_blocks', {
       domain: domain
@@ -777,31 +596,14 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/filters
   // ======================================
 
-  /**
-   * GET /api/v1/filters
-   */
   public getFilters(): Promise<Response<Array<Filter>>> {
     return this.client.get<Array<Filter>>('/api/v1/filters')
   }
 
-  /**
-   * GET /api/v1/filters/:id
-   * @param id The filter ID.
-   */
   public getFilter(id: string): Promise<Response<Filter>> {
     return this.client.get<Filter>(`/api/v1/filters/${id}`)
   }
 
-  /**
-   * POST /api/v1/filters
-   *
-   * @param phrase Text to be filtered.
-   * @param context Array of enumerable strings home, notifications, public, thread. At least one context must be specified.
-   * @param irreversible Should the server irreversibly drop matching entities from home and notifications?
-   * @param whole_word Consider word boundaries?
-   * @param expires_in ISO 8601 Datetime for when the filter expires.
-   * @return Filter
-   */
   public createFilter(
     phrase: string,
     context: Array<'home' | 'notifications' | 'public' | 'thread'>,
@@ -831,17 +633,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<Filter>('/api/v1/filters', params)
   }
 
-  /**
-   * PUT /api/v1/filters/:id
-   *
-   * @param id The filter ID.
-   * @param phrase Text to be filtered.
-   * @param context Array of enumerable strings home, notifications, public, thread. At least one context must be specified.
-   * @param irreversible Should the server irreversibly drop matching entities from home and notifications?
-   * @param whole_word Consider word boundaries?
-   * @param expires_in ISO 8601 Datetime for when the filter expires.
-   * @return Filter
-   */
   public updateFilter(
     id: string,
     phrase: string,
@@ -872,12 +663,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<Filter>(`/api/v1/filters/${id}`, params)
   }
 
-  /**
-   * DELETE /api/v1/filters/:id
-   *
-   * @param id The filter ID.
-   * @return Removed filter.
-   */
   public deleteFilter(id: string): Promise<Response<Filter>> {
     return this.client.del<Filter>(`/api/v1/filters/${id}`)
   }
@@ -885,15 +670,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/reports
   // ======================================
-  /**
-   * POST /api/v1/reports
-   *
-   * @param account_id Target account ID.
-   * @param status_ids Array of Statuses ids to attach to the report.
-   * @param comment Reason of the report.
-   * @param forward If the account is remote, should the report be forwarded to the remote admin?
-   * @return Report
-   */
   public report(
     account_id: string,
     status_ids?: Array<string> | null,
@@ -924,12 +700,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/follow_requests
   // ======================================
-  /**
-   * GET /api/v1/follow_requests
-   *
-   * @param limit Maximum number of results.
-   * @return Array of account.
-   */
   public getFollowRequests(limit?: number): Promise<Response<Array<Account>>> {
     if (limit) {
       return this.client.get<Array<Account>>('/api/v1/follow_requests', {
@@ -940,22 +710,10 @@ export default class Mastodon implements MegalodonInterface {
     }
   }
 
-  /**
-   * POST /api/v1/follow_requests/:id/authorize
-   *
-   * @param id Target account ID.
-   * @return Relationship.
-   */
   public acceptFollowRequest(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/follow_requests/${id}/authorize`)
   }
 
-  /**
-   * POST /api/v1/follow_requests/:id/reject
-   *
-   * @param id Target account ID.
-   * @return Relationship.
-   */
   public rejectFollowRequest(id: string): Promise<Response<Relationship>> {
     return this.client.post<Relationship>(`/api/v1/follow_requests/${id}/reject`)
   }
@@ -963,14 +721,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/endorsements
   // ======================================
-  /**
-   * GET /api/v1/endorsements
-   *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @return Array of accounts.
-   */
   public getEndorsements(limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Account>>> {
     let params = {}
     if (limit) {
@@ -994,42 +744,20 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/featured_tags
   // ======================================
-  /**
-   * GET /api/v1/featured_tags
-   *
-   * @return Array of featured tag.
-   */
   public getFeaturedTags(): Promise<Response<Array<FeaturedTag>>> {
     return this.client.get<Array<FeaturedTag>>('/api/v1/featured_tags')
   }
 
-  /**
-   * POST /api/v1/featured_tags
-   *
-   * @param name Target hashtag name.
-   * @return FeaturedTag.
-   */
   public createFeaturedTag(name: string): Promise<Response<FeaturedTag>> {
     return this.client.post<FeaturedTag>('/api/v1/featured_tags', {
       name: name
     })
   }
 
-  /**
-   * DELETE /api/v1/featured_tags/:id
-   *
-   * @param id Target featured tag id.
-   * @return Empty
-   */
   public deleteFeaturedTag(id: string): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/featured_tags/${id}`)
   }
 
-  /**
-   * GET /api/v1/featured_tags/suggestions
-   *
-   * @return Array of tag.
-   */
   public getSuggestedTags(): Promise<Response<Array<Tag>>> {
     return this.client.get<Array<Tag>>('/api/v1/featured_tags/suggestions')
   }
@@ -1037,11 +765,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/preferences
   // ======================================
-  /**
-   * GET /api/v1/preferences
-   *
-   * @return Preferences.
-   */
   public getPreferences(): Promise<Response<Preferences>> {
     return this.client.get<Preferences>('/api/v1/preferences')
   }
@@ -1049,12 +772,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/suggestions
   // ======================================
-  /**
-   * GET /api/v1/suggestions
-   *
-   * @param limit Maximum number of results.
-   * @return Array of accounts.
-   */
   public getSuggestions(limit?: number): Promise<Response<Array<Account>>> {
     if (limit) {
       return this.client.get<Array<Account>>('/api/v1/suggestions', {
@@ -1068,20 +785,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses
   // ======================================
-  /**
-   * POST /api/v1/statuses
-   *
-   * @param status Text content of status.
-   * @param media_ids Array of Attachment ids.
-   * @param poll Poll object.
-   * @param in_reply_to_id ID of the status being replied to, if status is a reply.
-   * @param sensitive Mark status and attached media as sensitive?
-   * @param spoiler_text Text to be shown as a warning or subject before the actual content.
-   * @param visibility Visibility of the posted status.
-   * @param scheduled_at ISO 8601 Datetime at which to schedule a status.
-   * @param language ISO 639 language code for this status.
-   * @return Status
-   */
   public postStatus(
     status: string,
     media_ids: Array<string> = [],
@@ -1153,152 +856,62 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<Status>('/api/v1/statuses', params)
   }
 
-  /**
-   * GET /api/v1/statuses/:id
-   *
-   * @param id The target status id.
-   * @return Status
-   */
   public getStatus(id: string): Promise<Response<Status>> {
     return this.client.get<Status>(`/api/v1/statuses/${id}`)
   }
 
-  /**
-   * DELETE /api/v1/statuses/:id
-   *
-   * @param id The target status id.
-   * @return Status
-   */
   public deleteStatus(id: string): Promise<Response<Status>> {
     return this.client.del<Status>(`/api/v1/statuses/${id}`)
   }
 
-  /**
-   * GET /api/v1/statuses/:id/context
-   *
-   * Get parent and child statuses.
-   * @param id The target status id.
-   * @return Context
-   */
   public getStatusContext(id: string): Promise<Response<Context>> {
     return this.client.get<Context>(`/api/v1/statuses/${id}/context`)
   }
 
-  /**
-   * GET /api/v1/statuses/:id/reblogged_by
-   *
-   * @param id The target status id.
-   * @return Array of accounts.
-   */
   public getStatusRebloggedBy(id: string): Promise<Response<Array<Account>>> {
     return this.client.get<Array<Account>>(`/api/v1/statuses/${id}/reblogged_by`)
   }
 
-  /**
-   * GET /api/v1/statuses/:id/favourited_by
-   *
-   * @param id The target status id.
-   * @return Array of accounts.
-   */
   public getStatusFavouritedBy(id: string): Promise<Response<Array<Account>>> {
     return this.client.get<Array<Account>>(`/api/v1/statuses/${id}/favourited_by`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/favourite
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
   public favouriteStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/favourite`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/unfavourite
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
   public unfavouriteStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/unfavourite`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/reblog
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
   public reblogStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/reblog`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/unreblog
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
   public unreblogStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/unreblog`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/bookmark
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
   public bookmarkStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/bookmark`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/unbookmark
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
   public unbookmarkStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/unbookmark`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/mute
-   *
-   * @param id The target status id.
-   * @return Status
-   */
   public muteStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/mute`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/unmute
-   *
-   * @param id The target status id.
-   * @return Status
-   */
   public unmuteStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/unmute`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/pin
-   * @param id The target status id.
-   * @return Status
-   */
   public pinStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/pin`)
   }
 
-  /**
-   * POST /api/v1/statuses/:id/unpin
-   *
-   * @param id The target status id.
-   * @return Status
-   */
   public unpinStatus(id: string): Promise<Response<Status>> {
     return this.client.post<Status>(`/api/v1/statuses/${id}/unpin`)
   }
@@ -1306,14 +919,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses/media
   // ======================================
-  /**
-   * POST /api/v1/media
-   *
-   * @param file The file to be attached, using multipart form data.
-   * @param description A plain-text description of the media.
-   * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
-   * @return Attachment
-   */
   public uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>> {
     let params = {
       file: file
@@ -1331,15 +936,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<Attachment>('/api/v1/media', params)
   }
 
-  /**
-   * PUT /api/v1/media/:id
-   *
-   * @param id Target media ID.
-   * @param file The file to be attached, using multipart form data.
-   * @param description A plain-text description of the media.
-   * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
-   * @return Attachment
-   */
   public updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>> {
     let params = {}
     if (file) {
@@ -1363,23 +959,10 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses/polls
   // ======================================
-  /**
-   * GET /api/v1/polls/:id
-   *
-   * @param id Target poll ID.
-   * @return Poll
-   */
   public getPoll(id: string): Promise<Response<Poll>> {
     return this.client.get<Poll>(`/api/v1/polls/${id}`)
   }
 
-  /**
-   * POST /api/v1/polls/:id/votes
-   *
-   * @param id Target poll ID.
-   * @param choices Array of own votes containing index for each option (starting from 0).
-   * @return Poll
-   */
   public votePoll(id: string, choices: Array<number>): Promise<Response<Poll>> {
     return this.client.post<Poll>(`/api/v1/polls/${id}/votes`, {
       choices: choices
@@ -1389,15 +972,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses/scheduled_statuses
   // ======================================
-  /**
-   * GET /api/v1/scheduled_statuses
-   *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of scheduled statuses.
-   */
   public getScheduledStatuses(
     limit?: number | null,
     max_id?: string | null,
@@ -1428,23 +1002,10 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<ScheduledStatus>>('/api/v1/scheduled_statuses', params)
   }
 
-  /**
-   * GET /api/v1/scheduled_statuses/:id
-   *
-   * @param id Target status ID.
-   * @return ScheduledStatus.
-   */
   public getScheduledStatus(id: string): Promise<Response<ScheduledStatus>> {
     return this.client.get<ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`)
   }
 
-  /**
-   * PUT /api/v1/scheduled_statuses/:id
-   *
-   * @param id Target scheduled status ID.
-   * @param scheduled_at ISO 8601 Datetime at which the status will be published.
-   * @return ScheduledStatus.
-   */
   public scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<ScheduledStatus>> {
     let params = {}
     if (scheduled_at) {
@@ -1455,11 +1016,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.put<ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`, params)
   }
 
-  /**
-   * DELETE /api/v1/scheduled_statuses/:id
-   *
-   * @param id Target scheduled status ID.
-   */
   public cancelScheduledStatus(id: string): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/scheduled_statuses/${id}`)
   }
@@ -1467,17 +1023,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines
   // ======================================
-  /**
-   * GET /api/v1/timelines/public
-   *
-   * @param local Show only local statuses? Defaults to false.
-   * @param only_media Show only statuses with media attached? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getPublicTimeline(
     local?: boolean | null,
     only_media?: boolean | null,
@@ -1520,18 +1065,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Status>>('/api/v1/timelines/public', params)
   }
 
-  /**
-   * GET /api/v1/timelines/tag/:hashtag
-   *
-   * @param hashtag Content of a #hashtag, not including # symbol.
-   * @param local Show only local statuses? Defaults to false.
-   * @param only_media Show only statuses with media attached? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getTagTimeline(
     hashtag: string,
     local?: boolean | null,
@@ -1575,16 +1108,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Status>>(`/api/v1/timelines/tag/${hashtag}`, params)
   }
 
-  /**
-   * GET /api/v1/timelines/home
-   *
-   * @param local Show only local statuses? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getHomeTimeline(
     local?: boolean | null,
     limit?: number | null,
@@ -1621,16 +1144,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Status>>('/api/v1/timelines/home', params)
   }
 
-  /**
-   * GET /api/v1/timelines/list/:list_id
-   *
-   * @param list_id Local ID of the list in the database.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getListTimeline(
     list_id: string,
     limit?: number | null,
@@ -1665,15 +1178,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines/conversations
   // ======================================
-  /**
-   * GET /api/v1/conversations
-   *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
   public getConversationTimeline(
     limit?: number | null,
     max_id?: string | null,
@@ -1704,21 +1208,10 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Status>>('/api/v1/conversations', params)
   }
 
-  /**
-   * DELETE /api/v1/conversations/:id
-   *
-   * @param id Target conversation ID.
-   */
   public deleteConversation(id: string): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/conversations/${id}`)
   }
 
-  /**
-   * POST /api/v1/conversations/:id/read
-   *
-   * @param id Target conversation ID.
-   * @return Conversation.
-   */
   public readConversation(id: string): Promise<Response<Conversation>> {
     return this.client.post<Conversation>(`/api/v1/conversations/${id}/read`)
   }
@@ -1726,57 +1219,30 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines/lists
   // ======================================
-  /**
-   * GET /api/v1/lists
-   */
   public getLists(): Promise<Response<Array<List>>> {
     return this.client.get<Array<List>>('/api/v1/lists')
   }
 
-  /**
-   * GET /api/v1/lists/:id
-   *
-   * @param id Target list ID.
-   */
   public getList(id: string): Promise<Response<List>> {
     return this.client.get<List>(`/api/v1/lists/${id}`)
   }
 
-  /**
-   * POST /api/v1/lists
-   *
-   * @param title List name.
-   */
   public createList(title: string): Promise<Response<List>> {
     return this.client.post<List>('/api/v1/lists', {
       title: title
     })
   }
 
-  /**
-   * PUT /api/v1/lists/:id
-   *
-   * @param id Target list ID.
-   * @param title New list name.
-   */
   public updateList(id: string, title: string): Promise<Response<List>> {
     return this.client.put<List>(`/api/v1/lists/${id}`, {
       title: title
     })
   }
 
-  /**
-   * DELETE /api/v1/lists/:id
-   *
-   * @param id Target list ID.
-   */
   public deleteList(id: string): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/lists/${id}`)
   }
 
-  /**
-   * GET /api/v1/lists/:id/accounts
-   */
   public getAccountsInList(
     id: string,
     limit?: number | null,
@@ -1802,24 +1268,12 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Account>>(`/api/v1/lists/${id}/accounts`, params)
   }
 
-  /**
-   * POST /api/v1/lists/:id/accounts
-   *
-   * @param id Target list ID.
-   * @param account_ids Array of account IDs to add to the list.
-   */
   public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
     return this.client.post<{}>(`/api/v1/lists/${id}/accounts`, {
       account_ids: account_ids
     })
   }
 
-  /**
-   * DELETE /api/v1/lists/:id/accounts
-   *
-   * @param id Target list ID.
-   * @param account_ids Array of account IDs to add to the list.
-   */
   public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/lists/${id}/accounts`, {
       account_ids: account_ids
@@ -1829,21 +1283,12 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  /**
-   * GET /api/v1/markers
-   *
-   * @param timelines Array of timeline names, String enum anyOf home, notifications.
-   * @return Marker or empty object.
-   */
   public getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Marker | {}>> {
     return this.client.get<Marker | {}>('/api/v1/markers', {
       timeline: timeline
     })
   }
 
-  /**
-   * POST /api/v1/markers
-   */
   public saveMarker(home?: { last_read_id: string } | null, notifications?: { last_read_id: string } | null): Promise<Response<Marker>> {
     let params = {}
     if (home) {
@@ -1862,17 +1307,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // notifications
   // ======================================
-  /**
-   * GET /api/v1/notifications
-   *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @param exclude_type Array of types to exclude.
-   * @param account_id Return only notifications received from this account.
-   * @return Array of notifications.
-   */
   public getNotifications(
     limit?: number | null,
     max_id?: string | null,
@@ -1915,28 +1349,14 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.get<Array<Notification>>('/api/v1/notifications', params)
   }
 
-  /**
-   * GET /api/v1/notifications/:id
-   *
-   * @param id Target notification ID.
-   * @return Notification.
-   */
   public getNotification(id: string): Promise<Response<Notification>> {
     return this.client.get<Notification>(`/api/v1/notifications/${id}`)
   }
 
-  /**
-   * POST /api/v1/notifications/clear
-   */
   public dismissNotifications(): Promise<Response<{}>> {
     return this.client.post<{}>('/api/v1/notifications/clear')
   }
 
-  /**
-   * POST /api/v1/notifications/:id/dismiss
-   *
-   * @param id Target notification ID.
-   */
   public dismissNotification(id: string): Promise<Response<{}>> {
     return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
   }
@@ -1944,19 +1364,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // notifications/push
   // ======================================
-  /**
-   * POST /api/v1/push/subscription
-   *
-   * @param subscription[endpoint] Endpoint URL that is called when a notification event occurs.
-   * @param subscription[keys][p256dh] User agent public key. Base64 encoded string of public key of ECDH key using prime256v1 curve.
-   * @param subscription[keys] Auth secret. Base64 encoded string of 16 bytes of random data.
-   * @param data[alerts][follow] Receive follow notifications?
-   * @param data[alerts][favourite] Receive favourite notifications?
-   * @param data[alerts][reblog] Receive reblog notifictaions?
-   * @param data[alerts][mention] Receive mention notifications?
-   * @param data[alerts][poll] Receive poll notifications?
-   * @return PushSubscription.
-   */
   public subscribePushNotification(
     subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
     data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
@@ -1972,22 +1379,10 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<PushSubscription>('/api/v1/push/subscription', params)
   }
 
-  /**
-   * GET /api/v1/push/subscription
-   */
   public getPushSubscription(): Promise<Response<PushSubscription>> {
     return this.client.get<PushSubscription>('/api/v1/push/subscription')
   }
 
-  /**
-   * PUT /api/v1/push/subscription
-   *
-   * @param data[alerts][follow] Receive follow notifications?
-   * @param data[alerts][favourite] Receive favourite notifications?
-   * @param data[alerts][reblog] Receive reblog notifictaions?
-   * @param data[alerts][mention] Receive mention notifications?
-   * @param data[alerts][poll] Receive poll notifications?
-   */
   public updatePushSubscription(
     data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
   ): Promise<Response<PushSubscription>> {
@@ -2000,9 +1395,6 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.put<PushSubscription>('/api/v1/push/subscription', params)
   }
 
-  /**
-   * DELETE /api/v1/push/subscription
-   */
   public deletePushSubscription(): Promise<Response<{}>> {
     return this.client.del<{}>('/api/v1/push/subscription')
   }
@@ -2010,20 +1402,6 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // search
   // ======================================
-  /**
-   * GET /api/v2/search
-   *
-   * @param q The search query.
-   * @param type Enum of search target.
-   * @param limit Maximum number of results to load, per type. Defaults to 20. Max 40.
-   * @param max_id Return results older than this id.
-   * @param min_id Return results immediately newer than this id.
-   * @param resolve Attempt WebFinger lookup. Defaults to false.
-   * @param following Only include accounts that the user is following. Defaults to false.
-   * @param account_id If provided, statuses returned will be authored only by this account.
-   * @param exclude_unreviewed Filter out unreviewed tags? Defaults to false.
-   * @return Results.
-   */
   public search(
     q: string,
     type: 'accounts' | 'hashtags' | 'statuses',
@@ -2172,6 +1550,8 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   /**
    * GET /api/v1/custom_emojis
+   *
+   * @return Array of emojis.
    */
   public static getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
     return APIClient.get<Array<Emoji>>('/api/v1/custom_emojis')
