@@ -1,3 +1,5 @@
+ignore:
+  - "docs/**"
 linter:
   eslint:
     npm_install: true
