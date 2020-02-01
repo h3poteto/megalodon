@@ -1,19 +1,11 @@
 import MegalodonInterface, { NoImplementedError } from './megalodon'
 import Mastodon from './mastodon'
 import StreamListener from './mastodon/stream_listener'
-import APIClient from './pleroma/api_client'
 import Response from './response'
 import { Status } from './entities/status'
 import { Relationship } from './entities/relationship'
 
 export default class Pleroma extends Mastodon implements MegalodonInterface {
-  /**
-   * GET /api/pleroma/healthcheck
-   */
-  public static healthcheck(): Promise<Response<{}>> {
-    return APIClient.get<{}>('/api/pleroma/healthcheck')
-  }
-
   // ======================================
   // accounts
   // ======================================
