@@ -8,6 +8,7 @@ import { ProxyConfig } from './proxy_config'
 //
 import MegalodonInterface from './megalodon'
 import Mastodon from './mastodon'
+import Pleroma from './pleroma'
 /**
  * Entities
  */
@@ -51,6 +52,7 @@ export {
   //
   MegalodonInterface,
   Mastodon,
+  Pleroma,
   /**
    * Entities
    */
