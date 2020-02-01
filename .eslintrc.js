@@ -30,6 +30,7 @@ module.exports = {
     ],
     camelcase: 'off',
     '@typescript-eslint/camelcase': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'promise/param-names': 'off'
   }
 }
