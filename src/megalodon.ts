@@ -51,6 +51,14 @@ export default interface MegalodonInterface {
   ): Promise<Response<Account>>
   getAccount(id: string): Promise<Response<Account>>
   getAccountStatuses(id: string): Promise<Response<Array<Status>>>
+  getAccountFavourites(
+    id: string,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
+  ): Promise<Response<Array<Status>>>
+  subscribeAccount(id: string): Promise<Response<Relationship>>
+  unsubscribeAccount(id: string): Promise<Response<Relationship>>
   getAccountFollowers(
     id: string,
     limit?: number | null,
@@ -252,4 +260,13 @@ export default interface MegalodonInterface {
   tagSocket(tag: string): WebSocket
   listSocket(list_id: string): WebSocket
   directSocket(): WebSocket
+}
+
+export class NoImplementedError extends Error {
+  constructor(err?: string) {
+    super(err)
+
+    this.name = new.target.name
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
 }

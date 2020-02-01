@@ -17,7 +17,7 @@ const DEFAULT_UA = 'megalodon'
  * Interface
  */
 
-interface ApiInterface {
+export interface ApiInterface {
   get<T = any>(path: string, params: object): Promise<Response<T>>
   put<T = any>(path: string, params: object): Promise<Response<T>>
   patch<T = any>(path: string, params: object): Promise<Response<T>>

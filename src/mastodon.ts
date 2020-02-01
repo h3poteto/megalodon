@@ -28,7 +28,7 @@ import { PushSubscription } from './entities/push_subscription'
 import { Token } from './entities/token'
 import StreamListener from './mastodon/stream_listener'
 import WebSocket from './mastodon/web_socket'
-import MegalodonInterface from './megalodon'
+import MegalodonInterface, { NoImplementedError } from './megalodon'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -332,6 +332,32 @@ export default class Mastodon implements MegalodonInterface {
    */
   public getAccountStatuses(id: string): Promise<Response<Array<Status>>> {
     return this.client.get<Array<Status>>(`/api/v1/accounts/${id}/statuses`)
+  }
+
+  public subscribeAccount(_id: string): Promise<Response<Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('mastodon does not support')
+      reject(err)
+    })
+  }
+
+  public unsubscribeAccount(_id: string): Promise<Response<Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('mastodon does not support')
+      reject(err)
+    })
+  }
+
+  public getAccountFavourites(
+    _id: string,
+    _limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Status>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('mastodon does not support')
+      reject(err)
+    })
   }
 
   /**
