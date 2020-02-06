@@ -1,6 +1,6 @@
-import API from './mastodon/api_client'
-import StreamListener, { StreamListenerError } from './mastodon/stream_listener'
-import WebSocket from './mastodon/web_socket'
+import MastodonAPI from './mastodon/api_client'
+import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 import Response from './response'
 import OAuth from './oauth'
 import { isCancel, RequestCanceledError } from './cancel'
@@ -41,8 +41,8 @@ import { Token } from './entities/token'
 import { URLs } from './entities/urls'
 
 export {
+  MastodonAPI,
   StreamListener,
-  StreamListenerError,
   WebSocket,
   Response,
   OAuth,
@@ -85,4 +85,4 @@ export {
   URLs
 }
 
-export default API
+export default MastodonAPI.Client

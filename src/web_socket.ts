@@ -1,10 +1,10 @@
 import WS from 'ws'
 import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
-import { Status } from '../entities/status'
-import { Notification } from '../entities/notification'
-import { Conversation } from '../entities/conversation'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
+import { Status } from './entities/status'
+import { Notification } from './entities/notification'
+import { Conversation } from './entities/conversation'
+import proxyAgent, { ProxyConfig } from './proxy_config'
 
 /**
  * WebSocket

@@ -1,3 +1,5 @@
+import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 import Response from './response'
 import { Application } from './entities/application'
 import { Account } from './entities/account'
@@ -20,8 +22,6 @@ import { Notification } from './entities/notification'
 import { Results } from './entities/results'
 import { PushSubscription } from './entities/push_subscription'
 import { Token } from './entities/token'
-import StreamListener from './mastodon/stream_listener'
-import WebSocket from './mastodon/web_socket'
 
 export default interface MegalodonInterface {
   // ======================================

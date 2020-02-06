@@ -1,4 +1,4 @@
-import APIClient from '@/mastodon/api_client'
+import MastodonAPI from '@/mastodon/api_client'
 import { Account } from '@/entities/account'
 import { Status } from '@/entities/status'
 import { Application } from '@/entities/application'
@@ -67,7 +67,7 @@ const status: Status = {
 })
 
 describe('get', () => {
-  const client = new APIClient('testToken', 'https://pleroma.io/api/v1')
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
   const mockResponse: AxiosResponse<Array<Status>> = {
     data: [status],
     status: 200,
@@ -83,7 +83,7 @@ describe('get', () => {
 })
 
 describe('put', () => {
-  const client = new APIClient('testToken', 'https://pleroma.io/api/v1')
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
   const mockResponse: AxiosResponse<Account> = {
     data: account,
     status: 200,
@@ -101,7 +101,7 @@ describe('put', () => {
 })
 
 describe('patch', () => {
-  const client = new APIClient('testToken', 'https://pleroma.io/api/v1')
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
   const mockResponse: AxiosResponse<Account> = {
     data: account,
     status: 200,
@@ -119,7 +119,7 @@ describe('patch', () => {
 })
 
 describe('post', () => {
-  const client = new APIClient('testToken', 'https://pleroma.io/api/v1')
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
   const mockResponse: AxiosResponse<Status> = {
     data: status,
     status: 200,
@@ -137,7 +137,7 @@ describe('post', () => {
 })
 
 describe('del', () => {
-  const client = new APIClient('testToken', 'https://pleroma.io/api/v1')
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
   const mockResponse: AxiosResponse<{}> = {
     data: {},
     status: 200,

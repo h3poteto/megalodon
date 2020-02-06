@@ -1,7 +1,10 @@
-import APIClient from './mastodon/api_client'
+import MastodonAPI from './mastodon/api_client'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
+import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
+import MegalodonInterface, { NoImplementedError } from './megalodon'
 import { Application } from './entities/application'
 import { Account } from './entities/account'
 import { Status } from './entities/status'
@@ -26,9 +29,6 @@ import { Activity } from './entities/activity'
 import { Emoji } from './entities/emoji'
 import { PushSubscription } from './entities/push_subscription'
 import { Token } from './entities/token'
-import StreamListener from './mastodon/stream_listener'
-import WebSocket from './mastodon/web_socket'
-import MegalodonInterface, { NoImplementedError } from './megalodon'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -36,7 +36,7 @@ const DEFAULT_SCOPE = 'read write follow'
 const DEFAULT_UA = 'megalodon'
 
 export default class Mastodon implements MegalodonInterface {
-  public client: APIClient
+  public client: MastodonAPI.Client
 
   /**
    * @param accessToken access token from OAuth2 authorization
@@ -50,7 +50,7 @@ export default class Mastodon implements MegalodonInterface {
     userAgent: string = DEFAULT_UA,
     proxyConfig: ProxyConfig | false = false
   ) {
-    this.client = new APIClient(accessToken, baseUrl, userAgent, proxyConfig)
+    this.client = new MastodonAPI.Client(accessToken, baseUrl, userAgent, proxyConfig)
   }
 
   /**
@@ -70,7 +70,7 @@ export default class Mastodon implements MegalodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.AppData> {
-    return APIClient.registerApp(clientName, options, baseUrl, proxyConfig)
+    return MastodonAPI.Client.registerApp(clientName, options, baseUrl, proxyConfig)
   }
 
   /**
@@ -91,7 +91,7 @@ export default class Mastodon implements MegalodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.AppData> {
-    return APIClient.createApp(client_name, options, baseUrl, proxyConfig)
+    return MastodonAPI.Client.createApp(client_name, options, baseUrl, proxyConfig)
   }
 
   /**
@@ -111,7 +111,7 @@ export default class Mastodon implements MegalodonInterface {
     },
     baseUrl = DEFAULT_URL
   ): Promise<string> {
-    return APIClient.generateAuthUrl(clientId, clientSecret, options, baseUrl)
+    return MastodonAPI.Client.generateAuthUrl(clientId, clientSecret, options, baseUrl)
   }
 
   // ======================================
@@ -145,7 +145,7 @@ export default class Mastodon implements MegalodonInterface {
     redirect_uri = NO_REDIRECT,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.TokenData> {
-    return APIClient.fetchAccessToken(client_id, client_secret, code, baseUrl, redirect_uri, proxyConfig)
+    return MastodonAPI.Client.fetchAccessToken(client_id, client_secret, code, baseUrl, redirect_uri, proxyConfig)
   }
 
   /**
@@ -166,7 +166,7 @@ export default class Mastodon implements MegalodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<OAuth.TokenData> {
-    return APIClient.refreshToken(client_id, client_secret, refresh_token, baseUrl, proxyConfig)
+    return MastodonAPI.Client.refreshToken(client_id, client_secret, refresh_token, baseUrl, proxyConfig)
   }
 
   /**
@@ -186,7 +186,7 @@ export default class Mastodon implements MegalodonInterface {
     baseUrl = DEFAULT_URL,
     proxyConfig: ProxyConfig | false = false
   ): Promise<Response<{}>> {
-    return APIClient.post<{}>(
+    return MastodonAPI.Client.post<{}>(
       '/oauth/revoke',
       {
         client_id,
@@ -1468,21 +1468,21 @@ export default class Mastodon implements MegalodonInterface {
    * GET /api/v1/instance
    */
   public static getInstance(): Promise<Response<Instance>> {
-    return APIClient.get<Instance>('/api/v1/instance')
+    return MastodonAPI.Client.get<Instance>('/api/v1/instance')
   }
 
   /**
    * GET /api/v1/instance/peers
    */
   public static getInstancePeers(): Promise<Response<Array<string>>> {
-    return APIClient.get<Array<string>>('/api/v1/instance/peers')
+    return MastodonAPI.Client.get<Array<string>>('/api/v1/instance/peers')
   }
 
   /**
    * GET /api/v1/instance/activity
    */
   public static getInstanceActivity(): Promise<Response<Array<Activity>>> {
-    return APIClient.get<Array<Activity>>('/api/v1/instance/activity')
+    return MastodonAPI.Client.get<Array<Activity>>('/api/v1/instance/activity')
   }
 
   // ======================================
@@ -1500,7 +1500,7 @@ export default class Mastodon implements MegalodonInterface {
         limit
       })
     }
-    return APIClient.get<Array<Tag>>('/api/v1/trends', params)
+    return MastodonAPI.Client.get<Array<Tag>>('/api/v1/trends', params)
   }
 
   // ======================================
@@ -1542,7 +1542,7 @@ export default class Mastodon implements MegalodonInterface {
         local
       })
     }
-    return APIClient.get<Array<Account>>('/api/v1/directory', params)
+    return MastodonAPI.Client.get<Array<Account>>('/api/v1/directory', params)
   }
 
   // ======================================
@@ -1554,7 +1554,7 @@ export default class Mastodon implements MegalodonInterface {
    * @return Array of emojis.
    */
   public static getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
-    return APIClient.get<Array<Emoji>>('/api/v1/custom_emojis')
+    return MastodonAPI.Client.get<Array<Emoji>>('/api/v1/custom_emojis')
   }
 
   // ======================================
