@@ -1,6 +1,6 @@
 import MegalodonInterface, { NoImplementedError } from './megalodon'
 import Mastodon from './mastodon'
-import StreamListener from './mastodon/stream_listener'
+import StreamListener from './stream_listener'
 import Response from './response'
 import { Status } from './entities/status'
 import { Relationship } from './entities/relationship'

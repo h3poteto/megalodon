@@ -1,13 +1,13 @@
 import { EventEmitter } from 'events'
-import { Status } from '../entities/status'
-import { Notification } from '../entities/notification'
-import { Conversation } from '../entities/conversation'
+import { Status } from './entities/status'
+import { Notification } from './entities/notification'
+import { Conversation } from './entities/conversation'
 
 /**
  * Parser
  * Parse response data in streaming.
  **/
-class Parser extends EventEmitter {
+export class Parser extends EventEmitter {
   private message: string
 
   constructor() {
@@ -86,5 +86,3 @@ class Parser extends EventEmitter {
     this.message = chunk.slice(start, size)
   }
 }
-
-export default Parser

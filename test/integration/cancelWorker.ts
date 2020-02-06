@@ -1,5 +1,5 @@
-import APIClient from '@/mastodon/api_client'
+import MastodonAPI from '@/mastodon/api_client'
 
-export function cancel(client: APIClient) {
+export function cancel(client: MastodonAPI.Client) {
   return client.cancel()
 }

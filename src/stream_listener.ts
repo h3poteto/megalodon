@@ -1,11 +1,11 @@
 import { EventEmitter } from 'events'
 import axios, { CancelTokenSource, AxiosRequestConfig } from 'axios'
 import httpAdapter from 'axios/lib/adapters/http'
-import Parser from './parser'
-import { Status } from '../entities/status'
-import { Notification } from '../entities/notification'
-import { Conversation } from '../entities/conversation'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
+import { Parser } from './parser'
+import { Status } from './entities/status'
+import { Notification } from './entities/notification'
+import { Conversation } from './entities/conversation'
+import proxyAgent, { ProxyConfig } from './proxy_config'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
@@ -24,7 +24,7 @@ export class StreamListenerError extends Error {
  * EventStream
  * Listener of text/event-stream. It receives data, and parse when streaming.
  */
-class StreamListener extends EventEmitter {
+export default class StreamListener extends EventEmitter {
   public url: string
   public headers: object
   public parser: Parser
@@ -185,5 +185,3 @@ class StreamListener extends EventEmitter {
     })
   }
 }
-
-export default StreamListener
