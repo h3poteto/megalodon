@@ -1,12 +1,9 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
-import { OAuth2 } from 'oauth'
-
 import StreamListener from '../stream_listener'
 import WebSocket from '../web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
-import OAuth from '../oauth'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_URL = 'https://mastodon.social'
@@ -61,129 +58,6 @@ namespace MastodonAPI {
       this.userAgent = userAgent
       this.cancelTokenSource = axios.CancelToken.source()
       this.proxyConfig = proxyConfig
-    }
-
-    /**
-     * TODO: We have to move these methods to mastodon.ts
-     */
-    public static async registerApp(
-      clientName: string,
-      options: Partial<{ scopes: string; redirect_uris: string; website: string }> = {
-        scopes: DEFAULT_SCOPE,
-        redirect_uris: NO_REDIRECT
-      },
-      baseUrl = DEFAULT_URL,
-      proxyConfig: ProxyConfig | false = false
-    ): Promise<OAuth.AppData> {
-      return this.createApp(clientName, options, baseUrl, proxyConfig).then(async appData => {
-        return this.generateAuthUrl(
-          appData.client_id,
-          appData.client_secret,
-          {
-            redirect_uri: appData.redirect_uri,
-            scope: options.scopes
-          },
-          baseUrl
-        ).then(url => {
-          appData.url = url
-          return appData
-        })
-      })
-    }
-
-    public static async createApp(
-      client_name: string,
-      options: Partial<{ redirect_uris: string; scopes: string; website: string }> = {
-        redirect_uris: NO_REDIRECT,
-        scopes: DEFAULT_SCOPE
-      },
-      baseUrl = DEFAULT_URL,
-      proxyConfig: ProxyConfig | false = false
-    ): Promise<OAuth.AppData> {
-      const redirect_uris = options.redirect_uris || NO_REDIRECT
-      const scopes = options.scopes || DEFAULT_SCOPE
-
-      const params: {
-        client_name: string
-        redirect_uris: string
-        scopes: string
-        website?: string
-      } = {
-        client_name,
-        redirect_uris,
-        scopes
-      }
-      if (options.website) params.website = options.website
-
-      return this.post<OAuth.AppDataFromServer>(
-        '/api/v1/apps',
-        params,
-        baseUrl,
-        proxyConfig
-      ).then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
-    }
-
-    public static generateAuthUrl(
-      clientId: string,
-      clientSecret: string,
-      options: Partial<{ redirect_uri: string; scope: string }> = {
-        redirect_uri: NO_REDIRECT,
-        scope: DEFAULT_SCOPE
-      },
-      baseUrl = DEFAULT_URL
-    ): Promise<string> {
-      return new Promise(resolve => {
-        const oauth = new OAuth2(clientId, clientSecret, baseUrl, undefined, '/oauth/token')
-        const url = oauth.getAuthorizeUrl({
-          redirect_uri: options.redirect_uri,
-          response_type: 'code',
-          client_id: clientId,
-          scope: options.scope
-        })
-        resolve(url)
-      })
-    }
-
-    public static async fetchAccessToken(
-      client_id: string,
-      client_secret: string,
-      code: string,
-      baseUrl = DEFAULT_URL,
-      redirect_uri = NO_REDIRECT,
-      proxyConfig: ProxyConfig | false = false
-    ): Promise<OAuth.TokenData> {
-      return this.post<OAuth.TokenDataFromServer>(
-        '/oauth/token',
-        {
-          client_id,
-          client_secret,
-          code,
-          redirect_uri,
-          grant_type: 'authorization_code'
-        },
-        baseUrl,
-        proxyConfig
-      ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
-    }
-
-    public static async refreshToken(
-      client_id: string,
-      client_secret: string,
-      refresh_token: string,
-      baseUrl = DEFAULT_URL,
-      proxyConfig: ProxyConfig | false = false
-    ): Promise<OAuth.TokenData> {
-      return this.post<OAuth.TokenDataFromServer>(
-        '/oauth/token',
-        {
-          client_id,
-          client_secret,
-          refresh_token,
-          grant_type: 'refresh_token'
-        },
-        baseUrl,
-        proxyConfig
-      ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
     }
 
     /**
