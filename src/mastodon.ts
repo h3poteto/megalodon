@@ -54,6 +54,13 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   /**
+   * Cancel
+   */
+  public cancel(): void {
+    return this.client.cancel()
+  }
+
+  /**
    * First, call createApp to get client_id and client_secret.
    * Next, call generateAuthUrl to get authorization url.
    * @param clientName Form Data, which is sent to /api/v1/apps

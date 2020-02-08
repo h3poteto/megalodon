@@ -24,6 +24,13 @@ import { PushSubscription } from './entities/push_subscription'
 import { Token } from './entities/token'
 
 export default interface MegalodonInterface {
+  /**
+   * Cancel all requests in this instance.
+   *
+   * @return void
+   */
+  cancel(): void
+
   // ======================================
   // apps
   // ======================================
