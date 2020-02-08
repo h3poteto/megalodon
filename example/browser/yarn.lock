@@ -14,10 +14,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ws@^6.0.1":
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-6.0.4.tgz#7797707c8acce8f76d8c34b370d4645b70421ff1"
-  integrity sha512-PpPrX7SZW9re6+Ha8ojZG4Se8AZXgf0GK6zmfqEuCsY49LFDNXO3SByp44X3dFEqtB73lkCDAdUazhAjVPiNwg==
+"@types/ws@^7.2.0":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.2.1.tgz#b800f2b8aee694e2b581113643e20d79dd3b8556"
+  integrity sha512-UEmRNbXFGvfs/sLncf01GuVv6U1mZP3Df0iXWx4kUlikJxbFyFADp95mDn1XDTE2mXpzzoHcKlfFcbytLq4vaA==
   dependencies:
     "@types/node" "*"
 
@@ -1773,16 +1773,16 @@ md5.js@^1.3.4:
     safe-buffer "^5.1.2"
 
 "megalodon@file:../..":
-  version "2.1.1"
+  version "2.2.0"
   dependencies:
     "@types/oauth" "^0.9.0"
-    "@types/ws" "^6.0.1"
+    "@types/ws" "^7.2.0"
     axios "^0.19.0"
     https-proxy-agent "^4.0.0"
     moment "^2.24.0"
     oauth "^0.9.15"
     socks-proxy-agent h3poteto/node-socks-proxy-agent#master
-    typescript "3.5.3"
+    typescript "3.7.5"
     ws "^7.2.1"
 
 mem@^4.0.0:
@@ -2996,10 +2996,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+typescript@3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
 
 union-value@^1.0.0:
   version "1.0.1"
