@@ -1,5 +1,5 @@
 import readline from 'readline'
-import Mastodon from 'megalodon'
+import { Mastodon } from 'megalodon'
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -12,13 +12,12 @@ const BASE_URL = 'https://mastodon.social'
 let clientId
 let clientSecret
 
-Mastodon.registerApp(
-  'Test App',
-  {
+const client = new Mastodon(BASE_URL)
+
+client
+  .registerApp('Test App', {
     scopes: SCOPES
-  },
-  BASE_URL
-)
+  })
   .then(appData => {
     clientId = appData.clientId
     clientSecret = appData.clientSecret

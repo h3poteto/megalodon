@@ -1,12 +1,12 @@
-import Mastodon from 'megalodon'
+import { Mastodon } from 'megalodon'
 
 const BASE_URL = 'wss://pleroma.io'
 
 const access_token = process.env.PLEROMA_ACCESS_TOKEN
 
-const client = new Mastodon(access_token, BASE_URL + '/api/v1')
+const client = new Mastodon(BASE_URL, access_token)
 
-const stream = client.socket('/streaming', 'user')
+const stream = client.userSocket()
 stream.on('connect', event => {
   console.log('connect')
 })
