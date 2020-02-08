@@ -1,4 +1,4 @@
-import Mastodon, { Status, Notification, WebSocket } from 'megalodon'
+import { Mastodon, Status, Notification, WebSocket } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
@@ -12,9 +12,9 @@ const BASE_URL: string = 'wss://pleroma.io'
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
 
-const client = new Mastodon(access_token, BASE_URL + '/api/v1')
+const client = new Mastodon(BASE_URL, access_token)
 
-const stream: WebSocket = client.socket('/streaming', 'user')
+const stream: WebSocket = client.userSocket()
 
 const logger = log4js.getLogger()
 logger.level = 'debug'
