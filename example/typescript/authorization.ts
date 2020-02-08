@@ -12,13 +12,12 @@ const BASE_URL: string = 'https://mastodon.social'
 let clientId: string
 let clientSecret: string
 
-Mastodon.registerApp(
-  'Test App',
-  {
+const client = new Mastodon(BASE_URL)
+
+client
+  .registerApp('Test App', {
     scopes: SCOPES
-  },
-  BASE_URL
-)
+  })
   .then(appData => {
     clientId = appData.clientId
     clientSecret = appData.clientSecret
@@ -33,7 +32,7 @@ Mastodon.registerApp(
     })
   })
   .then((code: string) => {
-    return Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
+    return client.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
   })
   .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')

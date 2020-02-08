@@ -42,17 +42,12 @@ namespace MastodonAPI {
     private proxyConfig: ProxyConfig | false = false
 
     /**
-     * @param accessToken access token from OAuth2 authorization
      * @param baseUrl hostname or base URL
+     * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
      * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-    constructor(
-      accessToken: string,
-      baseUrl: string = DEFAULT_URL,
-      userAgent: string = DEFAULT_UA,
-      proxyConfig: ProxyConfig | false = false
-    ) {
+    constructor(baseUrl: string, accessToken: string, userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
