@@ -32,62 +32,40 @@ import { PushSubscription } from './entities/push_subscription'
 import { Token } from './entities/token'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
-const DEFAULT_URL = 'https://mastodon.social'
 const DEFAULT_SCOPE = 'read write follow'
 const DEFAULT_UA = 'megalodon'
 
 export default class Mastodon implements MegalodonInterface {
   public client: MastodonAPI.Client
+  public baseUrl: string
 
   /**
-   * @param accessToken access token from OAuth2 authorization
    * @param baseUrl hostname or base URL
+   * @param accessToken access token from OAuth2 authorization
    * @param userAgent UserAgent is specified in header on request.
    * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(
-    accessToken: string,
-    baseUrl: string = DEFAULT_URL,
-    userAgent: string = DEFAULT_UA,
-    proxyConfig: ProxyConfig | false = false
-  ) {
-    this.client = new MastodonAPI.Client(accessToken, baseUrl, userAgent, proxyConfig)
+  constructor(baseUrl: string, accessToken: string = '', userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
+    this.client = new MastodonAPI.Client(baseUrl, accessToken, userAgent, proxyConfig)
+    this.baseUrl = baseUrl
   }
 
-  /**
-   * Cancel
-   */
   public cancel(): void {
     return this.client.cancel()
   }
 
-  /**
-   * First, call createApp to get client_id and client_secret.
-   * Next, call generateAuthUrl to get authorization url.
-   * @param clientName Form Data, which is sent to /api/v1/apps
-   * @param options Form Data, which is sent to /api/v1/apps. and properties should be **snake_case**
-   * @param baseUrl base URL of the target
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
-   */
-  public static async registerApp(
-    clientName: string,
+  public async registerApp(
+    client_name: string,
     options: Partial<{ scopes: string; redirect_uris: string; website: string }> = {
       scopes: DEFAULT_SCOPE,
       redirect_uris: NO_REDIRECT
-    },
-    baseUrl = DEFAULT_URL,
-    proxyConfig: ProxyConfig | false = false
+    }
   ): Promise<OAuth.AppData> {
-    return this.createApp(clientName, options, baseUrl, proxyConfig).then(async appData => {
-      return this.generateAuthUrl(
-        appData.client_id,
-        appData.client_secret,
-        {
-          redirect_uri: appData.redirect_uri,
-          scope: options.scopes
-        },
-        baseUrl
-      ).then(url => {
+    return this.createApp(client_name, options).then(async appData => {
+      return this.generateAuthUrl(appData.client_id, appData.client_secret, {
+        redirect_uri: appData.redirect_uri,
+        scope: options.scopes
+      }).then(url => {
         appData.url = url
         return appData
       })
@@ -100,17 +78,13 @@ export default class Mastodon implements MegalodonInterface {
    * Create an application.
    * @param client_name your application's name
    * @param options Form Data
-   * @param baseUrl target of base URL
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  public static async createApp(
+  public async createApp(
     client_name: string,
     options: Partial<{ redirect_uris: string; scopes: string; website: string }> = {
       redirect_uris: NO_REDIRECT,
       scopes: DEFAULT_SCOPE
-    },
-    baseUrl = DEFAULT_URL,
-    proxyConfig: ProxyConfig | false = false
+    }
   ): Promise<OAuth.AppData> {
     const redirect_uris = options.redirect_uris || NO_REDIRECT
     const scopes = options.scopes || DEFAULT_SCOPE
@@ -127,12 +101,9 @@ export default class Mastodon implements MegalodonInterface {
     }
     if (options.website) params.website = options.website
 
-    return MastodonAPI.Client.post<OAuth.AppDataFromServer>(
-      '/api/v1/apps',
-      params,
-      baseUrl,
-      proxyConfig
-    ).then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
+    return this.client
+      .post<OAuth.AppDataFromServer>('/api/v1/apps', params)
+      .then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
   }
 
   /**
@@ -141,19 +112,17 @@ export default class Mastodon implements MegalodonInterface {
    * @param clientId your OAuth app's client ID
    * @param clientSecret your OAuth app's client Secret
    * @param options as property, redirect_uri and scope are available, and must be the same as when you register your app
-   * @param baseUrl base URL of the target
    */
-  public static generateAuthUrl(
+  public generateAuthUrl(
     clientId: string,
     clientSecret: string,
     options: Partial<{ redirect_uri: string; scope: string }> = {
       redirect_uri: NO_REDIRECT,
       scope: DEFAULT_SCOPE
-    },
-    baseUrl = DEFAULT_URL
+    }
   ): Promise<string> {
     return new Promise(resolve => {
-      const oauth = new OAuth2(clientId, clientSecret, baseUrl, undefined, '/oauth/token')
+      const oauth = new OAuth2(clientId, clientSecret, this.baseUrl, undefined, '/oauth/token')
       const url = oauth.getAuthorizeUrl({
         redirect_uri: options.redirect_uri,
         response_type: 'code',
@@ -174,99 +143,40 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // apps/oauth
   // ======================================
-
-  /**
-   * POST /oauth/token
-   *
-   * Fetch OAuth access token.
-   * Get an access token based client_id and client_secret and authorization code.
-   * @param client_id will be generated by #createApp or #registerApp
-   * @param client_secret will be generated by #createApp or #registerApp
-   * @param code will be generated by the link of #generateAuthUrl or #registerApp
-   * @param baseUrl base URL of the target
-   * @param redirect_uri must be the same uri as the time when you register your OAuth application
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
-   */
-  public static async fetchAccessToken(
+  public async fetchAccessToken(
     client_id: string,
     client_secret: string,
     code: string,
-    baseUrl = DEFAULT_URL,
-    redirect_uri = NO_REDIRECT,
-    proxyConfig: ProxyConfig | false = false
+    redirect_uri = NO_REDIRECT
   ): Promise<OAuth.TokenData> {
-    return MastodonAPI.Client.post<OAuth.TokenDataFromServer>(
-      '/oauth/token',
-      {
+    return this.client
+      .post<OAuth.TokenDataFromServer>('/oauth/token', {
         client_id,
         client_secret,
         code,
         redirect_uri,
         grant_type: 'authorization_code'
-      },
-      baseUrl,
-      proxyConfig
-    ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+      })
+      .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
-  /**
-   * POST /oauth/token
-   *
-   * Refresh OAuth access token.
-   * Send refresh token and get new access token.
-   * @param client_id will be generated by #createApp or #registerApp
-   * @param client_secret will be generated by #createApp or #registerApp
-   * @param refresh_token will be get #fetchAccessToken
-   * @param baseUrl base URL or the target
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
-   */
-  public static async refreshToken(
-    client_id: string,
-    client_secret: string,
-    refresh_token: string,
-    baseUrl = DEFAULT_URL,
-    proxyConfig: ProxyConfig | false = false
-  ): Promise<OAuth.TokenData> {
-    return MastodonAPI.Client.post<OAuth.TokenDataFromServer>(
-      '/oauth/token',
-      {
+  public async refreshToken(client_id: string, client_secret: string, refresh_token: string): Promise<OAuth.TokenData> {
+    return this.client
+      .post<OAuth.TokenDataFromServer>('/oauth/token', {
         client_id,
         client_secret,
         refresh_token,
         grant_type: 'refresh_token'
-      },
-      baseUrl,
-      proxyConfig
-    ).then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+      })
+      .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
-  /**
-   * POST /oauth/revoke
-   *
-   * Revoke an OAuth token.
-   * @param client_id will be generated by #createApp or #registerApp
-   * @param client_secret will be generated by #createApp or #registerApp
-   * @param token will be get #fetchAccessToken
-   * @param baseUrl base URL or the target
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
-   */
-  public static async revokeToken(
-    client_id: string,
-    client_secret: string,
-    token: string,
-    baseUrl = DEFAULT_URL,
-    proxyConfig: ProxyConfig | false = false
-  ): Promise<Response<{}>> {
-    return MastodonAPI.Client.post<{}>(
-      '/oauth/revoke',
-      {
-        client_id,
-        client_secret,
-        token
-      },
-      baseUrl,
-      proxyConfig
-    )
+  public async revokeToken(client_id: string, client_secret: string, token: string): Promise<Response<{}>> {
+    return this.client.post<{}>('/oauth/revoke', {
+      client_id,
+      client_secret,
+      token
+    })
   }
 
   // ======================================
@@ -1535,25 +1445,16 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // instance
   // ======================================
-  /**
-   * GET /api/v1/instance
-   */
-  public static getInstance(): Promise<Response<Instance>> {
-    return MastodonAPI.Client.get<Instance>('/api/v1/instance')
+  public getInstance(): Promise<Response<Instance>> {
+    return this.client.get<Instance>('/api/v1/instance')
   }
 
-  /**
-   * GET /api/v1/instance/peers
-   */
-  public static getInstancePeers(): Promise<Response<Array<string>>> {
-    return MastodonAPI.Client.get<Array<string>>('/api/v1/instance/peers')
+  public getInstancePeers(): Promise<Response<Array<string>>> {
+    return this.client.get<Array<string>>('/api/v1/instance/peers')
   }
 
-  /**
-   * GET /api/v1/instance/activity
-   */
-  public static getInstanceActivity(): Promise<Response<Array<Activity>>> {
-    return MastodonAPI.Client.get<Array<Activity>>('/api/v1/instance/activity')
+  public getInstanceActivity(): Promise<Response<Array<Activity>>> {
+    return this.client.get<Array<Activity>>('/api/v1/instance/activity')
   }
 
   // ======================================
@@ -1564,29 +1465,20 @@ export default class Mastodon implements MegalodonInterface {
    *
    * @param limit Maximum number of results to return. Defaults to 10.
    */
-  public static getInstanceTrends(limit?: number | null): Promise<Response<Array<Tag>>> {
+  public getInstanceTrends(limit?: number | null): Promise<Response<Array<Tag>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
         limit
       })
     }
-    return MastodonAPI.Client.get<Array<Tag>>('/api/v1/trends', params)
+    return this.client.get<Array<Tag>>('/api/v1/trends', params)
   }
 
   // ======================================
   // instance/directory
   // ======================================
-  /**
-   * GET /api/v1/directory
-   *
-   * @param limit How many accounts to load. Default 40.
-   * @param offset How many accounts to skip before returning results. Default 0.
-   * @param order Order of results.
-   * @param local Only return local accounts.
-   * @return Array of accounts.
-   */
-  public static getInstanceDirectory(
+  public getInstanceDirectory(
     limit?: number | null,
     offset?: number | null,
     order?: 'active' | 'new' | null,
@@ -1613,19 +1505,14 @@ export default class Mastodon implements MegalodonInterface {
         local
       })
     }
-    return MastodonAPI.Client.get<Array<Account>>('/api/v1/directory', params)
+    return this.client.get<Array<Account>>('/api/v1/directory', params)
   }
 
   // ======================================
   // instance/custom_emojis
   // ======================================
-  /**
-   * GET /api/v1/custom_emojis
-   *
-   * @return Array of emojis.
-   */
-  public static getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
-    return MastodonAPI.Client.get<Array<Emoji>>('/api/v1/custom_emojis')
+  public getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
+    return this.client.get<Array<Emoji>>('/api/v1/custom_emojis')
   }
 
   // ======================================
