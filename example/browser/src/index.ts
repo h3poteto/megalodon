@@ -1,8 +1,10 @@
-import Mastodon, { Instance } from 'megalodon'
+import { Mastodon, Instance, Response } from 'megalodon'
 
 const BASE_URL: string = 'http://mastodon.social'
 console.log('start')
 
-Mastodon.get<Instance>('/api/v1/instance', {}, BASE_URL).then(res => {
+const client = new Mastodon(BASE_URL)
+
+client.getInstance().then((res: Response<Instance>) => {
   console.log(res)
 })
