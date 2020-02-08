@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import Mastodon, { OAuth } from 'megalodon'
+import { Mastodon, OAuth } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -12,23 +12,29 @@ const BASE_URL: string = 'https://mastodon.social'
 let clientId: string
 let clientSecret: string
 
-Mastodon.registerApp('Test App', {
-  scopes: SCOPES
-}, BASE_URL).then(appData => {
-  clientId = appData.clientId
-  clientSecret = appData.clientSecret
-  console.log('Authorization URL is generated.')
-  console.log(appData.url)
-  console.log()
-  return new Promise<string>(resolve => {
-    rl.question('Enter the authorization code from website: ', code => {
-      resolve(code)
-      rl.close()
+Mastodon.registerApp(
+  'Test App',
+  {
+    scopes: SCOPES
+  },
+  BASE_URL
+)
+  .then(appData => {
+    clientId = appData.clientId
+    clientSecret = appData.clientSecret
+    console.log('Authorization URL is generated.')
+    console.log(appData.url)
+    console.log()
+    return new Promise<string>(resolve => {
+      rl.question('Enter the authorization code from website: ', code => {
+        resolve(code)
+        rl.close()
+      })
     })
   })
-}).then((code: string) => {
-  return Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
-})
+  .then((code: string) => {
+    return Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
+  })
   .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')
     console.log(tokenData.accessToken)
@@ -37,4 +43,3 @@ Mastodon.registerApp('Test App', {
     console.log()
   })
   .catch((err: Error) => console.error(err))
-
