@@ -1,5 +1,5 @@
 import readline from 'readline'
-import Mastodon from 'megalodon'
+import { Mastodon } from 'megalodon'
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,13 +10,11 @@ const BASE_URL = 'https://mastodon.social'
 
 const access_token = process.env.MASTODON_ACCESS_TOKEN
 
-const client = new Mastodon(access_token, BASE_URL + '/api/v1')
+const client = new Mastodon(BASE_URL, access_token)
 new Promise(resolve => {
   rl.question('Toot: ', status => {
     client
-      .post('/statuses', {
-        status: status
-      })
+      .postStatus(status)
       .then(res => {
         console.log(res)
         rl.close()

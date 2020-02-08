@@ -45,8 +45,21 @@ export default class Mastodon implements MegalodonInterface {
    * @param userAgent UserAgent is specified in header on request.
    * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(baseUrl: string, accessToken: string = '', userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
-    this.client = new MastodonAPI.Client(baseUrl, accessToken, userAgent, proxyConfig)
+  constructor(
+    baseUrl: string,
+    accessToken: string | null = null,
+    userAgent: string | null = DEFAULT_UA,
+    proxyConfig: ProxyConfig | false = false
+  ) {
+    let token: string = ''
+    if (accessToken) {
+      token = accessToken
+    }
+    let agent: string = DEFAULT_UA
+    if (userAgent) {
+      agent = userAgent
+    }
+    this.client = new MastodonAPI.Client(baseUrl, token, agent, proxyConfig)
     this.baseUrl = baseUrl
   }
 

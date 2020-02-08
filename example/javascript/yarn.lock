@@ -1627,7 +1627,7 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 "megalodon@file:../..":
-  version "2.2.0"
+  version "2.2.2"
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^7.2.0"
@@ -1636,7 +1636,7 @@ map-visit@^1.0.0:
     moment "^2.24.0"
     oauth "^0.9.15"
     socks-proxy-agent h3poteto/node-socks-proxy-agent#master
-    typescript "3.5.3"
+    typescript "3.7.5"
     ws "^7.2.1"
 
 micromatch@^3.1.10, micromatch@^3.1.4:
@@ -2161,7 +2161,6 @@ snapdragon@^0.8.1:
 
 socks-proxy-agent@h3poteto/node-socks-proxy-agent#master:
   version "4.0.2"
-  uid "5be42d4a3f98c5a156d713ea88a54b825f26d1f3"
   resolved "https://codeload.github.com/h3poteto/node-socks-proxy-agent/tar.gz/5be42d4a3f98c5a156d713ea88a54b825f26d1f3"
   dependencies:
     agent-base "~4.2.1"
@@ -2304,10 +2303,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-typescript@3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+typescript@3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

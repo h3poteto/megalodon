@@ -1,4 +1,4 @@
-import Mastodon, { Status, Notification, WebSocket, ProxyConfig } from 'megalodon'
+import { Mastodon, Status, Notification, WebSocket, ProxyConfig } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
@@ -21,9 +21,9 @@ const proxy: ProxyConfig = {
   protocol: process.env.PROXY_PROTOCOL
 }
 
-const client = new Mastodon(access_token, BASE_URL + '/api/v1', 'megalodon', proxy)
+const client = new Mastodon(BASE_URL, access_token, null, proxy)
 
-const stream: WebSocket = client.socket('/streaming', 'user')
+const stream: WebSocket = client.userSocket()
 
 const logger = log4js.getLogger()
 logger.level = 'debug'

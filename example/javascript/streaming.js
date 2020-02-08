@@ -1,12 +1,12 @@
-import Mastodon from 'megalodon'
+import { Mastodon } from 'megalodon'
 
 const BASE_URL = 'https://mastodon.social'
 
 const access_token = process.env.MASTODON_ACCESS_TOKEN
 
-const client = new Mastodon(access_token, BASE_URL + '/api/v1')
+const client = new Mastodon(BASE_URL, access_token)
 
-const stream = client.stream('/streaming/public')
+const stream = client.publicStream()
 stream.on('connect', _ => {
   console.log('connect')
 })

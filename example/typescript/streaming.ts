@@ -1,4 +1,4 @@
-import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
+import { Mastodon, Status, Notification, StreamListener } from 'megalodon'
 
 declare var process: {
   env: {
@@ -10,9 +10,9 @@ const BASE_URL: string = 'https://mastodon.social'
 
 const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
-const client = new Mastodon(access_token, BASE_URL + '/api/v1')
+const client = new Mastodon(BASE_URL, access_token)
 
-const stream: StreamListener = client.stream('/streaming/public')
+const stream: StreamListener = client.publicStream()
 stream.on('connect', _ => {
   console.log('connect')
 })

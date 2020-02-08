@@ -1,4 +1,4 @@
-import Mastodon, { Instance, ProxyConfig } from 'megalodon'
+import { Mastodon, Instance, ProxyConfig, Response } from 'megalodon'
 
 declare var process: {
   env: {
@@ -16,6 +16,8 @@ const proxy: ProxyConfig = {
   protocol: process.env.PROXY_PROTOCOL
 }
 
-Mastodon.get<Instance>('/api/v1/instance', {}, BASE_URL, proxy).then(res => {
+const client = new Mastodon(BASE_URL, '', null, proxy)
+
+client.getInstance().then((res: Response<Instance>) => {
   console.log(res)
 })
