@@ -1,11 +1,13 @@
-import { PollOption } from './poll_option'
+/// <reference path="poll_option.ts" />
 
-export type Poll = {
-  id: string
-  expires_at: string | null
-  expired: boolean
-  multiple: boolean
-  votes_count: number
-  options: Array<PollOption>
-  voted: boolean
+namespace Entity {
+  export type Poll = {
+    id: string
+    expires_at: string | null
+    expired: boolean
+    multiple: boolean
+    votes_count: number
+    options: Array<PollOption>
+    voted: boolean
+  }
 }

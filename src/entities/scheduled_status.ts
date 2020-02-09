@@ -1,8 +1,10 @@
-import { Attachment } from './attachment'
+// <reference path="attachment.ts" />
 
-export type ScheduledStatus = {
-  id: string
-  scheduled_at: string
-  params: object
-  media_attachments: Array<Attachment>
+namespace Entity {
+  export type ScheduledStatus = {
+    id: string
+    scheduled_at: string
+    params: object
+    media_attachments: Array<Attachment>
+  }
 }

@@ -1,3 +1,5 @@
-export type URLs = {
-  streaming_api: string
+namespace Entity {
+  export type URLs = {
+    streaming_api: string
+  }
 }

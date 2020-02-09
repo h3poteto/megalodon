@@ -1,7 +1,9 @@
-import { History } from './history'
+/// <reference path="history.ts" />
 
-export type Tag = {
-  name: string
-  url: string
-  history: Array<History> | null
+namespace Entity {
+  export type Tag = {
+    name: string
+    url: string
+    history: Array<History> | null
+  }
 }

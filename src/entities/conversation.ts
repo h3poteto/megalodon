@@ -1,9 +1,11 @@
-import { Account } from './account'
-import { Status } from './status'
+/// <reference path="account.ts" />
+/// <reference path="status.ts" />
 
-export type Conversation = {
-  id: string
-  accounts: Array<Account>
-  last_status: Status | null
-  unread: boolean
+namespace Entity {
+  export type Conversation = {
+    id: string
+    accounts: Array<Account>
+    last_status: Status | null
+    unread: boolean
+  }
 }

@@ -1,10 +1,8 @@
 import WS from 'ws'
 import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
-import { Status } from './entities/status'
-import { Notification } from './entities/notification'
-import { Conversation } from './entities/conversation'
 import proxyAgent, { ProxyConfig } from './proxy_config'
+import Entity from './entity'
 
 /**
  * WebSocket
@@ -233,16 +231,16 @@ export default class WebSocket extends EventEmitter {
    * Set up parser when receive message.
    */
   private _setupParser() {
-    this.parser.on('update', (status: Status) => {
+    this.parser.on('update', (status: Entity.Status) => {
       this.emit('update', status)
     })
-    this.parser.on('notification', (notification: Notification) => {
+    this.parser.on('notification', (notification: Entity.Notification) => {
       this.emit('notification', notification)
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
     })
-    this.parser.on('conversation', (conversation: Conversation) => {
+    this.parser.on('conversation', (conversation: Entity.Conversation) => {
       this.emit('conversation', conversation)
     })
     this.parser.on('error', (err: Error) => {
@@ -314,13 +312,13 @@ export class Parser extends EventEmitter {
 
     switch (event) {
       case 'update':
-        this.emit('update', mes as Status)
+        this.emit('update', mes as Entity.Status)
         break
       case 'notification':
-        this.emit('notification', mes as Notification)
+        this.emit('notification', mes as Entity.Notification)
         break
       case 'conversation':
-        this.emit('conversation', mes as Conversation)
+        this.emit('conversation', mes as Entity.Conversation)
         break
       case 'delete':
         this.emit('delete', payload)

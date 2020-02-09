@@ -1,7 +1,5 @@
 import { EventEmitter } from 'events'
-import { Status } from './entities/status'
-import { Notification } from './entities/notification'
-import { Conversation } from './entities/conversation'
+import Entity from './entity'
 
 /**
  * Parser
@@ -64,13 +62,13 @@ export class Parser extends EventEmitter {
         }
         switch (event) {
           case 'update':
-            this.emit('update', jsonObj as Status)
+            this.emit('update', jsonObj as Entity.Status)
             break
           case 'notification':
-            this.emit('notification', jsonObj as Notification)
+            this.emit('notification', jsonObj as Entity.Notification)
             break
           case 'conversation':
-            this.emit('conversation', jsonObj as Conversation)
+            this.emit('conversation', jsonObj as Entity.Conversation)
             break
           case 'delete':
             // When delete, data is an ID of the deleted status

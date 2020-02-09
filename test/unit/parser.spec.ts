@@ -1,11 +1,7 @@
 import { Parser } from '@/parser'
-import { Account } from '@/entities/account'
-import { Status } from '@/entities/status'
-import { Application } from '@/entities/application'
-import { Notification } from '@/entities/notification'
-import { Conversation } from '@/entities/conversation'
+import Entity from '@/entity'
 
-const account: Account = {
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -27,7 +23,7 @@ const account: Account = {
   bot: false
 }
 
-const status: Status = {
+const status: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -54,12 +50,12 @@ const status: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const notification: Notification = {
+const notification: Entity.Notification = {
   id: '1',
   account: account,
   status: status,
@@ -67,7 +63,7 @@ const notification: Notification = {
   created_at: '2019-04-01T17:01:32'
 }
 
-const conversation: Conversation = {
+const conversation: Entity.Conversation = {
   id: '1',
   accounts: [account],
   last_status: status,

@@ -1,9 +1,11 @@
-import { Account } from './account'
-import { Status } from './status'
-import { Tag } from './tag'
+/// <reference path="account.ts" />
+/// <reference path="status.ts" />
+/// <reference path="tag.ts" />
 
-export type Results = {
-  accounts: Array<Account>
-  statuses: Array<Status>
-  hashtags: Array<Tag>
+namespace Entity {
+  export type Results = {
+    accounts: Array<Account>
+    statuses: Array<Status>
+    hashtags: Array<Tag>
+  }
 }

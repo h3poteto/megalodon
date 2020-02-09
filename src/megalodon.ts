@@ -2,33 +2,10 @@ import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import Response from './response'
 import OAuth from './oauth'
-import { Application } from './entities/application'
-import { Account } from './entities/account'
-import { Status } from './entities/status'
-import { List } from './entities/list'
-import { IdentityProof } from './entities/identity_proof'
-import { Relationship } from './entities/relationship'
-import { Filter } from './entities/filter'
-import { Report } from './entities/report'
-import { FeaturedTag } from './entities/featured_tag'
-import { Tag } from './entities/tag'
-import { Preferences } from './entities/preferences'
-import { Context } from './entities/context'
-import { Attachment } from './entities/attachment'
-import { Poll } from './entities/poll'
-import { ScheduledStatus } from './entities/scheduled_status'
-import { Conversation } from './entities/conversation'
-import { Marker } from './entities/marker'
-import { Notification } from './entities/notification'
-import { Results } from './entities/results'
-import { PushSubscription } from './entities/push_subscription'
-import { Token } from './entities/token'
-import { Instance } from './entities/instance'
-import { Activity } from './entities/activity'
-import { Emoji } from './entities/emoji'
 import Pleroma from './pleroma'
 import { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
+import Entity from './entity'
 
 export interface MegalodonInterface {
   /**
@@ -72,7 +49,7 @@ export interface MegalodonInterface {
    *
    * @return An Application
    */
-  verifyAppCredentials(): Promise<Response<Application>>
+  verifyAppCredentials(): Promise<Response<Entity.Application>>
 
   // ======================================
   // apps/oauth
@@ -132,13 +109,13 @@ export interface MegalodonInterface {
     agreement: boolean,
     locale: string,
     reason?: string | null
-  ): Promise<Response<Token>>
+  ): Promise<Response<Entity.Token>>
   /**
    * GET /api/v1/accounts/verify_credentials
    *
    * @return Account.
    */
-  verifyAccountCredentials(): Promise<Response<Account>>
+  verifyAccountCredentials(): Promise<Response<Entity.Account>>
   /**
    * PATCH /api/v1/accounts/update_credentials
    *
@@ -158,21 +135,21 @@ export interface MegalodonInterface {
       language?: string
     } | null,
     fields_attributes?: Array<{ name: string; value: string }>
-  ): Promise<Response<Account>>
+  ): Promise<Response<Entity.Account>>
   /**
    * GET /api/v1/accounts/:id
    *
    * @param id The account ID.
    * @return An account.
    */
-  getAccount(id: string): Promise<Response<Account>>
+  getAccount(id: string): Promise<Response<Entity.Account>>
   /**
    * GET /api/v1/accounts/:id/statuses
    *
    * @param id The account ID.
    * @return Account's statuses.
    */
-  getAccountStatuses(id: string): Promise<Response<Array<Status>>>
+  getAccountStatuses(id: string): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/pleroma/accounts/:id/favourites
    *
@@ -187,21 +164,21 @@ export interface MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   /**
    * POST /api/v1/pleroma/accounts/:id/subscribe
    *
    * @param id Target account ID.
    * @return Relationship.
    */
-  subscribeAccount(id: string): Promise<Response<Relationship>>
+  subscribeAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/pleroma/accounts/:id/unsubscribe
    *
    * @param id Target account ID.
    * @return Relationship.
    */
-  unsubscribeAccount(id: string): Promise<Response<Relationship>>
+  unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * GET /api/v1/accounts/:id/followers
    *
@@ -216,7 +193,7 @@ export interface MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Account>>>
+  ): Promise<Response<Array<Entity.Account>>>
   /**
    * GET /api/v1/accounts/:id/following
    *
@@ -231,21 +208,21 @@ export interface MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Account>>>
+  ): Promise<Response<Array<Entity.Account>>>
   /**
    * GET /api/v1/accounts/:id/lists
    *
    * @param id The account ID.
    * @return The array of lists.
    */
-  getAccountLists(id: string): Promise<Response<Array<List>>>
+  getAccountLists(id: string): Promise<Response<Array<Entity.List>>>
   /**
    * GET /api/v1/accounts/:id/identity_proofs
    *
    * @param id The account ID.
    * @return Array of IdentityProof
    */
-  getIdentityProof(id: string): Promise<Response<Array<IdentityProof>>>
+  getIdentityProof(id: string): Promise<Response<Array<Entity.IdentityProof>>>
   /**
    * POST /api/v1/accounts/:id/follow
    *
@@ -253,28 +230,28 @@ export interface MegalodonInterface {
    * @param reblog Receive this account's reblogs in home timeline.
    * @return Relationship
    */
-  followAccount(id: string, reblog: boolean): Promise<Response<Relationship>>
+  followAccount(id: string, reblog: boolean): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/unfollow
    *
    * @param id The account ID.
    * @return Relationship
    */
-  unfollowAccount(id: string): Promise<Response<Relationship>>
+  unfollowAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/block
    *
    * @param id The account ID.
    * @return Relationship
    */
-  blockAccount(id: string): Promise<Response<Relationship>>
+  blockAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/unblock
    *
    * @param id The account ID.
    * @return RElationship
    */
-  unblockAccount(id: string): Promise<Response<Relationship>>
+  unblockAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/mute
    *
@@ -282,35 +259,35 @@ export interface MegalodonInterface {
    * @param notifications Mute notifications in addition to statuses.
    * @return Relationship
    */
-  muteAccount(id: string, notifications: boolean): Promise<Response<Relationship>>
+  muteAccount(id: string, notifications: boolean): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/unmute
    *
    * @param id The account ID.
    * @return Relationship
    */
-  unmuteAccount(id: string): Promise<Response<Relationship>>
+  unmuteAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/pin
    *
    * @param id The account ID.
    * @return Relationship
    */
-  pinAccount(id: string): Promise<Response<Relationship>>
+  pinAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/unpin
    *
    * @param id The account ID.
    * @return Relationship
    */
-  unpinAccount(id: string): Promise<Response<Relationship>>
+  unpinAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
    * GET /api/v1/accounts/relationships
    *
    * @param ids Array of account IDs.
    * @return Relationship
    */
-  getRelationship(ids: Array<string>): Promise<Response<Relationship>>
+  getRelationship(ids: Array<string>): Promise<Response<Entity.Relationship>>
   /**
    * GET /api/v1/accounts/search
    *
@@ -320,7 +297,12 @@ export interface MegalodonInterface {
    * @param since_id Return results newer than ID.
    * @return The array of accounts.
    */
-  searchAccount(q: string, limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Account>>>
+  searchAccount(
+    q: string,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/bookmarks
   // ======================================
@@ -338,7 +320,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   // ======================================
   //  accounts/favourites
   // ======================================
@@ -350,7 +332,7 @@ export interface MegalodonInterface {
    * @param min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getFavourites(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Status>>>
+  getFavourites(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Status>>>
   // ======================================
   // accounts/mutes
   // ======================================
@@ -362,7 +344,7 @@ export interface MegalodonInterface {
    * @param min_id Return results immediately newer than ID.
    * @return Array of accounts.
    */
-  getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>>
+  getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/blocks
   // ======================================
@@ -374,7 +356,7 @@ export interface MegalodonInterface {
    * @param min_id Return results immediately newer than ID.
    * @return Array of accounts.
    */
-  getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>>
+  getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/domain_blocks
   // ======================================
@@ -407,14 +389,14 @@ export interface MegalodonInterface {
    *
    * @return Array of filters.
    */
-  getFilters(): Promise<Response<Array<Filter>>>
+  getFilters(): Promise<Response<Array<Entity.Filter>>>
   /**
    * GET /api/v1/filters/:id
    *
    * @param id The filter ID.
    * @return Filter.
    */
-  getFilter(id: string): Promise<Response<Filter>>
+  getFilter(id: string): Promise<Response<Entity.Filter>>
   /**
    * POST /api/v1/filters
    *
@@ -431,7 +413,7 @@ export interface MegalodonInterface {
     irreversible?: boolean | null,
     whole_word?: boolean | null,
     expires_in?: string | null
-  ): Promise<Response<Filter>>
+  ): Promise<Response<Entity.Filter>>
   /**
    * PUT /api/v1/filters/:id
    *
@@ -450,14 +432,14 @@ export interface MegalodonInterface {
     irreversible?: boolean | null,
     whole_word?: boolean | null,
     expires_in?: string | null
-  ): Promise<Response<Filter>>
+  ): Promise<Response<Entity.Filter>>
   /**
    * DELETE /api/v1/filters/:id
    *
    * @param id The filter ID.
    * @return Removed filter.
    */
-  deleteFilter(id: string): Promise<Response<Filter>>
+  deleteFilter(id: string): Promise<Response<Entity.Filter>>
   // ======================================
   // accounts/reports
   // ======================================
@@ -475,7 +457,7 @@ export interface MegalodonInterface {
     status_ids?: Array<string> | null,
     comment?: string | null,
     forward?: boolean | null
-  ): Promise<Response<Report>>
+  ): Promise<Response<Entity.Report>>
   // ======================================
   // accounts/follow_requests
   // ======================================
@@ -485,21 +467,21 @@ export interface MegalodonInterface {
    * @param limit Maximum number of results.
    * @return Array of account.
    */
-  getFollowRequests(limit?: number): Promise<Response<Array<Account>>>
+  getFollowRequests(limit?: number): Promise<Response<Array<Entity.Account>>>
   /**
    * POST /api/v1/follow_requests/:id/authorize
    *
    * @param id Target account ID.
    * @return Relationship.
    */
-  acceptFollowRequest(id: string): Promise<Response<Relationship>>
+  acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/follow_requests/:id/reject
    *
    * @param id Target account ID.
    * @return Relationship.
    */
-  rejectFollowRequest(id: string): Promise<Response<Relationship>>
+  rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>>
   // ======================================
   // accounts/endorsements
   // ======================================
@@ -511,7 +493,7 @@ export interface MegalodonInterface {
    * @param since_id Return results newer than ID.
    * @return Array of accounts.
    */
-  getEndorsements(limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Account>>>
+  getEndorsements(limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/featured_tags
   // ======================================
@@ -520,14 +502,14 @@ export interface MegalodonInterface {
    *
    * @return Array of featured tag.
    */
-  getFeaturedTags(): Promise<Response<Array<FeaturedTag>>>
+  getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>>
   /**
    * POST /api/v1/featured_tags
    *
    * @param name Target hashtag name.
    * @return FeaturedTag.
    */
-  createFeaturedTag(name: string): Promise<Response<FeaturedTag>>
+  createFeaturedTag(name: string): Promise<Response<Entity.FeaturedTag>>
   /**
    * DELETE /api/v1/featured_tags/:id
    *
@@ -540,7 +522,7 @@ export interface MegalodonInterface {
    *
    * @return Array of tag.
    */
-  getSuggestedTags(): Promise<Response<Array<Tag>>>
+  getSuggestedTags(): Promise<Response<Array<Entity.Tag>>>
   // ======================================
   // accounts/preferences
   // ======================================
@@ -549,7 +531,7 @@ export interface MegalodonInterface {
    *
    * @return Preferences.
    */
-  getPreferences(): Promise<Response<Preferences>>
+  getPreferences(): Promise<Response<Entity.Preferences>>
   // ======================================
   // accounts/suggestions
   // ======================================
@@ -559,7 +541,7 @@ export interface MegalodonInterface {
    * @param limit Maximum number of results.
    * @return Array of accounts.
    */
-  getSuggestions(limit?: number): Promise<Response<Array<Account>>>
+  getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // statuses
   // ======================================
@@ -587,21 +569,21 @@ export interface MegalodonInterface {
     visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
     scheduled_at?: string | null,
     language?: string | null
-  ): Promise<Response<Status>>
+  ): Promise<Response<Entity.Status>>
   /**
    * GET /api/v1/statuses/:id
    *
    * @param id The target status id.
    * @return Status
    */
-  getStatus(id: string): Promise<Response<Status>>
+  getStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * DELETE /api/v1/statuses/:id
    *
    * @param id The target status id.
    * @return Status
    */
-  deleteStatus(id: string): Promise<Response<Status>>
+  deleteStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * GET /api/v1/statuses/:id/context
    *
@@ -609,90 +591,90 @@ export interface MegalodonInterface {
    * @param id The target status id.
    * @return Context
    */
-  getStatusContext(id: string): Promise<Response<Context>>
+  getStatusContext(id: string): Promise<Response<Entity.Context>>
   /**
    * GET /api/v1/statuses/:id/reblogged_by
    *
    * @param id The target status id.
    * @return Array of accounts.
    */
-  getStatusRebloggedBy(id: string): Promise<Response<Array<Account>>>
+  getStatusRebloggedBy(id: string): Promise<Response<Array<Entity.Account>>>
   /**
    * GET /api/v1/statuses/:id/favourited_by
    *
    * @param id The target status id.
    * @return Array of accounts.
    */
-  getStatusFavouritedBy(id: string): Promise<Response<Array<Account>>>
+  getStatusFavouritedBy(id: string): Promise<Response<Array<Entity.Account>>>
   /**
    * POST /api/v1/statuses/:id/favourite
    *
    * @param id The target status id.
    * @return Status.
    */
-  favouriteStatus(id: string): Promise<Response<Status>>
+  favouriteStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/unfavourite
    *
    * @param id The target status id.
    * @return Status.
    */
-  unfavouriteStatus(id: string): Promise<Response<Status>>
+  unfavouriteStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/reblog
    *
    * @param id The target status id.
    * @return Status.
    */
-  reblogStatus(id: string): Promise<Response<Status>>
+  reblogStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/unreblog
    *
    * @param id The target status id.
    * @return Status.
    */
-  unreblogStatus(id: string): Promise<Response<Status>>
+  unreblogStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/bookmark
    *
    * @param id The target status id.
    * @return Status.
    */
-  bookmarkStatus(id: string): Promise<Response<Status>>
+  bookmarkStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/unbookmark
    *
    * @param id The target status id.
    * @return Status.
    */
-  unbookmarkStatus(id: string): Promise<Response<Status>>
+  unbookmarkStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/mute
    *
    * @param id The target status id.
    * @return Status
    */
-  muteStatus(id: string): Promise<Response<Status>>
+  muteStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/unmute
    *
    * @param id The target status id.
    * @return Status
    */
-  unmuteStatus(id: string): Promise<Response<Status>>
+  unmuteStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/pin
    * @param id The target status id.
    * @return Status
    */
-  pinStatus(id: string): Promise<Response<Status>>
+  pinStatus(id: string): Promise<Response<Entity.Status>>
   /**
    * POST /api/v1/statuses/:id/unpin
    *
    * @param id The target status id.
    * @return Status
    */
-  unpinStatus(id: string): Promise<Response<Status>>
+  unpinStatus(id: string): Promise<Response<Entity.Status>>
   // ======================================
   // statuses/media
   // ======================================
@@ -704,7 +686,7 @@ export interface MegalodonInterface {
    * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
    * @return Attachment
    */
-  uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>>
+  uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>>
   /**
    * PUT /api/v1/media/:id
    *
@@ -714,7 +696,7 @@ export interface MegalodonInterface {
    * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
    * @return Attachment
    */
-  updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>>
+  updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>>
   // ======================================
   // statuses/polls
   // ======================================
@@ -724,7 +706,7 @@ export interface MegalodonInterface {
    * @param id Target poll ID.
    * @return Poll
    */
-  getPoll(id: string): Promise<Response<Poll>>
+  getPoll(id: string): Promise<Response<Entity.Poll>>
   /**
    * POST /api/v1/polls/:id/votes
    *
@@ -732,7 +714,7 @@ export interface MegalodonInterface {
    * @param choices Array of own votes containing index for each option (starting from 0).
    * @return Poll
    */
-  votePoll(id: string, choices: Array<number>): Promise<Response<Poll>>
+  votePoll(id: string, choices: Array<number>): Promise<Response<Entity.Poll>>
   // ======================================
   // statuses/scheduled_statuses
   // ======================================
@@ -750,14 +732,14 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<ScheduledStatus>>>
+  ): Promise<Response<Array<Entity.ScheduledStatus>>>
   /**
    * GET /api/v1/scheduled_statuses/:id
    *
    * @param id Target status ID.
    * @return ScheduledStatus.
    */
-  getScheduledStatus(id: string): Promise<Response<ScheduledStatus>>
+  getScheduledStatus(id: string): Promise<Response<Entity.ScheduledStatus>>
   /**
    * PUT /api/v1/scheduled_statuses/:id
    *
@@ -765,7 +747,7 @@ export interface MegalodonInterface {
    * @param scheduled_at ISO 8601 Datetime at which the status will be published.
    * @return ScheduledStatus.
    */
-  scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<ScheduledStatus>>
+  scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>>
   /**
    * DELETE /api/v1/scheduled_statuses/:id
    *
@@ -793,7 +775,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/tag/:hashtag
    *
@@ -814,7 +796,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/home
    *
@@ -831,7 +813,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/list/:list_id
    *
@@ -848,7 +830,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   // ======================================
   // timelines/conversations
   // ======================================
@@ -866,7 +848,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>>
+  ): Promise<Response<Array<Entity.Status>>>
   /**
    * DELETE /api/v1/conversations/:id
    *
@@ -879,7 +861,7 @@ export interface MegalodonInterface {
    * @param id Target conversation ID.
    * @return Conversation.
    */
-  readConversation(id: string): Promise<Response<Conversation>>
+  readConversation(id: string): Promise<Response<Entity.Conversation>>
   // ======================================
   // timelines/lists
   // ======================================
@@ -888,21 +870,21 @@ export interface MegalodonInterface {
    *
    * @return Array of lists.
    */
-  getLists(): Promise<Response<Array<List>>>
+  getLists(): Promise<Response<Array<Entity.List>>>
   /**
    * GET /api/v1/lists/:id
    *
    * @param id Target list ID.
    * @return List.
    */
-  getList(id: string): Promise<Response<List>>
+  getList(id: string): Promise<Response<Entity.List>>
   /**
    * POST /api/v1/lists
    *
    * @param title List name.
    * @return List.
    */
-  createList(title: string): Promise<Response<List>>
+  createList(title: string): Promise<Response<Entity.List>>
   /**
    * PUT /api/v1/lists/:id
    *
@@ -910,7 +892,7 @@ export interface MegalodonInterface {
    * @param title New list name.
    * @return List.
    */
-  updateList(id: string, title: string): Promise<Response<List>>
+  updateList(id: string, title: string): Promise<Response<Entity.List>>
   /**
    * DELETE /api/v1/lists/:id
    *
@@ -926,7 +908,12 @@ export interface MegalodonInterface {
    * @param min_id Return results immediately newer than ID.
    * @return Array of accounts.
    */
-  getAccountsInList(id: string, limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Account>>>
+  getAccountsInList(
+    id: string,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>>
   /**
    * POST /api/v1/lists/:id/accounts
    *
@@ -950,7 +937,7 @@ export interface MegalodonInterface {
    * @param timelines Array of timeline names, String enum anyOf home, notifications.
    * @return Marker or empty object.
    */
-  getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Marker | {}>>
+  getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Entity.Marker | {}>>
   /**
    * POST /api/v1/markers
    *
@@ -958,7 +945,7 @@ export interface MegalodonInterface {
    * @param notifications Marker position of the last read notification ID in notifications.
    * @return Marker.
    */
-  saveMarker(home?: { last_read_id: string } | null, notifications?: { last_read_id: string } | null): Promise<Response<Marker>>
+  saveMarker(home?: { last_read_id: string } | null, notifications?: { last_read_id: string } | null): Promise<Response<Entity.Marker>>
   // ======================================
   // notifications
   // ======================================
@@ -980,14 +967,14 @@ export interface MegalodonInterface {
     min_id?: string | null,
     exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
     account_id?: string | null
-  ): Promise<Response<Array<Notification>>>
+  ): Promise<Response<Array<Entity.Notification>>>
   /**
    * GET /api/v1/notifications/:id
    *
    * @param id Target notification ID.
    * @return Notification.
    */
-  getNotification(id: string): Promise<Response<Notification>>
+  getNotification(id: string): Promise<Response<Entity.Notification>>
   /**
    * POST /api/v1/notifications/clear
    */
@@ -1017,13 +1004,13 @@ export interface MegalodonInterface {
   subscribePushNotification(
     subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
     data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
-  ): Promise<Response<PushSubscription>>
+  ): Promise<Response<Entity.PushSubscription>>
   /**
    * GET /api/v1/push/subscription
    *
    * @return PushSubscription.
    */
-  getPushSubscription(): Promise<Response<PushSubscription>>
+  getPushSubscription(): Promise<Response<Entity.PushSubscription>>
   /**
    * PUT /api/v1/push/subscription
    *
@@ -1036,7 +1023,7 @@ export interface MegalodonInterface {
    */
   updatePushSubscription(
     data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
-  ): Promise<Response<PushSubscription>>
+  ): Promise<Response<Entity.PushSubscription>>
   /**
    * DELETE /api/v1/push/subscription
    */
@@ -1069,7 +1056,7 @@ export interface MegalodonInterface {
     following?: boolean | null,
     account_id?: string | null,
     exclude_unreviewed?: boolean | null
-  ): Promise<Response<Results>>
+  ): Promise<Response<Entity.Results>>
 
   // ======================================
   // instance
@@ -1077,7 +1064,7 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/instance
    */
-  getInstance(): Promise<Response<Instance>>
+  getInstance(): Promise<Response<Entity.Instance>>
 
   /**
    * GET /api/v1/instance/peers
@@ -1087,7 +1074,7 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/instance/activity
    */
-  getInstanceActivity(): Promise<Response<Array<Activity>>>
+  getInstanceActivity(): Promise<Response<Array<Entity.Activity>>>
 
   // ======================================
   // instance/trends
@@ -1097,7 +1084,7 @@ export interface MegalodonInterface {
    *
    * @param limit Maximum number of results to return. Defaults to 10.
    */
-  getInstanceTrends(limit?: number | null): Promise<Response<Array<Tag>>>
+  getInstanceTrends(limit?: number | null): Promise<Response<Array<Entity.Tag>>>
 
   // ======================================
   // instance/directory
@@ -1116,7 +1103,7 @@ export interface MegalodonInterface {
     offset?: number | null,
     order?: 'active' | 'new' | null,
     local?: boolean | null
-  ): Promise<Response<Array<Account>>>
+  ): Promise<Response<Array<Entity.Account>>>
 
   // ======================================
   // instance/custom_emojis
@@ -1126,7 +1113,7 @@ export interface MegalodonInterface {
    *
    * @return Array of emojis.
    */
-  getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>>
+  getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>>
 
   // ======================================
   // HTTP Streaming
