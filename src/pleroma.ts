@@ -1,4 +1,4 @@
-import MegalodonInterface, { NoImplementedError } from './megalodon'
+import { MegalodonInterface, NoImplementedError } from './megalodon'
 import Mastodon from './mastodon'
 import StreamListener from './stream_listener'
 import Response from './response'
