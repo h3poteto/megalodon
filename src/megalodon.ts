@@ -26,8 +26,11 @@ import { Token } from './entities/token'
 import { Instance } from './entities/instance'
 import { Activity } from './entities/activity'
 import { Emoji } from './entities/emoji'
+import Pleroma from './pleroma'
+import { ProxyConfig } from './proxy_config'
+import Mastodon from './mastodon'
 
-export default interface MegalodonInterface {
+export interface MegalodonInterface {
   /**
    * Cancel all requests in this instance.
    *
@@ -1154,3 +1157,34 @@ export class NoImplementedError extends Error {
     Object.setPrototypeOf(this, new.target.prototype)
   }
 }
+
+/**
+ * Get client for each SNS according to megalodon interface.
+ *
+ * @param sns Name of your SNS, `mastodon` or `pleroma`.
+ * @param baseUrl hostname or base URL.
+ * @param accessToken access token from OAuth2 authorization
+ * @param userAgent UserAgent is specified in header on request.
+ * @param proxyConfig Proxy setting, or set false if don't use proxy.
+ * @return Client instance for each SNS you specified.
+ */
+const generator = (
+  sns: 'mastodon' | 'pleroma',
+  baseUrl: string,
+  accessToken: string | null = null,
+  userAgent: string | null = null,
+  proxyConfig: ProxyConfig | false = false
+): MegalodonInterface => {
+  switch (sns) {
+    case 'pleroma': {
+      const pleroma = new Pleroma(baseUrl, accessToken, userAgent, proxyConfig)
+      return pleroma
+    }
+    default: {
+      const mastodon = new Mastodon(baseUrl, accessToken, userAgent, proxyConfig)
+      return mastodon
+    }
+  }
+}
+
+export default generator

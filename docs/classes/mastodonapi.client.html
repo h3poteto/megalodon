@@ -138,13 +138,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span>accessToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, baseUrl<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, userAgent<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, proxyConfig<span class="tsd-signature-symbol">?: </span><a href="../globals.html#proxyconfig" class="tsd-signature-type">ProxyConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="mastodonapi.client.html" class="tsd-signature-type">Client</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span>baseUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, accessToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userAgent<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, proxyConfig<span class="tsd-signature-symbol">?: </span><a href="../globals.html#proxyconfig" class="tsd-signature-type">ProxyConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="mastodonapi.client.html" class="tsd-signature-type">Client</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L42">src/mastodon/api_client.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L42">src/mastodon/api_client.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -152,18 +152,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>accessToken: <span class="tsd-signature-type">string</span></h5>
+									<h5>baseUrl: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>access token from OAuth2 authorization</p>
+											<p>hostname or base URL</p>
 										</div>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> baseUrl: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = DEFAULT_URL</span></h5>
+									<h5>accessToken: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>hostname or base URL</p>
+											<p>access token from OAuth2 authorization</p>
 										</div>
 									</div>
 								</li>
@@ -197,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">access<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L38">src/mastodon/api_client.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L38">src/mastodon/api_client.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -207,7 +207,7 @@
 					<div class="tsd-signature tsd-kind-icon">base<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L39">src/mastodon/api_client.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L39">src/mastodon/api_client.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -217,7 +217,7 @@
 					<div class="tsd-signature tsd-kind-icon">cancel<wbr>Token<wbr>Source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CancelTokenSource</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L41">src/mastodon/api_client.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L41">src/mastodon/api_client.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -227,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">proxy<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../globals.html#proxyconfig" class="tsd-signature-type">ProxyConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L42">src/mastodon/api_client.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L42">src/mastodon/api_client.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -237,7 +237,7 @@
 					<div class="tsd-signature tsd-kind-icon">user<wbr>Agent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L40">src/mastodon/api_client.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L40">src/mastodon/api_client.ts:40</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -247,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SCOPE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = DEFAULT_SCOPE</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L34">src/mastodon/api_client.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L34">src/mastodon/api_client.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -257,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = DEFAULT_URL</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L35">src/mastodon/api_client.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L35">src/mastodon/api_client.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -267,7 +267,7 @@
 					<div class="tsd-signature tsd-kind-icon">NO_<wbr>REDIRECT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = NO_REDIRECT</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L36">src/mastodon/api_client.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L36">src/mastodon/api_client.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -285,7 +285,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/mastodonapi.interface.html">Interface</a>.<a href="../interfaces/mastodonapi.interface.html#cancel">cancel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L302">src/mastodon/api_client.ts:302</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L297">src/mastodon/api_client.ts:297</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -308,7 +308,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L265">src/mastodon/api_client.ts:265</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L260">src/mastodon/api_client.ts:260</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -353,7 +353,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L125">src/mastodon/api_client.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L120">src/mastodon/api_client.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -398,7 +398,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L200">src/mastodon/api_client.ts:200</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L195">src/mastodon/api_client.ts:195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -443,7 +443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L237">src/mastodon/api_client.ts:237</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L232">src/mastodon/api_client.ts:232</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,7 +488,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L163">src/mastodon/api_client.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L158">src/mastodon/api_client.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -533,7 +533,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L337">src/mastodon/api_client.ts:337</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L332">src/mastodon/api_client.ts:332</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -575,7 +575,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/mastodonapi.interface.html">Interface</a>.<a href="../interfaces/mastodonapi.interface.html#stream">stream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L314">src/mastodon/api_client.ts:314</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L309">src/mastodon/api_client.ts:309</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -614,7 +614,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L70">src/mastodon/api_client.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L65">src/mastodon/api_client.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -671,7 +671,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/e31b87f/src/mastodon/api_client.ts#L96">src/mastodon/api_client.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/3eb0daa/src/mastodon/api_client.ts#L91">src/mastodon/api_client.ts:91</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>

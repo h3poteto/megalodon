@@ -6,7 +6,7 @@ import OAuth from './oauth'
 import { isCancel, RequestCanceledError } from './cancel'
 import { ProxyConfig } from './proxy_config'
 //
-import MegalodonInterface from './megalodon'
+import generator, { MegalodonInterface } from './megalodon'
 import Mastodon from './mastodon'
 import Pleroma from './pleroma'
 /**
@@ -85,4 +85,4 @@ export {
   URLs
 }
 
-export default MastodonAPI.Client
+export default generator
