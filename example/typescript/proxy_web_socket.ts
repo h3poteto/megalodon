@@ -1,4 +1,4 @@
-import { Mastodon, Status, Notification, WebSocket, ProxyConfig } from 'megalodon'
+import { Mastodon, Entity, WebSocket, ProxyConfig } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
@@ -35,11 +35,11 @@ stream.on('pong', () => {
   logger.debug('pong')
 })
 
-stream.on('update', (status: Status) => {
+stream.on('update', (status: Entity.Status) => {
   logger.debug(status)
 })
 
-stream.on('notification', (notification: Notification) => {
+stream.on('notification', (notification: Entity.Notification) => {
   logger.debug(notification)
 })
 

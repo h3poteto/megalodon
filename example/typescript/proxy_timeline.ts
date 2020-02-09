@@ -1,4 +1,4 @@
-import { Mastodon, Status, Response, ProxyConfig } from 'megalodon'
+import { Mastodon, Entity, Response, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
@@ -21,6 +21,6 @@ const proxy: ProxyConfig = {
 
 const client = new Mastodon(BASE_URL, access_token, null, proxy)
 
-client.getPublicTimeline().then((resp: Response<Array<Status>>) => {
+client.getPublicTimeline().then((resp: Response<Array<Entity.Status>>) => {
   console.log(resp.data)
 })

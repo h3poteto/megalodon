@@ -1,4 +1,4 @@
-import { Mastodon, Status, Notification, StreamListener } from 'megalodon'
+import { Mastodon, Entity, StreamListener } from 'megalodon'
 
 declare var process: {
   env: {
@@ -21,11 +21,11 @@ stream.on('not-event-stream', (mes: string) => {
   console.log(mes)
 })
 
-stream.on('update', (status: Status) => {
+stream.on('update', (status: Entity.Status) => {
   console.log(status)
 })
 
-stream.on('notification', (notification: Notification) => {
+stream.on('notification', (notification: Entity.Notification) => {
   console.log(notification)
 })
 
