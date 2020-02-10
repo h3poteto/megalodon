@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import { Mastodon, OAuth } from 'megalodon'
+import generator, { OAuth } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -12,7 +12,7 @@ const BASE_URL: string = 'https://mastodon.social'
 let clientId: string
 let clientSecret: string
 
-const client = new Mastodon(BASE_URL)
+const client = generator('mastodon', BASE_URL)
 
 client
   .registerApp('Test App', {

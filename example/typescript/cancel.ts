@@ -1,10 +1,10 @@
-import { Mastodon, Response, Entity, isCancel } from 'megalodon'
+import generator, { Response, Entity, isCancel } from 'megalodon'
 
 const BASE_URL: string = 'https://pleroma.io'
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN!
 
-const client = new Mastodon(BASE_URL, access_token)
+const client = generator('pleroma', BASE_URL, access_token)
 
 client
   .search('whalebird', 'hashtags', null, null, null, true)

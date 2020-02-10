@@ -1,10 +1,11 @@
-import { Mastodon, Entity, WebSocket } from 'megalodon'
+import generator, { Entity, WebSocket } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
   env: {
     PLEROMA_ACCESS_TOKEN: string
     MASTODON_ACCESS_TOKEN: string
+    SNS: 'mastodon' | 'pleroma'
   }
 }
 
@@ -12,7 +13,7 @@ const BASE_URL: string = 'wss://pleroma.io'
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
 
-const client = new Mastodon(BASE_URL, access_token)
+const client = generator(process.env.SNS, BASE_URL, access_token)
 
 const stream: WebSocket = client.userSocket()
 
