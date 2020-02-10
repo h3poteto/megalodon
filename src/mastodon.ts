@@ -7,10 +7,7 @@ import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import { MegalodonInterface, NoImplementedError } from './megalodon'
 import Entity from './entity'
-
-const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
-const DEFAULT_SCOPE = 'read write follow'
-const DEFAULT_UA = 'megalodon'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 
 export default class Mastodon implements MegalodonInterface {
   public client: MastodonAPI.Client
