@@ -1,4 +1,4 @@
-import { Mastodon, Status, Response } from 'megalodon'
+import { Mastodon, Entity, Response } from 'megalodon'
 
 declare var process: {
   env: {
@@ -12,6 +12,6 @@ const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
 const client = new Mastodon(BASE_URL, access_token)
 
-client.getPublicTimeline().then((resp: Response<Array<Status>>) => {
+client.getPublicTimeline().then((resp: Response<Array<Entity.Status>>) => {
   console.log(resp.data)
 })

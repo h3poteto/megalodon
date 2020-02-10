@@ -2,8 +2,7 @@ import { MegalodonInterface, NoImplementedError } from './megalodon'
 import Mastodon from './mastodon'
 import StreamListener from './stream_listener'
 import Response from './response'
-import { Status } from './entities/status'
-import { Relationship } from './entities/relationship'
+import Entity from './entity'
 
 export default class Pleroma extends Mastodon implements MegalodonInterface {
   // ======================================
@@ -14,7 +13,7 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
@@ -31,15 +30,15 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
         since_id: since_id
       })
     }
-    return this.client.get<Array<Status>>(`/api/v1/pleroma/accounts/${id}/favourites`, params)
+    return this.client.get<Array<Entity.Status>>(`/api/v1/pleroma/accounts/${id}/favourites`, params)
   }
 
-  public subscribeAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/pleroma/accounts/${id}/subscribe`)
+  public subscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/subscribe`)
   }
 
-  public unsubscribeAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`)
+  public unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`)
   }
 
   // ======================================

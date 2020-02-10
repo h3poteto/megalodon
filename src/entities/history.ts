@@ -1,5 +1,7 @@
-export type History = {
-  day: string
-  uses: number
-  accounts: number
+namespace Entity {
+  export type History = {
+    day: string
+    uses: number
+    accounts: number
+  }
 }

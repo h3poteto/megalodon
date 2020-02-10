@@ -1,13 +1,11 @@
 import MastodonAPI from '@/mastodon/api_client'
-import { Account } from '@/entities/account'
-import { Status } from '@/entities/status'
-import { Application } from '@/entities/application'
+import Entity from '@/entity'
 import Response from '@/response'
 import axios, { AxiosResponse } from 'axios'
 
 jest.mock('axios')
 
-const account: Account = {
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -29,7 +27,7 @@ const account: Account = {
   bot: false
 }
 
-const status: Status = {
+const status: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -56,7 +54,7 @@ const status: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
@@ -68,7 +66,7 @@ const status: Status = {
 
 describe('get', () => {
   const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
-  const mockResponse: AxiosResponse<Array<Status>> = {
+  const mockResponse: AxiosResponse<Array<Entity.Status>> = {
     data: [status],
     status: 200,
     statusText: '200OK',
@@ -77,14 +75,14 @@ describe('get', () => {
   }
   it('should be responsed', async () => {
     ;(axios.get as any).mockResolvedValue(mockResponse)
-    const response: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/home')
+    const response: Response<Array<Entity.Status>> = await client.get<Array<Entity.Status>>('/timelines/home')
     expect(response.data).toEqual([status])
   })
 })
 
 describe('put', () => {
   const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
-  const mockResponse: AxiosResponse<Account> = {
+  const mockResponse: AxiosResponse<Entity.Account> = {
     data: account,
     status: 200,
     statusText: '200OK',
@@ -93,7 +91,7 @@ describe('put', () => {
   }
   it('should be responsed', async () => {
     ;(axios.put as any).mockResolvedValue(mockResponse)
-    const response: Response<Account> = await client.put<Account>('/accounts/update_credentials', {
+    const response: Response<Entity.Account> = await client.put<Entity.Account>('/accounts/update_credentials', {
       display_name: 'hoge'
     })
     expect(response.data).toEqual(account)
@@ -102,7 +100,7 @@ describe('put', () => {
 
 describe('patch', () => {
   const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
-  const mockResponse: AxiosResponse<Account> = {
+  const mockResponse: AxiosResponse<Entity.Account> = {
     data: account,
     status: 200,
     statusText: '200OK',
@@ -111,7 +109,7 @@ describe('patch', () => {
   }
   it('should be responsed', async () => {
     ;(axios.patch as any).mockResolvedValue(mockResponse)
-    const response: Response<Account> = await client.patch<Account>('/accounts/update_credentials', {
+    const response: Response<Entity.Account> = await client.patch<Entity.Account>('/accounts/update_credentials', {
       display_name: 'hoge'
     })
     expect(response.data).toEqual(account)
@@ -120,7 +118,7 @@ describe('patch', () => {
 
 describe('post', () => {
   const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
-  const mockResponse: AxiosResponse<Status> = {
+  const mockResponse: AxiosResponse<Entity.Status> = {
     data: status,
     status: 200,
     statusText: '200OK',
@@ -129,7 +127,7 @@ describe('post', () => {
   }
   it('should be responsed', async () => {
     ;(axios.post as any).mockResolvedValue(mockResponse)
-    const response: Response<Status> = await client.post<Status>('/statuses', {
+    const response: Response<Entity.Status> = await client.post<Entity.Status>('/statuses', {
       status: 'hoge'
     })
     expect(response.data).toEqual(status)

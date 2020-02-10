@@ -1,4 +1,4 @@
-import { Mastodon, Response, Results, isCancel } from 'megalodon'
+import { Mastodon, Response, Entity, isCancel } from 'megalodon'
 
 const BASE_URL: string = 'https://pleroma.io'
 
@@ -8,7 +8,7 @@ const client = new Mastodon(BASE_URL, access_token)
 
 client
   .search('whalebird', 'hashtags', null, null, null, true)
-  .then((resp: Response<Results>) => {
+  .then((resp: Response<Entity.Results>) => {
     console.log(resp.data.hashtags)
   })
   .catch((err: Error) => {

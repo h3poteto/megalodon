@@ -2,10 +2,8 @@ import { EventEmitter } from 'events'
 import axios, { CancelTokenSource, AxiosRequestConfig } from 'axios'
 import httpAdapter from 'axios/lib/adapters/http'
 import { Parser } from './parser'
-import { Status } from './entities/status'
-import { Notification } from './entities/notification'
-import { Conversation } from './entities/conversation'
 import proxyAgent, { ProxyConfig } from './proxy_config'
+import Entity from './entity'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
@@ -162,13 +160,13 @@ export default class StreamListener extends EventEmitter {
    * Set up parser when receive some data.
    **/
   private _setupParser() {
-    this.parser.on('update', (status: Status) => {
+    this.parser.on('update', (status: Entity.Status) => {
       this.emit('update', status)
     })
-    this.parser.on('notification', (notification: Notification) => {
+    this.parser.on('notification', (notification: Entity.Notification) => {
       this.emit('notification', notification)
     })
-    this.parser.on('conversation', (conversation: Conversation) => {
+    this.parser.on('conversation', (conversation: Entity.Conversation) => {
       this.emit('conversation', conversation)
     })
     this.parser.on('delete', (id: string) => {

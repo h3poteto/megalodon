@@ -6,30 +6,7 @@ import Response from './response'
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import { MegalodonInterface, NoImplementedError } from './megalodon'
-import { Application } from './entities/application'
-import { Account } from './entities/account'
-import { Status } from './entities/status'
-import { List } from './entities/list'
-import { IdentityProof } from './entities/identity_proof'
-import { Relationship } from './entities/relationship'
-import { Filter } from './entities/filter'
-import { Report } from './entities/report'
-import { FeaturedTag } from './entities/featured_tag'
-import { Tag } from './entities/tag'
-import { Preferences } from './entities/preferences'
-import { Context } from './entities/context'
-import { Attachment } from './entities/attachment'
-import { Poll } from './entities/poll'
-import { ScheduledStatus } from './entities/scheduled_status'
-import { Conversation } from './entities/conversation'
-import { Marker } from './entities/marker'
-import { Notification } from './entities/notification'
-import { Results } from './entities/results'
-import { Instance } from './entities/instance'
-import { Activity } from './entities/activity'
-import { Emoji } from './entities/emoji'
-import { PushSubscription } from './entities/push_subscription'
-import { Token } from './entities/token'
+import Entity from './entity'
 
 const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
 const DEFAULT_SCOPE = 'read write follow'
@@ -149,8 +126,8 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // apps
   // ======================================
-  public verifyAppCredentials(): Promise<Response<Application>> {
-    return this.client.get<Application>('/api/v1/apps/verify_credentials')
+  public verifyAppCredentials(): Promise<Response<Entity.Application>> {
+    return this.client.get<Entity.Application>('/api/v1/apps/verify_credentials')
   }
 
   // ======================================
@@ -202,7 +179,7 @@ export default class Mastodon implements MegalodonInterface {
     agreement: boolean,
     locale: string,
     reason?: string | null
-  ): Promise<Response<Token>> {
+  ): Promise<Response<Entity.Token>> {
     let params = {
       username: username,
       email: email,
@@ -215,11 +192,11 @@ export default class Mastodon implements MegalodonInterface {
         reason: reason
       })
     }
-    return this.client.post<Token>('/api/v1/accounts', params)
+    return this.client.post<Entity.Token>('/api/v1/accounts', params)
   }
 
-  public verifyAccountCredentials(): Promise<Response<Account>> {
-    return this.client.get<Account>('/api/v1/accounts/verify_credentials')
+  public verifyAccountCredentials(): Promise<Response<Entity.Account>> {
+    return this.client.get<Entity.Account>('/api/v1/accounts/verify_credentials')
   }
 
   public updateCredentials(
@@ -236,7 +213,7 @@ export default class Mastodon implements MegalodonInterface {
       language?: string
     } | null,
     fields_attributes?: Array<{ name: string; value: string }>
-  ): Promise<Response<Account>> {
+  ): Promise<Response<Entity.Account>> {
     let params = {}
     if (discoverable) {
       params = Object.assign(params, {
@@ -283,25 +260,25 @@ export default class Mastodon implements MegalodonInterface {
         fields_attributes: fields_attributes
       })
     }
-    return this.client.patch<Account>('/api/v1/accounts/update_credentials', params)
+    return this.client.patch<Entity.Account>('/api/v1/accounts/update_credentials', params)
   }
 
-  public getAccount(id: string): Promise<Response<Account>> {
-    return this.client.get<Account>(`/api/v1/accounts/${id}`)
+  public getAccount(id: string): Promise<Response<Entity.Account>> {
+    return this.client.get<Entity.Account>(`/api/v1/accounts/${id}`)
   }
 
-  public getAccountStatuses(id: string): Promise<Response<Array<Status>>> {
-    return this.client.get<Array<Status>>(`/api/v1/accounts/${id}/statuses`)
+  public getAccountStatuses(id: string): Promise<Response<Array<Entity.Status>>> {
+    return this.client.get<Array<Entity.Status>>(`/api/v1/accounts/${id}/statuses`)
   }
 
-  public subscribeAccount(_id: string): Promise<Response<Relationship>> {
+  public subscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('mastodon does not support')
       reject(err)
     })
   }
 
-  public unsubscribeAccount(_id: string): Promise<Response<Relationship>> {
+  public unsubscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('mastodon does not support')
       reject(err)
@@ -313,7 +290,7 @@ export default class Mastodon implements MegalodonInterface {
     _limit?: number | null,
     _max_id?: string | null,
     _since_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('mastodon does not support')
       reject(err)
@@ -325,7 +302,7 @@ export default class Mastodon implements MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Account>>> {
+  ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (max_id) {
       params = Object.assign(params, {
@@ -342,7 +319,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/followers`, params)
+    return this.client.get<Array<Entity.Account>>(`/api/v1/accounts/${id}/followers`, params)
   }
 
   public getAccountFollowing(
@@ -350,7 +327,7 @@ export default class Mastodon implements MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Account>>> {
+  ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (max_id) {
       params = Object.assign(params, {
@@ -367,55 +344,55 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Account>>(`/api/v1/accounts/${id}/following`, params)
+    return this.client.get<Array<Entity.Account>>(`/api/v1/accounts/${id}/following`, params)
   }
 
-  public getAccountLists(id: string): Promise<Response<Array<List>>> {
-    return this.client.get<Array<List>>(`/api/v1/accounts/${id}/lists`)
+  public getAccountLists(id: string): Promise<Response<Array<Entity.List>>> {
+    return this.client.get<Array<Entity.List>>(`/api/v1/accounts/${id}/lists`)
   }
 
-  public getIdentityProof(id: string): Promise<Response<Array<IdentityProof>>> {
-    return this.client.get<Array<IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`)
+  public getIdentityProof(id: string): Promise<Response<Array<Entity.IdentityProof>>> {
+    return this.client.get<Array<Entity.IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`)
   }
 
-  public followAccount(id: string, reblog: boolean = true): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/follow`, {
+  public followAccount(id: string, reblog: boolean = true): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/follow`, {
       reblog: reblog
     })
   }
 
-  public unfollowAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unfollow`)
+  public unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/unfollow`)
   }
 
-  public blockAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/block`)
+  public blockAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/block`)
   }
 
-  public unblockAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unblock`)
+  public unblockAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/unblock`)
   }
 
-  public muteAccount(id: string, notifications: boolean = true): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/mute`, {
+  public muteAccount(id: string, notifications: boolean = true): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/mute`, {
       notifications: notifications
     })
   }
 
-  public unmuteAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unmute`)
+  public unmuteAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/unmute`)
   }
 
-  public pinAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/pin`)
+  public pinAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/pin`)
   }
 
-  public unpinAccount(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/accounts/${id}/unpin`)
+  public unpinAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/accounts/${id}/unpin`)
   }
 
-  public getRelationship(ids: Array<string>): Promise<Response<Relationship>> {
-    return this.client.get<Relationship>('/api/v1/accounts/relationships', {
+  public getRelationship(ids: Array<string>): Promise<Response<Entity.Relationship>> {
+    return this.client.get<Entity.Relationship>('/api/v1/accounts/relationships', {
       id: ids
     })
   }
@@ -425,7 +402,7 @@ export default class Mastodon implements MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Account>>> {
+  ): Promise<Response<Array<Entity.Account>>> {
     let params = { q: q }
     if (max_id) {
       params = Object.assign(params, {
@@ -442,7 +419,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Account>>('/api/v1/accounts/search', params)
+    return this.client.get<Array<Entity.Account>>('/api/v1/accounts/search', params)
   }
 
   // ======================================
@@ -454,7 +431,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (max_id) {
       params = Object.assign(params, {
@@ -476,14 +453,14 @@ export default class Mastodon implements MegalodonInterface {
         min_id: min_id
       })
     }
-    return this.client.get<Array<Status>>('/api/v1/bookmarks', params)
+    return this.client.get<Array<Entity.Status>>('/api/v1/bookmarks', params)
   }
 
   // ======================================
   //  accounts/favourites
   // ======================================
 
-  public getFavourites(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Status>>> {
+  public getFavourites(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (min_id) {
       params = Object.assign(params, {
@@ -500,14 +477,14 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Status>>('/api/v1/favourites', params)
+    return this.client.get<Array<Entity.Status>>('/api/v1/favourites', params)
   }
 
   // ======================================
   // accounts/mutes
   // ======================================
 
-  public getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>> {
+  public getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (min_id) {
       params = Object.assign(params, {
@@ -524,14 +501,14 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Account>>('/api/v1/mutes', params)
+    return this.client.get<Array<Entity.Account>>('/api/v1/mutes', params)
   }
 
   // ======================================
   // accounts/blocks
   // ======================================
 
-  public getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Account>>> {
+  public getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (min_id) {
       params = Object.assign(params, {
@@ -548,7 +525,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Account>>('/api/v1/blocks', params)
+    return this.client.get<Array<Entity.Account>>('/api/v1/blocks', params)
   }
 
   // ======================================
@@ -590,12 +567,12 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/filters
   // ======================================
 
-  public getFilters(): Promise<Response<Array<Filter>>> {
-    return this.client.get<Array<Filter>>('/api/v1/filters')
+  public getFilters(): Promise<Response<Array<Entity.Filter>>> {
+    return this.client.get<Array<Entity.Filter>>('/api/v1/filters')
   }
 
-  public getFilter(id: string): Promise<Response<Filter>> {
-    return this.client.get<Filter>(`/api/v1/filters/${id}`)
+  public getFilter(id: string): Promise<Response<Entity.Filter>> {
+    return this.client.get<Entity.Filter>(`/api/v1/filters/${id}`)
   }
 
   public createFilter(
@@ -604,7 +581,7 @@ export default class Mastodon implements MegalodonInterface {
     irreversible?: boolean | null,
     whole_word?: boolean | null,
     expires_in?: string | null
-  ): Promise<Response<Filter>> {
+  ): Promise<Response<Entity.Filter>> {
     let params = {
       phrase: phrase,
       context: context
@@ -624,7 +601,7 @@ export default class Mastodon implements MegalodonInterface {
         expires_in: expires_in
       })
     }
-    return this.client.post<Filter>('/api/v1/filters', params)
+    return this.client.post<Entity.Filter>('/api/v1/filters', params)
   }
 
   public updateFilter(
@@ -634,7 +611,7 @@ export default class Mastodon implements MegalodonInterface {
     irreversible?: boolean | null,
     whole_word?: boolean | null,
     expires_in?: string | null
-  ): Promise<Response<Filter>> {
+  ): Promise<Response<Entity.Filter>> {
     let params = {
       phrase: phrase,
       context: context
@@ -654,11 +631,11 @@ export default class Mastodon implements MegalodonInterface {
         expires_in: expires_in
       })
     }
-    return this.client.post<Filter>(`/api/v1/filters/${id}`, params)
+    return this.client.post<Entity.Filter>(`/api/v1/filters/${id}`, params)
   }
 
-  public deleteFilter(id: string): Promise<Response<Filter>> {
-    return this.client.del<Filter>(`/api/v1/filters/${id}`)
+  public deleteFilter(id: string): Promise<Response<Entity.Filter>> {
+    return this.client.del<Entity.Filter>(`/api/v1/filters/${id}`)
   }
 
   // ======================================
@@ -669,7 +646,7 @@ export default class Mastodon implements MegalodonInterface {
     status_ids?: Array<string> | null,
     comment?: string | null,
     forward?: boolean | null
-  ): Promise<Response<Report>> {
+  ): Promise<Response<Entity.Report>> {
     let params = {
       account_id: account_id
     }
@@ -688,34 +665,38 @@ export default class Mastodon implements MegalodonInterface {
         forward: forward
       })
     }
-    return this.client.post<Report>('/api/v1/reports', params)
+    return this.client.post<Entity.Report>('/api/v1/reports', params)
   }
 
   // ======================================
   // accounts/follow_requests
   // ======================================
-  public getFollowRequests(limit?: number): Promise<Response<Array<Account>>> {
+  public getFollowRequests(limit?: number): Promise<Response<Array<Entity.Account>>> {
     if (limit) {
-      return this.client.get<Array<Account>>('/api/v1/follow_requests', {
+      return this.client.get<Array<Entity.Account>>('/api/v1/follow_requests', {
         limit: limit
       })
     } else {
-      return this.client.get<Array<Account>>('/api/v1/follow_requests')
+      return this.client.get<Array<Entity.Account>>('/api/v1/follow_requests')
     }
   }
 
-  public acceptFollowRequest(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/follow_requests/${id}/authorize`)
+  public acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/follow_requests/${id}/authorize`)
   }
 
-  public rejectFollowRequest(id: string): Promise<Response<Relationship>> {
-    return this.client.post<Relationship>(`/api/v1/follow_requests/${id}/reject`)
+  public rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<Entity.Relationship>(`/api/v1/follow_requests/${id}/reject`)
   }
 
   // ======================================
   // accounts/endorsements
   // ======================================
-  public getEndorsements(limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Account>>> {
+  public getEndorsements(
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
@@ -732,18 +713,18 @@ export default class Mastodon implements MegalodonInterface {
         since_id: since_id
       })
     }
-    return this.client.get<Array<Account>>('/api/v1/endorsements', params)
+    return this.client.get<Array<Entity.Account>>('/api/v1/endorsements', params)
   }
 
   // ======================================
   // accounts/featured_tags
   // ======================================
-  public getFeaturedTags(): Promise<Response<Array<FeaturedTag>>> {
-    return this.client.get<Array<FeaturedTag>>('/api/v1/featured_tags')
+  public getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
+    return this.client.get<Array<Entity.FeaturedTag>>('/api/v1/featured_tags')
   }
 
-  public createFeaturedTag(name: string): Promise<Response<FeaturedTag>> {
-    return this.client.post<FeaturedTag>('/api/v1/featured_tags', {
+  public createFeaturedTag(name: string): Promise<Response<Entity.FeaturedTag>> {
+    return this.client.post<Entity.FeaturedTag>('/api/v1/featured_tags', {
       name: name
     })
   }
@@ -752,27 +733,27 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.del<{}>(`/api/v1/featured_tags/${id}`)
   }
 
-  public getSuggestedTags(): Promise<Response<Array<Tag>>> {
-    return this.client.get<Array<Tag>>('/api/v1/featured_tags/suggestions')
+  public getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
+    return this.client.get<Array<Entity.Tag>>('/api/v1/featured_tags/suggestions')
   }
 
   // ======================================
   // accounts/preferences
   // ======================================
-  public getPreferences(): Promise<Response<Preferences>> {
-    return this.client.get<Preferences>('/api/v1/preferences')
+  public getPreferences(): Promise<Response<Entity.Preferences>> {
+    return this.client.get<Entity.Preferences>('/api/v1/preferences')
   }
 
   // ======================================
   // accounts/suggestions
   // ======================================
-  public getSuggestions(limit?: number): Promise<Response<Array<Account>>> {
+  public getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>> {
     if (limit) {
-      return this.client.get<Array<Account>>('/api/v1/suggestions', {
+      return this.client.get<Array<Entity.Account>>('/api/v1/suggestions', {
         limit: limit
       })
     } else {
-      return this.client.get<Array<Account>>('/api/v1/suggestions')
+      return this.client.get<Array<Entity.Account>>('/api/v1/suggestions')
     }
   }
 
@@ -789,7 +770,7 @@ export default class Mastodon implements MegalodonInterface {
     visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
     scheduled_at?: string | null,
     language?: string | null
-  ): Promise<Response<Status>> {
+  ): Promise<Response<Entity.Status>> {
     let params = {
       status: status
     }
@@ -847,73 +828,73 @@ export default class Mastodon implements MegalodonInterface {
         language: language
       })
     }
-    return this.client.post<Status>('/api/v1/statuses', params)
+    return this.client.post<Entity.Status>('/api/v1/statuses', params)
   }
 
-  public getStatus(id: string): Promise<Response<Status>> {
-    return this.client.get<Status>(`/api/v1/statuses/${id}`)
+  public getStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.get<Entity.Status>(`/api/v1/statuses/${id}`)
   }
 
-  public deleteStatus(id: string): Promise<Response<Status>> {
-    return this.client.del<Status>(`/api/v1/statuses/${id}`)
+  public deleteStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.del<Entity.Status>(`/api/v1/statuses/${id}`)
   }
 
-  public getStatusContext(id: string): Promise<Response<Context>> {
-    return this.client.get<Context>(`/api/v1/statuses/${id}/context`)
+  public getStatusContext(id: string): Promise<Response<Entity.Context>> {
+    return this.client.get<Entity.Context>(`/api/v1/statuses/${id}/context`)
   }
 
-  public getStatusRebloggedBy(id: string): Promise<Response<Array<Account>>> {
-    return this.client.get<Array<Account>>(`/api/v1/statuses/${id}/reblogged_by`)
+  public getStatusRebloggedBy(id: string): Promise<Response<Array<Entity.Account>>> {
+    return this.client.get<Array<Entity.Account>>(`/api/v1/statuses/${id}/reblogged_by`)
   }
 
-  public getStatusFavouritedBy(id: string): Promise<Response<Array<Account>>> {
-    return this.client.get<Array<Account>>(`/api/v1/statuses/${id}/favourited_by`)
+  public getStatusFavouritedBy(id: string): Promise<Response<Array<Entity.Account>>> {
+    return this.client.get<Array<Entity.Account>>(`/api/v1/statuses/${id}/favourited_by`)
   }
 
-  public favouriteStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/favourite`)
+  public favouriteStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/favourite`)
   }
 
-  public unfavouriteStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/unfavourite`)
+  public unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/unfavourite`)
   }
 
-  public reblogStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/reblog`)
+  public reblogStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/reblog`)
   }
 
-  public unreblogStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/unreblog`)
+  public unreblogStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/unreblog`)
   }
 
-  public bookmarkStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/bookmark`)
+  public bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/bookmark`)
   }
 
-  public unbookmarkStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/unbookmark`)
+  public unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/unbookmark`)
   }
 
-  public muteStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/mute`)
+  public muteStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/mute`)
   }
 
-  public unmuteStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/unmute`)
+  public unmuteStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/unmute`)
   }
 
-  public pinStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/pin`)
+  public pinStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/pin`)
   }
 
-  public unpinStatus(id: string): Promise<Response<Status>> {
-    return this.client.post<Status>(`/api/v1/statuses/${id}/unpin`)
+  public unpinStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client.post<Entity.Status>(`/api/v1/statuses/${id}/unpin`)
   }
 
   // ======================================
   // statuses/media
   // ======================================
-  public uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>> {
+  public uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>> {
     let params = {
       file: file
     }
@@ -927,10 +908,10 @@ export default class Mastodon implements MegalodonInterface {
         focus: focus
       })
     }
-    return this.client.post<Attachment>('/api/v1/media', params)
+    return this.client.post<Entity.Attachment>('/api/v1/media', params)
   }
 
-  public updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Attachment>> {
+  public updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>> {
     let params = {}
     if (file) {
       params = Object.assign(params, {
@@ -947,18 +928,18 @@ export default class Mastodon implements MegalodonInterface {
         focus: focus
       })
     }
-    return this.client.put<Attachment>(`/api/v1/media/${id}`, params)
+    return this.client.put<Entity.Attachment>(`/api/v1/media/${id}`, params)
   }
 
   // ======================================
   // statuses/polls
   // ======================================
-  public getPoll(id: string): Promise<Response<Poll>> {
-    return this.client.get<Poll>(`/api/v1/polls/${id}`)
+  public getPoll(id: string): Promise<Response<Entity.Poll>> {
+    return this.client.get<Entity.Poll>(`/api/v1/polls/${id}`)
   }
 
-  public votePoll(id: string, choices: Array<number>): Promise<Response<Poll>> {
-    return this.client.post<Poll>(`/api/v1/polls/${id}/votes`, {
+  public votePoll(id: string, choices: Array<number>): Promise<Response<Entity.Poll>> {
+    return this.client.post<Entity.Poll>(`/api/v1/polls/${id}/votes`, {
       choices: choices
     })
   }
@@ -971,7 +952,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<ScheduledStatus>>> {
+  ): Promise<Response<Array<Entity.ScheduledStatus>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
@@ -993,21 +974,21 @@ export default class Mastodon implements MegalodonInterface {
         min_id: min_id
       })
     }
-    return this.client.get<Array<ScheduledStatus>>('/api/v1/scheduled_statuses', params)
+    return this.client.get<Array<Entity.ScheduledStatus>>('/api/v1/scheduled_statuses', params)
   }
 
-  public getScheduledStatus(id: string): Promise<Response<ScheduledStatus>> {
-    return this.client.get<ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`)
+  public getScheduledStatus(id: string): Promise<Response<Entity.ScheduledStatus>> {
+    return this.client.get<Entity.ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`)
   }
 
-  public scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<ScheduledStatus>> {
+  public scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
     let params = {}
     if (scheduled_at) {
       params = Object.assign(params, {
         scheduled_at: scheduled_at
       })
     }
-    return this.client.put<ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`, params)
+    return this.client.put<Entity.ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`, params)
   }
 
   public cancelScheduledStatus(id: string): Promise<Response<{}>> {
@@ -1024,7 +1005,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (local !== null) {
       params = Object.assign(params, {
@@ -1056,7 +1037,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Status>>('/api/v1/timelines/public', params)
+    return this.client.get<Array<Entity.Status>>('/api/v1/timelines/public', params)
   }
 
   public getTagTimeline(
@@ -1067,7 +1048,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (local !== null) {
       params = Object.assign(params, {
@@ -1099,7 +1080,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Status>>(`/api/v1/timelines/tag/${hashtag}`, params)
+    return this.client.get<Array<Entity.Status>>(`/api/v1/timelines/tag/${hashtag}`, params)
   }
 
   public getHomeTimeline(
@@ -1108,7 +1089,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (local !== null) {
       params = Object.assign(params, {
@@ -1135,7 +1116,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Status>>('/api/v1/timelines/home', params)
+    return this.client.get<Array<Entity.Status>>('/api/v1/timelines/home', params)
   }
 
   public getListTimeline(
@@ -1144,7 +1125,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (max_id) {
       params = Object.assign(params, {
@@ -1166,7 +1147,7 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Status>>(`/api/v1/timelines/list/${list_id}`, params)
+    return this.client.get<Array<Entity.Status>>(`/api/v1/timelines/list/${list_id}`, params)
   }
 
   // ======================================
@@ -1177,7 +1158,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Status>>> {
+  ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (max_id) {
       params = Object.assign(params, {
@@ -1199,36 +1180,36 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<Status>>('/api/v1/conversations', params)
+    return this.client.get<Array<Entity.Status>>('/api/v1/conversations', params)
   }
 
   public deleteConversation(id: string): Promise<Response<{}>> {
     return this.client.del<{}>(`/api/v1/conversations/${id}`)
   }
 
-  public readConversation(id: string): Promise<Response<Conversation>> {
-    return this.client.post<Conversation>(`/api/v1/conversations/${id}/read`)
+  public readConversation(id: string): Promise<Response<Entity.Conversation>> {
+    return this.client.post<Entity.Conversation>(`/api/v1/conversations/${id}/read`)
   }
 
   // ======================================
   // timelines/lists
   // ======================================
-  public getLists(): Promise<Response<Array<List>>> {
-    return this.client.get<Array<List>>('/api/v1/lists')
+  public getLists(): Promise<Response<Array<Entity.List>>> {
+    return this.client.get<Array<Entity.List>>('/api/v1/lists')
   }
 
-  public getList(id: string): Promise<Response<List>> {
-    return this.client.get<List>(`/api/v1/lists/${id}`)
+  public getList(id: string): Promise<Response<Entity.List>> {
+    return this.client.get<Entity.List>(`/api/v1/lists/${id}`)
   }
 
-  public createList(title: string): Promise<Response<List>> {
-    return this.client.post<List>('/api/v1/lists', {
+  public createList(title: string): Promise<Response<Entity.List>> {
+    return this.client.post<Entity.List>('/api/v1/lists', {
       title: title
     })
   }
 
-  public updateList(id: string, title: string): Promise<Response<List>> {
-    return this.client.put<List>(`/api/v1/lists/${id}`, {
+  public updateList(id: string, title: string): Promise<Response<Entity.List>> {
+    return this.client.put<Entity.List>(`/api/v1/lists/${id}`, {
       title: title
     })
   }
@@ -1242,7 +1223,7 @@ export default class Mastodon implements MegalodonInterface {
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
-  ): Promise<Response<Array<Account>>> {
+  ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
@@ -1259,7 +1240,7 @@ export default class Mastodon implements MegalodonInterface {
         since_id: since_id
       })
     }
-    return this.client.get<Array<Account>>(`/api/v1/lists/${id}/accounts`, params)
+    return this.client.get<Array<Entity.Account>>(`/api/v1/lists/${id}/accounts`, params)
   }
 
   public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
@@ -1277,13 +1258,16 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  public getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Marker | {}>> {
-    return this.client.get<Marker | {}>('/api/v1/markers', {
+  public getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Entity.Marker | {}>> {
+    return this.client.get<Entity.Marker | {}>('/api/v1/markers', {
       timeline: timeline
     })
   }
 
-  public saveMarker(home?: { last_read_id: string } | null, notifications?: { last_read_id: string } | null): Promise<Response<Marker>> {
+  public saveMarker(
+    home?: { last_read_id: string } | null,
+    notifications?: { last_read_id: string } | null
+  ): Promise<Response<Entity.Marker>> {
     let params = {}
     if (home) {
       params = Object.assign(params, {
@@ -1295,7 +1279,7 @@ export default class Mastodon implements MegalodonInterface {
         notifications: notifications
       })
     }
-    return this.client.post<Marker>('/api/v1/markers', params)
+    return this.client.post<Entity.Marker>('/api/v1/markers', params)
   }
 
   // ======================================
@@ -1308,7 +1292,7 @@ export default class Mastodon implements MegalodonInterface {
     min_id?: string | null,
     exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
     account_id?: string | null
-  ): Promise<Response<Array<Notification>>> {
+  ): Promise<Response<Array<Entity.Notification>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
@@ -1340,11 +1324,11 @@ export default class Mastodon implements MegalodonInterface {
         account_id
       })
     }
-    return this.client.get<Array<Notification>>('/api/v1/notifications', params)
+    return this.client.get<Array<Entity.Notification>>('/api/v1/notifications', params)
   }
 
-  public getNotification(id: string): Promise<Response<Notification>> {
-    return this.client.get<Notification>(`/api/v1/notifications/${id}`)
+  public getNotification(id: string): Promise<Response<Entity.Notification>> {
+    return this.client.get<Entity.Notification>(`/api/v1/notifications/${id}`)
   }
 
   public dismissNotifications(): Promise<Response<{}>> {
@@ -1361,7 +1345,7 @@ export default class Mastodon implements MegalodonInterface {
   public subscribePushNotification(
     subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
     data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
-  ): Promise<Response<PushSubscription>> {
+  ): Promise<Response<Entity.PushSubscription>> {
     let params = {
       subscription
     }
@@ -1370,23 +1354,23 @@ export default class Mastodon implements MegalodonInterface {
         data
       })
     }
-    return this.client.post<PushSubscription>('/api/v1/push/subscription', params)
+    return this.client.post<Entity.PushSubscription>('/api/v1/push/subscription', params)
   }
 
-  public getPushSubscription(): Promise<Response<PushSubscription>> {
-    return this.client.get<PushSubscription>('/api/v1/push/subscription')
+  public getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
+    return this.client.get<Entity.PushSubscription>('/api/v1/push/subscription')
   }
 
   public updatePushSubscription(
     data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
-  ): Promise<Response<PushSubscription>> {
+  ): Promise<Response<Entity.PushSubscription>> {
     let params = {}
     if (data) {
       params = Object.assign(params, {
         data
       })
     }
-    return this.client.put<PushSubscription>('/api/v1/push/subscription', params)
+    return this.client.put<Entity.PushSubscription>('/api/v1/push/subscription', params)
   }
 
   public deletePushSubscription(): Promise<Response<{}>> {
@@ -1407,7 +1391,7 @@ export default class Mastodon implements MegalodonInterface {
     following?: boolean | null,
     account_id?: string | null,
     exclude_unreviewed?: boolean | null
-  ): Promise<Response<Results>> {
+  ): Promise<Response<Entity.Results>> {
     let params = {
       q,
       type
@@ -1452,22 +1436,22 @@ export default class Mastodon implements MegalodonInterface {
         exclude_unreviewed
       })
     }
-    return this.client.get<Results>('/api/v2/search', params)
+    return this.client.get<Entity.Results>('/api/v2/search', params)
   }
 
   // ======================================
   // instance
   // ======================================
-  public getInstance(): Promise<Response<Instance>> {
-    return this.client.get<Instance>('/api/v1/instance')
+  public getInstance(): Promise<Response<Entity.Instance>> {
+    return this.client.get<Entity.Instance>('/api/v1/instance')
   }
 
   public getInstancePeers(): Promise<Response<Array<string>>> {
     return this.client.get<Array<string>>('/api/v1/instance/peers')
   }
 
-  public getInstanceActivity(): Promise<Response<Array<Activity>>> {
-    return this.client.get<Array<Activity>>('/api/v1/instance/activity')
+  public getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
+    return this.client.get<Array<Entity.Activity>>('/api/v1/instance/activity')
   }
 
   // ======================================
@@ -1478,14 +1462,14 @@ export default class Mastodon implements MegalodonInterface {
    *
    * @param limit Maximum number of results to return. Defaults to 10.
    */
-  public getInstanceTrends(limit?: number | null): Promise<Response<Array<Tag>>> {
+  public getInstanceTrends(limit?: number | null): Promise<Response<Array<Entity.Tag>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
         limit
       })
     }
-    return this.client.get<Array<Tag>>('/api/v1/trends', params)
+    return this.client.get<Array<Entity.Tag>>('/api/v1/trends', params)
   }
 
   // ======================================
@@ -1496,7 +1480,7 @@ export default class Mastodon implements MegalodonInterface {
     offset?: number | null,
     order?: 'active' | 'new' | null,
     local?: boolean | null
-  ): Promise<Response<Array<Account>>> {
+  ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (limit) {
       params = Object.assign(params, {
@@ -1518,14 +1502,14 @@ export default class Mastodon implements MegalodonInterface {
         local
       })
     }
-    return this.client.get<Array<Account>>('/api/v1/directory', params)
+    return this.client.get<Array<Entity.Account>>('/api/v1/directory', params)
   }
 
   // ======================================
   // instance/custom_emojis
   // ======================================
-  public getInstanceCustomEmojis(): Promise<Response<Array<Emoji>>> {
-    return this.client.get<Array<Emoji>>('/api/v1/custom_emojis')
+  public getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>> {
+    return this.client.get<Array<Entity.Emoji>>('/api/v1/custom_emojis')
   }
 
   // ======================================

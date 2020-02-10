@@ -1,4 +1,4 @@
-import { Mastodon, Status, Response } from 'megalodon'
+import { Mastodon, Entity, Response } from 'megalodon'
 
 declare var process: {
   env: {
@@ -12,7 +12,7 @@ const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
 const client = new Mastodon(BASE_URL, access_token)
 
-client.getFavourites().then((res: Response<Array<Status>>) => {
+client.getFavourites().then((res: Response<Array<Entity.Status>>) => {
   console.log(res.headers)
   console.log(res.data)
 })

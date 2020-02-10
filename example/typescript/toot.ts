@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import { Mastodon, Status, Response } from 'megalodon'
+import { Mastodon, Entity, Response } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -16,7 +16,7 @@ new Promise(resolve => {
   rl.question('Toot: ', status => {
     client
       .postStatus(status)
-      .then((res: Response<Status>) => {
+      .then((res: Response<Entity.Status>) => {
         console.log(res)
         rl.close()
         resolve(res)

@@ -1,4 +1,6 @@
-export type PollOption = {
-  title: string
-  votes_count: number | null
+namespace Entity {
+  export type PollOption = {
+    title: string
+    votes_count: number | null
+  }
 }
