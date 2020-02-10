@@ -1,4 +1,4 @@
-import { Mastodon, Entity, Response, ProxyConfig } from 'megalodon'
+import generator, { Entity, Response, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
@@ -6,6 +6,7 @@ declare var process: {
     PROXY_HOST: string
     PROXY_PORT: number
     PROXY_PROTOCOL: 'http' | 'https' | 'socks4' | 'socks4a' | 'socks5' | 'socks5h' | 'socks'
+    SNS: 'mastodon' | 'pleroma'
   }
 }
 
@@ -19,7 +20,7 @@ const proxy: ProxyConfig = {
   protocol: process.env.PROXY_PROTOCOL
 }
 
-const client = new Mastodon(BASE_URL, access_token, null, proxy)
+const client = generator(process.env.SNS, BASE_URL, access_token, null, proxy)
 
 client.getPublicTimeline().then((resp: Response<Array<Entity.Status>>) => {
   console.log(resp.data)

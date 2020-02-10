@@ -561,7 +561,7 @@ export interface MegalodonInterface {
    */
   postStatus(
     status: string,
-    media_ids: Array<string>,
+    media_ids?: Array<string>,
     poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean } | null,
     in_reply_to_id?: string | null,
     sensitive?: boolean | null,

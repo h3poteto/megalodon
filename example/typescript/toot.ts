@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import { Mastodon, Entity, Response } from 'megalodon'
+import generator, { Entity, Response } from 'megalodon'
 
 const rl: readline.ReadLine = readline.createInterface({
   input: process.stdin,
@@ -10,7 +10,7 @@ const BASE_URL: string = 'https://pleroma.io'
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN as string
 
-const client = new Mastodon(BASE_URL, access_token)
+const client = generator('pleroma', BASE_URL, access_token)
 
 new Promise(resolve => {
   rl.question('Toot: ', status => {
