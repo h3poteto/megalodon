@@ -4,6 +4,27 @@ import proxyAgent, { ProxyConfig } from '@/proxy_config'
 import Response from '@/response'
 
 namespace MisskeyAPI {
+  export const DEFAULT_SCOPE = [
+    'read:account',
+    'write:account',
+    'read:blocks',
+    'write:blocks',
+    'read:favourites',
+    'write:favourites',
+    'read:following',
+    'write:following',
+    'read:messaging',
+    'write:messaging',
+    'read:mute',
+    'write:mute',
+    'write:note',
+    'read:notifications',
+    'write:notifications',
+    'read:reactions',
+    'write:reactions',
+    'write:votes'
+  ]
+
   /**
    * Interface
    */
@@ -44,7 +65,6 @@ namespace MisskeyAPI {
      * @param baseUrl base URL of the target
      * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-
     public static async post<T>(
       path: string,
       params = {},
@@ -99,6 +119,27 @@ namespace MisskeyAPI {
         return res
       })
     }
+
+    /**
+     * Cancel all requests in this instance.
+     * @returns void
+     */
+    public cancel(): void {
+      return this.cancelTokenSource.cancel('Request is canceled by user')
+    }
+  }
+
+  export type App = {
+    id: string
+    name: string
+    callbackUrl: string
+    permission: Array<string>
+    secret: string
+  }
+
+  export type Session = {
+    token: string
+    url: string
   }
 }
 

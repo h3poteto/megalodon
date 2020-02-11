@@ -4,7 +4,7 @@
  **/
 namespace OAuth {
   export type AppDataFromServer = {
-    id: number
+    id: string
     name: string
     website: string | null
     redirect_uri: string
@@ -23,8 +23,9 @@ namespace OAuth {
 
   export class AppData {
     public url: string | null
+    public session_token: string | null
     constructor(
-      public id: number,
+      public id: string,
       public name: string,
       public website: string | null,
       public redirect_uri: string,
@@ -32,6 +33,7 @@ namespace OAuth {
       public client_secret: string
     ) {
       this.url = null
+      this.session_token = null
     }
 
     /**
