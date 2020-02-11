@@ -4,11 +4,7 @@ import WebSocket from '../web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
-
-const NO_REDIRECT = 'urn:ietf:wg:oauth:2.0:oob'
-const DEFAULT_URL = 'https://mastodon.social'
-const DEFAULT_SCOPE = 'read write follow'
-const DEFAULT_UA = 'megalodon'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
 
 namespace MastodonAPI {
   /**
@@ -32,7 +28,7 @@ namespace MastodonAPI {
    */
   export class Client implements Interface {
     static DEFAULT_SCOPE = DEFAULT_SCOPE
-    static DEFAULT_URL = DEFAULT_URL
+    static DEFAULT_URL = 'https://mastodon.social'
     static NO_REDIRECT = NO_REDIRECT
 
     private accessToken: string
@@ -65,7 +61,7 @@ namespace MastodonAPI {
     public static async get<T>(
       path: string,
       params = {},
-      baseUrl = DEFAULT_URL,
+      baseUrl = this.DEFAULT_URL,
       proxyConfig: ProxyConfig | false = false
     ): Promise<Response<T>> {
       const apiUrl = baseUrl
@@ -91,7 +87,7 @@ namespace MastodonAPI {
     public static async post<T>(
       path: string,
       params = {},
-      baseUrl = DEFAULT_URL,
+      baseUrl = this.DEFAULT_URL,
       proxyConfig: ProxyConfig | false = false
     ): Promise<Response<T>> {
       let options: AxiosRequestConfig = {}
