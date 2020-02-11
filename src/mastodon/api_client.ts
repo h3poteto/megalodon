@@ -84,6 +84,13 @@ namespace MastodonAPI {
       })
     }
 
+    /**
+     * Unauthorized POST request to mastodon REST API.
+     * @param path relative path from baseUrl
+     * @param params Body parameters
+     * @param baseUrl base URL of the target
+     * @param proxyConfig Proxy setting, or set false if don't use proxy.
+     */
     public static async post<T>(
       path: string,
       params = {},
