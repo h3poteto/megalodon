@@ -21,7 +21,10 @@ export interface MegalodonInterface {
    * @param client_name Form Data, which is sent to /api/v1/apps
    * @param options Form Data, which is sent to /api/v1/apps. and properties should be **snake_case**
    */
-  registerApp(client_name: string, options: Partial<{ scopes: string; redirect_uris: string; website: string }>): Promise<OAuth.AppData>
+  registerApp(
+    client_name: string,
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }>
+  ): Promise<OAuth.AppData>
 
   /**
    * Call /api/v1/apps
@@ -30,16 +33,10 @@ export interface MegalodonInterface {
    * @param client_name your application's name
    * @param options Form Data
    */
-  createApp(client_name: string, options: Partial<{ redirect_uris: string; scopes: string; website: string }>): Promise<OAuth.AppData>
-
-  /**
-   * Generate authorization url using OAuth2.
-   *
-   * @param clientId your OAuth app's client ID
-   * @param clientSecret your OAuth app's client Secret
-   * @param options as property, redirect_uri and scope are available, and must be the same as when you register your app
-   */
-  generateAuthUrl(clientId: string, clientSecret: string, options: Partial<{ redirect_uri: string; scope: string }>): Promise<string>
+  createApp(
+    client_name: string,
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }>
+  ): Promise<OAuth.AppData>
 
   // ======================================
   // apps

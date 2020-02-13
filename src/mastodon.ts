@@ -43,15 +43,15 @@ export default class Mastodon implements MegalodonInterface {
 
   public async registerApp(
     client_name: string,
-    options: Partial<{ scopes: string; redirect_uris: string; website: string }> = {
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
       scopes: DEFAULT_SCOPE,
       redirect_uris: NO_REDIRECT
     }
   ): Promise<OAuth.AppData> {
     return this.createApp(client_name, options).then(async appData => {
       return this.generateAuthUrl(appData.client_id, appData.client_secret, {
-        redirect_uri: appData.redirect_uri,
-        scope: options.scopes
+        scope: options.scopes,
+        redirect_uri: appData.redirect_uri
       }).then(url => {
         appData.url = url
         return appData
@@ -68,7 +68,7 @@ export default class Mastodon implements MegalodonInterface {
    */
   public async createApp(
     client_name: string,
-    options: Partial<{ redirect_uris: string; scopes: string; website: string }> = {
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
       redirect_uris: NO_REDIRECT,
       scopes: DEFAULT_SCOPE
     }
@@ -82,9 +82,9 @@ export default class Mastodon implements MegalodonInterface {
       scopes: string
       website?: string
     } = {
-      client_name,
-      redirect_uris,
-      scopes
+      client_name: client_name,
+      redirect_uris: redirect_uris,
+      scopes: scopes.join(' ')
     }
     if (options.website) params.website = options.website
 
@@ -103,7 +103,7 @@ export default class Mastodon implements MegalodonInterface {
   public generateAuthUrl(
     clientId: string,
     clientSecret: string,
-    options: Partial<{ redirect_uri: string; scope: string }> = {
+    options: Partial<{ scope: Array<string>; redirect_uri: string }> = {
       redirect_uri: NO_REDIRECT,
       scope: DEFAULT_SCOPE
     }
@@ -114,7 +114,7 @@ export default class Mastodon implements MegalodonInterface {
         redirect_uri: options.redirect_uri,
         response_type: 'code',
         client_id: clientId,
-        scope: options.scope
+        scope: options.scope!.join(',')
       })
       resolve(url)
     })
