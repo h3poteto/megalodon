@@ -6,7 +6,7 @@ const rl: readline.ReadLine = readline.createInterface({
   output: process.stdout
 })
 
-const SCOPES: string = 'read write follow'
+const SCOPES: Array<string> = ['read', 'write', 'follow']
 const BASE_URL: string = 'https://mastodon.social'
 
 let clientId: string

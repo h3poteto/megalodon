@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout
 })
 
-const SCOPES = 'read write follow'
+const SCOPES = ['read', 'write', 'follow']
 const BASE_URL = 'https://mastodon.social'
 
 let clientId
