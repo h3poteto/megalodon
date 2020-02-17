@@ -96,8 +96,8 @@ export default class Misskey {
        "secret": "string"
      }
     */
-    return MisskeyAPI.Client.post<MisskeyAPI.App>('/api/app/create', params, this.baseUrl, this.proxyConfig).then(
-      (res: Response<MisskeyAPI.App>) => {
+    return MisskeyAPI.Client.post<MisskeyAPI.Entity.App>('/api/app/create', params, this.baseUrl, this.proxyConfig).then(
+      (res: Response<MisskeyAPI.Entity.App>) => {
         const appData: OAuth.AppDataFromServer = {
           id: res.data.id,
           name: res.data.name,
@@ -114,10 +114,10 @@ export default class Misskey {
   /**
    * POST /api/auth/session/generate
    */
-  public async generateAuthUrlAndToken(clientSecret: string): Promise<MisskeyAPI.Session> {
-    return MisskeyAPI.Client.post<MisskeyAPI.Session>('/api/auth/session/generate', {
+  public async generateAuthUrlAndToken(clientSecret: string): Promise<MisskeyAPI.Entity.Session> {
+    return MisskeyAPI.Client.post<MisskeyAPI.Entity.Session>('/api/auth/session/generate', {
       appSecret: clientSecret
-    }).then((res: Response<MisskeyAPI.Session>) => res.data)
+    }).then((res: Response<MisskeyAPI.Entity.Session>) => res.data)
   }
 
   // ======================================
@@ -147,7 +147,7 @@ export default class Misskey {
     session_token: string,
     _redirect_uri: string
   ): Promise<OAuth.TokenData> {
-    return MisskeyAPI.Client.post<MisskeyAPI.UserKey>('/api/auth/session/userkey', {
+    return MisskeyAPI.Client.post<MisskeyAPI.Entity.UserKey>('/api/auth/session/userkey', {
       appSecret: client_secret,
       token: session_token
     }).then(res => {

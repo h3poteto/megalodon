@@ -2,8 +2,16 @@ import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axi
 import { DEFAULT_UA } from '@/default'
 import proxyAgent, { ProxyConfig } from '@/proxy_config'
 import Response from '@/response'
+import MisskeyEntity from './entity'
 
 namespace MisskeyAPI {
+  export namespace Entity {
+    export type App = MisskeyEntity.App
+    export type User = MisskeyEntity.User
+    export type UserKey = MisskeyEntity.UserKey
+    export type Session = MisskeyEntity.Session
+  }
+
   export const DEFAULT_SCOPE = [
     'read:account',
     'write:account',
@@ -127,23 +135,6 @@ namespace MisskeyAPI {
     public cancel(): void {
       return this.cancelTokenSource.cancel('Request is canceled by user')
     }
-  }
-
-  export type App = {
-    id: string
-    name: string
-    callbackUrl: string
-    permission: Array<string>
-    secret: string
-  }
-
-  export type Session = {
-    token: string
-    url: string
-  }
-
-  export type UserKey = {
-    accessToken: string
   }
 }
 
