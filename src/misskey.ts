@@ -3,6 +3,7 @@ import { NO_REDIRECT, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
+import { NoImplementedError } from './megalodon'
 
 export default class Misskey {
   public client: MisskeyAPI.Client
@@ -63,9 +64,9 @@ export default class Misskey {
    */
   public async createApp(
     client_name: string,
-    options: Partial<{ redirect_uris: string; scopes: Array<string>; website: string }> = {
-      redirect_uris: NO_REDIRECT,
-      scopes: MisskeyAPI.DEFAULT_SCOPE
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
+      scopes: MisskeyAPI.DEFAULT_SCOPE,
+      redirect_uris: NO_REDIRECT
     }
   ): Promise<OAuth.AppData> {
     const redirect_uris = options.redirect_uris || NO_REDIRECT
@@ -117,5 +118,55 @@ export default class Misskey {
     return MisskeyAPI.Client.post<MisskeyAPI.Session>('/api/auth/session/generate', {
       appSecret: clientSecret
     }).then((res: Response<MisskeyAPI.Session>) => res.data)
+  }
+
+  // ======================================
+  // apps
+  // ======================================
+  public async verifyAppCredentials(): Promise<Response<Entity.Application>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // apps/oauth
+  // ======================================
+  /**
+   * POST /api/auth/session/userkey
+   *
+   * @param _client_id This parameter is not used in this method.
+   * @param client_secret Application secret key which will be provided in createApp.
+   * @param session_token Session token string which will be provided in generateAuthUrlAndToken.
+   * @param _redirect_uri This parameter is not used in this method.
+   */
+  public async fetchAccessToken(
+    _client_id: string,
+    client_secret: string,
+    session_token: string,
+    _redirect_uri: string
+  ): Promise<OAuth.TokenData> {
+    return MisskeyAPI.Client.post<MisskeyAPI.UserKey>('/api/auth/session/userkey', {
+      appSecret: client_secret,
+      token: session_token
+    }).then(res => {
+      const token = new OAuth.TokenData(res.data.accessToken, 'misskey', '', 0, null, null)
+      return token
+    })
+  }
+
+  public async refreshToken(_client_id: string, _client_secret: string, _refresh_token: string): Promise<OAuth.TokenData> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async revokeToken(_client_id: string, _client_secret: string, _token: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
   }
 }

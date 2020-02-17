@@ -141,6 +141,10 @@ namespace MisskeyAPI {
     token: string
     url: string
   }
+
+  export type UserKey = {
+    accessToken: string
+  }
 }
 
 export default MisskeyAPI
