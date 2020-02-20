@@ -33,7 +33,7 @@ namespace Entity {
     tags: Array<Tag>
     card: Card | null
     poll: Poll | null
-    application: Application
+    application: Application | null
     language: string | null
     pinned: boolean | null
   }
