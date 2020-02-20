@@ -1,6 +1,6 @@
 /// <reference path="user.ts" />
 
-namespace Entity {
+namespace MisskeyEntity {
   export type UserKey = {
     accessToken: string
     user: User

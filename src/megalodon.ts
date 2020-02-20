@@ -120,7 +120,7 @@ export interface MegalodonInterface {
    * @return An account.
    */
   updateCredentials(
-    discoverable?: string | null,
+    discoverable?: boolean | null,
     bot?: boolean | null,
     display_name?: string | null,
     note?: string | null,

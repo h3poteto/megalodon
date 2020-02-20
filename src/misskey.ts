@@ -169,4 +169,147 @@ export default class Misskey {
       reject(err)
     })
   }
+
+  // ======================================
+  // accounts
+  // ======================================
+  public async registerAccount(
+    _username: string,
+    _email: string,
+    _password: string,
+    _agreement: boolean,
+    _locale: string,
+    _reason?: string | null
+  ): Promise<Response<Entity.Token>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/i
+   */
+  public async verifyAccountCredentials(): Promise<Response<Entity.Account>> {
+    return this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i').then(res => {
+      return Object.assign(res, {
+        data: MisskeyAPI.Converter.userDetail(res.data)
+      })
+    })
+  }
+
+  /**
+   * POST /api/i/update
+   */
+  public async pudateCredentials(
+    _discoverable?: boolean | null,
+    bot?: boolean | null,
+    display_name?: string | null,
+    note?: string | null,
+    _avatar?: string | null,
+    _header?: string | null,
+    locked?: boolean | null,
+    source?: {
+      privacy?: string
+      sensitive?: boolean
+      language?: string
+    } | null,
+    _fields_attributes?: Array<{ name: string; value: string }>
+  ): Promise<Response<Entity.Account>> {
+    let params = {}
+    if (bot !== null) {
+      params = Object.assign(params, {
+        isBot: bot
+      })
+    }
+    if (display_name) {
+      params = Object.assign(params, {
+        name: display_name
+      })
+    }
+    if (note) {
+      params = Object.assign(params, {
+        description: note
+      })
+    }
+    if (locked !== null) {
+      params = Object.assign(params, {
+        isLocked: locked
+      })
+    }
+    if (source) {
+      if (source.language) {
+        params = Object.assign(params, {
+          lang: source.language
+        })
+      }
+      if (source.sensitive) {
+        params = Object.assign(params, {
+          alwaysMarkNsfw: source.sensitive
+        })
+      }
+    }
+
+    return this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i', params).then(res => {
+      return Object.assign(res, {
+        data: MisskeyAPI.Converter.userDetail(res.data)
+      })
+    })
+  }
+
+  /**
+   * POST /api/users/show
+   */
+  public async getAccount(id: string): Promise<Response<Entity.Account>> {
+    return this.client
+      .post<MisskeyAPI.Entity.UserDetail>('/api/users/show', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.userDetail(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/users/notes
+   */
+  public async getAccountStatuses(id: string): Promise<Response<Array<Entity.Status>>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/users/notes', {
+        userId: id
+      })
+      .then(res => {
+        const statuses: Array<Entity.Status> = res.data.map(note => MisskeyAPI.Converter.note(note))
+        return Object.assign(res, {
+          data: statuses
+        })
+      })
+  }
+
+  public async getAccountFavourites(
+    _id: string,
+    _limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async subscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  public async unsubscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
 }

@@ -205,7 +205,7 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   public async updateCredentials(
-    discoverable?: string | null,
+    discoverable?: boolean | null,
     bot?: boolean | null,
     display_name?: string | null,
     note?: string | null,
@@ -220,7 +220,7 @@ export default class Mastodon implements MegalodonInterface {
     fields_attributes?: Array<{ name: string; value: string }>
   ): Promise<Response<Entity.Account>> {
     let params = {}
-    if (discoverable) {
+    if (discoverable !== null) {
       params = Object.assign(params, {
         discoverable: discoverable
       })
