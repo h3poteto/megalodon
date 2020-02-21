@@ -5,6 +5,8 @@ import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
+import MastodonEntity from './entity'
+import MegalodonEntity from '../entity'
 
 namespace MastodonAPI {
   /**
@@ -340,6 +342,78 @@ namespace MastodonAPI {
       })
       return streaming
     }
+  }
+
+  export namespace Entity {
+    export type Account = MastodonEntity.Account
+    export type Activity = MastodonEntity.Activity
+    export type Application = MastodonEntity.Application
+    export type Attachment = MastodonEntity.Attachment
+    export type Card = MastodonEntity.Card
+    export type Context = MastodonEntity.Context
+    export type Conversation = MastodonEntity.Conversation
+    export type Emoji = MastodonEntity.Emoji
+    export type FeaturedTag = MastodonEntity.FeaturedTag
+    export type Field = MastodonEntity.Field
+    export type Filter = MastodonEntity.Filter
+    export type History = MastodonEntity.History
+    export type IdentityProof = MastodonEntity.IdentityProof
+    export type Instance = MastodonEntity.Instance
+    export type List = MastodonEntity.List
+    export type Marker = MastodonEntity.Marker
+    export type Mention = MastodonEntity.Mention
+    export type Notification = MastodonEntity.Notification
+    export type Poll = MastodonEntity.Poll
+    export type PollOption = MastodonEntity.PollOption
+    export type Preferences = MastodonEntity.Preferences
+    export type PushSubscription = MastodonEntity.PushSubscription
+    export type Relationship = MastodonEntity.Relationship
+    export type Report = MastodonEntity.Report
+    export type Results = MastodonEntity.Results
+    export type ScheduledStatus = MastodonEntity.ScheduledStatus
+    export type Source = MastodonEntity.Source
+    export type Stats = MastodonEntity.Stats
+    export type Status = MastodonEntity.Status
+    export type StatusParams = MastodonEntity.StatusParams
+    export type Tag = MastodonEntity.Tag
+    export type Token = MastodonEntity.Token
+    export type URLs = MastodonEntity.URLs
+  }
+
+  export namespace Converter {
+    export const account = (a: Entity.Account): MegalodonEntity.Account => a
+    export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
+    export const application = (a: Entity.Application): MegalodonEntity.Application => a
+    export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
+    export const card = (c: Entity.Card): MegalodonEntity.Card => c
+    export const context = (c: Entity.Context): MegalodonEntity.Context => c
+    export const conversation = (c: Entity.Conversation): MegalodonEntity.Conversation => c
+    export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
+    export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
+    export const field = (f: Entity.Field): MegalodonEntity.Field => f
+    export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
+    export const history = (h: Entity.History): MegalodonEntity.History => h
+    export const identity_proof = (i: Entity.IdentityProof): MegalodonEntity.IdentityProof => i
+    export const instance = (i: Entity.Instance): MegalodonEntity.Instance => i
+    export const list = (l: Entity.List): MegalodonEntity.List => l
+    export const marker = (m: Entity.Marker): MegalodonEntity.Marker => m
+    export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => n
+    export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p
+    export const poll_option = (p: Entity.PollOption): MegalodonEntity.PollOption => p
+    export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
+    export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
+    export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => r
+    export const report = (r: Entity.Report): MegalodonEntity.Report => r
+    export const results = (r: Entity.Results): MegalodonEntity.Results => r
+    export const scheduled_status = (s: Entity.ScheduledStatus): MegalodonEntity.ScheduledStatus => s
+    export const source = (s: Entity.Source): MegalodonEntity.Source => s
+    export const stats = (s: Entity.Stats): MegalodonEntity.Stats => s
+    export const status = (s: Entity.Status): MegalodonEntity.Status => s
+    export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
+    export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
+    export const token = (t: Entity.Token): MegalodonEntity.Token => t
+    export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
   }
 }
 export default MastodonAPI
