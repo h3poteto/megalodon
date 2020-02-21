@@ -3,12 +3,13 @@ import Mastodon from './mastodon'
 import StreamListener from './stream_listener'
 import Response from './response'
 import Entity from './entity'
+import PleromaAPI from './pleroma/api_client'
 
 export default class Pleroma extends Mastodon implements MegalodonInterface {
   // ======================================
   // accounts
   // ======================================
-  public getAccountFavourites(
+  public async getAccountFavourites(
     id: string,
     limit?: number | null,
     max_id?: string | null,
@@ -30,15 +31,27 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
         since_id: since_id
       })
     }
-    return this.client.get<Array<Entity.Status>>(`/api/v1/pleroma/accounts/${id}/favourites`, params)
+    return this.client.get<Array<PleromaAPI.Entity.Status>>(`/api/v1/pleroma/accounts/${id}/favourites`, params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(s => PleromaAPI.Converter.status(s))
+      })
+    })
   }
 
-  public subscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/subscribe`)
+  public async subscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/subscribe`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.relationship(res.data)
+      })
+    })
   }
 
-  public unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`)
+  public async unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
+    return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.relationship(res.data)
+      })
+    })
   }
 
   // ======================================
