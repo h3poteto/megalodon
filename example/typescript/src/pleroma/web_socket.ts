@@ -1,14 +1,9 @@
-import generator, { Entity, WebSocket, ProxyConfig } from 'megalodon'
+import generator, { Entity, WebSocket } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
   env: {
     PLEROMA_ACCESS_TOKEN: string
-    MASTODON_ACCESS_TOKEN: string
-    PROXY_HOST: string
-    PROXY_PORT: number
-    PROXY_PROTOCOL: 'http' | 'https' | 'socks4' | 'socks4a' | 'socks5' | 'socks5h' | 'socks'
-    SNS: 'mastodon' | 'pleroma'
   }
 }
 
@@ -16,13 +11,7 @@ const BASE_URL: string = 'wss://pleroma.io'
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
 
-const proxy: ProxyConfig = {
-  host: process.env.PROXY_HOST,
-  port: process.env.PROXY_PORT,
-  protocol: process.env.PROXY_PROTOCOL
-}
-
-const client = generator(process.env.SNS, BASE_URL, access_token, null, proxy)
+const client = generator('pleroma', BASE_URL, access_token)
 
 const stream: WebSocket = client.userSocket()
 
@@ -37,7 +26,7 @@ stream.on('pong', () => {
 })
 
 stream.on('update', (status: Entity.Status) => {
-  logger.debug(status)
+  logger.debug(status.url)
 })
 
 stream.on('notification', (notification: Entity.Notification) => {

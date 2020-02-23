@@ -2,17 +2,16 @@ import generator, { Entity, Response, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
-    MASTODON_ACCESS_TOKEN: string
+    PLEROMA_ACCESS_TOKEN: string
     PROXY_HOST: string
     PROXY_PORT: number
     PROXY_PROTOCOL: 'http' | 'https' | 'socks4' | 'socks4a' | 'socks5' | 'socks5h' | 'socks'
-    SNS: 'mastodon' | 'pleroma'
   }
 }
 
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://pleroma.io'
 
-const access_token: string = process.env.MASTODON_ACCESS_TOKEN
+const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
 
 const proxy: ProxyConfig = {
   host: process.env.PROXY_HOST,
@@ -20,7 +19,7 @@ const proxy: ProxyConfig = {
   protocol: process.env.PROXY_PROTOCOL
 }
 
-const client = generator(process.env.SNS, BASE_URL, access_token, null, proxy)
+const client = generator('pleroma', BASE_URL, access_token, null, proxy)
 
 client.getPublicTimeline().then((resp: Response<Array<Entity.Status>>) => {
   console.log(resp.data)

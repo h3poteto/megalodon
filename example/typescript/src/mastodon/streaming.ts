@@ -3,7 +3,6 @@ import generator, { Entity, StreamListener } from 'megalodon'
 declare var process: {
   env: {
     MASTODON_ACCESS_TOKEN: string
-    SNS: 'mastodon' | 'pleroma'
   }
 }
 
@@ -11,7 +10,7 @@ const BASE_URL: string = 'https://mastodon.social'
 
 const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
-const client = generator(process.env.SNS, BASE_URL, access_token)
+const client = generator('mastodon', BASE_URL, access_token)
 
 const stream: StreamListener = client.publicStream()
 stream.on('connect', _ => {
