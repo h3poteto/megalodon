@@ -1,9 +1,9 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
-import { DEFAULT_UA } from '@/default'
-import proxyAgent, { ProxyConfig } from '@/proxy_config'
-import Response from '@/response'
+import { DEFAULT_UA } from '../default'
+import proxyAgent, { ProxyConfig } from '../proxy_config'
+import Response from '../response'
 import MisskeyEntity from './entity'
-import MegalodonEntity from '@/entity'
+import MegalodonEntity from '../entity'
 
 namespace MisskeyAPI {
   export namespace Entity {

@@ -1,5 +1,5 @@
 import MisskeyAPI from './misskey/api_client'
-import { NO_REDIRECT, DEFAULT_UA } from './default'
+import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
@@ -43,7 +43,7 @@ export default class Misskey {
     client_name: string,
     options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
       scopes: MisskeyAPI.DEFAULT_SCOPE,
-      redirect_uris: NO_REDIRECT
+      redirect_uris: this.baseUrl
     }
   ): Promise<OAuth.AppData> {
     return this.createApp(client_name, options).then(async appData => {
@@ -66,10 +66,10 @@ export default class Misskey {
     client_name: string,
     options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
       scopes: MisskeyAPI.DEFAULT_SCOPE,
-      redirect_uris: NO_REDIRECT
+      redirect_uris: this.baseUrl
     }
   ): Promise<OAuth.AppData> {
-    const redirect_uris = options.redirect_uris || NO_REDIRECT
+    const redirect_uris = options.redirect_uris || this.baseUrl
     const scopes = options.scopes || MisskeyAPI.DEFAULT_SCOPE
 
     const params: {

@@ -9,6 +9,7 @@ import { ProxyConfig } from './proxy_config'
 import generator, { MegalodonInterface } from './megalodon'
 import Mastodon from './mastodon'
 import Pleroma from './pleroma'
+import Misskey from './misskey'
 import Entity from './entity'
 
 export {
@@ -24,6 +25,7 @@ export {
   MegalodonInterface,
   Mastodon,
   Pleroma,
+  Misskey,
   Entity
 }
 
