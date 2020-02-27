@@ -312,4 +312,229 @@ export default class Misskey {
       reject(err)
     })
   }
+
+  /**
+   * POST /api/users/followers
+   */
+  public async getAccountFollowers(
+    id: string,
+    limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>> {
+    let params = {
+      userId: id
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Follower>>('/api/users/followers', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(f => MisskeyAPI.Converter.follower(f))
+      })
+    })
+  }
+
+  /**
+   * POST /api/users/following
+   */
+  public async getAccountFollowing(
+    id: string,
+    limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>> {
+    let params = {
+      userId: id
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Follower>>('/api/users/following', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(f => MisskeyAPI.Converter.follower(f))
+      })
+    })
+  }
+
+  public async getAccountLists(_id: string): Promise<Response<Array<Entity.List>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getIdentityProof(_id: string): Promise<Response<Array<Entity.IdentityProof>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/following/create
+   */
+  public async followAccount(id: string, _reblog: boolean): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('api/following/create', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/following/delete
+   */
+  public async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('api/following/delete', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/blocking/create
+   */
+  public async blockAccount(id: string): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('api/blocking/create', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/blocking/delete
+   */
+  public async unblockAccount(id: string): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('api/blocking/delete', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/mute/create
+   */
+  public async muteAccount(id: string, _notifications: boolean): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('api/mute/create', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/mute/delete
+   */
+  public async unmuteAccount(id: string): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('api/mute/delete', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/users/relation
+   *
+   * @param ids Array of the accountID, for example `['1sdfag']`. Only the first element is used.
+   */
+  public async getRelationship(ids: Array<string>): Promise<Response<Entity.Relationship>> {
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: ids[0]
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/users/search
+   */
+  public async searchAccount(
+    q: string,
+    limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>> {
+    let params = {
+      query: q
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/search', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(u => MisskeyAPI.Converter.userDetail(u))
+      })
+    })
+  }
 }

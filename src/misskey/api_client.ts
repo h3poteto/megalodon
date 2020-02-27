@@ -10,7 +10,10 @@ namespace MisskeyAPI {
     export type App = MisskeyEntity.App
     export type Emoji = MisskeyEntity.Emoji
     export type File = MisskeyEntity.File
+    export type Follower = MisskeyEntity.Follower
+    export type Following = MisskeyEntity.Following
     export type Note = MisskeyEntity.Note
+    export type Relation = MisskeyEntity.Relation
     export type User = MisskeyEntity.User
     export type UserDetail = MisskeyEntity.UserDetail
     export type UserKey = MisskeyEntity.UserKey
@@ -105,6 +108,29 @@ namespace MisskeyAPI {
         text_url: f.url,
         meta: null,
         description: null
+      }
+    }
+
+    export const follower = (f: Entity.Follower): MegalodonEntity.Account => {
+      return user(f.follower)
+    }
+
+    export const following = (f: Entity.Following): MegalodonEntity.Account => {
+      return user(f.followee)
+    }
+
+    export const relation = (r: Entity.Relation): MegalodonEntity.Relationship => {
+      return {
+        id: r.id,
+        following: r.isFollowing,
+        followed_by: r.isFollowed,
+        blocking: r.isBlocking,
+        muting: r.isMuted,
+        muting_notifications: false,
+        requested: r.hasPendingFollowRequestFromYou,
+        domain_blocking: false,
+        showing_reblogs: true,
+        endorsed: false
       }
     }
 
