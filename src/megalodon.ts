@@ -1,8 +1,9 @@
 import Response from './response'
 import OAuth from './oauth'
-import Pleroma from './pleroma'
 import proxyAgent, { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
+import Pleroma from './pleroma'
+import Pixelfed from './pixelfed'
 import Entity from './entity'
 import axios, { AxiosRequestConfig } from 'axios'
 import Misskey from './misskey'
@@ -1295,7 +1296,7 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
 /**
  * Get client for each SNS according to megalodon interface.
  *
- * @param sns Name of your SNS, `mastodon` or `pleroma`.
+ * @param sns Name of your SNS, `mastodon`, `pleroma` or `pixelfed`.
  * @param baseUrl hostname or base URL.
  * @param accessToken access token from OAuth2 authorization
  * @param userAgent UserAgent is specified in header on request.
@@ -1303,7 +1304,7 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma' | 'misskey',
+  sns: 'mastodon' | 'pleroma' | 'misskey' | 'pixelfed',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null,
@@ -1317,6 +1318,10 @@ const generator = (
     case 'misskey': {
       const misskey = new Misskey(baseUrl, accessToken, userAgent, proxyConfig)
       return misskey
+    }
+    case 'pixelfed': {
+      const pixelfed = new Pixelfed(baseUrl, accessToken, userAgent, proxyConfig)
+      return pixelfed
     }
     default: {
       const mastodon = new Mastodon(baseUrl, accessToken, userAgent, proxyConfig)
