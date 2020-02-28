@@ -8,10 +8,14 @@ import MegalodonEntity from '../entity'
 namespace MisskeyAPI {
   export namespace Entity {
     export type App = MisskeyEntity.App
+    export type Blocking = MisskeyEntity.Blocking
     export type Emoji = MisskeyEntity.Emoji
+    export type Favorite = MisskeyEntity.Favorite
     export type File = MisskeyEntity.File
     export type Follower = MisskeyEntity.Follower
     export type Following = MisskeyEntity.Following
+    export type FollowRequest = MisskeyEntity.FollowRequest
+    export type Mute = MisskeyEntity.Mute
     export type Note = MisskeyEntity.Note
     export type Relation = MisskeyEntity.Relation
     export type User = MisskeyEntity.User

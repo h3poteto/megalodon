@@ -762,21 +762,18 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   public async report(
     account_id: string,
+    comment: string,
     status_ids?: Array<string> | null,
-    comment?: string | null,
+
     forward?: boolean | null
   ): Promise<Response<Entity.Report>> {
     let params = {
-      account_id: account_id
+      account_id: account_id,
+      comment: comment
     }
     if (status_ids) {
       params = Object.assign(params, {
         status_ids: status_ids
-      })
-    }
-    if (comment) {
-      params = Object.assign(params, {
-        comment: comment
       })
     }
     if (forward !== null) {

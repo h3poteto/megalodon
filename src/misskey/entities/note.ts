@@ -15,10 +15,10 @@ namespace MisskeyEntity {
     renote?: Note
     repliesCount: number
     renoteCount: number
-    viaMobile: boolean
+    viaMobile?: boolean
     visibility: 'public' | 'home' | 'followers' | 'direct'
     reactions: { [key: string]: number }
-    tags: Array<string>
+    tags?: Array<string>
     emojis: Array<Emoji>
     fileIds: Array<string>
     files: Array<File>

@@ -450,12 +450,7 @@ export interface MegalodonInterface {
    * @param forward If the account is remote, should the report be forwarded to the remote admin?
    * @return Report
    */
-  report(
-    account_id: string,
-    status_ids?: Array<string> | null,
-    comment?: string | null,
-    forward?: boolean | null
-  ): Promise<Response<Entity.Report>>
+  report(account_id: string, comment: string, status_ids?: Array<string> | null, forward?: boolean | null): Promise<Response<Entity.Report>>
   // ======================================
   // accounts/follow_requests
   // ======================================

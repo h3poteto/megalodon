@@ -537,4 +537,340 @@ export default class Misskey {
       })
     })
   }
+
+  // ======================================
+  // accounts/bookmarks
+  // ======================================
+  public async getBookmarks(
+    _limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  //  accounts/favourites
+  // ======================================
+  /**
+   * POST /api/i/favorites
+   */
+  public async getFavourites(
+    limit?: number | null,
+    max_id?: string | null,
+    min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        sinceId: min_id
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/i/favorites', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(fav => MisskeyAPI.Converter.note(fav.note))
+      })
+    })
+  }
+
+  // ======================================
+  // accounts/mutes
+  // ======================================
+  /**
+   * POST /api/mute/list
+   */
+  public async getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        sinceId: min_id
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Mute>>('/api/mute/list', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(mute => MisskeyAPI.Converter.userDetail(mute.mutee))
+      })
+    })
+  }
+
+  // ======================================
+  // accounts/blocks
+  // ======================================
+  /**
+   * POST /api/blocking/list
+   */
+  public async getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        sinceId: min_id
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Blocking>>('/api/blocking/list', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(blocking => MisskeyAPI.Converter.userDetail(blocking.blockee))
+      })
+    })
+  }
+
+  // ======================================
+  // accounts/domain_blocks
+  // ======================================
+  public async getDomainBlocks(_limit?: number | null, _max_id?: string | null, _min_id?: string | null): Promise<Response<Array<string>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async blockDomain(_domain: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async unblockDomain(_domain: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // accounts/filters
+  // ======================================
+  public async getFilters(): Promise<Response<Array<Entity.Filter>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getFilter(_id: string): Promise<Response<Entity.Filter>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async createFilter(
+    _phrase: string,
+    _context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    _irreversible?: boolean | null,
+    _whole_word?: boolean | null,
+    _expires_in?: string | null
+  ): Promise<Response<Entity.Filter>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async updateFilter(
+    _id: string,
+    _phrase: string,
+    _context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    _irreversible?: boolean | null,
+    _whole_word?: boolean | null,
+    _expires_in?: string | null
+  ): Promise<Response<Entity.Filter>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async deleteFilter(_id: string): Promise<Response<Entity.Filter>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // accounts/reports
+  // ======================================
+  /**
+   * POST /api/users/report-abuse
+   */
+  public async report(
+    account_id: string,
+    comment: string,
+    _status_ids?: Array<string> | null,
+    _forward?: boolean | null
+  ): Promise<Response<Entity.Report>> {
+    return this.client
+      .post<{}>('/api/users/report-abuse', {
+        userId: account_id,
+        comment: comment
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: {
+            id: '',
+            action_taken: '',
+            comment: comment,
+            account_id: account_id,
+            status_ids: []
+          }
+        })
+      })
+  }
+
+  // ======================================
+  // accounts/follow_requests
+  // ======================================
+  /**
+   * POST /api/following/requests/list
+   */
+  public async getFollowRequests(_limit?: number): Promise<Response<Array<Entity.Account>>> {
+    return this.client.post<Array<MisskeyAPI.Entity.FollowRequest>>('/api/folllowing/requests/list').then(res => {
+      return Object.assign(res, {
+        data: res.data.map(r => MisskeyAPI.Converter.user(r.follower))
+      })
+    })
+  }
+
+  /**
+   * POST /api/following/requests/accept
+   */
+  public async acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('/api/following/requests/accept', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  /**
+   * POST /api/following/requests/reject
+   */
+  public async rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
+    await this.client.post<{}>('/api/following/requests/reject', {
+      userId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
+        userId: id
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MisskeyAPI.Converter.relation(res.data)
+        })
+      })
+  }
+
+  // ======================================
+  // accounts/endorsements
+  // ======================================
+  public async getEndorsements(
+    _limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // accounts/featured_tags
+  // ======================================
+  public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  public async deleteFeaturedTag(_id: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // accounts/preferences
+  // ======================================
+  public async getPreferences(): Promise<Response<Entity.Preferences>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // accounts/suggestions
+  // ======================================
+  /**
+   * POST /api/users/recommendation
+   */
+  public async getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>> {
+    let params = {}
+    if (limit) {
+      params = {
+        ...params,
+        limit: limit
+      }
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/recommendation', params)
+      .then(res => ({ ...res, data: res.data.map(u => MisskeyAPI.Converter.userDetail(u)) }))
+  }
 }
