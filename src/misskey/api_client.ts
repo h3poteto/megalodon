@@ -9,6 +9,7 @@ namespace MisskeyAPI {
   export namespace Entity {
     export type App = MisskeyEntity.App
     export type Blocking = MisskeyEntity.Blocking
+    export type CreatedNote = MisskeyEntity.CreatedNote
     export type Emoji = MisskeyEntity.Emoji
     export type Favorite = MisskeyEntity.Favorite
     export type File = MisskeyEntity.File
@@ -102,6 +103,18 @@ namespace MisskeyAPI {
       }
     }
 
+    export const encodeVisibility = (v: 'public' | 'unlisted' | 'private' | 'direct'): 'public' | 'home' | 'followers' | 'direct' => {
+      switch (v) {
+        case 'public':
+        case 'direct':
+          return v
+        case 'unlisted':
+          return 'home'
+        case 'private':
+          return 'followers'
+      }
+    }
+
     export const file = (f: Entity.File): MegalodonEntity.Attachment => {
       return {
         id: f.id,
@@ -156,8 +169,8 @@ namespace MisskeyAPI {
         reblogged: false,
         favourited: false,
         muted: false,
-        sensitive: n.files ? n.files.some(f => f.isSensitive) : false,
-        spoiler_text: '',
+        sensitive: n.cw ? true : false,
+        spoiler_text: n.cw ? n.cw : '',
         visibility: visibility(n.visibility),
         media_attachments: n.files ? n.files.map(f => file(f)) : [],
         mentions: [],

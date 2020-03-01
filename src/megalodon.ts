@@ -576,7 +576,7 @@ export interface MegalodonInterface {
    * @param id The target status id.
    * @return Status
    */
-  deleteStatus(id: string): Promise<Response<Entity.Status>>
+  deleteStatus(id: string): Promise<Response<{}>>
   /**
    * GET /api/v1/statuses/:id/context
    *

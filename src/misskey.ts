@@ -864,13 +864,243 @@ export default class Misskey {
   public async getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>> {
     let params = {}
     if (limit) {
-      params = {
-        ...params,
+      params = Object.assign(params, {
         limit: limit
-      }
+      })
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/recommendation', params)
       .then(res => ({ ...res, data: res.data.map(u => MisskeyAPI.Converter.userDetail(u)) }))
+  }
+
+  // ======================================
+  // statuses
+  // ======================================
+  public async postStatus(
+    status: string,
+    media_ids?: Array<string>,
+    poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean } | null,
+    in_reply_to_id?: string | null,
+    sensitive?: boolean | null,
+    spoiler_text?: string | null,
+    visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
+    _scheduled_at?: string | null,
+    _language?: string | null
+  ): Promise<Response<Entity.Status>> {
+    let params = {
+      text: status
+    }
+    if (media_ids) {
+      params = Object.assign(params, {
+        fileIds: media_ids
+      })
+    }
+    if (poll) {
+      let pollParam = {
+        choices: poll.options,
+        expiresAt: poll.expires_in
+      }
+      if (poll.multiple) {
+        pollParam = Object.assign(pollParam, {
+          multiple: poll.multiple
+        })
+      }
+      params = Object.assign(params, {
+        poll: pollParam
+      })
+    }
+    if (in_reply_to_id) {
+      params = Object.assign(params, {
+        replyId: in_reply_to_id
+      })
+    }
+    if (sensitive) {
+      params = Object.assign(params, {
+        cw: ''
+      })
+    }
+    if (spoiler_text) {
+      params = Object.assign(params, {
+        cw: spoiler_text
+      })
+    }
+    if (visibility) {
+      params = Object.assign(params, {
+        visibility: MisskeyAPI.Converter.encodeVisibility(visibility)
+      })
+    }
+    return this.client
+      .post<MisskeyAPI.Entity.CreatedNote>('/api/notes/create', params)
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data.createdNote) }))
+  }
+
+  /**
+   * POST /api/notes/show
+   */
+  public async getStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  /**
+   * POST /api/notes/delete
+   */
+  public async deleteStatus(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>('/api/notes/delete', {
+      noteId: id
+    })
+  }
+
+  /**
+   * POST /api/notes/children
+   */
+  public async getStatusContext(id: string): Promise<Response<Entity.Context>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/children', {
+        noteId: id
+      })
+      .then(res => {
+        const context: Entity.Context = {
+          ancestors: [],
+          descendants: res.data.map(n => MisskeyAPI.Converter.note(n))
+        }
+        return {
+          ...res,
+          data: context
+        }
+      })
+  }
+
+  /**
+   * POST /api/notes/renotes
+   */
+  public async getStatusRebloggedBy(id: string): Promise<Response<Array<Entity.Account>>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/renotes', {
+        noteId: id
+      })
+      .then(res => ({
+        ...res,
+        data: res.data.map(n => MisskeyAPI.Converter.user(n.user))
+      }))
+  }
+
+  public async getStatusFavouritedBy(_id: string): Promise<Response<Array<Entity.Account>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/notes/favorites/create
+   */
+  public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/favorites/create', {
+      noteId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  /**
+   * POST /api/notes/favorites/delete
+   */
+  public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/favorites/delete', {
+      noteId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  /**
+   * POST /api/notes/create
+   */
+  public async reblogStatus(id: string): Promise<Response<Entity.Status>> {
+    return this.client
+      .post<MisskeyAPI.Entity.CreatedNote>('/api/notes/create', {
+        renoteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data.createdNote) }))
+  }
+
+  /**
+   * POST /api/notes/unrenote
+   */
+  public async unreblogStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/unrenote', {
+      noteId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  public async bookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async unbookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async muteStatus(_id: string): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async unmuteStatus(_id: string): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/i/pin
+   */
+  public async pinStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/i/pin', {
+      noteId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  /**
+   * POST /api/i/unpin
+   */
+  public async unpinStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/i/unpin', {
+      noteId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
   }
 }

@@ -1,5 +1,6 @@
 /// <reference path="entities/app.ts" />
 /// <reference path="entities/blocking.ts" />
+/// <reference path="entities/createdNote.ts" />
 /// <reference path="entities/emoji.ts" />
 /// <reference path="entities/favorite.ts" />
 /// <reference path="entities/file.ts" />
