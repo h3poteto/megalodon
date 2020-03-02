@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
+import moment from 'moment'
 import { DEFAULT_UA } from '../default'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
@@ -9,6 +10,7 @@ namespace MisskeyAPI {
   export namespace Entity {
     export type App = MisskeyEntity.App
     export type Blocking = MisskeyEntity.Blocking
+    export type Choice = MisskeyEntity.Choice
     export type CreatedNote = MisskeyEntity.CreatedNote
     export type Emoji = MisskeyEntity.Emoji
     export type Favorite = MisskeyEntity.Favorite
@@ -18,6 +20,7 @@ namespace MisskeyAPI {
     export type FollowRequest = MisskeyEntity.FollowRequest
     export type Mute = MisskeyEntity.Mute
     export type Note = MisskeyEntity.Note
+    export type Poll = MisskeyEntity.Poll
     export type Relation = MisskeyEntity.Relation
     export type User = MisskeyEntity.User
     export type UserDetail = MisskeyEntity.UserDetail
@@ -151,6 +154,28 @@ namespace MisskeyAPI {
       }
     }
 
+    export const choice = (c: Entity.Choice): MegalodonEntity.PollOption => {
+      return {
+        title: c.text,
+        votes_count: c.votes
+      }
+    }
+
+    export const poll = (p: Entity.Poll): MegalodonEntity.Poll => {
+      const now = moment()
+      const expire = moment(p.expiresAt)
+      const count = p.choices.reduce((sum, choice) => sum + choice.votes, 0)
+      return {
+        id: '',
+        expires_at: p.expiresAt,
+        expired: now.isAfter(expire),
+        multiple: p.multiple,
+        votes_count: count,
+        options: p.choices.map(c => choice(c)),
+        voted: p.choices.some(c => c.isVoted)
+      }
+    }
+
     export const note = (n: Entity.Note): MegalodonEntity.Status => {
       return {
         id: n.id,
@@ -169,14 +194,14 @@ namespace MisskeyAPI {
         reblogged: false,
         favourited: false,
         muted: false,
-        sensitive: n.cw ? true : false,
+        sensitive: n.files ? n.files.some(f => f.isSensitive) : false,
         spoiler_text: n.cw ? n.cw : '',
         visibility: visibility(n.visibility),
         media_attachments: n.files ? n.files.map(f => file(f)) : [],
         mentions: [],
         tags: [],
         card: null,
-        poll: null,
+        poll: n.poll ? poll(n.poll) : null,
         application: null,
         language: null,
         pinned: null

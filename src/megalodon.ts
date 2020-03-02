@@ -689,7 +689,13 @@ export interface MegalodonInterface {
    * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
    * @return Attachment
    */
-  updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>>
+  updateMedia(
+    id: string,
+    file?: any,
+    description?: string | null,
+    focus?: string | null,
+    is_sensitive?: boolean | null
+  ): Promise<Response<Entity.Attachment>>
   // ======================================
   // statuses/polls
   // ======================================
@@ -707,7 +713,7 @@ export interface MegalodonInterface {
    * @param choices Array of own votes containing index for each option (starting from 0).
    * @return Poll
    */
-  votePoll(id: string, choices: Array<number>): Promise<Response<Entity.Poll>>
+  votePoll(id: string, choices: Array<number>, status_id?: string | null): Promise<Response<Entity.Poll>>
   // ======================================
   // statuses/scheduled_statuses
   // ======================================
@@ -1145,6 +1151,24 @@ export interface MegalodonInterface {
 }
 
 export class NoImplementedError extends Error {
+  constructor(err?: string) {
+    super(err)
+
+    this.name = new.target.name
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
+}
+
+export class ArgumentError extends Error {
+  constructor(err?: string) {
+    super(err)
+
+    this.name = new.target.name
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
+}
+
+export class UnexpectedError extends Error {
   constructor(err?: string) {
     super(err)
 

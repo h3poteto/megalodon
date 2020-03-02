@@ -1,6 +1,7 @@
 /// <reference path="user.ts" />
 /// <reference path="emoji.ts" />
 /// <reference path="file.ts" />
+/// <reference path="poll.ts" />
 
 namespace MisskeyEntity {
   export type Note = {
@@ -22,5 +23,6 @@ namespace MisskeyEntity {
     emojis: Array<Emoji>
     fileIds: Array<string>
     files: Array<File>
+    poll?: Poll
   }
 }

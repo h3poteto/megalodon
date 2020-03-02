@@ -3,7 +3,7 @@ import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
-import { NoImplementedError } from './megalodon'
+import { NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 
 export default class Misskey {
   public client: MisskeyAPI.Client
@@ -1102,5 +1102,120 @@ export default class Misskey {
         noteId: id
       })
       .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  // ======================================
+  // statuses/media
+  // ======================================
+  /**
+   * POST /api/drive/files/create
+   */
+  public async uploadMedia(file: any, _description?: string | null, _focus?: string | null): Promise<Response<Entity.Attachment>> {
+    const formData = new FormData()
+    formData.append('file', file)
+    return this.client
+      .post<MisskeyAPI.Entity.File>('/api/drive/files/create', formData)
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.file(res.data) }))
+  }
+
+  /**
+   * POST /api/drive/files/update
+   */
+  public async updateMedia(
+    id: string,
+    _file?: any,
+    _description?: string | null,
+    _focus?: string | null,
+    is_sensitive?: boolean | null
+  ): Promise<Response<Entity.Attachment>> {
+    let params = {
+      fileId: id
+    }
+    if (is_sensitive !== undefined && is_sensitive !== null) {
+      params = Object.assign(params, {
+        isSensitive: is_sensitive
+      })
+    }
+    return this.client
+      .post<MisskeyAPI.Entity.File>('/api/drive/files/update', params)
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.file(res.data) }))
+  }
+
+  // ======================================
+  // statuses/polls
+  // ======================================
+  public async getPoll(_id: string): Promise<Response<Entity.Poll>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/notes/polls/vote
+   */
+  public async votePoll(_id: string, choices: Array<number>, status_id?: string | null): Promise<Response<Entity.Poll>> {
+    if (!status_id) {
+      return new Promise((_, reject) => {
+        const err = new ArgumentError('status_id is required')
+        reject(err)
+      })
+    }
+    const params = {
+      noteId: status_id,
+      choice: choices[0]
+    }
+    await this.client.post<{}>('/api/notes/polls/vote', params)
+    const res = await this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: status_id
+      })
+      .then(res => {
+        const note = MisskeyAPI.Converter.note(res.data)
+        return { ...res, data: note.poll }
+      })
+    if (!res.data) {
+      return new Promise((_, reject) => {
+        const err = new UnexpectedError('poll does not exist')
+        reject(err)
+      })
+    }
+    return { ...res, data: res.data }
+  }
+
+  // ======================================
+  // statuses/scheduled_statuses
+  // ======================================
+  public async getScheduledStatuses(
+    _limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.ScheduledStatus>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getScheduledStatus(_id: string): Promise<Response<Entity.ScheduledStatus>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async scheduleStatus(_id: string, _scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async cancelScheduledStatus(_id: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
   }
 }
