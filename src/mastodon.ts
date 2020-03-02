@@ -1132,20 +1132,15 @@ export default class Mastodon implements MegalodonInterface {
   // statuses/media
   // ======================================
   public async uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>> {
-    let params = {
-      file: file
-    }
+    const formData = new FormData()
+    formData.append('file', file)
     if (description) {
-      params = Object.assign(params, {
-        description: description
-      })
+      formData.append('description', description)
     }
     if (focus) {
-      params = Object.assign(params, {
-        focus: focus
-      })
+      formData.append('focus', focus)
     }
-    return this.client.post<MastodonAPI.Entity.Attachment>('/api/v1/media', params).then(res => {
+    return this.client.post<MastodonAPI.Entity.Attachment>('/api/v1/media', formData).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.attachment(res.data)
       })
