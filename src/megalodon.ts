@@ -758,7 +758,6 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/timelines/public
    *
-   * @param local Show only local statuses? Defaults to false.
    * @param only_media Show only statuses with media attached? Defaults to false.
    * @param limit Max number of results to return. Defaults to 20.
    * @param max_id Return results older than ID.
@@ -767,7 +766,23 @@ export interface MegalodonInterface {
    * @return Array of statuses.
    */
   getPublicTimeline(
-    local?: boolean | null,
+    only_media?: boolean | null,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>>
+  /**
+   * GET /api/v1/timelines/public
+   *
+   * @param only_media Show only statuses with media attached? Defaults to false.
+   * @param limit Max number of results to return. Defaults to 20.
+   * @param max_id Return results older than ID.
+   * @param since_id Return results newer than ID.
+   * @param min_id Return results immediately newer than ID.
+   * @return Array of statuses.
+   */
+  getLocalTimeline(
     only_media?: boolean | null,
     limit?: number | null,
     max_id?: string | null,
