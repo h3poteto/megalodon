@@ -1266,18 +1266,56 @@ export default class Mastodon implements MegalodonInterface {
   // timelines
   // ======================================
   public async getPublicTimeline(
-    local?: boolean | null,
     only_media?: boolean | null,
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
   ): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (local !== null) {
+    let params = {
+      local: false
+    }
+    if (only_media !== null) {
       params = Object.assign(params, {
-        local: local
+        only_media: only_media
       })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        max_id: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (min_id) {
+      params = Object.assign(params, {
+        min_id: min_id
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(s => MastodonAPI.Converter.status(s))
+      })
+    })
+  }
+
+  public async getLocalTimeline(
+    only_media?: boolean | null,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {
+      local: true
     }
     if (only_media !== null) {
       params = Object.assign(params, {
