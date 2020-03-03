@@ -1479,7 +1479,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  ): Promise<Response<Array<Entity.Conversation>>> {
     let params = {}
     if (max_id) {
       params = Object.assign(params, {
@@ -1501,9 +1501,9 @@ export default class Mastodon implements MegalodonInterface {
         limit: limit
       })
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/conversations', params).then(res => {
+    return this.client.get<Array<MastodonAPI.Entity.Conversation>>('/api/v1/conversations', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(c => MastodonAPI.Converter.conversation(c))
       })
     })
   }

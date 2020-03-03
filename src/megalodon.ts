@@ -861,7 +861,7 @@ export interface MegalodonInterface {
     max_id?: string | null,
     since_id?: string | null,
     min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>>
+  ): Promise<Response<Array<Entity.Conversation>>>
   /**
    * DELETE /api/v1/conversations/:id
    *
