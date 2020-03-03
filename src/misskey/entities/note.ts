@@ -7,22 +7,25 @@ namespace MisskeyEntity {
   export type Note = {
     id: string
     createdAt: string
-    text: string
-    cw: string | null
     userId: string
     user: User
-    replyId: string | null
-    renoteId: string | null
-    renote?: Note
-    repliesCount: number
+    text: string
+    cw: string | null
+    visibility: 'public' | 'home' | 'followers' | 'specified'
     renoteCount: number
-    viaMobile?: boolean
-    visibility: 'public' | 'home' | 'followers' | 'direct'
+    repliesCount: number
     reactions: { [key: string]: number }
-    tags?: Array<string>
     emojis: Array<Emoji>
     fileIds: Array<string>
     files: Array<File>
+    replyId: string | null
+    renoteId: string | null
+    uri?: string
+    reply?: Note
+    renote?: Note
+    viaMobile?: boolean
+    tags?: Array<string>
     poll?: Poll
+    mentions?: Array<string>
   }
 }

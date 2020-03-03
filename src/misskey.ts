@@ -1218,4 +1218,186 @@ export default class Misskey {
       reject(err)
     })
   }
+
+  // ======================================
+  // timelines
+  // ======================================
+  /**
+   * POST /api/notes/global-timeline
+   */
+  public async getPublicTimeline(
+    only_media?: boolean | null,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {}
+    if (only_media) {
+      params = Object.assign(params, {
+        withFiles: only_media
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        sinceId: since_id
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/global-timeline', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+  }
+
+  /**
+   * POST /api/notes/local-timeline
+   */
+  public async getLocalTimeline(
+    only_media?: boolean | null,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {}
+    if (only_media) {
+      params = Object.assign(params, {
+        withFiles: only_media
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        sinceId: since_id
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/local-timeline', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+  }
+
+  /**
+   * POST /api/notes/search-by-tag
+   */
+  public async getTagTimeline(
+    hashtag: string,
+    _local?: boolean | null,
+    only_media?: boolean | null,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {
+      tag: hashtag
+    }
+    if (only_media) {
+      params = Object.assign(params, {
+        withFiles: only_media
+      })
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        sinceId: since_id
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/search-by-tag', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+  }
+
+  /**
+   * POST /api/notes/timeline
+   */
+  public async getHomeTimeline(
+    _local?: boolean | null,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {
+      withFiles: false
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        sinceId: since_id
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/timeline', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+  }
+
+  /**
+   * POST /api/notes/user-list-timeline
+   */
+  public async getListTimeline(
+    list_id: string,
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {
+      listId: list_id,
+      withFiles: false
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        sinceId: since_id
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/user-list-timeline', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+  }
 }

@@ -94,27 +94,29 @@ namespace MisskeyAPI {
       }
     }
 
-    export const visibility = (v: 'public' | 'home' | 'followers' | 'direct'): 'public' | 'unlisted' | 'private' | 'direct' => {
+    export const visibility = (v: 'public' | 'home' | 'followers' | 'specified'): 'public' | 'unlisted' | 'private' | 'direct' => {
       switch (v) {
         case 'public':
-        case 'direct':
           return v
         case 'home':
           return 'unlisted'
         case 'followers':
           return 'private'
+        case 'specified':
+          return 'direct'
       }
     }
 
-    export const encodeVisibility = (v: 'public' | 'unlisted' | 'private' | 'direct'): 'public' | 'home' | 'followers' | 'direct' => {
+    export const encodeVisibility = (v: 'public' | 'unlisted' | 'private' | 'direct'): 'public' | 'home' | 'followers' | 'specified' => {
       switch (v) {
         case 'public':
-        case 'direct':
           return v
         case 'unlisted':
           return 'home'
         case 'private':
           return 'followers'
+        case 'direct':
+          return 'specified'
       }
     }
 
@@ -205,6 +207,19 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null
+      }
+    }
+
+    export const noteToConversation = (n: Entity.Note): MegalodonEntity.Conversation => {
+      const accounts: Array<MegalodonEntity.Account> = [user(n.user)]
+      if (n.reply) {
+        accounts.push(user(n.reply.user))
+      }
+      return {
+        id: n.id,
+        accounts: accounts,
+        last_status: note(n),
+        unread: false
       }
     }
   }
