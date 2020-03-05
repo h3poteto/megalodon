@@ -1400,4 +1400,163 @@ export default class Misskey {
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/user-list-timeline', params)
       .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
   }
+
+  // ======================================
+  // timelines/conversations
+  // ======================================
+  /**
+   * POST /api/notes/mentions
+   */
+  public async getConversationTimeline(
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null
+  ): Promise<Response<Array<Entity.Conversation>>> {
+    let params = {
+      visibility: 'specified'
+    }
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        sinceId: since_id
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/mentions', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.noteToConversation(n)) }))
+  }
+
+  public async deleteConversation(_id: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  public async readConversation(_id: string): Promise<Response<Entity.Conversation>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  // ======================================
+  // timelines/lists
+  // ======================================
+  /**
+   * POST /api/users/lists/list
+   */
+  public async getLists(): Promise<Response<Array<Entity.List>>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.List>>('/api/users/lists/list')
+      .then(res => ({ ...res, data: res.data.map(l => MisskeyAPI.Converter.list(l)) }))
+  }
+
+  /**
+   * POST /api/users/lists/show
+   */
+  public async getList(id: string): Promise<Response<Entity.List>> {
+    return this.client
+      .post<MisskeyAPI.Entity.List>('/api/users/lists/show', {
+        listId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.list(res.data) }))
+  }
+
+  /**
+   * POST /api/users/lists/create
+   */
+  public async createList(title: string): Promise<Response<Entity.List>> {
+    return this.client
+      .post<MisskeyAPI.Entity.List>('/api/users/lists/create', {
+        name: title
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.list(res.data) }))
+  }
+
+  /**
+   * POST /api/users/lists/update
+   */
+  public async updateList(id: string, title: string): Promise<Response<Entity.List>> {
+    return this.client
+      .post<MisskeyAPI.Entity.List>('/api/users/lists/update', {
+        listId: id,
+        name: title
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.list(res.data) }))
+  }
+
+  /**
+   * POST /api/users/lists/delete
+   */
+  public async deleteList(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>('/api/users/lists/delete', {
+      listId: id
+    })
+  }
+
+  /**
+   * POST /api/users/lists/show
+   */
+  public async getAccountsInList(
+    id: string,
+    _limit?: number | null,
+    _max_id?: string | null,
+    _since_id?: string | null
+  ): Promise<Response<Array<Entity.Account>>> {
+    const res = await this.client.post<MisskeyAPI.Entity.List>('/api/users/lists/show', {
+      listId: id
+    })
+    const promise = res.data.userIds.map(userId => this.getAccount(userId))
+    const accounts = await Promise.all(promise)
+    return { ...res, data: accounts.map(r => r.data) }
+  }
+
+  /**
+   * POST /api/users/lists/push
+   */
+  public async addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
+    return await this.client.post<{}>('/api/users/lists/push', {
+      listId: id,
+      userId: account_ids[0]
+    })
+  }
+
+  /**
+   * POST /api/users/lists/pull
+   */
+  public async deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
+    return await this.client.post<{}>('/api/users/lists/pull', {
+      listId: id,
+      userId: account_ids[0]
+    })
+  }
+
+  // ======================================
+  // timelines/markers
+  // ======================================
+  public async getMarker(_timeline: Array<'home' | 'notifications'>): Promise<Response<Entity.Marker | {}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async saveMarker(
+    _home?: { last_read_id: string } | null,
+    _notifications?: { last_read_id: string } | null
+  ): Promise<Response<Entity.Marker>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
 }

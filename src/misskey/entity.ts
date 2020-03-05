@@ -7,6 +7,7 @@
 /// <reference path="entities/follower.ts" />
 /// <reference path="entities/following.ts" />
 /// <reference path="entities/followRequest.ts" />
+/// <reference path="entities/list.ts" />
 /// <reference path="entities/mute.ts" />
 /// <reference path="entities/note.ts" />
 /// <reference path="entities/poll.ts" />

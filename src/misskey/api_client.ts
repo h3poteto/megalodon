@@ -18,6 +18,7 @@ namespace MisskeyAPI {
     export type Follower = MisskeyEntity.Follower
     export type Following = MisskeyEntity.Following
     export type FollowRequest = MisskeyEntity.FollowRequest
+    export type List = MisskeyEntity.List
     export type Mute = MisskeyEntity.Mute
     export type Note = MisskeyEntity.Note
     export type Poll = MisskeyEntity.Poll
@@ -222,6 +223,11 @@ namespace MisskeyAPI {
         unread: false
       }
     }
+
+    export const list = (l: Entity.List): MegalodonEntity.List => ({
+      id: l.id,
+      title: l.name
+    })
   }
 
   export const DEFAULT_SCOPE = [
