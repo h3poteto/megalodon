@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StreamListenerError | megalodon</title>
+	<title>UnexpectedError | megalodon</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="streamlistenererror.html">StreamListenerError</a>
+					<a href="unexpectederror.html">UnexpectedError</a>
 				</li>
 			</ul>
-			<h1>Class StreamListenerError</h1>
+			<h1>Class UnexpectedError</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 						<a href="requestcancelederror.html#error" class="tsd-signature-type">Error</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">StreamListenerError</span>
+								<span class="target">UnexpectedError</span>
 							</li>
 						</ul>
 					</li>
@@ -86,17 +86,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="streamlistenererror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="unexpectederror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="streamlistenererror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="streamlistenererror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="streamlistenererror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="streamlistenererror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="streamlistenererror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="unexpectederror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="unexpectederror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="unexpectederror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="unexpectederror.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,39 +107,36 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Stream<wbr>Listener<wbr>Error<span class="tsd-signature-symbol">(</span>statusCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="streamlistenererror.html" class="tsd-signature-type">StreamListenerError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Unexpected<wbr>Error<span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="unexpectederror.html" class="tsd-signature-type">UnexpectedError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/be4074a/src/stream_listener.ts#L12">src/stream_listener.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/be4074a/src/megalodon.ts#L1171">src/megalodon.ts:1171</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>statusCode: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> err: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="streamlistenererror.html" class="tsd-signature-type">StreamListenerError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="unexpectederror.html" class="tsd-signature-type">UnexpectedError</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
 					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="requestcancelederror.html">RequestCanceledError</a>.<a href="requestcancelederror.html#message">message</a></p>
+						<p>Inherited from <a href="requestcancelederror.html">RequestCanceledError</a>.<a href="requestcancelederror.html#message">message</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/be4074a/src/stream_listener.ts#L12">src/stream_listener.ts:12</a></li>
+							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974</li>
 						</ul>
 					</aside>
 				</section>
@@ -164,16 +160,6 @@
 						<p>Overrides <a href="requestcancelederror.html">RequestCanceledError</a>.<a href="requestcancelederror.html#stack">stack</a></p>
 						<ul>
 							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="statuscode" class="tsd-anchor"></a>
-					<h3>status<wbr>Code</h3>
-					<div class="tsd-signature tsd-kind-icon">status<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/be4074a/src/stream_listener.ts#L11">src/stream_listener.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,36 +212,33 @@
 					<li class=" tsd-kind-class">
 						<a href="streamlistener.html" class="tsd-kind-icon">Stream<wbr>Listener</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="streamlistenererror.html" class="tsd-kind-icon">Stream<wbr>Listener<wbr>Error</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="streamlistenererror.html" class="tsd-kind-icon">Stream<wbr>Listener<wbr>Error</a>
+						<a href="unexpectederror.html" class="tsd-kind-icon">Unexpected<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="streamlistenererror.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-								<a href="streamlistenererror.html#message" class="tsd-kind-icon">message</a>
+								<a href="unexpectederror.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="streamlistenererror.html#name" class="tsd-kind-icon">name</a>
+								<a href="unexpectederror.html#message" class="tsd-kind-icon">message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="unexpectederror.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="streamlistenererror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="streamlistenererror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a>
+								<a href="unexpectederror.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="streamlistenererror.html#error" class="tsd-kind-icon">Error</a>
+								<a href="unexpectederror.html#error" class="tsd-kind-icon">Error</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="unexpectederror.html" class="tsd-kind-icon">Unexpected<wbr>Error</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="websocket.html" class="tsd-kind-icon">Web<wbr>Socket</a>
 					</li>
