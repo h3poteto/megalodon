@@ -6,7 +6,7 @@ namespace Entity {
     account: Account
     created_at: string
     id: string
-    status: Status | null
-    type: 'mention' | 'reblog' | 'favourite' | 'follow'
+    status?: Status
+    type: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll'
   }
 }

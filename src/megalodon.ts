@@ -120,7 +120,7 @@ export interface MegalodonInterface {
    * @return An account.
    */
   updateCredentials(
-    discoverable?: string | null,
+    discoverable?: boolean | null,
     bot?: boolean | null,
     display_name?: string | null,
     note?: string | null,
@@ -450,12 +450,7 @@ export interface MegalodonInterface {
    * @param forward If the account is remote, should the report be forwarded to the remote admin?
    * @return Report
    */
-  report(
-    account_id: string,
-    status_ids?: Array<string> | null,
-    comment?: string | null,
-    forward?: boolean | null
-  ): Promise<Response<Entity.Report>>
+  report(account_id: string, comment: string, status_ids?: Array<string> | null, forward?: boolean | null): Promise<Response<Entity.Report>>
   // ======================================
   // accounts/follow_requests
   // ======================================
@@ -581,7 +576,7 @@ export interface MegalodonInterface {
    * @param id The target status id.
    * @return Status
    */
-  deleteStatus(id: string): Promise<Response<Entity.Status>>
+  deleteStatus(id: string): Promise<Response<{}>>
   /**
    * GET /api/v1/statuses/:id/context
    *
@@ -694,7 +689,13 @@ export interface MegalodonInterface {
    * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
    * @return Attachment
    */
-  updateMedia(id: string, file?: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>>
+  updateMedia(
+    id: string,
+    file?: any,
+    description?: string | null,
+    focus?: string | null,
+    is_sensitive?: boolean | null
+  ): Promise<Response<Entity.Attachment>>
   // ======================================
   // statuses/polls
   // ======================================
@@ -712,7 +713,7 @@ export interface MegalodonInterface {
    * @param choices Array of own votes containing index for each option (starting from 0).
    * @return Poll
    */
-  votePoll(id: string, choices: Array<number>): Promise<Response<Entity.Poll>>
+  votePoll(id: string, choices: Array<number>, status_id?: string | null): Promise<Response<Entity.Poll>>
   // ======================================
   // statuses/scheduled_statuses
   // ======================================
@@ -1150,6 +1151,24 @@ export interface MegalodonInterface {
 }
 
 export class NoImplementedError extends Error {
+  constructor(err?: string) {
+    super(err)
+
+    this.name = new.target.name
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
+}
+
+export class ArgumentError extends Error {
+  constructor(err?: string) {
+    super(err)
+
+    this.name = new.target.name
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
+}
+
+export class UnexpectedError extends Error {
   constructor(err?: string) {
     super(err)
 
