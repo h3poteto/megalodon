@@ -1,6 +1,5 @@
-import { MegalodonInterface, NoImplementedError } from './megalodon'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
 import Mastodon from './mastodon'
-import StreamListener from './stream_listener'
 import Response from './response'
 import Entity from './entity'
 import PleromaAPI from './pleroma/api_client'
@@ -57,27 +56,27 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
   // ======================================
   // HTTP Streaming
   // ======================================
-  public userStream(): StreamListener {
+  public userStream(): StreamListenerInterface {
     throw new NoImplementedError('pleroma does not support')
   }
 
-  public publicStream(): StreamListener {
+  public publicStream(): StreamListenerInterface {
     throw new NoImplementedError('pleroma does not support')
   }
 
-  public localStream(): StreamListener {
+  public localStream(): StreamListenerInterface {
     throw new NoImplementedError('pleroma does not support')
   }
 
-  public tagStream(_tag: string): StreamListener {
+  public tagStream(_tag: string): StreamListenerInterface {
     throw new NoImplementedError('pleroma does not support')
   }
 
-  public listStream(_list_id: string): StreamListener {
+  public listStream(_list_id: string): StreamListenerInterface {
     throw new NoImplementedError('pleroma does not support')
   }
 
-  public directStream(): StreamListener {
+  public directStream(): StreamListenerInterface {
     throw new NoImplementedError('pleroma does not support')
   }
 }

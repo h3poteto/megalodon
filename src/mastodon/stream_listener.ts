@@ -1,9 +1,11 @@
 import { EventEmitter } from 'events'
 import axios, { CancelTokenSource, AxiosRequestConfig } from 'axios'
 import httpAdapter from 'axios/lib/adapters/http'
-import { Parser } from './parser'
-import proxyAgent, { ProxyConfig } from './proxy_config'
+import { Parser } from '../parser'
+import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Entity from './entity'
+import { StreamListenerInterface } from '../megalodon'
+import MastodonAPI from './api_client'
 
 const STATUS_CODES_TO_ABORT_ON: Array<number> = [400, 401, 403, 404, 406, 410, 422]
 
@@ -22,7 +24,7 @@ export class StreamListenerError extends Error {
  * EventStream
  * Listener of text/event-stream. It receives data, and parse when streaming.
  */
-export default class StreamListener extends EventEmitter {
+export default class StreamListener extends EventEmitter implements StreamListenerInterface {
   public url: string
   public headers: object
   public parser: Parser
@@ -161,13 +163,13 @@ export default class StreamListener extends EventEmitter {
    **/
   private _setupParser() {
     this.parser.on('update', (status: Entity.Status) => {
-      this.emit('update', status)
+      this.emit('update', MastodonAPI.Converter.status(status))
     })
     this.parser.on('notification', (notification: Entity.Notification) => {
-      this.emit('notification', notification)
+      this.emit('notification', MastodonAPI.Converter.notification(notification))
     })
     this.parser.on('conversation', (conversation: Entity.Conversation) => {
-      this.emit('conversation', conversation)
+      this.emit('conversation', MastodonAPI.Converter.conversation(conversation))
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
