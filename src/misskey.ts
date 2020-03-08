@@ -308,6 +308,7 @@ export default class Misskey implements MegalodonInterface {
       reject(err)
     })
   }
+
   public async unsubscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
@@ -827,12 +828,14 @@ export default class Misskey implements MegalodonInterface {
       reject(err)
     })
   }
+
   public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
     })
   }
+
   public async deleteFeaturedTag(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
@@ -1444,12 +1447,14 @@ export default class Misskey implements MegalodonInterface {
       reject(err)
     })
   }
+
   public async readConversation(_id: string): Promise<Response<Entity.Conversation>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
     })
   }
+
   // ======================================
   // timelines/lists
   // ======================================
@@ -1526,7 +1531,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/users/lists/push
    */
   public async addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return await this.client.post<{}>('/api/users/lists/push', {
+    return this.client.post<{}>('/api/users/lists/push', {
       listId: id,
       userId: account_ids[0]
     })
@@ -1536,7 +1541,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/users/lists/pull
    */
   public async deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return await this.client.post<{}>('/api/users/lists/pull', {
+    return this.client.post<{}>('/api/users/lists/pull', {
       listId: id,
       userId: account_ids[0]
     })
@@ -1635,12 +1640,14 @@ export default class Misskey implements MegalodonInterface {
       reject(err)
     })
   }
+
   public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
     })
   }
+
   public async updatePushSubscription(
     _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
   ): Promise<Response<Entity.PushSubscription>> {
@@ -1649,6 +1656,7 @@ export default class Misskey implements MegalodonInterface {
       reject(err)
     })
   }
+
   /**
    * DELETE /api/v1/push/subscription
    */
@@ -1726,7 +1734,7 @@ export default class Misskey implements MegalodonInterface {
           }
         }))
       }
-      case 'hashtags':
+      case 'hashtags': {
         let params = {
           query: q
         }
@@ -1748,6 +1756,7 @@ export default class Misskey implements MegalodonInterface {
             hashtags: res.data.map(h => ({ name: h, url: h, history: null }))
           }
         }))
+      }
     }
   }
 
