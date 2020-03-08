@@ -3,10 +3,11 @@ import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
-import { NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
+import { MegalodonInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 
-export default class Misskey {
+export default class Misskey implements MegalodonInterface {
   public client: MisskeyAPI.Client
   public baseUrl: string
   public proxyConfig: ProxyConfig | false
@@ -202,7 +203,7 @@ export default class Misskey {
   /**
    * POST /api/i/update
    */
-  public async pudateCredentials(
+  public async updateCredentials(
     _discoverable?: boolean | null,
     bot?: boolean | null,
     display_name?: string | null,
@@ -1842,5 +1843,29 @@ export default class Misskey {
 
   public directStream(): StreamListener {
     throw new NoImplementedError('misskey does not support')
+  }
+
+  public userSocket(): WebSocket {
+    throw new NoImplementedError('TODO: implement')
+  }
+
+  public publicSocket(): WebSocket {
+    throw new NoImplementedError('TODO: implement')
+  }
+
+  public localSocket(): WebSocket {
+    throw new NoImplementedError('TODO: implement')
+  }
+
+  public tagSocket(_tag: string): WebSocket {
+    throw new NoImplementedError('TODO: implement')
+  }
+
+  public listSocket(_list_id: string): WebSocket {
+    throw new NoImplementedError('TODO: implement')
+  }
+
+  public directSocket(): WebSocket {
+    throw new NoImplementedError('TODO: implement')
   }
 }
