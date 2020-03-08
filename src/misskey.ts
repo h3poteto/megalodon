@@ -4,6 +4,7 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
 import { NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
+import StreamListener from './stream_listener'
 
 export default class Misskey {
   public client: MisskeyAPI.Client
@@ -1814,5 +1815,32 @@ export default class Misskey {
     return this.client
       .post<MisskeyAPI.Entity.Meta>('/api/meta')
       .then(res => ({ ...res, data: res.data.emojis.map(e => MisskeyAPI.Converter.emoji(e)) }))
+  }
+
+  // ======================================
+  // HTTP Streaming
+  // ======================================
+  public userStream(): StreamListener {
+    throw new NoImplementedError('misskey does not support')
+  }
+
+  public publicStream(): StreamListener {
+    throw new NoImplementedError('misskey does not support')
+  }
+
+  public localStream(): StreamListener {
+    throw new NoImplementedError('misskey does not support')
+  }
+
+  public tagStream(_tag: string): StreamListener {
+    throw new NoImplementedError('misskey does not support')
+  }
+
+  public listStream(_list_id: string): StreamListener {
+    throw new NoImplementedError('misskey does not support')
+  }
+
+  public directStream(): StreamListener {
+    throw new NoImplementedError('misskey does not support')
   }
 }
