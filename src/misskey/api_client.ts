@@ -21,6 +21,7 @@ namespace MisskeyAPI {
     export type List = MisskeyEntity.List
     export type Mute = MisskeyEntity.Mute
     export type Note = MisskeyEntity.Note
+    export type Notification = MisskeyEntity.Notification
     export type Poll = MisskeyEntity.Poll
     export type Relation = MisskeyEntity.Relation
     export type User = MisskeyEntity.User
@@ -228,6 +229,68 @@ namespace MisskeyAPI {
       id: l.id,
       title: l.name
     })
+
+    export const encodeNotificationType = (
+      e: 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'
+    ): 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollVote' => {
+      switch (e) {
+        case 'follow':
+          return e
+        case 'mention':
+          return 'reply'
+        case 'favourite':
+          return 'reaction'
+        case 'reblog':
+          return 'renote'
+        case 'poll':
+          return 'pollVote'
+      }
+    }
+
+    export const decodeNotificationType = (
+      e:
+        | 'follow'
+        | 'mention'
+        | 'reply'
+        | 'renote'
+        | 'quote'
+        | 'reaction'
+        | 'pollVote'
+        | 'receiveFollowRequest'
+        | 'followRequestAccepted'
+        | 'groupInvited'
+    ): 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' => {
+      switch (e) {
+        case 'follow':
+          return e
+        case 'mention':
+        case 'reply':
+          return 'mention'
+        case 'renote':
+          return 'reblog'
+        case 'reaction':
+          return 'favourite'
+        case 'pollVote':
+          return 'poll'
+        default:
+          return 'follow'
+      }
+    }
+
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+      let notification = {
+        id: n.id,
+        account: user(n.user),
+        created_at: n.createdAt,
+        type: decodeNotificationType(n.type)
+      }
+      if (n.note) {
+        notification = Object.assign(notification, {
+          status: note(n.note)
+        })
+      }
+      return notification
+    }
   }
 
   export const DEFAULT_SCOPE = [

@@ -1559,4 +1559,65 @@ export default class Misskey {
       reject(err)
     })
   }
+
+  // ======================================
+  // notifications
+  // ======================================
+  /**
+   * POST /api/i/notifications
+   */
+  public async getNotifications(
+    limit?: number | null,
+    max_id?: string | null,
+    since_id?: string | null,
+    _min_id?: string | null,
+    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
+    _account_id?: string | null
+  ): Promise<Response<Array<Entity.Notification>>> {
+    let params = {}
+    if (limit) {
+      params = Object.assign(params, {
+        limit: limit
+      })
+    }
+    if (max_id) {
+      params = Object.assign(params, {
+        untilId: max_id
+      })
+    }
+    if (since_id) {
+      params = Object.assign(params, {
+        since_id: since_id
+      })
+    }
+    if (exclude_type) {
+      params = Object.assign(params, {
+        excludeType: exclude_type.map(e => MisskeyAPI.Converter.encodeNotificationType(e))
+      })
+    }
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Notification>>('/api/i/notifications', params)
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.notification(n)) }))
+  }
+
+  public async getNotification(_id: string): Promise<Response<Entity.Notification>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * POST /api/notifications/mark-all-as-read
+   */
+  public async dismissNotifications(): Promise<Response<{}>> {
+    return this.client.post<{}>('/api/notifications/mark-all-as-read')
+  }
+
+  public async dismissNotification(_id: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
 }

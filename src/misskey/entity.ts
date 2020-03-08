@@ -10,6 +10,7 @@
 /// <reference path="entities/list.ts" />
 /// <reference path="entities/mute.ts" />
 /// <reference path="entities/note.ts" />
+/// <reference path="entities/notification.ts" />
 /// <reference path="entities/poll.ts" />
 /// <reference path="entities/relation.ts" />
 /// <reference path="entities/user.ts" />
