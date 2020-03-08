@@ -1656,4 +1656,96 @@ export default class Misskey {
       reject(err)
     })
   }
+
+  // ======================================
+  // search
+  // ======================================
+  public async search(
+    q: string,
+    type: 'accounts' | 'hashtags' | 'statuses',
+    limit?: number | null,
+    _max_id?: string | null,
+    _min_id?: string | null,
+    resolve?: boolean | null,
+    offset?: number | null,
+    _following?: boolean | null,
+    _account_id?: string | null,
+    _exclude_unreviewed?: boolean | null
+  ): Promise<Response<Entity.Results>> {
+    switch (type) {
+      case 'accounts': {
+        let params = {
+          query: q
+        }
+        if (limit) {
+          params = Object.assign(params, {
+            limit: limit
+          })
+        }
+        if (offset) {
+          params = Object.assign(params, {
+            offset: offset
+          })
+        }
+        if (resolve) {
+          params = Object.assign(params, {
+            localOnly: resolve
+          })
+        }
+        return this.client.post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/search', params).then(res => ({
+          ...res,
+          data: {
+            accounts: res.data.map(u => MisskeyAPI.Converter.userDetail(u)),
+            statuses: [],
+            hashtags: []
+          }
+        }))
+      }
+      case 'statuses': {
+        let params = {
+          query: q
+        }
+        if (limit) {
+          params = Object.assign(params, {
+            limit: limit
+          })
+        }
+        if (offset) {
+          params = Object.assign(params, {
+            offset: offset
+          })
+        }
+        return this.client.post<Array<MisskeyAPI.Entity.Note>>('/api/notes/search', params).then(res => ({
+          ...res,
+          data: {
+            accounts: [],
+            statuses: res.data.map(n => MisskeyAPI.Converter.note(n)),
+            hashtags: []
+          }
+        }))
+      }
+      case 'hashtags':
+        let params = {
+          query: q
+        }
+        if (limit) {
+          params = Object.assign(params, {
+            limit: limit
+          })
+        }
+        if (offset) {
+          params = Object.assign(params, {
+            offset: offset
+          })
+        }
+        return this.client.post<Array<string>>('/api/hashtags/search', params).then(res => ({
+          ...res,
+          data: {
+            accounts: [],
+            statuses: [],
+            hashtags: res.data.map(h => ({ name: h, url: h, history: null }))
+          }
+        }))
+    }
+  }
 }
