@@ -18,7 +18,9 @@ namespace MisskeyAPI {
     export type Follower = MisskeyEntity.Follower
     export type Following = MisskeyEntity.Following
     export type FollowRequest = MisskeyEntity.FollowRequest
+    export type Hashtag = MisskeyEntity.Hashtag
     export type List = MisskeyEntity.List
+    export type Meta = MisskeyEntity.Meta
     export type Mute = MisskeyEntity.Mute
     export type Note = MisskeyEntity.Note
     export type Notification = MisskeyEntity.Notification
@@ -28,6 +30,7 @@ namespace MisskeyAPI {
     export type UserDetail = MisskeyEntity.UserDetail
     export type UserKey = MisskeyEntity.UserKey
     export type Session = MisskeyEntity.Session
+    export type Stats = MisskeyEntity.Stats
   }
 
   export namespace Converter {
@@ -290,6 +293,42 @@ namespace MisskeyAPI {
         })
       }
       return notification
+    }
+
+    export const stats = (s: Entity.Stats): MegalodonEntity.Stats => {
+      return {
+        user_count: s.usersCount,
+        status_count: s.notesCount,
+        domain_count: s.instances
+      }
+    }
+
+    export const meta = (m: Entity.Meta, s: Entity.Stats): MegalodonEntity.Instance => {
+      const wss = m.uri.replace(/^https:\/\//, 'wss://')
+      return {
+        uri: m.uri,
+        title: m.name,
+        description: m.description,
+        email: m.maintainerEmail,
+        version: m.version,
+        thumbnail: m.bannerUrl,
+        urls: {
+          streaming_api: `${wss}/streaming`
+        },
+        stats: stats(s),
+        languages: m.langs,
+        contact_account: null,
+        max_toot_chars: m.maxNoteTextLength,
+        registrations: !m.disableRegistration
+      }
+    }
+
+    export const hashtag = (h: Entity.Hashtag): MegalodonEntity.Tag => {
+      return {
+        name: h.tag,
+        url: h.tag,
+        history: null
+      }
     }
   }
 

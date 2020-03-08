@@ -1748,4 +1748,71 @@ export default class Misskey {
         }))
     }
   }
+
+  // ======================================
+  // instance
+  // ======================================
+  /**
+   * POST /api/meta
+   * POST /api/stats
+   */
+  public async getInstance(): Promise<Response<Entity.Instance>> {
+    const meta = await this.client.post<MisskeyAPI.Entity.Meta>('/api/meta').then(res => res.data)
+    return this.client
+      .post<MisskeyAPI.Entity.Stats>('/api/stats')
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.meta(meta, res.data) }))
+  }
+
+  public async getInstancePeers(): Promise<Response<Array<string>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // instance/trends
+  // ======================================
+  /**
+   * POST /api/hashtags/trend
+   */
+  public async getInstanceTrends(_limit?: number | null): Promise<Response<Array<Entity.Tag>>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Hashtag>>('/api/hashtags/trend')
+      .then(res => ({ ...res, data: res.data.map(h => MisskeyAPI.Converter.hashtag(h)) }))
+  }
+
+  // ======================================
+  // instance/directory
+  // ======================================
+  public async getInstanceDirectory(
+    _limit?: number | null,
+    _offset?: number | null,
+    _order?: 'active' | 'new' | null,
+    _local?: boolean | null
+  ): Promise<Response<Array<Entity.Account>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
+  // instance/custom_emojis
+  // ======================================
+  /**
+   * POST /api/meta
+   */
+  public async getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>> {
+    return this.client
+      .post<MisskeyAPI.Entity.Meta>('/api/meta')
+      .then(res => ({ ...res, data: res.data.emojis.map(e => MisskeyAPI.Converter.emoji(e)) }))
+  }
 }

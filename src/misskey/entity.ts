@@ -7,7 +7,9 @@
 /// <reference path="entities/follower.ts" />
 /// <reference path="entities/following.ts" />
 /// <reference path="entities/followRequest.ts" />
+/// <reference path="entities/hashtag.ts" />
 /// <reference path="entities/list.ts" />
+/// <reference path="entities/meta.ts" />
 /// <reference path="entities/mute.ts" />
 /// <reference path="entities/note.ts" />
 /// <reference path="entities/notification.ts" />
@@ -17,5 +19,6 @@
 /// <reference path="entities/userDetail.ts" />
 /// <reference path="entities/userkey.ts" />
 /// <reference path="entities/session.ts" />
+/// <reference path="entities/stats.ts" />
 
 export default MisskeyEntity
