@@ -1620,4 +1620,40 @@ export default class Misskey {
       reject(err)
     })
   }
+
+  // ======================================
+  // notifications/push
+  // ======================================
+  public async subscribePushNotification(
+    _subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
+    _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
+  ): Promise<Response<Entity.PushSubscription>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  public async updatePushSubscription(
+    _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
+  ): Promise<Response<Entity.PushSubscription>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+  /**
+   * DELETE /api/v1/push/subscription
+   */
+  public async deletePushSubscription(): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
 }
