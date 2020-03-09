@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
-import StreamListener from '../stream_listener'
-import WebSocket from '../web_socket'
+import StreamListener from './stream_listener'
+import WebSocket from './web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'

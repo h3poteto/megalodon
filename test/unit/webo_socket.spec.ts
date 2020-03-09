@@ -1,4 +1,4 @@
-import { Parser } from '@/web_socket'
+import { Parser } from '@/mastodon/web_socket'
 import Entity from '@/entity'
 
 const account: Entity.Account = {

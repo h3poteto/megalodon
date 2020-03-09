@@ -3,9 +3,14 @@ import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
-import { MegalodonInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
-import StreamListener from './stream_listener'
-import WebSocket from './web_socket'
+import {
+  MegalodonInterface,
+  StreamListenerInterface,
+  WebSocketInterface,
+  NoImplementedError,
+  ArgumentError,
+  UnexpectedError
+} from './megalodon'
 
 export default class Misskey implements MegalodonInterface {
   public client: MisskeyAPI.Client
@@ -1830,51 +1835,51 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // HTTP Streaming
   // ======================================
-  public userStream(): StreamListener {
+  public userStream(): StreamListenerInterface {
     throw new NoImplementedError('misskey does not support')
   }
 
-  public publicStream(): StreamListener {
+  public publicStream(): StreamListenerInterface {
     throw new NoImplementedError('misskey does not support')
   }
 
-  public localStream(): StreamListener {
+  public localStream(): StreamListenerInterface {
     throw new NoImplementedError('misskey does not support')
   }
 
-  public tagStream(_tag: string): StreamListener {
+  public tagStream(_tag: string): StreamListenerInterface {
     throw new NoImplementedError('misskey does not support')
   }
 
-  public listStream(_list_id: string): StreamListener {
+  public listStream(_list_id: string): StreamListenerInterface {
     throw new NoImplementedError('misskey does not support')
   }
 
-  public directStream(): StreamListener {
+  public directStream(): StreamListenerInterface {
     throw new NoImplementedError('misskey does not support')
   }
 
-  public userSocket(): WebSocket {
+  public userSocket(): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 
-  public publicSocket(): WebSocket {
+  public publicSocket(): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 
-  public localSocket(): WebSocket {
+  public localSocket(): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 
-  public tagSocket(_tag: string): WebSocket {
+  public tagSocket(_tag: string): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 
-  public listSocket(_list_id: string): WebSocket {
+  public listSocket(_list_id: string): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 
-  public directSocket(): WebSocket {
+  public directSocket(): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 }

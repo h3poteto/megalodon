@@ -1,4 +1,4 @@
-import generator, { Entity, WebSocket, ProxyConfig } from 'megalodon'
+import generator, { Entity, WebSocketInterface, ProxyConfig } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
@@ -22,7 +22,7 @@ const proxy: ProxyConfig = {
 
 const client = generator('pleroma', BASE_URL, access_token, null, proxy)
 
-const stream: WebSocket = client.userSocket()
+const stream: WebSocketInterface = client.userSocket()
 
 const logger = log4js.getLogger()
 logger.level = 'debug'

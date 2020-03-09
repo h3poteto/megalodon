@@ -3,9 +3,8 @@ import MastodonAPI from './mastodon/api_client'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
-import StreamListener from './stream_listener'
-import WebSocket from './web_socket'
-import { MegalodonInterface, NoImplementedError } from './megalodon'
+import WebSocket from './mastodon/web_socket'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 
@@ -1913,27 +1912,27 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // HTTP Streaming
   // ======================================
-  public userStream(): StreamListener {
+  public userStream(): StreamListenerInterface {
     return this.client.stream('/api/v1/streaming/user')
   }
 
-  public publicStream(): StreamListener {
+  public publicStream(): StreamListenerInterface {
     return this.client.stream('/api/v1/streaming/public')
   }
 
-  public localStream(): StreamListener {
+  public localStream(): StreamListenerInterface {
     return this.client.stream('/api/v1/streaming/public/local')
   }
 
-  public tagStream(tag: string): StreamListener {
+  public tagStream(tag: string): StreamListenerInterface {
     return this.client.stream(`/api/v1/streaming/hashtag?tag=${tag}`)
   }
 
-  public listStream(list_id: string): StreamListener {
+  public listStream(list_id: string): StreamListenerInterface {
     return this.client.stream(`/api/v1/streaming/list?list=${list_id}`)
   }
 
-  public directStream(): StreamListener {
+  public directStream(): StreamListenerInterface {
     return this.client.stream('/api/v1/streaming/direct')
   }
 

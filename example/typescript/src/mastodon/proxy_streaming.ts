@@ -1,4 +1,4 @@
-import generator, { Entity, StreamListener, ProxyConfig } from 'megalodon'
+import generator, { Entity, StreamListenerInterface, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
@@ -21,7 +21,7 @@ const proxy: ProxyConfig = {
 
 const client = generator('mastodon', BASE_URL, access_token, null, proxy)
 
-const stream: StreamListener = client.userStream()
+const stream: StreamListenerInterface = client.userStream()
 stream.on('connect', _ => {
   console.log('connect')
 })

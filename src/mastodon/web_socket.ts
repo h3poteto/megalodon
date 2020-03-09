@@ -1,15 +1,17 @@
 import WS from 'ws'
 import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
-import proxyAgent, { ProxyConfig } from './proxy_config'
-import Entity from './entity'
+import proxyAgent, { ProxyConfig } from '../proxy_config'
+import Entity from '../entity'
+import { WebSocketInterface } from '../megalodon'
+import MastodonAPI from './api_client'
 
 /**
  * WebSocket
  * Pleroma is not support streaming. It is support websocket instead of streaming.
  * So this class connect to Phoenix websocket for Pleroma.
  */
-export default class WebSocket extends EventEmitter {
+export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
   public stream: string
   public params: string | null
@@ -232,16 +234,16 @@ export default class WebSocket extends EventEmitter {
    */
   private _setupParser() {
     this.parser.on('update', (status: Entity.Status) => {
-      this.emit('update', status)
+      this.emit('update', MastodonAPI.Converter.status(status))
     })
     this.parser.on('notification', (notification: Entity.Notification) => {
-      this.emit('notification', notification)
+      this.emit('notification', MastodonAPI.Converter.notification(notification))
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
     })
     this.parser.on('conversation', (conversation: Entity.Conversation) => {
-      this.emit('conversation', conversation)
+      this.emit('conversation', MastodonAPI.Converter.conversation(conversation))
     })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)

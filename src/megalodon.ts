@@ -1,5 +1,3 @@
-import StreamListener from './stream_listener'
-import WebSocket from './web_socket'
 import Response from './response'
 import OAuth from './oauth'
 import Pleroma from './pleroma'
@@ -7,6 +5,26 @@ import proxyAgent, { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
 import Entity from './entity'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+
+export interface WebSocketInterface {
+  start(): void
+  stop(): void
+  // EventEmitter
+  on(event: string | symbol, listener: (...args: any[]) => void): this
+  once(event: string | symbol, listener: (...args: any[]) => void): this
+  removeListener(event: string | symbol, listener: (...args: any[]) => void): this
+  removeAllListeners(event?: string | symbol): this
+}
+
+export interface StreamListenerInterface {
+  start(): void
+  stop(): void
+  // EventEmitter
+  on(event: string | symbol, listener: (...args: any[]) => void): this
+  once(event: string | symbol, listener: (...args: any[]) => void): this
+  removeListener(event: string | symbol, listener: (...args: any[]) => void): this
+  removeAllListeners(event?: string | symbol): this
+}
 
 export interface MegalodonInterface {
   /**
@@ -1132,22 +1150,22 @@ export interface MegalodonInterface {
   // ======================================
   // HTTP Streaming
   // ======================================
-  userStream(): StreamListener
-  publicStream(): StreamListener
-  localStream(): StreamListener
-  tagStream(tag: string): StreamListener
-  listStream(list_id: string): StreamListener
-  directStream(): StreamListener
+  userStream(): StreamListenerInterface
+  publicStream(): StreamListenerInterface
+  localStream(): StreamListenerInterface
+  tagStream(tag: string): StreamListenerInterface
+  listStream(list_id: string): StreamListenerInterface
+  directStream(): StreamListenerInterface
 
   // ======================================
   // WebSocket
   // ======================================
-  userSocket(): WebSocket
-  publicSocket(): WebSocket
-  localSocket(): WebSocket
-  tagSocket(tag: string): WebSocket
-  listSocket(list_id: string): WebSocket
-  directSocket(): WebSocket
+  userSocket(): WebSocketInterface
+  publicSocket(): WebSocketInterface
+  localSocket(): WebSocketInterface
+  tagSocket(tag: string): WebSocketInterface
+  listSocket(list_id: string): WebSocketInterface
+  directSocket(): WebSocketInterface
 }
 
 export class NoImplementedError extends Error {
