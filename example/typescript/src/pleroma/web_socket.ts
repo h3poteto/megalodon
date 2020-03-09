@@ -1,4 +1,4 @@
-import generator, { Entity, WebSocket } from 'megalodon'
+import generator, { Entity, WebSocketInterface } from 'megalodon'
 import log4js from 'log4js'
 
 declare var process: {
@@ -13,7 +13,7 @@ const access_token: string = process.env.PLEROMA_ACCESS_TOKEN
 
 const client = generator('pleroma', BASE_URL, access_token)
 
-const stream: WebSocket = client.userSocket()
+const stream: WebSocketInterface = client.userSocket()
 
 const logger = log4js.getLogger()
 logger.level = 'debug'

@@ -1,4 +1,4 @@
-import generator, { Entity, StreamListener } from 'megalodon'
+import generator, { Entity, StreamListenerInterface } from 'megalodon'
 
 declare var process: {
   env: {
@@ -12,7 +12,7 @@ const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
 const client = generator('mastodon', BASE_URL, access_token)
 
-const stream: StreamListener = client.publicStream()
+const stream: StreamListenerInterface = client.publicStream()
 stream.on('connect', _ => {
   console.log('connect')
 })
