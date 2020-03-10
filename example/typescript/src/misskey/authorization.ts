@@ -6,7 +6,6 @@ const rl: readline.ReadLine = readline.createInterface({
   output: process.stdout
 })
 
-const SCOPES: Array<string> = ['read', 'write', 'follow']
 const BASE_URL: string = 'https://misskey.io'
 
 let clientId: string
@@ -15,9 +14,7 @@ let clientSecret: string
 const client = new Misskey(BASE_URL)
 
 client
-  .registerApp('Test App', {
-    scopes: SCOPES
-  })
+  .registerApp('Test App')
   .then(appData => {
     clientId = appData.clientId
     clientSecret = appData.clientSecret

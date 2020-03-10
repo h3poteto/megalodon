@@ -4,7 +4,8 @@ import Pleroma from './pleroma'
 import proxyAgent, { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
 import Entity from './entity'
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
+import Misskey from './misskey'
 
 export interface WebSocketInterface {
   start(): void
@@ -1212,14 +1213,18 @@ type Instance = {
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return SNS name.
  */
-export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'pixelfed'> => {
+export const detector = async (
+  url: string,
+  proxyConfig: ProxyConfig | false = false
+): Promise<'mastodon' | 'pleroma' | 'pixelfed' | 'misskey'> => {
   let options: AxiosRequestConfig = {}
   if (proxyConfig) {
     options = Object.assign(options, {
       httpsAgent: proxyAgent(proxyConfig)
     })
   }
-  return axios.get<Instance>(url + '/api/v1/instance', options).then((res: AxiosResponse<Instance>) => {
+  try {
+    const res = await axios.get<Instance>(url + '/api/v1/instance', options)
     if (res.data.version.includes('Pleroma')) {
       return 'pleroma'
     } else if (res.data.version.includes('Pixelfed')) {
@@ -1227,7 +1232,10 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
     } else {
       return 'mastodon'
     }
-  })
+  } catch (err) {
+    await axios.post<{}>(url + '/api/meta', options)
+    return 'misskey'
+  }
 }
 
 /**
@@ -1241,7 +1249,7 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma',
+  sns: 'mastodon' | 'pleroma' | 'misskey',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null,
@@ -1251,6 +1259,10 @@ const generator = (
     case 'pleroma': {
       const pleroma = new Pleroma(baseUrl, accessToken, userAgent, proxyConfig)
       return pleroma
+    }
+    case 'misskey': {
+      const misskey = new Misskey(baseUrl, accessToken, userAgent, proxyConfig)
+      return misskey
     }
     default: {
       const mastodon = new Mastodon(baseUrl, accessToken, userAgent, proxyConfig)
