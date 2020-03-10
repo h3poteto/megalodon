@@ -337,15 +337,15 @@ namespace MisskeyAPI {
     'write:account',
     'read:blocks',
     'write:blocks',
-    'read:favourites',
-    'write:favourites',
+    'read:drive',
+    'write:drive',
+    'read:favorites',
+    'write:favorites',
     'read:following',
     'write:following',
-    'read:messaging',
-    'write:messaging',
-    'read:mute',
-    'write:mute',
-    'write:note',
+    'read:mutes',
+    'write:mutes',
+    'write:notes',
     'read:notifications',
     'write:notifications',
     'read:reactions',
@@ -366,7 +366,7 @@ namespace MisskeyAPI {
   export class Client implements Interface {
     static DEFAULT_URL = 'https://misskey.io'
 
-    private accessToken: string
+    private accessToken: string | null
     private baseUrl: string
     private userAgent: string
     private cancelTokenSource: CancelTokenSource
@@ -378,7 +378,7 @@ namespace MisskeyAPI {
      * @param userAgent UserAgent is specified in header on request.
      * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-    constructor(baseUrl: string, accessToken: string, userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
+    constructor(baseUrl: string, accessToken: string | null, userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
@@ -434,9 +434,12 @@ namespace MisskeyAPI {
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
-      const bodyParams = Object.assign(params, {
-        i: this.accessToken
-      })
+      let bodyParams = {}
+      if (this.accessToken) {
+        bodyParams = Object.assign(params, {
+          i: this.accessToken
+        })
+      }
       return axios.post<T>(this.baseUrl + path, bodyParams, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
