@@ -6,8 +6,9 @@ import MisskeyAPI from './api_client'
 
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
-  public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation'
+  public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list'
   public parser: Parser
+  public listId: string | null = null
   private _accessToken: string
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number
@@ -16,11 +17,19 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _client: WS | null = null
   private _channelID: string
 
-  constructor(url: string, channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation', accessToken: string) {
+  constructor(
+    url: string,
+    channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
+    accessToken: string,
+    listId?: string | null
+  ) {
     super()
     this.url = url
     this.parser = new Parser()
     this.channel = channel
+    if (listId) {
+      this.listId = listId
+    }
     this._accessToken = accessToken
     this._reconnectInterval = 10000
     this._reconnectMaxAttempts = Infinity
@@ -101,6 +110,20 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
             body: {
               channel: 'homeTimeline',
               id: this._channelID
+            }
+          })
+        )
+        break
+      case 'list':
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'userList',
+              id: this._channelID,
+              params: {
+                listId: this.listId
+              }
             }
           })
         )
