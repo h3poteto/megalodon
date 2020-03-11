@@ -2,7 +2,6 @@ import WS from 'ws'
 import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
-import Entity from '../entity'
 import { WebSocketInterface } from '../megalodon'
 import MastodonAPI from './api_client'
 
@@ -233,16 +232,16 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * Set up parser when receive message.
    */
   private _setupParser() {
-    this.parser.on('update', (status: Entity.Status) => {
+    this.parser.on('update', (status: MastodonAPI.Entity.Status) => {
       this.emit('update', MastodonAPI.Converter.status(status))
     })
-    this.parser.on('notification', (notification: Entity.Notification) => {
+    this.parser.on('notification', (notification: MastodonAPI.Entity.Notification) => {
       this.emit('notification', MastodonAPI.Converter.notification(notification))
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
     })
-    this.parser.on('conversation', (conversation: Entity.Conversation) => {
+    this.parser.on('conversation', (conversation: MastodonAPI.Entity.Conversation) => {
       this.emit('conversation', MastodonAPI.Converter.conversation(conversation))
     })
     this.parser.on('error', (err: Error) => {
@@ -314,13 +313,13 @@ export class Parser extends EventEmitter {
 
     switch (event) {
       case 'update':
-        this.emit('update', mes as Entity.Status)
+        this.emit('update', mes as MastodonAPI.Entity.Status)
         break
       case 'notification':
-        this.emit('notification', mes as Entity.Notification)
+        this.emit('notification', mes as MastodonAPI.Entity.Notification)
         break
       case 'conversation':
-        this.emit('conversation', mes as Entity.Conversation)
+        this.emit('conversation', mes as MastodonAPI.Entity.Conversation)
         break
       case 'delete':
         this.emit('delete', payload)

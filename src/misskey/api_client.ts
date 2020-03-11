@@ -5,6 +5,7 @@ import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
 import MisskeyEntity from './entity'
 import MegalodonEntity from '../entity'
+import WebSocket from './web_socket'
 
 namespace MisskeyAPI {
   export namespace Entity {
@@ -457,6 +458,18 @@ namespace MisskeyAPI {
      */
     public cancel(): void {
       return this.cancelTokenSource.cancel('Request is canceled by user')
+    }
+
+    public socket(channel: 'homeTimeline'): WebSocket {
+      if (!this.accessToken) {
+        throw new Error('accessToken is required')
+      }
+      const url = this.baseUrl + '/streaming'
+      const streaming = new WebSocket(url, channel, this.accessToken)
+      process.nextTick(() => {
+        streaming.start()
+      })
+      return streaming
     }
   }
 }
