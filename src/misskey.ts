@@ -1864,11 +1864,11 @@ export default class Misskey implements MegalodonInterface {
   }
 
   public publicSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('globalTimeline')
   }
 
   public localSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('localTimeline')
   }
 
   public tagSocket(_tag: string): WebSocketInterface {

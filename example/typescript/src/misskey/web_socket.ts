@@ -13,7 +13,7 @@ const access_token: string = process.env.MISSKEY_ACCESS_TOKEN
 
 const client = generator('misskey', BASE_URL, access_token)
 
-const stream: WebSocketInterface = client.userSocket()
+const stream: WebSocketInterface = client.publicSocket()
 
 const logger = log4js.getLogger()
 logger.level = 'debug'

@@ -460,7 +460,7 @@ namespace MisskeyAPI {
       return this.cancelTokenSource.cancel('Request is canceled by user')
     }
 
-    public socket(channel: 'homeTimeline'): WebSocket {
+    public socket(channel: 'homeTimeline' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }

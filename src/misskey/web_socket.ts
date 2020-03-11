@@ -6,7 +6,7 @@ import MisskeyAPI from './api_client'
 
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
-  public channel: 'homeTimeline'
+  public channel: 'homeTimeline' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'
   public parser: Parser
   private _accessToken: string
   private _reconnectInterval: number
@@ -16,7 +16,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _client: WS | null = null
   private _channelID: string
 
-  constructor(url: string, channel: 'homeTimeline', accessToken: string) {
+  constructor(url: string, channel: 'homeTimeline' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline', accessToken: string) {
     super()
     this.url = url
     this.parser = new Parser()
