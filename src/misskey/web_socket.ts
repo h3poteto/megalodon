@@ -6,7 +6,7 @@ import MisskeyAPI from './api_client'
 
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
-  public channel: 'homeTimeline' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'
+  public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'
   public parser: Parser
   private _accessToken: string
   private _reconnectInterval: number
@@ -16,7 +16,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _client: WS | null = null
   private _channelID: string
 
-  constructor(url: string, channel: 'homeTimeline' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline', accessToken: string) {
+  constructor(url: string, channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline', accessToken: string) {
     super()
     this.url = url
     this.parser = new Parser()
@@ -73,15 +73,36 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     if (!this._client) {
       return
     }
-    this._client.send(
-      JSON.stringify({
-        type: 'connect',
-        body: {
-          channel: this.channel,
-          id: this._channelID
-        }
-      })
-    )
+    if (this.channel === 'user') {
+      this._client.send(
+        JSON.stringify({
+          type: 'connect',
+          body: {
+            channel: 'main',
+            id: this._channelID
+          }
+        })
+      )
+      this._client.send(
+        JSON.stringify({
+          type: 'connect',
+          body: {
+            channel: 'homeTimeline',
+            id: this._channelID
+          }
+        })
+      )
+    } else {
+      this._client.send(
+        JSON.stringify({
+          type: 'connect',
+          body: {
+            channel: this.channel,
+            id: this._channelID
+          }
+        })
+      )
+    }
   }
 
   private _reconnect() {
@@ -151,6 +172,12 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this.parser.on('update', (note: MisskeyAPI.Entity.Note) => {
       this.emit('update', MisskeyAPI.Converter.note(note))
     })
+    this.parser.on('notification', (notification: MisskeyAPI.Entity.Notification) => {
+      this.emit('notification', MisskeyAPI.Converter.notification(notification))
+    })
+    this.parser.on('error', (err: Error) => {
+      this.emit('parser-error', err)
+    })
   }
 }
 
@@ -208,8 +235,22 @@ export class Parser extends EventEmitter {
       case 'note':
         this.emit('update', body.body as MisskeyAPI.Entity.Note)
         break
+      case 'notification':
+        this.emit('notification', body.body as MisskeyAPI.Entity.Notification)
+        break
+      case 'renote':
+      case 'followed':
+      case 'mention':
+      case 'receiveFollowRequest':
+      case 'meUpdated':
+      case 'readAllNotifications':
+      case 'readAllUnreadSpecifiedNotes':
+      case 'readAllAntennas':
+      case 'readAllUnreadMentions':
+        // Ignore these events
+        break
       default:
-        this.emit('error', new Error(`Unknown event has received: ${body}`))
+        this.emit('error', new Error(`Unknown event has received: ${JSON.stringify(body)}`))
         break
     }
   }

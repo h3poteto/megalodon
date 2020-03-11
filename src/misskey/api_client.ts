@@ -60,7 +60,7 @@ namespace MisskeyAPI {
         following_count: 0,
         statuses_count: 0,
         note: '',
-        url: '',
+        url: acct,
         avatar: u.avatarUrl,
         avatar_static: u.avatarColor,
         header: '',
@@ -187,8 +187,8 @@ namespace MisskeyAPI {
     export const note = (n: Entity.Note): MegalodonEntity.Status => {
       return {
         id: n.id,
-        uri: '',
-        url: '',
+        uri: n.uri ? n.uri : '',
+        url: n.uri ? n.uri : '',
         account: user(n.user),
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: null,
@@ -460,7 +460,7 @@ namespace MisskeyAPI {
       return this.cancelTokenSource.cancel('Request is canceled by user')
     }
 
-    public socket(channel: 'homeTimeline' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'): WebSocket {
+    public socket(channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }

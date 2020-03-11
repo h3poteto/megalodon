@@ -1860,7 +1860,7 @@ export default class Misskey implements MegalodonInterface {
   }
 
   public userSocket(): WebSocketInterface {
-    return this.client.socket('homeTimeline')
+    return this.client.socket('user')
   }
 
   public publicSocket(): WebSocketInterface {
