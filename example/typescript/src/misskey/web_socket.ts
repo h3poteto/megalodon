@@ -13,7 +13,7 @@ const access_token: string = process.env.MISSKEY_ACCESS_TOKEN
 
 const client = generator('misskey', BASE_URL, access_token)
 
-const stream: WebSocketInterface = client.userSocket()
+const stream: WebSocketInterface = client.directSocket()
 
 const logger = log4js.getLogger()
 logger.level = 'debug'
@@ -31,6 +31,10 @@ stream.on('update', (status: Entity.Status) => {
 
 stream.on('notification', (notification: Entity.Notification) => {
   logger.debug(notification)
+})
+
+stream.on('conversation', (con: Entity.Conversation) => {
+  logger.debug(con)
 })
 
 stream.on('error', (err: Error) => {

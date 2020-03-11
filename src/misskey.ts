@@ -1880,6 +1880,6 @@ export default class Misskey implements MegalodonInterface {
   }
 
   public directSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('conversation')
   }
 }

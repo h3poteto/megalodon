@@ -6,7 +6,7 @@ import MisskeyAPI from './api_client'
 
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
-  public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline'
+  public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation'
   public parser: Parser
   private _accessToken: string
   private _reconnectInterval: number
@@ -16,7 +16,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _client: WS | null = null
   private _channelID: string
 
-  constructor(url: string, channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline', accessToken: string) {
+  constructor(url: string, channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation', accessToken: string) {
     super()
     this.url = url
     this.parser = new Parser()
@@ -73,35 +73,49 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     if (!this._client) {
       return
     }
-    if (this.channel === 'user') {
-      this._client.send(
-        JSON.stringify({
-          type: 'connect',
-          body: {
-            channel: 'main',
-            id: this._channelID
-          }
-        })
-      )
-      this._client.send(
-        JSON.stringify({
-          type: 'connect',
-          body: {
-            channel: 'homeTimeline',
-            id: this._channelID
-          }
-        })
-      )
-    } else {
-      this._client.send(
-        JSON.stringify({
-          type: 'connect',
-          body: {
-            channel: this.channel,
-            id: this._channelID
-          }
-        })
-      )
+    switch (this.channel) {
+      case 'conversation':
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'main',
+              id: this._channelID
+            }
+          })
+        )
+        break
+      case 'user':
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'main',
+              id: this._channelID
+            }
+          })
+        )
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'homeTimeline',
+              id: this._channelID
+            }
+          })
+        )
+        break
+      default:
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: this.channel,
+              id: this._channelID
+            }
+          })
+        )
+        break
     }
   }
 
@@ -175,6 +189,9 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this.parser.on('notification', (notification: MisskeyAPI.Entity.Notification) => {
       this.emit('notification', MisskeyAPI.Converter.notification(notification))
     })
+    this.parser.on('conversation', (note: MisskeyAPI.Entity.Note) => {
+      this.emit('conversation', MisskeyAPI.Converter.noteToConversation(note))
+    })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)
     })
@@ -238,9 +255,14 @@ export class Parser extends EventEmitter {
       case 'notification':
         this.emit('notification', body.body as MisskeyAPI.Entity.Notification)
         break
+      case 'mention':
+        const note = body.body as MisskeyAPI.Entity.Note
+        if (note.visibility === 'specified') {
+          this.emit('conversation', note)
+        }
+        break
       case 'renote':
       case 'followed':
-      case 'mention':
       case 'receiveFollowRequest':
       case 'meUpdated':
       case 'readAllNotifications':
