@@ -3,6 +3,7 @@ import moment, { Moment } from 'moment'
 import { v4 as uuid } from 'uuid'
 import { EventEmitter } from 'events'
 import { WebSocketInterface } from '../megalodon'
+import proxyAgent, { ProxyConfig } from '../proxy_config'
 import MisskeyAPI from './api_client'
 
 /**
@@ -14,6 +15,8 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   public url: string
   public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list'
   public parser: Parser
+  public headers: { [key: string]: string }
+  public proxyConfig: ProxyConfig | false = false
   public listId: string | null = null
   private _accessToken: string
   private _reconnectInterval: number
@@ -36,15 +39,19 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     url: string,
     channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
     accessToken: string,
-    listId?: string | null
+    listId: string | null,
+    userAgent: string,
+    proxyConfig: ProxyConfig | false = false
   ) {
     super()
     this.url = url
     this.parser = new Parser()
     this.channel = channel
-    if (listId) {
-      this.listId = listId
+    this.headers = {
+      'User-Agent': userAgent
     }
+    this.listId = listId
+    this.proxyConfig = proxyConfig
     this._accessToken = accessToken
     this._reconnectInterval = 10000
     this._reconnectMaxAttempts = Infinity
@@ -108,7 +115,15 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * Connect to the endpoint.
    */
   private _connect(): WS {
-    const cli: WS = new WS(`${this.url}?i=${this._accessToken}`)
+    let options: WS.ClientOptions = {
+      headers: this.headers
+    }
+    if (this.proxyConfig) {
+      options = Object.assign(options, {
+        agent: proxyAgent(this.proxyConfig)
+      })
+    }
+    const cli: WS = new WS(`${this.url}?i=${this._accessToken}`, options)
     return cli
   }
 
