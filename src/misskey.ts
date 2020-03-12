@@ -1860,26 +1860,26 @@ export default class Misskey implements MegalodonInterface {
   }
 
   public userSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('user')
   }
 
   public publicSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('globalTimeline')
   }
 
   public localSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('localTimeline')
   }
 
   public tagSocket(_tag: string): WebSocketInterface {
     throw new NoImplementedError('TODO: implement')
   }
 
-  public listSocket(_list_id: string): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+  public listSocket(list_id: string): WebSocketInterface {
+    return this.client.socket('list', list_id)
   }
 
   public directSocket(): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    return this.client.socket('conversation')
   }
 }

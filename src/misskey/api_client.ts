@@ -5,6 +5,7 @@ import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
 import MisskeyEntity from './entity'
 import MegalodonEntity from '../entity'
+import WebSocket from './web_socket'
 
 namespace MisskeyAPI {
   export namespace Entity {
@@ -59,7 +60,7 @@ namespace MisskeyAPI {
         following_count: 0,
         statuses_count: 0,
         note: '',
-        url: '',
+        url: acct,
         avatar: u.avatarUrl,
         avatar_static: u.avatarColor,
         header: '',
@@ -186,8 +187,8 @@ namespace MisskeyAPI {
     export const note = (n: Entity.Note): MegalodonEntity.Status => {
       return {
         id: n.id,
-        uri: '',
-        url: '',
+        uri: n.uri ? n.uri : '',
+        url: n.uri ? n.uri : '',
         account: user(n.user),
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: null,
@@ -457,6 +458,27 @@ namespace MisskeyAPI {
      */
     public cancel(): void {
       return this.cancelTokenSource.cancel('Request is canceled by user')
+    }
+
+    /**
+     * Get connection and receive websocket connection for Misskey API.
+     *
+     * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
+     * @param listId This parameter is required only list channel.
+     */
+    public socket(
+      channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
+      listId?: string | null
+    ): WebSocket {
+      if (!this.accessToken) {
+        throw new Error('accessToken is required')
+      }
+      const url = this.baseUrl + '/streaming'
+      const streaming = new WebSocket(url, channel, this.accessToken, listId)
+      process.nextTick(() => {
+        streaming.start()
+      })
+      return streaming
     }
   }
 }

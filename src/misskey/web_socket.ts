@@ -1,62 +1,56 @@
 import WS from 'ws'
 import moment, { Moment } from 'moment'
+import { v4 as uuid } from 'uuid'
 import { EventEmitter } from 'events'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
-import MastodonAPI from './api_client'
+import MisskeyAPI from './api_client'
 
 /**
  * WebSocket
- * Pleroma is not support streaming. It is support websocket instead of streaming.
- * So this class connect to Phoenix websocket for Pleroma.
+ * Misskey is not support http streaming. It supports websocket instead of streaming.
+ * So this class connect to Misskey server with WebSocket.
  */
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
-  public stream: string
-  public params: string | null
+  public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list'
   public parser: Parser
-  public headers: { [key: string]: string }
-  public proxyConfig: ProxyConfig | false = false
+  public listId: string | null = null
   private _accessToken: string
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number
   private _reconnectCurrentAttempts: number
   private _connectionClosed: boolean
-  private _client: WS | null
+  private _client: WS | null = null
+  private _channelID: string
   private _pongReceivedTimestamp: Moment
   private _heartbeatInterval: number = 60000
   private _pongWaiting: boolean = false
 
   /**
-   * @param url Full url of websocket: e.g. https://pleroma.io/api/v1/streaming
-   * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
+   * @param url Full url of websocket: e.g. wss://misskey.io/streaming
+   * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
    * @param accessToken The access token.
-   * @param userAgent The specified User Agent.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
+   * @param listId This parameter is required when you specify list as channel.
    */
   constructor(
     url: string,
-    stream: string,
-    params: string | null,
+    channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
     accessToken: string,
-    userAgent: string,
-    proxyConfig: ProxyConfig | false = false
+    listId?: string | null
   ) {
     super()
     this.url = url
-    this.stream = stream
-    this.params = params
     this.parser = new Parser()
-    this.headers = {
-      'User-Agent': userAgent
+    this.channel = channel
+    if (listId) {
+      this.listId = listId
     }
-    this.proxyConfig = proxyConfig
     this._accessToken = accessToken
     this._reconnectInterval = 10000
     this._reconnectMaxAttempts = Infinity
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
-    this._client = null
+    this._channelID = uuid()
     this._pongReceivedTimestamp = moment()
   }
 
@@ -75,7 +69,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _startWebSocketConnection() {
     this._resetConnection()
     this._setupParser()
-    this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers, this.proxyConfig)
+    this._client = this._connect()
     this._bindSocket(this._client)
   }
 
@@ -93,7 +87,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    */
   private _resetConnection() {
     if (this._client) {
-      this._client.close(1000)
+      this._client.close(100)
       this._client.removeAllListeners()
       this._client = null
     }
@@ -111,8 +105,84 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   }
 
   /**
+   * Connect to the endpoint.
+   */
+  private _connect(): WS {
+    const cli: WS = new WS(`${this.url}?i=${this._accessToken}`)
+    return cli
+  }
+
+  /**
+   * Connect specified channels in websocket.
+   */
+  private _channel() {
+    if (!this._client) {
+      return
+    }
+    switch (this.channel) {
+      case 'conversation':
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'main',
+              id: this._channelID
+            }
+          })
+        )
+        break
+      case 'user':
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'main',
+              id: this._channelID
+            }
+          })
+        )
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'homeTimeline',
+              id: this._channelID
+            }
+          })
+        )
+        break
+      case 'list':
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: 'userList',
+              id: this._channelID,
+              params: {
+                listId: this.listId
+              }
+            }
+          })
+        )
+        break
+      default:
+        this._client.send(
+          JSON.stringify({
+            type: 'connect',
+            body: {
+              channel: this.channel,
+              id: this._channelID
+            }
+          })
+        )
+        break
+    }
+  }
+
+  /**
    * Reconnects to the same endpoint.
    */
+
   private _reconnect() {
     setTimeout(() => {
       // Skip reconnect when client is connecting.
@@ -131,53 +201,14 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
         }
         // Call connect methods
         console.log('Reconnecting')
-        this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers, this.proxyConfig)
+        this._client = this._connect()
         this._bindSocket(this._client)
       }
     }, this._reconnectInterval)
   }
 
   /**
-   * @param url Base url of streaming endpoint.
-   * @param stream The specified stream name.
-   * @param accessToken Access token.
-   * @param headers The specified headers.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
-   * @return A WebSocket instance.
-   */
-  private _connect(
-    url: string,
-    stream: string,
-    params: string | null,
-    accessToken: string,
-    headers: { [key: string]: string },
-    proxyConfig: ProxyConfig | false
-  ): WS {
-    const parameter: Array<string> = [`stream=${stream}`]
-
-    if (params) {
-      parameter.push(params)
-    }
-
-    if (accessToken !== null) {
-      parameter.push(`access_token=${accessToken}`)
-    }
-    const requestURL: string = `${url}/?${parameter.join('&')}`
-    let options: WS.ClientOptions = {
-      headers: headers
-    }
-    if (proxyConfig) {
-      options = Object.assign(proxyConfig, {
-        agent: proxyAgent(proxyConfig)
-      })
-    }
-
-    const cli: WS = new WS(requestURL, options)
-    return cli
-  }
-
-  /**
-   * Clear binding event for web socket client.
+   * Clear binding event for websocket client.
    */
   private _clearBinding() {
     if (this._client) {
@@ -195,12 +226,10 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    */
   private _bindSocket(client: WS) {
     client.on('close', (code: number, _reason: string) => {
-      // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
       if (code === 1000) {
         this.emit('close', {})
       } else {
         console.log(`Closed connection with ${code}`)
-        // If already called close method, it does not retry.
         if (!this._connectionClosed) {
           this._reconnect()
         }
@@ -215,13 +244,14 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     })
     client.on('open', () => {
       this.emit('connect', {})
+      this._channel()
       // Call first ping event.
       setTimeout(() => {
         client.ping('')
       }, 10000)
     })
     client.on('message', (data: WS.Data) => {
-      this.parser.parse(data)
+      this.parser.parse(data, this._channelID)
     })
     client.on('error', (err: Error) => {
       this.emit('error', err)
@@ -232,23 +262,17 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * Set up parser when receive message.
    */
   private _setupParser() {
-    this.parser.on('update', (status: MastodonAPI.Entity.Status) => {
-      this.emit('update', MastodonAPI.Converter.status(status))
+    this.parser.on('update', (note: MisskeyAPI.Entity.Note) => {
+      this.emit('update', MisskeyAPI.Converter.note(note))
     })
-    this.parser.on('notification', (notification: MastodonAPI.Entity.Notification) => {
-      this.emit('notification', MastodonAPI.Converter.notification(notification))
+    this.parser.on('notification', (notification: MisskeyAPI.Entity.Notification) => {
+      this.emit('notification', MisskeyAPI.Converter.notification(notification))
     })
-    this.parser.on('delete', (id: string) => {
-      this.emit('delete', id)
-    })
-    this.parser.on('conversation', (conversation: MastodonAPI.Entity.Conversation) => {
-      this.emit('conversation', MastodonAPI.Converter.conversation(conversation))
+    this.parser.on('conversation', (note: MisskeyAPI.Entity.Note) => {
+      this.emit('conversation', MisskeyAPI.Converter.noteToConversation(note))
     })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)
-    })
-    this.parser.on('heartbeat', _ => {
-      this.emit('heartbeat', 'heartbeat')
     })
   }
 
@@ -283,8 +307,9 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
 export class Parser extends EventEmitter {
   /**
    * @param message Message body of websocket.
+   * @param channelID Parse only messages which has same channelID.
    */
-  public parse(message: WS.Data) {
+  public parse(message: WS.Data, channelID: string) {
     if (typeof message !== 'string') {
       this.emit('heartbeat', {})
       return
@@ -295,37 +320,65 @@ export class Parser extends EventEmitter {
       return
     }
 
-    let event = ''
-    let payload = ''
-    let mes = {}
-    try {
-      const obj = JSON.parse(message)
-      event = obj.event
-      payload = obj.payload
-      mes = JSON.parse(payload)
-    } catch (err) {
-      // delete event does not have json object
-      if (event !== 'delete') {
-        this.emit('error', new Error(`Error parsing websocket reply: ${message}, error message: ${err}`))
-        return
+    let obj: {
+      type: string
+      body: {
+        id: string
+        type: string
+        body: any
       }
     }
+    let body: {
+      id: string
+      type: string
+      body: any
+    }
 
-    switch (event) {
-      case 'update':
-        this.emit('update', mes as MastodonAPI.Entity.Status)
+    try {
+      obj = JSON.parse(message)
+      if (obj.type !== 'channel') {
+        return
+      }
+      if (!obj.body) {
+        return
+      }
+      body = obj.body
+      if (body.id !== channelID) {
+        return
+      }
+    } catch (err) {
+      this.emit('error', new Error(`Error parsing websocket reply: ${message}, error message: ${err}`))
+      return
+    }
+
+    switch (body.type) {
+      case 'note':
+        this.emit('update', body.body as MisskeyAPI.Entity.Note)
         break
       case 'notification':
-        this.emit('notification', mes as MastodonAPI.Entity.Notification)
+        this.emit('notification', body.body as MisskeyAPI.Entity.Notification)
         break
-      case 'conversation':
-        this.emit('conversation', mes as MastodonAPI.Entity.Conversation)
+      case 'mention': {
+        const note = body.body as MisskeyAPI.Entity.Note
+        if (note.visibility === 'specified') {
+          this.emit('conversation', note)
+        }
         break
-      case 'delete':
-        this.emit('delete', payload)
+      }
+      // When renote and followed event, the same notification will be received.
+      case 'renote':
+      case 'followed':
+      case 'receiveFollowRequest':
+      case 'meUpdated':
+      case 'readAllNotifications':
+      case 'readAllUnreadSpecifiedNotes':
+      case 'readAllAntennas':
+      case 'readAllUnreadMentions':
+        // Ignore these events
         break
       default:
-        this.emit('error', new Error(`Unknown event has received: ${message}`))
+        this.emit('error', new Error(`Unknown event has received: ${JSON.stringify(body)}`))
+        break
     }
   }
 }
