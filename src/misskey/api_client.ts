@@ -468,13 +468,13 @@ namespace MisskeyAPI {
      */
     public socket(
       channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
-      listId?: string | null
+      listId: string | null = null
     ): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
       const url = this.baseUrl + '/streaming'
-      const streaming = new WebSocket(url, channel, this.accessToken, listId)
+      const streaming = new WebSocket(url, channel, this.accessToken, listId, this.userAgent, this.proxyConfig)
       process.nextTick(() => {
         streaming.start()
       })
