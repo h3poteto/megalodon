@@ -33,7 +33,7 @@ namespace MastodonAPI {
     static DEFAULT_URL = 'https://mastodon.social'
     static NO_REDIRECT = NO_REDIRECT
 
-    private accessToken: string
+    private accessToken: string | null
     private baseUrl: string
     private userAgent: string
     private cancelTokenSource: CancelTokenSource
@@ -45,7 +45,12 @@ namespace MastodonAPI {
      * @param userAgent UserAgent is specified in header on request.
      * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-    constructor(baseUrl: string, accessToken: string, userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
+    constructor(
+      baseUrl: string,
+      accessToken: string | null = null,
+      userAgent: string = DEFAULT_UA,
+      proxyConfig: ProxyConfig | false = false
+    ) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
@@ -125,10 +130,14 @@ namespace MastodonAPI {
     public async get<T>(path: string, params = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        },
         params: params
+      }
+      if (this.accessToken) {
+        options = Object.assign(options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
@@ -162,10 +171,14 @@ namespace MastodonAPI {
      */
     public async put<T>(path: string, params = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+        cancelToken: this.cancelTokenSource.token
+      }
+      if (this.accessToken) {
+        options = Object.assign(options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
@@ -199,10 +212,14 @@ namespace MastodonAPI {
      */
     public async patch<T>(path: string, params = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+        cancelToken: this.cancelTokenSource.token
+      }
+      if (this.accessToken) {
+        options = Object.assign(options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
@@ -236,10 +253,14 @@ namespace MastodonAPI {
      */
     public async post<T>(path: string, params = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+        cancelToken: this.cancelTokenSource.token
+      }
+      if (this.accessToken) {
+        options = Object.assign(options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
@@ -265,10 +286,14 @@ namespace MastodonAPI {
     public async del<T>(path: string, params = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         cancelToken: this.cancelTokenSource.token,
-        data: params,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
+        data: params
+      }
+      if (this.accessToken) {
+        options = Object.assign(options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
@@ -312,6 +337,9 @@ namespace MastodonAPI {
      * @returns streamListener, which inherits from EventEmitter
      */
     public stream(path: string, reconnectInterval = 1000): StreamListener {
+      if (!this.accessToken) {
+        throw new Error('accessToken is required')
+      }
       const headers = {
         'Cache-Control': 'no-cache',
         Accept: 'text/event-stream',
@@ -335,6 +363,9 @@ namespace MastodonAPI {
      * @returns WebSocket, which inherits from EventEmitter
      */
     public socket(path: string, stream: string, params: string | null = null): WebSocket {
+      if (!this.accessToken) {
+        throw new Error('accessToken is required')
+      }
       const url = this.baseUrl + path
       const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
       process.nextTick(() => {

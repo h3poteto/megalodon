@@ -167,7 +167,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       headers: headers
     }
     if (proxyConfig) {
-      options = Object.assign(proxyConfig, {
+      options = Object.assign(options, {
         agent: proxyAgent(proxyConfig)
       })
     }
