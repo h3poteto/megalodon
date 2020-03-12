@@ -278,12 +278,13 @@ export class Parser extends EventEmitter {
       case 'notification':
         this.emit('notification', body.body as MisskeyAPI.Entity.Notification)
         break
-      case 'mention':
+      case 'mention': {
         const note = body.body as MisskeyAPI.Entity.Note
         if (note.visibility === 'specified') {
           this.emit('conversation', note)
         }
         break
+      }
       case 'renote':
       case 'followed':
       case 'receiveFollowRequest':
