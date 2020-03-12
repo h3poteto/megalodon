@@ -460,6 +460,12 @@ namespace MisskeyAPI {
       return this.cancelTokenSource.cancel('Request is canceled by user')
     }
 
+    /**
+     * Get connection and receive websocket connection for Misskey API.
+     *
+     * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
+     * @param listId This parameter is required only list channel.
+     */
     public socket(
       channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
       listId?: string | null

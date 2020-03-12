@@ -5,6 +5,11 @@ import { EventEmitter } from 'events'
 import { WebSocketInterface } from '../megalodon'
 import MisskeyAPI from './api_client'
 
+/**
+ * WebSocket
+ * Misskey is not support http streaming. It supports websocket instead of streaming.
+ * So this class connect to Misskey server with WebSocket.
+ */
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
   public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list'
@@ -21,6 +26,12 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _heartbeatInterval: number = 60000
   private _pongWaiting: boolean = false
 
+  /**
+   * @param url Full url of websocket: e.g. wss://misskey.io/streaming
+   * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
+   * @param accessToken The access token.
+   * @param listId This parameter is required when you specify list as channel.
+   */
   constructor(
     url: string,
     channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
@@ -43,12 +54,18 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this._pongReceivedTimestamp = moment()
   }
 
+  /**
+   * Start websocket connection.
+   */
   public start() {
     this._connectionClosed = false
     this._resetRetryParams()
     this._startWebSocketConnection()
   }
 
+  /**
+   * Reset connection and start new websocket connection.
+   */
   private _startWebSocketConnection() {
     this._resetConnection()
     this._setupParser()
@@ -56,12 +73,18 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this._bindSocket(this._client)
   }
 
+  /**
+   * Stop current connection.
+   */
   public stop() {
     this._connectionClosed = true
     this._resetConnection()
     this._resetRetryParams()
   }
 
+  /**
+   * Clean up current connection, and listeners.
+   */
   private _resetConnection() {
     if (this._client) {
       this._client.close(100)
@@ -74,15 +97,24 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     }
   }
 
+  /**
+   * Resets the parameters used in reconnect.
+   */
   private _resetRetryParams() {
     this._reconnectCurrentAttempts = 0
   }
 
+  /**
+   * Connect to the endpoint.
+   */
   private _connect(): WS {
     const cli: WS = new WS(`${this.url}?i=${this._accessToken}`)
     return cli
   }
 
+  /**
+   * Connect specified channels in websocket.
+   */
   private _channel() {
     if (!this._client) {
       return
@@ -147,6 +179,10 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     }
   }
 
+  /**
+   * Reconnects to the same endpoint.
+   */
+
   private _reconnect() {
     setTimeout(() => {
       // Skip reconnect when client is connecting.
@@ -171,6 +207,9 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     }, this._reconnectInterval)
   }
 
+  /**
+   * Clear binding event for websocket client.
+   */
   private _clearBinding() {
     if (this._client) {
       this._client.removeAllListeners('close')
@@ -181,6 +220,10 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     }
   }
 
+  /**
+   * Bind event for web socket client.
+   * @param client A WebSocket instance.
+   */
   private _bindSocket(client: WS) {
     client.on('close', (code: number, _reason: string) => {
       if (code === 1000) {
@@ -215,6 +258,9 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     })
   }
 
+  /**
+   * Set up parser when receive message.
+   */
   private _setupParser() {
     this.parser.on('update', (note: MisskeyAPI.Entity.Note) => {
       this.emit('update', MisskeyAPI.Converter.note(note))
@@ -261,6 +307,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
 export class Parser extends EventEmitter {
   /**
    * @param message Message body of websocket.
+   * @param channelID Parse only messages which has same channelID.
    */
   public parse(message: WS.Data, channelID: string) {
     if (typeof message !== 'string') {
@@ -318,6 +365,7 @@ export class Parser extends EventEmitter {
         }
         break
       }
+      // When renote and followed event, the same notification will be received.
       case 'renote':
       case 'followed':
       case 'receiveFollowRequest':
