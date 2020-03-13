@@ -1213,10 +1213,7 @@ type Instance = {
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return SNS name.
  */
-export const detector = async (
-  url: string,
-  proxyConfig: ProxyConfig | false = false
-): Promise<'mastodon' | 'pleroma' | 'pixelfed' | 'misskey'> => {
+export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'misskey'> => {
   let options: AxiosRequestConfig = {}
   if (proxyConfig) {
     options = Object.assign(options, {
@@ -1227,8 +1224,6 @@ export const detector = async (
     const res = await axios.get<Instance>(url + '/api/v1/instance', options)
     if (res.data.version.includes('Pleroma')) {
       return 'pleroma'
-    } else if (res.data.version.includes('Pixelfed')) {
-      return 'pixelfed'
     } else {
       return 'mastodon'
     }

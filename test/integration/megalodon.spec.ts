@@ -24,12 +24,4 @@ describe('detector', () => {
       expect(misskey).toEqual('misskey')
     })
   })
-
-  describe('pixelfed', () => {
-    const url = 'https://pixelfed.tokyo'
-    it('should be pixelfed', async () => {
-      const pixelfed = await detector(url)
-      expect(pixelfed).toEqual('pixelfed')
-    })
-  })
 })
