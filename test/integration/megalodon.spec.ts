@@ -1,0 +1,35 @@
+import { detector } from '../../src/index'
+
+describe('detector', () => {
+  describe('mastodon', () => {
+    const url = 'https://mastodon.social'
+    it('should be mastodon', async () => {
+      const mastodon = await detector(url)
+      expect(mastodon).toEqual('mastodon')
+    })
+  })
+
+  describe('pleroma', () => {
+    const url = 'https://pleroma.io'
+    it('should be pleroma', async () => {
+      const pleroma = await detector(url)
+      expect(pleroma).toEqual('pleroma')
+    })
+  })
+
+  describe('misskey', () => {
+    const url = 'https://misskey.io'
+    it('should be misskey', async () => {
+      const misskey = await detector(url)
+      expect(misskey).toEqual('misskey')
+    })
+  })
+
+  describe('pixelfed', () => {
+    const url = 'https://pixelfed.tokyo'
+    it('should be pixelfed', async () => {
+      const pixelfed = await detector(url)
+      expect(pixelfed).toEqual('pixelfed')
+    })
+  })
+})
