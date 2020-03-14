@@ -283,7 +283,7 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getAccountStatuses(
     id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string; pinned: boolean }
+    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (options) {
