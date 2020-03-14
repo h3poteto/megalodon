@@ -286,7 +286,7 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getAccountStatuses(
     id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string; pinned: boolean }
+    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean }
   ): Promise<Response<Array<Entity.Status>>> {
     if (options && options.pinned) {
       return this.client
