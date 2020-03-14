@@ -527,7 +527,8 @@ export default class Misskey implements MegalodonInterface {
    */
   public async searchAccount(
     q: string,
-    _following: boolean,
+    _following?: boolean | null,
+    resolve?: boolean | null,
     limit?: number | null,
     _max_id?: string | null,
     _since_id?: string | null
@@ -535,6 +536,11 @@ export default class Misskey implements MegalodonInterface {
     let params = {
       query: q,
       detail: true
+    }
+    if (resolve !== undefined && resolve !== null) {
+      params = Object.assign(params, {
+        localOnly: resolve
+      })
     }
     if (limit) {
       params = Object.assign(params, {
