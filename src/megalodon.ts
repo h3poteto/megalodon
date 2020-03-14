@@ -316,6 +316,8 @@ export interface MegalodonInterface {
    */
   searchAccount(
     q: string,
+    following?: boolean | null,
+    resolve?: boolean | null,
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
