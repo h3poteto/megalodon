@@ -208,55 +208,56 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/i/update
    */
-  public async updateCredentials(
-    _discoverable?: boolean | null,
-    bot?: boolean | null,
-    display_name?: string | null,
-    note?: string | null,
-    _avatar?: string | null,
-    _header?: string | null,
-    locked?: boolean | null,
+  public async updateCredentials(options?: {
+    discoverable?: boolean
+    bot?: boolean
+    display_name?: string
+    note?: string
+    avatar?: string
+    header?: string
+    locked?: boolean
     source?: {
       privacy?: string
       sensitive?: boolean
       language?: string
-    } | null,
-    _fields_attributes?: Array<{ name: string; value: string }>
-  ): Promise<Response<Entity.Account>> {
+    } | null
+    fields_attributes?: Array<{ name: string; value: string }>
+  }): Promise<Response<Entity.Account>> {
     let params = {}
-    if (bot !== null) {
-      params = Object.assign(params, {
-        isBot: bot
-      })
-    }
-    if (display_name) {
-      params = Object.assign(params, {
-        name: display_name
-      })
-    }
-    if (note) {
-      params = Object.assign(params, {
-        description: note
-      })
-    }
-    if (locked !== null) {
-      params = Object.assign(params, {
-        isLocked: locked
-      })
-    }
-    if (source) {
-      if (source.language) {
+    if (options) {
+      if (options.bot !== undefined) {
         params = Object.assign(params, {
-          lang: source.language
+          isBot: options.bot
         })
       }
-      if (source.sensitive) {
+      if (options.display_name) {
         params = Object.assign(params, {
-          alwaysMarkNsfw: source.sensitive
+          name: options.display_name
         })
       }
+      if (options.note) {
+        params = Object.assign(params, {
+          description: options.note
+        })
+      }
+      if (options.locked !== undefined) {
+        params = Object.assign(params, {
+          isLocked: options.locked
+        })
+      }
+      if (options.source) {
+        if (options.source.language) {
+          params = Object.assign(params, {
+            lang: options.source.language
+          })
+        }
+        if (options.source.sensitive) {
+          params = Object.assign(params, {
+            alwaysMarkNsfw: options.source.sensitive
+          })
+        }
+      }
     }
-
     return this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i', params).then(res => {
       return Object.assign(res, {
         data: MisskeyAPI.Converter.userDetail(res.data)
@@ -297,9 +298,11 @@ export default class Misskey implements MegalodonInterface {
 
   public async getAccountFavourites(
     _id: string,
-    _limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
+    _options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
@@ -326,17 +329,21 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getAccountFollowers(
     id: string,
-    limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {
       userId: id
     }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.post<Array<MisskeyAPI.Entity.Follower>>('/api/users/followers', params).then(res => {
       return Object.assign(res, {
@@ -350,17 +357,21 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getAccountFollowing(
     id: string,
-    limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {
       userId: id
     }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.post<Array<MisskeyAPI.Entity.Follower>>('/api/users/following', params).then(res => {
       return Object.assign(res, {
@@ -527,25 +538,29 @@ export default class Misskey implements MegalodonInterface {
    */
   public async searchAccount(
     q: string,
-    _following?: boolean | null,
-    resolve?: boolean | null,
-    limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
+    options?: {
+      following?: boolean
+      resolve?: boolean
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {
       query: q,
       detail: true
     }
-    if (resolve !== undefined && resolve !== null) {
-      params = Object.assign(params, {
-        localOnly: resolve
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.resolve !== undefined) {
+        params = Object.assign(params, {
+          localOnly: options.resolve
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/search', params).then(res => {
       return Object.assign(res, {
@@ -557,12 +572,12 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // accounts/bookmarks
   // ======================================
-  public async getBookmarks(
-    _limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null,
-    _min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getBookmarks(_options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
@@ -575,26 +590,24 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/i/favorites
    */
-  public async getFavourites(
-    limit?: number | null,
-    max_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        sinceId: min_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
     }
     return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/i/favorites', params).then(res => {
       return Object.assign(res, {
@@ -609,22 +622,24 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/mute/list
    */
-  public async getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
+  public async getMutes(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        sinceId: min_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
     }
     return this.client.post<Array<MisskeyAPI.Entity.Mute>>('/api/mute/list', params).then(res => {
       return Object.assign(res, {
@@ -639,22 +654,24 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/blocking/list
    */
-  public async getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
+  public async getBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        sinceId: min_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
     }
     return this.client.post<Array<MisskeyAPI.Entity.Blocking>>('/api/blocking/list', params).then(res => {
       return Object.assign(res, {
@@ -666,7 +683,7 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // accounts/domain_blocks
   // ======================================
-  public async getDomainBlocks(_limit?: number | null, _max_id?: string | null, _min_id?: string | null): Promise<Response<Array<string>>> {
+  public async getDomainBlocks(_options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
@@ -707,9 +724,11 @@ export default class Misskey implements MegalodonInterface {
   public async createFilter(
     _phrase: string,
     _context: Array<'home' | 'notifications' | 'public' | 'thread'>,
-    _irreversible?: boolean | null,
-    _whole_word?: boolean | null,
-    _expires_in?: string | null
+    _options?: {
+      irreversible?: boolean
+      whole_word?: boolean
+      expires_in?: string
+    }
   ): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
@@ -721,9 +740,11 @@ export default class Misskey implements MegalodonInterface {
     _id: string,
     _phrase: string,
     _context: Array<'home' | 'notifications' | 'public' | 'thread'>,
-    _irreversible?: boolean | null,
-    _whole_word?: boolean | null,
-    _expires_in?: string | null
+    _options?: {
+      irreversible?: boolean
+      whole_word?: boolean
+      expires_in?: string
+    }
   ): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
@@ -747,8 +768,10 @@ export default class Misskey implements MegalodonInterface {
   public async report(
     account_id: string,
     comment: string,
-    _status_ids?: Array<string> | null,
-    _forward?: boolean | null
+    _options?: {
+      status_ids?: Array<string>
+      forward?: boolean
+    }
   ): Promise<Response<Entity.Report>> {
     return this.client
       .post<{}>('/api/users/report-abuse', {
@@ -821,11 +844,11 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // accounts/endorsements
   // ======================================
-  public async getEndorsements(
-    _limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
-  ): Promise<Response<Array<Entity.Account>>> {
+  public async getEndorsements(_options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+  }): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
@@ -896,56 +919,60 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   public async postStatus(
     status: string,
-    media_ids?: Array<string>,
-    poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean } | null,
-    in_reply_to_id?: string | null,
-    sensitive?: boolean | null,
-    spoiler_text?: string | null,
-    visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
-    _scheduled_at?: string | null,
-    _language?: string | null
+    options?: {
+      media_ids?: Array<string>
+      poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean }
+      in_reply_to_id?: string
+      sensitive?: boolean
+      spoiler_text?: string
+      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
+      scheduled_at?: string
+      language?: string
+    }
   ): Promise<Response<Entity.Status>> {
     let params = {
       text: status
     }
-    if (media_ids) {
-      params = Object.assign(params, {
-        fileIds: media_ids
-      })
-    }
-    if (poll) {
-      let pollParam = {
-        choices: poll.options,
-        expiresAt: poll.expires_in
-      }
-      if (poll.multiple) {
-        pollParam = Object.assign(pollParam, {
-          multiple: poll.multiple
+    if (options) {
+      if (options.media_ids) {
+        params = Object.assign(params, {
+          fileIds: options.media_ids
         })
       }
-      params = Object.assign(params, {
-        poll: pollParam
-      })
-    }
-    if (in_reply_to_id) {
-      params = Object.assign(params, {
-        replyId: in_reply_to_id
-      })
-    }
-    if (sensitive) {
-      params = Object.assign(params, {
-        cw: ''
-      })
-    }
-    if (spoiler_text) {
-      params = Object.assign(params, {
-        cw: spoiler_text
-      })
-    }
-    if (visibility) {
-      params = Object.assign(params, {
-        visibility: MisskeyAPI.Converter.encodeVisibility(visibility)
-      })
+      if (options.poll) {
+        let pollParam = {
+          choices: options.poll.options,
+          expiresAt: options.poll.expires_in
+        }
+        if (options.poll.multiple) {
+          pollParam = Object.assign(pollParam, {
+            multiple: options.poll.multiple
+          })
+        }
+        params = Object.assign(params, {
+          poll: pollParam
+        })
+      }
+      if (options.in_reply_to_id) {
+        params = Object.assign(params, {
+          replyId: options.in_reply_to_id
+        })
+      }
+      if (options.sensitive) {
+        params = Object.assign(params, {
+          cw: ''
+        })
+      }
+      if (options.spoiler_text) {
+        params = Object.assign(params, {
+          cw: options.spoiler_text
+        })
+      }
+      if (options.visibility) {
+        params = Object.assign(params, {
+          visibility: MisskeyAPI.Converter.encodeVisibility(options.visibility)
+        })
+      }
     }
     return this.client
       .post<MisskeyAPI.Entity.CreatedNote>('/api/notes/create', params)
@@ -1128,7 +1155,7 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/drive/files/create
    */
-  public async uploadMedia(file: any, _description?: string | null, _focus?: string | null): Promise<Response<Entity.Attachment>> {
+  public async uploadMedia(file: any, _options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>> {
     const formData = new FormData()
     formData.append('file', file)
     return this.client
@@ -1141,18 +1168,22 @@ export default class Misskey implements MegalodonInterface {
    */
   public async updateMedia(
     id: string,
-    _file?: any,
-    _description?: string | null,
-    _focus?: string | null,
-    is_sensitive?: boolean | null
+    options?: {
+      file?: any
+      description?: string
+      focus?: string
+      is_sensitive?: boolean
+    }
   ): Promise<Response<Entity.Attachment>> {
     let params = {
       fileId: id
     }
-    if (is_sensitive !== undefined && is_sensitive !== null) {
-      params = Object.assign(params, {
-        isSensitive: is_sensitive
-      })
+    if (options) {
+      if (options.is_sensitive !== undefined) {
+        params = Object.assign(params, {
+          isSensitive: options.is_sensitive
+        })
+      }
     }
     return this.client
       .post<MisskeyAPI.Entity.File>('/api/drive/files/update', params)
@@ -1204,12 +1235,12 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // statuses/scheduled_statuses
   // ======================================
-  public async getScheduledStatuses(
-    _limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null,
-    _min_id?: string | null
-  ): Promise<Response<Array<Entity.ScheduledStatus>>> {
+  public async getScheduledStatuses(_options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.ScheduledStatus>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
@@ -1243,33 +1274,35 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/notes/global-timeline
    */
-  public async getPublicTimeline(
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getPublicTimeline(options?: {
+    only_media?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (only_media) {
-      params = Object.assign(params, {
-        withFiles: only_media
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        sinceId: since_id
-      })
+    if (options) {
+      if (options.only_media !== undefined) {
+        params = Object.assign(params, {
+          withFiles: options.only_media
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/global-timeline', params)
@@ -1279,33 +1312,35 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/notes/local-timeline
    */
-  public async getLocalTimeline(
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getLocalTimeline(options?: {
+    only_media?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (only_media) {
-      params = Object.assign(params, {
-        withFiles: only_media
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        sinceId: since_id
-      })
+    if (options) {
+      if (options.only_media !== undefined) {
+        params = Object.assign(params, {
+          withFiles: options.only_media
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/local-timeline', params)
@@ -1317,35 +1352,39 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getTagTimeline(
     hashtag: string,
-    _local?: boolean | null,
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null
+    options?: {
+      local?: boolean
+      only_media?: boolean
+      limit?: number
+      max_id?: string
+      since_id?: string
+      min_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {
       tag: hashtag
     }
-    if (only_media) {
-      params = Object.assign(params, {
-        withFiles: only_media
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        sinceId: since_id
-      })
+    if (options) {
+      if (options.only_media !== undefined) {
+        params = Object.assign(params, {
+          withFiles: options.only_media
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/search-by-tag', params)
@@ -1355,30 +1394,32 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/notes/timeline
    */
-  public async getHomeTimeline(
-    _local?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getHomeTimeline(options?: {
+    local?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {
       withFiles: false
     }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        sinceId: since_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/timeline', params)
@@ -1390,29 +1431,33 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getListTimeline(
     list_id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+      min_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {
       listId: list_id,
       withFiles: false
     }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        sinceId: since_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/user-list-timeline', params)
@@ -1425,29 +1470,31 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/notes/mentions
    */
-  public async getConversationTimeline(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null
-  ): Promise<Response<Array<Entity.Conversation>>> {
+  public async getConversationTimeline(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Conversation>>> {
     let params = {
       visibility: 'specified'
     }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        sinceId: since_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/mentions', params)
@@ -1528,9 +1575,11 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getAccountsInList(
     id: string,
-    _limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
+    _options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     const res = await this.client.post<MisskeyAPI.Entity.List>('/api/users/lists/show', {
       listId: id
@@ -1570,10 +1619,10 @@ export default class Misskey implements MegalodonInterface {
     })
   }
 
-  public async saveMarker(
-    _home?: { last_read_id: string } | null,
-    _notifications?: { last_read_id: string } | null
-  ): Promise<Response<Entity.Marker>> {
+  public async saveMarker(_options?: {
+    home?: { last_read_id: string }
+    notifications?: { last_read_id: string }
+  }): Promise<Response<Entity.Marker>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
@@ -1586,34 +1635,36 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/i/notifications
    */
-  public async getNotifications(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    _min_id?: string | null,
-    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
-    _account_id?: string | null
-  ): Promise<Response<Array<Entity.Notification>>> {
+  public async getNotifications(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'>
+    account_id?: string
+  }): Promise<Response<Array<Entity.Notification>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        untilId: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (exclude_type) {
-      params = Object.assign(params, {
-        excludeType: exclude_type.map(e => MisskeyAPI.Converter.encodeNotificationType(e))
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.exclude_type) {
+        params = Object.assign(params, {
+          excludeType: options.exclude_type.map(e => MisskeyAPI.Converter.encodeNotificationType(e))
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Notification>>('/api/i/notifications', params)
@@ -1686,34 +1737,38 @@ export default class Misskey implements MegalodonInterface {
   public async search(
     q: string,
     type: 'accounts' | 'hashtags' | 'statuses',
-    limit?: number | null,
-    _max_id?: string | null,
-    _min_id?: string | null,
-    resolve?: boolean | null,
-    offset?: number | null,
-    _following?: boolean | null,
-    _account_id?: string | null,
-    _exclude_unreviewed?: boolean | null
+    options?: {
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
   ): Promise<Response<Entity.Results>> {
     switch (type) {
       case 'accounts': {
         let params = {
           query: q
         }
-        if (limit) {
-          params = Object.assign(params, {
-            limit: limit
-          })
-        }
-        if (offset) {
-          params = Object.assign(params, {
-            offset: offset
-          })
-        }
-        if (resolve) {
-          params = Object.assign(params, {
-            localOnly: resolve
-          })
+        if (options) {
+          if (options.limit) {
+            params = Object.assign(params, {
+              limit: options.limit
+            })
+          }
+          if (options.offset) {
+            params = Object.assign(params, {
+              offset: options.offset
+            })
+          }
+          if (options.resolve) {
+            params = Object.assign(params, {
+              localOnly: options.resolve
+            })
+          }
         }
         return this.client.post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/search', params).then(res => ({
           ...res,
@@ -1728,15 +1783,17 @@ export default class Misskey implements MegalodonInterface {
         let params = {
           query: q
         }
-        if (limit) {
-          params = Object.assign(params, {
-            limit: limit
-          })
-        }
-        if (offset) {
-          params = Object.assign(params, {
-            offset: offset
-          })
+        if (options) {
+          if (options.limit) {
+            params = Object.assign(params, {
+              limit: options.limit
+            })
+          }
+          if (options.offset) {
+            params = Object.assign(params, {
+              offset: options.offset
+            })
+          }
         }
         return this.client.post<Array<MisskeyAPI.Entity.Note>>('/api/notes/search', params).then(res => ({
           ...res,
@@ -1751,15 +1808,17 @@ export default class Misskey implements MegalodonInterface {
         let params = {
           query: q
         }
-        if (limit) {
-          params = Object.assign(params, {
-            limit: limit
-          })
-        }
-        if (offset) {
-          params = Object.assign(params, {
-            offset: offset
-          })
+        if (options) {
+          if (options.limit) {
+            params = Object.assign(params, {
+              limit: options.limit
+            })
+          }
+          if (options.offset) {
+            params = Object.assign(params, {
+              offset: options.offset
+            })
+          }
         }
         return this.client.post<Array<string>>('/api/hashtags/search', params).then(res => ({
           ...res,
@@ -1816,12 +1875,12 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // instance/directory
   // ======================================
-  public async getInstanceDirectory(
-    _limit?: number | null,
-    _offset?: number | null,
-    _order?: 'active' | 'new' | null,
-    _local?: boolean | null
-  ): Promise<Response<Array<Entity.Account>>> {
+  public async getInstanceDirectory(_options?: {
+    limit?: number
+    offset?: number
+    order?: 'active' | 'new'
+    local?: boolean
+  }): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)

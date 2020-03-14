@@ -203,66 +203,68 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async updateCredentials(
-    discoverable?: boolean | null,
-    bot?: boolean | null,
-    display_name?: string | null,
-    note?: string | null,
-    avatar?: string | null,
-    header?: string | null,
-    locked?: boolean | null,
+  public async updateCredentials(options?: {
+    discoverable?: boolean
+    bot?: boolean
+    display_name?: string
+    note?: string
+    avatar?: string
+    header?: string
+    locked?: boolean
     source?: {
       privacy?: string
       sensitive?: boolean
       language?: string
-    } | null,
+    }
     fields_attributes?: Array<{ name: string; value: string }>
-  ): Promise<Response<Entity.Account>> {
+  }): Promise<Response<Entity.Account>> {
     let params = {}
-    if (discoverable !== null) {
-      params = Object.assign(params, {
-        discoverable: discoverable
-      })
-    }
-    if (bot !== null) {
-      params = Object.assign(params, {
-        bot: bot
-      })
-    }
-    if (display_name) {
-      params = Object.assign(params, {
-        display_name: display_name
-      })
-    }
-    if (note) {
-      params = Object.assign(params, {
-        note: note
-      })
-    }
-    if (avatar) {
-      params = Object.assign(params, {
-        avatar: avatar
-      })
-    }
-    if (header) {
-      params = Object.assign(params, {
-        header: header
-      })
-    }
-    if (locked !== null) {
-      params = Object.assign(params, {
-        locked: locked
-      })
-    }
-    if (source) {
-      params = Object.assign(params, {
-        source: source
-      })
-    }
-    if (fields_attributes) {
-      params = Object.assign(params, {
-        fields_attributes: fields_attributes
-      })
+    if (options) {
+      if (options.discoverable !== undefined) {
+        params = Object.assign(params, {
+          discoverable: options.discoverable
+        })
+      }
+      if (options.bot !== undefined) {
+        params = Object.assign(params, {
+          bot: options.bot
+        })
+      }
+      if (options.display_name) {
+        params = Object.assign(params, {
+          display_name: options.display_name
+        })
+      }
+      if (options.note) {
+        params = Object.assign(params, {
+          note: options.note
+        })
+      }
+      if (options.avatar) {
+        params = Object.assign(params, {
+          avatar: options.avatar
+        })
+      }
+      if (options.header) {
+        params = Object.assign(params, {
+          header: options.header
+        })
+      }
+      if (options.locked !== undefined) {
+        params = Object.assign(params, {
+          locked: options.locked
+        })
+      }
+      if (options.source) {
+        params = Object.assign(params, {
+          source: options.source
+        })
+      }
+      if (options.fields_attributes) {
+        params = Object.assign(params, {
+          fields_attributes: options.fields_attributes
+        })
+      }
     }
     return this.client.patch<MastodonAPI.Entity.Account>('/api/v1/accounts/update_credentials', params).then(res => {
       return Object.assign(res, {
@@ -303,9 +305,11 @@ export default class Mastodon implements MegalodonInterface {
 
   public getAccountFavourites(
     _id: string,
-    _limit?: number | null,
-    _max_id?: string | null,
-    _since_id?: string | null
+    _options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('mastodon does not support')
@@ -315,25 +319,29 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getAccountFollowers(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/accounts/${id}/followers`, params).then(res => {
       return Object.assign(res, {
@@ -344,25 +352,29 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getAccountFollowing(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonEntity.Account>>(`/api/v1/accounts/${id}/following`, params).then(res => {
       return Object.assign(res, {
@@ -473,37 +485,41 @@ export default class Mastodon implements MegalodonInterface {
 
   public async searchAccount(
     q: string,
-    following?: boolean | null,
-    resolve?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      following?: boolean
+      resolve?: boolean
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = { q: q }
-    if (following !== undefined && following !== null) {
-      params = Object.assign(params, {
-        following: following
-      })
-    }
-    if (resolve !== undefined && resolve !== null) {
-      params = Object.assign(params, {
-        resolve: resolve
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.following !== undefined && options.following !== null) {
+        params = Object.assign(params, {
+          following: options.following
+        })
+      }
+      if (options.resolve !== undefined && options.resolve !== null) {
+        params = Object.assign(params, {
+          resolve: options.resolve
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/accounts/search', params).then(res => {
       return Object.assign(res, {
@@ -516,32 +532,34 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/bookmarks
   // ======================================
 
-  public async getBookmarks(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getBookmarks(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
+    if (options) {
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/bookmarks', params).then(res => {
       return Object.assign(res, {
@@ -554,26 +572,24 @@ export default class Mastodon implements MegalodonInterface {
   //  accounts/favourites
   // ======================================
 
-  public async getFavourites(
-    limit?: number | null,
-    max_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/favourites', params).then(res => {
       return Object.assign(res, {
@@ -586,22 +602,24 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/mutes
   // ======================================
 
-  public async getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
+  public async getMutes(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/mutes', params).then(res => {
       return Object.assign(res, {
@@ -614,22 +632,24 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/blocks
   // ======================================
 
-  public async getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>> {
+  public async getBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/blocks', params).then(res => {
       return Object.assign(res, {
@@ -641,22 +661,24 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/domain_blocks
   // ======================================
-  public async getDomainBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<string>>> {
+  public async getDomainBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
     let params = {}
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<string>>('/api/v1/domain_blocks', params)
   }
@@ -696,28 +718,32 @@ export default class Mastodon implements MegalodonInterface {
   public async createFilter(
     phrase: string,
     context: Array<'home' | 'notifications' | 'public' | 'thread'>,
-    irreversible?: boolean | null,
-    whole_word?: boolean | null,
-    expires_in?: string | null
+    options?: {
+      irreversible?: boolean
+      whole_word?: boolean
+      expires_in?: string
+    }
   ): Promise<Response<Entity.Filter>> {
     let params = {
       phrase: phrase,
       context: context
     }
-    if (irreversible !== null) {
-      params = Object.assign(params, {
-        irreversible: irreversible
-      })
-    }
-    if (whole_word !== null) {
-      params = Object.assign(params, {
-        whole_word: whole_word
-      })
-    }
-    if (expires_in) {
-      params = Object.assign(params, {
-        expires_in: expires_in
-      })
+    if (options) {
+      if (options.irreversible !== undefined) {
+        params = Object.assign(params, {
+          irreversible: options.irreversible
+        })
+      }
+      if (options.whole_word !== undefined) {
+        params = Object.assign(params, {
+          whole_word: options.whole_word
+        })
+      }
+      if (options.expires_in) {
+        params = Object.assign(params, {
+          expires_in: options.expires_in
+        })
+      }
     }
     return this.client.post<MastodonAPI.Entity.Filter>('/api/v1/filters', params).then(res => {
       return Object.assign(res, {
@@ -730,28 +756,32 @@ export default class Mastodon implements MegalodonInterface {
     id: string,
     phrase: string,
     context: Array<'home' | 'notifications' | 'public' | 'thread'>,
-    irreversible?: boolean | null,
-    whole_word?: boolean | null,
-    expires_in?: string | null
+    options?: {
+      irreversible?: boolean
+      whole_word?: boolean
+      expires_in?: string
+    }
   ): Promise<Response<Entity.Filter>> {
     let params = {
       phrase: phrase,
       context: context
     }
-    if (irreversible !== null) {
-      params = Object.assign(params, {
-        irreversible: irreversible
-      })
-    }
-    if (whole_word !== null) {
-      params = Object.assign(params, {
-        whole_word: whole_word
-      })
-    }
-    if (expires_in) {
-      params = Object.assign(params, {
-        expires_in: expires_in
-      })
+    if (options) {
+      if (options.irreversible !== undefined) {
+        params = Object.assign(params, {
+          irreversible: options.irreversible
+        })
+      }
+      if (options.whole_word !== undefined) {
+        params = Object.assign(params, {
+          whole_word: options.whole_word
+        })
+      }
+      if (options.expires_in) {
+        params = Object.assign(params, {
+          expires_in: options.expires_in
+        })
+      }
     }
     return this.client.post<MastodonAPI.Entity.Filter>(`/api/v1/filters/${id}`, params).then(res => {
       return Object.assign(res, {
@@ -774,23 +804,27 @@ export default class Mastodon implements MegalodonInterface {
   public async report(
     account_id: string,
     comment: string,
-    status_ids?: Array<string> | null,
+    options?: {
+      status_ids?: Array<string>
 
-    forward?: boolean | null
+      forward?: boolean
+    }
   ): Promise<Response<Entity.Report>> {
     let params = {
       account_id: account_id,
       comment: comment
     }
-    if (status_ids) {
-      params = Object.assign(params, {
-        status_ids: status_ids
-      })
-    }
-    if (forward !== null) {
-      params = Object.assign(params, {
-        forward: forward
-      })
+    if (options) {
+      if (options.status_ids) {
+        params = Object.assign(params, {
+          status_ids: options.status_ids
+        })
+      }
+      if (options.forward !== undefined) {
+        params = Object.assign(params, {
+          forward: options.forward
+        })
+      }
     }
     return this.client.post<MastodonAPI.Entity.Report>('/api/v1/reports', params).then(res => {
       return Object.assign(res, {
@@ -841,26 +875,24 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/endorsements
   // ======================================
-  public async getEndorsements(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
-  ): Promise<Response<Array<Entity.Account>>> {
+  public async getEndorsements(options?: { limit?: number; max_id?: string; since_id?: string }): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/endorsements', params).then(res => {
       return Object.assign(res, {
@@ -943,71 +975,75 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   public async postStatus(
     status: string,
-    media_ids: Array<string> = [],
-    poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean } | null,
-    in_reply_to_id?: string | null,
-    sensitive?: boolean | null,
-    spoiler_text?: string | null,
-    visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
-    scheduled_at?: string | null,
-    language?: string | null
+    options: {
+      media_ids?: Array<string>
+      poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean }
+      in_reply_to_id?: string
+      sensitive?: boolean
+      spoiler_text?: string
+      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
+      scheduled_at?: string
+      language?: string
+    }
   ): Promise<Response<Entity.Status>> {
     let params = {
       status: status
     }
-    if (media_ids.length > 0) {
-      params = Object.assign(params, {
-        media_ids: media_ids
-      })
-    }
-    if (poll) {
-      let pollParam = {
-        options: poll.options,
-        expires_in: poll.expires_in
-      }
-      if (poll.multiple !== undefined) {
-        pollParam = Object.assign(pollParam, {
-          multiple: poll.multiple
+    if (options) {
+      if (options.media_ids) {
+        params = Object.assign(params, {
+          media_ids: options.media_ids
         })
       }
-      if (poll.hide_totals) {
-        pollParam = Object.assign(pollParam, {
-          hide_totals: poll.hide_totals
+      if (options.poll) {
+        let pollParam = {
+          options: options.poll.options,
+          expires_in: options.poll.expires_in
+        }
+        if (options.poll.multiple !== undefined) {
+          pollParam = Object.assign(pollParam, {
+            multiple: options.poll.multiple
+          })
+        }
+        if (options.poll.hide_totals !== undefined) {
+          pollParam = Object.assign(pollParam, {
+            hide_totals: options.poll.hide_totals
+          })
+        }
+        params = Object.assign(params, {
+          poll: pollParam
         })
       }
-      params = Object.assign(params, {
-        poll: pollParam
-      })
-    }
-    if (in_reply_to_id) {
-      params = Object.assign(params, {
-        in_reply_to_id: in_reply_to_id
-      })
-    }
-    if (sensitive !== null) {
-      params = Object.assign(params, {
-        sensitive: sensitive
-      })
-    }
-    if (spoiler_text) {
-      params = Object.assign(params, {
-        spoiler_text: spoiler_text
-      })
-    }
-    if (visibility) {
-      params = Object.assign(params, {
-        visibility: visibility
-      })
-    }
-    if (scheduled_at) {
-      params = Object.assign(params, {
-        scheduled_at: scheduled_at
-      })
-    }
-    if (language) {
-      params = Object.assign(params, {
-        language: language
-      })
+      if (options.in_reply_to_id) {
+        params = Object.assign(params, {
+          in_reply_to_id: options.in_reply_to_id
+        })
+      }
+      if (options.sensitive !== undefined) {
+        params = Object.assign(params, {
+          sensitive: options.sensitive
+        })
+      }
+      if (options.spoiler_text) {
+        params = Object.assign(params, {
+          spoiler_text: options.spoiler_text
+        })
+      }
+      if (options.visibility) {
+        params = Object.assign(params, {
+          visibility: options.visibility
+        })
+      }
+      if (options.scheduled_at) {
+        params = Object.assign(params, {
+          scheduled_at: options.scheduled_at
+        })
+      }
+      if (options.language) {
+        params = Object.assign(params, {
+          language: options.language
+        })
+      }
     }
     return this.client.post<MastodonAPI.Entity.Status>('/api/v1/statuses', params).then(res => {
       return Object.assign(res, {
@@ -1139,14 +1175,16 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses/media
   // ======================================
-  public async uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>> {
+  public async uploadMedia(file: any, options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>> {
     const formData = new FormData()
     formData.append('file', file)
-    if (description) {
-      formData.append('description', description)
-    }
-    if (focus) {
-      formData.append('focus', focus)
+    if (options) {
+      if (options.description) {
+        formData.append('description', options.description)
+      }
+      if (options.focus) {
+        formData.append('focus', options.focus)
+      }
     }
     return this.client.post<MastodonAPI.Entity.Attachment>('/api/v1/media', formData).then(res => {
       return Object.assign(res, {
@@ -1157,27 +1195,25 @@ export default class Mastodon implements MegalodonInterface {
 
   public async updateMedia(
     id: string,
-    file?: any,
-    description?: string | null,
-    focus?: string | null
+    options?: {
+      file?: any
+      description?: string
+      focus?: string
+    }
   ): Promise<Response<Entity.Attachment>> {
-    let params = {}
-    if (file) {
-      params = Object.assign(params, {
-        file: file
-      })
+    const formData = new FormData()
+    if (options) {
+      if (options.file) {
+        formData.append('file', options.file)
+      }
+      if (options.description) {
+        formData.append('description', options.description)
+      }
+      if (options.focus) {
+        formData.append('focus', options.focus)
+      }
     }
-    if (description) {
-      params = Object.assign(params, {
-        description: description
-      })
-    }
-    if (focus) {
-      params = Object.assign(params, {
-        focus: focus
-      })
-    }
-    return this.client.put<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, params).then(res => {
+    return this.client.put<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.attachment(res.data)
       })
@@ -1210,32 +1246,34 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses/scheduled_statuses
   // ======================================
-  public async getScheduledStatuses(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
+  public async getScheduledStatuses(options?: {
+    limit?: number | null
+    max_id?: string | null
+    since_id?: string | null
     min_id?: string | null
-  ): Promise<Response<Array<Entity.ScheduledStatus>>> {
+  }): Promise<Response<Array<Entity.ScheduledStatus>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.ScheduledStatus>>('/api/v1/scheduled_statuses', params).then(res => {
       return Object.assign(res, {
@@ -1273,40 +1311,42 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines
   // ======================================
-  public async getPublicTimeline(
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getPublicTimeline(options?: {
+    only_media?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {
       local: false
     }
-    if (only_media !== null) {
-      params = Object.assign(params, {
-        only_media: only_media
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.only_media !== undefined) {
+        params = Object.assign(params, {
+          only_media: options.only_media
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
       return Object.assign(res, {
@@ -1315,40 +1355,42 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async getLocalTimeline(
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getLocalTimeline(options?: {
+    only_media?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {
       local: true
     }
-    if (only_media !== null) {
-      params = Object.assign(params, {
-        only_media: only_media
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.only_media !== undefined) {
+        params = Object.assign(params, {
+          only_media: options.only_media
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
       return Object.assign(res, {
@@ -1359,43 +1401,47 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getTagTimeline(
     hashtag: string,
-    local?: boolean | null,
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
+    options?: {
+      local?: boolean
+      only_media?: boolean
+      limit?: number
+      max_id?: string
+      since_id?: string
+      min_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (local !== null) {
-      params = Object.assign(params, {
-        local: local
-      })
-    }
-    if (only_media !== null) {
-      params = Object.assign(params, {
-        only_media: only_media
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.local !== undefined) {
+        params = Object.assign(params, {
+          local: options.local
+        })
+      }
+      if (options.only_media !== undefined) {
+        params = Object.assign(params, {
+          only_media: options.only_media
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/timelines/tag/${hashtag}`, params).then(res => {
       return Object.assign(res, {
@@ -1404,38 +1450,40 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async getHomeTimeline(
-    local?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>> {
+  public async getHomeTimeline(options?: {
+    local?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (local !== null) {
-      params = Object.assign(params, {
-        local: local
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.local !== undefined) {
+        params = Object.assign(params, {
+          local: options.local
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/home', params).then(res => {
       return Object.assign(res, {
@@ -1446,31 +1494,35 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getListTimeline(
     list_id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+      min_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/timelines/list/${list_id}`, params).then(res => {
       return Object.assign(res, {
@@ -1482,32 +1534,34 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines/conversations
   // ======================================
-  public async getConversationTimeline(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Conversation>>> {
+  public async getConversationTimeline(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Conversation>>> {
     let params = {}
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id: min_id
-      })
-    }
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
+    if (options) {
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Conversation>>('/api/v1/conversations', params).then(res => {
       return Object.assign(res, {
@@ -1577,25 +1631,29 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getAccountsInList(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/lists/${id}/accounts`, params).then(res => {
       return Object.assign(res, {
@@ -1625,20 +1683,22 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async saveMarker(
-    home?: { last_read_id: string } | null,
-    notifications?: { last_read_id: string } | null
-  ): Promise<Response<Entity.Marker>> {
+  public async saveMarker(options?: {
+    home?: { last_read_id: string }
+    notifications?: { last_read_id: string }
+  }): Promise<Response<Entity.Marker>> {
     let params = {}
-    if (home) {
-      params = Object.assign(params, {
-        home: home
-      })
-    }
-    if (notifications) {
-      params = Object.assign(params, {
-        notifications: notifications
-      })
+    if (options) {
+      if (options.home) {
+        params = Object.assign(params, {
+          home: options.home
+        })
+      }
+      if (options.notifications) {
+        params = Object.assign(params, {
+          notifications: options.notifications
+        })
+      }
     }
     return this.client.post<MastodonAPI.Entity.Marker>('/api/v1/markers', params).then(res => {
       return Object.assign(res, {
@@ -1650,44 +1710,46 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // notifications
   // ======================================
-  public async getNotifications(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null,
-    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
-    account_id?: string | null
-  ): Promise<Response<Array<Entity.Notification>>> {
+  public async getNotifications(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'>
+    account_id?: string
+  }): Promise<Response<Array<Entity.Notification>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id
-      })
-    }
-    if (exclude_type) {
-      params = Object.assign(params, {
-        exclude_type
-      })
-    }
-    if (account_id) {
-      params = Object.assign(params, {
-        account_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.exclude_type) {
+        params = Object.assign(params, {
+          exclude_type: options.exclude_type
+        })
+      }
+      if (options.account_id) {
+        params = Object.assign(params, {
+          account_id: options.account_id
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
       return Object.assign(res, {
@@ -1768,58 +1830,62 @@ export default class Mastodon implements MegalodonInterface {
   public async search(
     q: string,
     type: 'accounts' | 'hashtags' | 'statuses',
-    limit?: number | null,
-    max_id?: string | null,
-    min_id?: string | null,
-    resolve?: boolean | null,
-    offset?: number | null,
-    following?: boolean | null,
-    account_id?: string | null,
-    exclude_unreviewed?: boolean | null
+    options?: {
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
   ): Promise<Response<Entity.Results>> {
     let params = {
       q,
       type
     }
-    if (limit) {
-      params = Object.assign(params, {
-        limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id
-      })
-    }
-    if (min_id) {
-      params = Object.assign(params, {
-        min_id
-      })
-    }
-    if (resolve) {
-      params = Object.assign(params, {
-        resolve
-      })
-    }
-    if (offset) {
-      params = Object.assign(params, {
-        offset
-      })
-    }
-    if (following) {
-      params = Object.assign(params, {
-        following
-      })
-    }
-    if (account_id) {
-      params = Object.assign(params, {
-        account_id
-      })
-    }
-    if (exclude_unreviewed) {
-      params = Object.assign(params, {
-        exclude_unreviewed
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.resolve !== undefined) {
+        params = Object.assign(params, {
+          resolve: options.resolve
+        })
+      }
+      if (options.offset) {
+        params = Object.assign(params, {
+          offset: options.offset
+        })
+      }
+      if (options.following !== undefined) {
+        params = Object.assign(params, {
+          following: options.following
+        })
+      }
+      if (options.account_id) {
+        params = Object.assign(params, {
+          account_id: options.account_id
+        })
+      }
+      if (options.exclude_unreviewed) {
+        params = Object.assign(params, {
+          exclude_unreviewed: options.exclude_unreviewed
+        })
+      }
     }
     return this.client.get<MastodonAPI.Entity.Results>('/api/v2/search', params).then(res => {
       return Object.assign(res, {
@@ -1876,32 +1942,34 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // instance/directory
   // ======================================
-  public async getInstanceDirectory(
-    limit?: number | null,
-    offset?: number | null,
-    order?: 'active' | 'new' | null,
-    local?: boolean | null
-  ): Promise<Response<Array<Entity.Account>>> {
+  public async getInstanceDirectory(options?: {
+    limit?: number
+    offset?: number
+    order?: 'active' | 'new'
+    local?: boolean
+  }): Promise<Response<Array<Entity.Account>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit
-      })
-    }
-    if (offset) {
-      params = Object.assign(params, {
-        offset
-      })
-    }
-    if (order) {
-      params = Object.assign(params, {
-        order
-      })
-    }
-    if (local) {
-      params = Object.assign(params, {
-        local
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.offset) {
+        params = Object.assign(params, {
+          offset: options.offset
+        })
+      }
+      if (options.order) {
+        params = Object.assign(params, {
+          order: options.order
+        })
+      }
+      if (options.local !== undefined) {
+        params = Object.assign(params, {
+          local: options.local
+        })
+      }
     }
     return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/directory', params).then(res => {
       return Object.assign(res, {
