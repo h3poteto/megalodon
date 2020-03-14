@@ -166,7 +166,10 @@ export interface MegalodonInterface {
    * @param id The account ID.
    * @return Account's statuses.
    */
-  getAccountStatuses(id: string): Promise<Response<Array<Entity.Status>>>
+  getAccountStatuses(
+    id: string,
+    options?: { limit?: number; max_id?: string; since_id?: string; pinned: boolean }
+  ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/pleroma/accounts/:id/favourites
    *
@@ -253,7 +256,7 @@ export interface MegalodonInterface {
    * @param reblog Receive this account's reblogs in home timeline.
    * @return Relationship
    */
-  followAccount(id: string, reblog: boolean): Promise<Response<Entity.Relationship>>
+  followAccount(id: string, reblog?: boolean): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/unfollow
    *
@@ -614,7 +617,7 @@ export interface MegalodonInterface {
    * @param id The target status id.
    * @return Context
    */
-  getStatusContext(id: string): Promise<Response<Entity.Context>>
+  getStatusContext(id: string, options?: { limit?: number; max_id?: string; since_id?: string }): Promise<Response<Entity.Context>>
   /**
    * GET /api/v1/statuses/:id/reblogged_by
    *
@@ -1010,7 +1013,7 @@ export interface MegalodonInterface {
    * @param options.max_id Return results older than ID.
    * @param options.since_id Return results newer than ID.
    * @param options.min_id Return results immediately newer than ID.
-   * @param options.exclude_type Array of types to exclude.
+   * @param options.exclude_types Array of types to exclude.
    * @param options.account_id Return only notifications received from this account.
    * @return Array of notifications.
    */
@@ -1019,7 +1022,7 @@ export interface MegalodonInterface {
     max_id?: string
     since_id?: string
     min_id?: string
-    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'>
+    exclude_types?: Array<NotificationType>
     account_id?: string
   }): Promise<Response<Array<Entity.Notification>>>
   /**
@@ -1287,6 +1290,14 @@ const generator = (
       return mastodon
     }
   }
+}
+
+export enum NotificationType {
+  Follow = 'follow',
+  Favourite = 'favourite',
+  Reblog = 'reblog',
+  Mention = 'mention',
+  Poll = 'poll'
 }
 
 export default generator

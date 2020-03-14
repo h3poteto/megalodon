@@ -1,4 +1,5 @@
 /// <reference path="emoji.ts" />
+/// <reference path="note.ts" />
 
 namespace MisskeyEntity {
   export type UserDetail = {
@@ -25,5 +26,7 @@ namespace MisskeyEntity {
     notesCount: number
     avatarId: string
     bannerId: string
+    pinnedNoteIds?: Array<string>
+    pinnedNotes?: Array<Note>
   }
 }
