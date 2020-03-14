@@ -10,25 +10,29 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
   // ======================================
   public async getAccountFavourites(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit: limit
-      })
-    }
-    if (max_id) {
-      params = Object.assign(params, {
-        max_id: max_id
-      })
-    }
-    if (since_id) {
-      params = Object.assign(params, {
-        since_id: since_id
-      })
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
     }
     return this.client.get<Array<PleromaAPI.Entity.Status>>(`/api/v1/pleroma/accounts/${id}/favourites`, params).then(res => {
       return Object.assign(res, {
