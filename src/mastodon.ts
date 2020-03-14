@@ -473,11 +473,12 @@ export default class Mastodon implements MegalodonInterface {
 
   public async searchAccount(
     q: string,
+    following: boolean,
     limit?: number | null,
     max_id?: string | null,
     since_id?: string | null
   ): Promise<Response<Array<Entity.Account>>> {
-    let params = { q: q }
+    let params = { q: q, following: following }
     if (max_id) {
       params = Object.assign(params, {
         max_id: max_id
