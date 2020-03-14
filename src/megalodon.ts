@@ -138,21 +138,21 @@ export interface MegalodonInterface {
    *
    * @return An account.
    */
-  updateCredentials(
-    discoverable?: boolean | null,
-    bot?: boolean | null,
-    display_name?: string | null,
-    note?: string | null,
-    avatar?: string | null,
-    header?: string | null,
-    locked?: boolean | null,
+  updateCredentials(options?: {
+    discoverable?: boolean
+    bot?: boolean
+    display_name?: string
+    note?: string
+    avatar?: string
+    header?: string
+    locked?: boolean
     source?: {
       privacy?: string
       sensitive?: boolean
       language?: string
-    } | null,
+    }
     fields_attributes?: Array<{ name: string; value: string }>
-  ): Promise<Response<Entity.Account>>
+  }): Promise<Response<Entity.Account>>
   /**
    * GET /api/v1/accounts/:id
    *
@@ -171,16 +171,18 @@ export interface MegalodonInterface {
    * GET /api/v1/pleroma/accounts/:id/favourites
    *
    * @param id Target account ID.
-   * @param limit Max number of results to return.
-   * @param max_id Return results order than ID.
-   * @param since_id Return results newer than ID.
+   * @param options.limit Max number of results to return.
+   * @param options.max_id Return results order than ID.
+   * @param options.since_id Return results newer than ID.
    * @return Array of statuses.
    */
   getAccountFavourites(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>>
   /**
    * POST /api/v1/pleroma/accounts/:id/subscribe
@@ -200,31 +202,35 @@ export interface MegalodonInterface {
    * GET /api/v1/accounts/:id/followers
    *
    * @param id The account ID.
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
    * @return The array of accounts.
    */
   getAccountFollowers(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>>
   /**
    * GET /api/v1/accounts/:id/following
    *
    * @param id The account ID.
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
    * @return The array of accounts.
    */
   getAccountFollowing(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>>
   /**
    * GET /api/v1/accounts/:id/lists
@@ -309,18 +315,20 @@ export interface MegalodonInterface {
    * GET /api/v1/accounts/search
    *
    * @param q Search query.
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
    * @return The array of accounts.
    */
   searchAccount(
     q: string,
-    following?: boolean | null,
-    resolve?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      following?: boolean
+      resolve?: boolean
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/bookmarks
@@ -328,66 +336,61 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/bookmarks
    *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getBookmarks(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>>
+  getBookmarks(options?: { limit?: number; max_id?: string; since_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>>
   // ======================================
   //  accounts/favourites
   // ======================================
   /**
    * GET /api/v1/favourites
    *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getFavourites(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Status>>>
+  getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>>
   // ======================================
   // accounts/mutes
   // ======================================
   /**
    * GET /api/v1/mutes
    *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of accounts.
    */
-  getMutes(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>>
+  getMutes(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/blocks
   // ======================================
   /**
    * GET /api/v1/blocks
    *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of accounts.
    */
-  getBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<Entity.Account>>>
+  getBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/domain_blocks
   // ======================================
   /**
    * GET /api/v1/domain_blocks
    *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of domain name.
    */
-  getDomainBlocks(limit?: number | null, max_id?: string | null, min_id?: string | null): Promise<Response<Array<string>>>
+  getDomainBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>>
   /**
    * POST/api/v1/domain_blocks
    *
@@ -421,17 +424,19 @@ export interface MegalodonInterface {
    *
    * @param phrase Text to be filtered.
    * @param context Array of enumerable strings home, notifications, public, thread. At least one context must be specified.
-   * @param irreversible Should the server irreversibly drop matching entities from home and notifications?
-   * @param whole_word Consider word boundaries?
-   * @param expires_in ISO 8601 Datetime for when the filter expires.
+   * @param options.irreversible Should the server irreversibly drop matching entities from home and notifications?
+   * @param options.whole_word Consider word boundaries?
+   * @param options.expires_in ISO 8601 Datetime for when the filter expires.
    * @return Filter
    */
   createFilter(
     phrase: string,
     context: Array<'home' | 'notifications' | 'public' | 'thread'>,
-    irreversible?: boolean | null,
-    whole_word?: boolean | null,
-    expires_in?: string | null
+    options?: {
+      irreversible?: boolean
+      whole_word?: boolean
+      expires_in?: string
+    }
   ): Promise<Response<Entity.Filter>>
   /**
    * PUT /api/v1/filters/:id
@@ -439,18 +444,20 @@ export interface MegalodonInterface {
    * @param id The filter ID.
    * @param phrase Text to be filtered.
    * @param context Array of enumerable strings home, notifications, public, thread. At least one context must be specified.
-   * @param irreversible Should the server irreversibly drop matching entities from home and notifications?
-   * @param whole_word Consider word boundaries?
-   * @param expires_in ISO 8601 Datetime for when the filter expires.
+   * @param options.irreversible Should the server irreversibly drop matching entities from home and notifications?
+   * @param options.whole_word Consider word boundaries?
+   * @param options.expires_in ISO 8601 Datetime for when the filter expires.
    * @return Filter
    */
   updateFilter(
     id: string,
     phrase: string,
     context: Array<'home' | 'notifications' | 'public' | 'thread'>,
-    irreversible?: boolean | null,
-    whole_word?: boolean | null,
-    expires_in?: string | null
+    options?: {
+      irreversible?: boolean
+      whole_word?: boolean
+      expires_in?: string
+    }
   ): Promise<Response<Entity.Filter>>
   /**
    * DELETE /api/v1/filters/:id
@@ -466,12 +473,12 @@ export interface MegalodonInterface {
    * POST /api/v1/reports
    *
    * @param account_id Target account ID.
-   * @param status_ids Array of Statuses ids to attach to the report.
    * @param comment Reason of the report.
-   * @param forward If the account is remote, should the report be forwarded to the remote admin?
+   * @param options.status_ids Array of Statuses ids to attach to the report.
+   * @param options.forward If the account is remote, should the report be forwarded to the remote admin?
    * @return Report
    */
-  report(account_id: string, comment: string, status_ids?: Array<string> | null, forward?: boolean | null): Promise<Response<Entity.Report>>
+  report(account_id: string, comment: string, options?: { status_ids?: Array<string>; forward?: boolean }): Promise<Response<Entity.Report>>
   // ======================================
   // accounts/follow_requests
   // ======================================
@@ -502,12 +509,12 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/endorsements
    *
-   * @param limit Max number of results to return. Defaults to 40.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 40.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
    * @return Array of accounts.
    */
-  getEndorsements(limit?: number | null, max_id?: string | null, since_id?: string | null): Promise<Response<Array<Entity.Account>>>
+  getEndorsements(options?: { limit?: number; max_id?: string; since_id?: string }): Promise<Response<Array<Entity.Account>>>
   // ======================================
   // accounts/featured_tags
   // ======================================
@@ -563,26 +570,28 @@ export interface MegalodonInterface {
    * POST /api/v1/statuses
    *
    * @param status Text content of status.
-   * @param media_ids Array of Attachment ids.
-   * @param poll Poll object.
-   * @param in_reply_to_id ID of the status being replied to, if status is a reply.
-   * @param sensitive Mark status and attached media as sensitive?
-   * @param spoiler_text Text to be shown as a warning or subject before the actual content.
-   * @param visibility Visibility of the posted status.
-   * @param scheduled_at ISO 8601 Datetime at which to schedule a status.
-   * @param language ISO 639 language code for this status.
+   * @param options.media_ids Array of Attachment ids.
+   * @param options.poll Poll object.
+   * @param options.in_reply_to_id ID of the status being replied to, if status is a reply.
+   * @param options.sensitive Mark status and attached media as sensitive?
+   * @param options.spoiler_text Text to be shown as a warning or subject before the actual content.
+   * @param options.visibility Visibility of the posted status.
+   * @param options.scheduled_at ISO 8601 Datetime at which to schedule a status.
+   * @param options.language ISO 639 language code for this status.
    * @return Status
    */
   postStatus(
     status: string,
-    media_ids?: Array<string>,
-    poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean } | null,
-    in_reply_to_id?: string | null,
-    sensitive?: boolean | null,
-    spoiler_text?: string | null,
-    visibility?: 'public' | 'unlisted' | 'private' | 'direct' | null,
-    scheduled_at?: string | null,
-    language?: string | null
+    options?: {
+      media_ids?: Array<string>
+      poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean }
+      in_reply_to_id?: string
+      sensitive?: boolean
+      spoiler_text?: string
+      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
+      scheduled_at?: string
+      language?: string
+    }
   ): Promise<Response<Entity.Status>>
   /**
    * GET /api/v1/statuses/:id
@@ -696,26 +705,29 @@ export interface MegalodonInterface {
    * POST /api/v1/media
    *
    * @param file The file to be attached, using multipart form data.
-   * @param description A plain-text description of the media.
-   * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+   * @param options.description A plain-text description of the media.
+   * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
    * @return Attachment
    */
-  uploadMedia(file: any, description?: string | null, focus?: string | null): Promise<Response<Entity.Attachment>>
+  uploadMedia(file: any, options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>>
   /**
    * PUT /api/v1/media/:id
    *
    * @param id Target media ID.
-   * @param file The file to be attached, using multipart form data.
-   * @param description A plain-text description of the media.
-   * @param focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+   * @param options.file The file to be attached, using multipart form data.
+   * @param options.description A plain-text description of the media.
+   * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+   * @param options.is_sensitive Whether the media is sensitive.
    * @return Attachment
    */
   updateMedia(
     id: string,
-    file?: any,
-    description?: string | null,
-    focus?: string | null,
-    is_sensitive?: boolean | null
+    options?: {
+      file?: any
+      description?: string
+      focus?: string
+      is_sensitive?: boolean
+    }
   ): Promise<Response<Entity.Attachment>>
   // ======================================
   // statuses/polls
@@ -741,18 +753,18 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/scheduled_statuses
    *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of scheduled statuses.
    */
-  getScheduledStatuses(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.ScheduledStatus>>>
+  getScheduledStatuses(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.ScheduledStatus>>>
   /**
    * GET /api/v1/scheduled_statuses/:id
    *
@@ -780,91 +792,95 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/timelines/public
    *
-   * @param only_media Show only statuses with media attached? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.only_media Show only statuses with media attached? Defaults to false.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getPublicTimeline(
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>>
+  getPublicTimeline(options?: {
+    only_media?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/public
    *
-   * @param only_media Show only statuses with media attached? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.only_media Show only statuses with media attached? Defaults to false.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getLocalTimeline(
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>>
+  getLocalTimeline(options?: {
+    only_media?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/tag/:hashtag
    *
    * @param hashtag Content of a #hashtag, not including # symbol.
-   * @param local Show only local statuses? Defaults to false.
-   * @param only_media Show only statuses with media attached? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.local Show only local statuses? Defaults to false.
+   * @param options.only_media Show only statuses with media attached? Defaults to false.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
   getTagTimeline(
     hashtag: string,
-    local?: boolean | null,
-    only_media?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
+    options?: {
+      local?: boolean
+      only_media?: boolean
+      limit?: number
+      max_id?: string
+      since_id?: string
+      min_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/home
    *
-   * @param local Show only local statuses? Defaults to false.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.local Show only local statuses? Defaults to false.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getHomeTimeline(
-    local?: boolean | null,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Status>>>
+  getHomeTimeline(options?: {
+    local?: boolean
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/timelines/list/:list_id
    *
    * @param list_id Local ID of the list in the database.
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
   getListTimeline(
     list_id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+      min_id?: string
+    }
   ): Promise<Response<Array<Entity.Status>>>
   // ======================================
   // timelines/conversations
@@ -872,18 +888,18 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/conversations
    *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of statuses.
    */
-  getConversationTimeline(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null
-  ): Promise<Response<Array<Entity.Conversation>>>
+  getConversationTimeline(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+  }): Promise<Response<Array<Entity.Conversation>>>
   /**
    * DELETE /api/v1/conversations/:id
    *
@@ -937,17 +953,20 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/lists/:id/accounts
    *
-   * @param limit Max number of results to return.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
+   * @param id Target list ID.
+   * @param options.limit Max number of results to return.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
    * @return Array of accounts.
    */
   getAccountsInList(
     id: string,
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+    }
   ): Promise<Response<Array<Entity.Account>>>
   /**
    * POST /api/v1/lists/:id/accounts
@@ -976,33 +995,33 @@ export interface MegalodonInterface {
   /**
    * POST /api/v1/markers
    *
-   * @param home Marker position of the last read status ID in home timeline.
-   * @param notifications Marker position of the last read notification ID in notifications.
+   * @param options.home Marker position of the last read status ID in home timeline.
+   * @param options.notifications Marker position of the last read notification ID in notifications.
    * @return Marker.
    */
-  saveMarker(home?: { last_read_id: string } | null, notifications?: { last_read_id: string } | null): Promise<Response<Entity.Marker>>
+  saveMarker(options?: { home?: { last_read_id: string }; notifications?: { last_read_id: string } }): Promise<Response<Entity.Marker>>
   // ======================================
   // notifications
   // ======================================
   /**
    * GET /api/v1/notifications
    *
-   * @param limit Max number of results to return. Defaults to 20.
-   * @param max_id Return results older than ID.
-   * @param since_id Return results newer than ID.
-   * @param min_id Return results immediately newer than ID.
-   * @param exclude_type Array of types to exclude.
-   * @param account_id Return only notifications received from this account.
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.min_id Return results immediately newer than ID.
+   * @param options.exclude_type Array of types to exclude.
+   * @param options.account_id Return only notifications received from this account.
    * @return Array of notifications.
    */
-  getNotifications(
-    limit?: number | null,
-    max_id?: string | null,
-    since_id?: string | null,
-    min_id?: string | null,
-    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'> | null,
-    account_id?: string | null
-  ): Promise<Response<Array<Entity.Notification>>>
+  getNotifications(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'>
+    account_id?: string
+  }): Promise<Response<Array<Entity.Notification>>>
   /**
    * GET /api/v1/notifications/:id
    *
@@ -1071,26 +1090,28 @@ export interface MegalodonInterface {
    *
    * @param q The search query.
    * @param type Enum of search target.
-   * @param limit Maximum number of results to load, per type. Defaults to 20. Max 40.
-   * @param max_id Return results older than this id.
-   * @param min_id Return results immediately newer than this id.
-   * @param resolve Attempt WebFinger lookup. Defaults to false.
-   * @param following Only include accounts that the user is following. Defaults to false.
-   * @param account_id If provided, statuses returned will be authored only by this account.
-   * @param exclude_unreviewed Filter out unreviewed tags? Defaults to false.
+   * @param options.limit Maximum number of results to load, per type. Defaults to 20. Max 40.
+   * @param options.max_id Return results older than this id.
+   * @param options.min_id Return results immediately newer than this id.
+   * @param options.resolve Attempt WebFinger lookup. Defaults to false.
+   * @param options.following Only include accounts that the user is following. Defaults to false.
+   * @param options.account_id If provided, statuses returned will be authored only by this account.
+   * @param options.exclude_unreviewed Filter out unreviewed tags? Defaults to false.
    * @return Results.
    */
   search(
     q: string,
     type: 'accounts' | 'hashtags' | 'statuses',
-    limit?: number | null,
-    max_id?: string | null,
-    min_id?: string | null,
-    resolve?: boolean | null,
-    offset?: number | null,
-    following?: boolean | null,
-    account_id?: string | null,
-    exclude_unreviewed?: boolean | null
+    options?: {
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
   ): Promise<Response<Entity.Results>>
 
   // ======================================
@@ -1127,18 +1148,18 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/directory
    *
-   * @param limit How many accounts to load. Default 40.
-   * @param offset How many accounts to skip before returning results. Default 0.
-   * @param order Order of results.
-   * @param local Only return local accounts.
+   * @param options.limit How many accounts to load. Default 40.
+   * @param options.offset How many accounts to skip before returning results. Default 0.
+   * @param options.order Order of results.
+   * @param options.local Only return local accounts.
    * @return Array of accounts.
    */
-  getInstanceDirectory(
-    limit?: number | null,
-    offset?: number | null,
-    order?: 'active' | 'new' | null,
-    local?: boolean | null
-  ): Promise<Response<Array<Entity.Account>>>
+  getInstanceDirectory(options?: {
+    limit?: number
+    offset?: number
+    order?: 'active' | 'new'
+    local?: boolean
+  }): Promise<Response<Array<Entity.Account>>>
 
   // ======================================
   // instance/custom_emojis
