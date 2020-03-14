@@ -4,7 +4,7 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
 import WebSocket from './mastodon/web_socket'
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError, NotificationType } from './megalodon'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 
@@ -281,8 +281,34 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async getAccountStatuses(id: string): Promise<Response<Array<Entity.Status>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/accounts/${id}/statuses`).then(res => {
+  public async getAccountStatuses(
+    id: string,
+    options?: { limit?: number; max_id?: string; since_id?: string; pinned: boolean }
+  ): Promise<Response<Array<Entity.Status>>> {
+    let params = {}
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.pinned) {
+        params = Object.assign(params, {
+          pinned: options.pinned
+        })
+      }
+    }
+    return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/accounts/${id}/statuses`, params).then(res => {
       return Object.assign(res, {
         data: res.data.map(s => MastodonAPI.Converter.status(s))
       })
@@ -399,16 +425,18 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async followAccount(id: string, reblog: boolean = true): Promise<Response<Entity.Relationship>> {
-    return this.client
-      .post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, {
+  public async followAccount(id: string, reblog?: boolean): Promise<Response<Entity.Relationship>> {
+    let params = {}
+    if (reblog !== undefined) {
+      params = Object.assign(params, {
         reblog: reblog
       })
-      .then(res => {
-        return Object.assign(res, {
-          data: MastodonAPI.Converter.relationship(res.data)
-        })
+    }
+    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.relationship(res.data)
       })
+    })
   }
 
   public async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
@@ -1068,8 +1096,29 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async getStatusContext(id: string): Promise<Response<Entity.Context>> {
-    return this.client.get<MastodonAPI.Entity.Context>(`/api/v1/statuses/${id}/context`).then(res => {
+  public async getStatusContext(
+    id: string,
+    options?: { limit?: number; max_id?: string; since_id?: string }
+  ): Promise<Response<Entity.Context>> {
+    let params = {}
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+    }
+    return this.client.get<MastodonAPI.Entity.Context>(`/api/v1/statuses/${id}/context`, params).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.context(res.data)
       })
@@ -1715,7 +1764,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string
     since_id?: string
     min_id?: string
-    exclude_type?: Array<'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'>
+    exclude_types?: Array<NotificationType>
     account_id?: string
   }): Promise<Response<Array<Entity.Notification>>> {
     let params = {}
@@ -1740,9 +1789,9 @@ export default class Mastodon implements MegalodonInterface {
           min_id: options.min_id
         })
       }
-      if (options.exclude_type) {
+      if (options.exclude_types) {
         params = Object.assign(params, {
-          exclude_type: options.exclude_type
+          exclude_types: options.exclude_types
         })
       }
       if (options.account_id) {
