@@ -153,7 +153,7 @@ export default class Misskey implements MegalodonInterface {
     _client_id: string | null,
     client_secret: string,
     session_token: string,
-    _redirect_uri?: string | null
+    _redirect_uri?: string
   ): Promise<OAuth.TokenData> {
     return MisskeyAPI.Client.post<MisskeyAPI.Entity.UserKey>('/api/auth/session/userkey', {
       appSecret: client_secret,

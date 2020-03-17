@@ -7,7 +7,7 @@ const rl: readline.ReadLine = readline.createInterface({
 })
 
 const SCOPES: Array<string> = ['read', 'write', 'follow']
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://mstdn.maud.io'
 
 let clientId: string
 let clientSecret: string
@@ -32,7 +32,7 @@ client
     })
   })
   .then((code: string) => {
-    return client.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
+    return client.fetchAccessToken(clientId, clientSecret, code)
   })
   .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')

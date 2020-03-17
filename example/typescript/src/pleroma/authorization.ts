@@ -32,7 +32,7 @@ client
     })
   })
   .then((code: string) => {
-    return client.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
+    return client.fetchAccessToken(clientId, clientSecret, code)
   })
   .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')
