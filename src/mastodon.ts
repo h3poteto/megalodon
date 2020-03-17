@@ -113,7 +113,7 @@ export default class Mastodon implements MegalodonInterface {
         redirect_uri: options.redirect_uri,
         response_type: 'code',
         client_id: clientId,
-        scope: options.scope!.join(',')
+        scope: options.scope!.join(' ')
       })
       resolve(url)
     })
@@ -133,7 +133,7 @@ export default class Mastodon implements MegalodonInterface {
     client_id: string | null,
     client_secret: string,
     code: string,
-    redirect_uri: string | null = NO_REDIRECT
+    redirect_uri: string = NO_REDIRECT
   ): Promise<OAuth.TokenData> {
     if (!client_id) {
       throw new Error('client_id is required')

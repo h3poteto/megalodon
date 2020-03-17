@@ -34,7 +34,7 @@ client
     if (!session_token) {
       throw new Error('Could not get session token')
     }
-    return client.fetchAccessToken(clientId, clientSecret, session_token, BASE_URL)
+    return client.fetchAccessToken(clientId, clientSecret, session_token)
   })
   .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')
