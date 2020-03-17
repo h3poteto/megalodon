@@ -130,11 +130,14 @@ export default class Mastodon implements MegalodonInterface {
   // apps/oauth
   // ======================================
   public async fetchAccessToken(
-    client_id: string,
+    client_id: string | null,
     client_secret: string,
     code: string,
-    redirect_uri = NO_REDIRECT
+    redirect_uri: string | null = NO_REDIRECT
   ): Promise<OAuth.TokenData> {
+    if (!client_id) {
+      throw new Error('client_id is required')
+    }
     return this.client
       .post<OAuth.TokenDataFromServer>('/oauth/token', {
         client_id,

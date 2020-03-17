@@ -150,10 +150,10 @@ export default class Misskey implements MegalodonInterface {
    * @param _redirect_uri This parameter is not used in this method.
    */
   public async fetchAccessToken(
-    _client_id: string,
+    _client_id: string | null,
     client_secret: string,
     session_token: string,
-    _redirect_uri: string
+    _redirect_uri?: string | null
   ): Promise<OAuth.TokenData> {
     return MisskeyAPI.Client.post<MisskeyAPI.Entity.UserKey>('/api/auth/session/userkey', {
       appSecret: client_secret,
