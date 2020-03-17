@@ -94,7 +94,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    */
   private _resetConnection() {
     if (this._client) {
-      this._client.close(100)
+      this._client.close(1000)
       this._client.removeAllListeners()
       this._client = null
     }
