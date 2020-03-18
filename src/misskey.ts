@@ -831,7 +831,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/following/requests/list
    */
   public async getFollowRequests(_limit?: number): Promise<Response<Array<Entity.Account>>> {
-    return this.client.post<Array<MisskeyAPI.Entity.FollowRequest>>('/api/folllowing/requests/list').then(res => {
+    return this.client.post<Array<MisskeyAPI.Entity.FollowRequest>>('/api/following/requests/list').then(res => {
       return Object.assign(res, {
         data: res.data.map(r => MisskeyAPI.Converter.user(r.follower))
       })
