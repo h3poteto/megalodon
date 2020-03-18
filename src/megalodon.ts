@@ -315,6 +315,13 @@ export interface MegalodonInterface {
    */
   getRelationship(id: string): Promise<Response<Entity.Relationship>>
   /**
+   * Get multiple relationships in one method
+   *
+   * @param ids Array of account IDs.
+   * @return Array of Relationship.
+   */
+  getRelationships(ids: Array<string>): Promise<Response<Array<Entity.Relationship>>>
+  /**
    * GET /api/v1/accounts/search
    *
    * @param q Search query.

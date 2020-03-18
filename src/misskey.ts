@@ -567,6 +567,18 @@ export default class Misskey implements MegalodonInterface {
   }
 
   /**
+   * POST /api/users/relation
+   *
+   * @param id Array of account ID, for example `['1sdfag', 'ds12aa']`.
+   */
+  public async getRelationships(ids: Array<string>): Promise<Response<Array<Entity.Relationship>>> {
+    return Promise.all(ids.map(id => this.getRelationship(id))).then(results => ({
+      ...results[0],
+      data: results.map(r => r.data)
+    }))
+  }
+
+  /**
    * POST /api/users/search
    */
   public async searchAccount(
