@@ -514,6 +514,18 @@ export default class Mastodon implements MegalodonInterface {
       })
   }
 
+  public async getRelationships(ids: Array<string>): Promise<Response<Array<Entity.Relationship>>> {
+    return this.client
+      .get<Array<MastodonAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
+        id: ids
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: res.data.map(r => MastodonAPI.Converter.relationship(r))
+        })
+      })
+  }
+
   public async searchAccount(
     q: string,
     options?: {
