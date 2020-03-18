@@ -42,14 +42,12 @@ export default class Mastodon implements MegalodonInterface {
 
   public async registerApp(
     client_name: string,
-    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
-      scopes: DEFAULT_SCOPE,
-      redirect_uris: NO_REDIRECT
-    }
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }>
   ): Promise<OAuth.AppData> {
+    const scopes = options.scopes || DEFAULT_SCOPE
     return this.createApp(client_name, options).then(async appData => {
       return this.generateAuthUrl(appData.client_id, appData.client_secret, {
-        scope: options.scopes,
+        scope: scopes,
         redirect_uri: appData.redirect_uri
       }).then(url => {
         appData.url = url
@@ -67,13 +65,10 @@ export default class Mastodon implements MegalodonInterface {
    */
   public async createApp(
     client_name: string,
-    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }> = {
-      redirect_uris: NO_REDIRECT,
-      scopes: DEFAULT_SCOPE
-    }
+    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }>
   ): Promise<OAuth.AppData> {
-    const redirect_uris = options.redirect_uris || NO_REDIRECT
     const scopes = options.scopes || DEFAULT_SCOPE
+    const redirect_uris = options.redirect_uris || NO_REDIRECT
 
     const params: {
       client_name: string
@@ -102,18 +97,17 @@ export default class Mastodon implements MegalodonInterface {
   public generateAuthUrl(
     clientId: string,
     clientSecret: string,
-    options: Partial<{ scope: Array<string>; redirect_uri: string }> = {
-      redirect_uri: NO_REDIRECT,
-      scope: DEFAULT_SCOPE
-    }
+    options: Partial<{ scope: Array<string>; redirect_uri: string }>
   ): Promise<string> {
+    const scope = options.scope || DEFAULT_SCOPE
+    const redirect_uri = options.redirect_uri || NO_REDIRECT
     return new Promise(resolve => {
       const oauth = new OAuth2(clientId, clientSecret, this.baseUrl, undefined, '/oauth/token')
       const url = oauth.getAuthorizeUrl({
-        redirect_uri: options.redirect_uri,
+        redirect_uri: redirect_uri,
         response_type: 'code',
         client_id: clientId,
-        scope: options.scope!.join(' ')
+        scope: scope.join(' ')
       })
       resolve(url)
     })
