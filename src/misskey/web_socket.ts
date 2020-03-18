@@ -383,6 +383,8 @@ export class Parser extends EventEmitter {
       // When renote and followed event, the same notification will be received.
       case 'renote':
       case 'followed':
+      case 'follow':
+      case 'unfollow':
       case 'receiveFollowRequest':
       case 'meUpdated':
       case 'readAllNotifications':
