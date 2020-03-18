@@ -126,10 +126,23 @@ namespace MisskeyAPI {
       }
     }
 
+    export const fileType = (s: string): 'unknown' | 'image' | 'gifv' | 'video' => {
+      if (s === 'image/gif') {
+        return 'gifv'
+      }
+      if (s.includes('image')) {
+        return 'image'
+      }
+      if (s.includes('video')) {
+        return 'video'
+      }
+      return 'unknown'
+    }
+
     export const file = (f: Entity.File): MegalodonEntity.Attachment => {
       return {
         id: f.id,
-        type: 'image',
+        type: fileType(f.type),
         url: f.url,
         remote_url: f.url,
         preview_url: f.thumbnailUrl,
