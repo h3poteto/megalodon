@@ -290,7 +290,7 @@ export default class Misskey implements MegalodonInterface {
   ): Promise<Response<Array<Entity.Status>>> {
     if (options && options.pinned) {
       return this.client
-        .post<MisskeyAPI.Entity.UserDetail>('/api/usres/show', {
+        .post<MisskeyAPI.Entity.UserDetail>('/api/users/show', {
           userId: id
         })
         .then(res => {
@@ -406,9 +406,9 @@ export default class Misskey implements MegalodonInterface {
         })
       }
     }
-    return this.client.post<Array<MisskeyAPI.Entity.Follower>>('/api/users/following', params).then(res => {
+    return this.client.post<Array<MisskeyAPI.Entity.Following>>('/api/users/following', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(f => MisskeyAPI.Converter.follower(f))
+        data: res.data.map(f => MisskeyAPI.Converter.following(f))
       })
     })
   }
@@ -431,7 +431,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/following/create
    */
   public async followAccount(id: string, _reblog?: boolean): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('api/following/create', {
+    await this.client.post<{}>('/api/following/create', {
       userId: id
     })
     return this.client
@@ -449,7 +449,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/following/delete
    */
   public async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('api/following/delete', {
+    await this.client.post<{}>('/api/following/delete', {
       userId: id
     })
     return this.client
@@ -467,7 +467,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/blocking/create
    */
   public async blockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('api/blocking/create', {
+    await this.client.post<{}>('/api/blocking/create', {
       userId: id
     })
     return this.client
@@ -485,7 +485,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/blocking/delete
    */
   public async unblockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('api/blocking/delete', {
+    await this.client.post<{}>('/api/blocking/delete', {
       userId: id
     })
     return this.client
@@ -503,7 +503,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/mute/create
    */
   public async muteAccount(id: string, _notifications: boolean): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('api/mute/create', {
+    await this.client.post<{}>('/api/mute/create', {
       userId: id
     })
     return this.client
@@ -521,7 +521,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/mute/delete
    */
   public async unmuteAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('api/mute/delete', {
+    await this.client.post<{}>('/api/mute/delete', {
       userId: id
     })
     return this.client
