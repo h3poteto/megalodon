@@ -552,12 +552,12 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/users/relation
    *
-   * @param ids Array of the accountID, for example `['1sdfag']`. Only the first element is used.
+   * @param id The accountID, for example `'1sdfag'`
    */
-  public async getRelationship(ids: Array<string>): Promise<Response<Entity.Relationship>> {
+  public async getRelationship(id: string): Promise<Response<Entity.Relationship>> {
     return this.client
       .post<MisskeyAPI.Entity.Relation>('/api/users/relation', {
-        userId: ids[0]
+        userId: id
       })
       .then(res => {
         return Object.assign(res, {

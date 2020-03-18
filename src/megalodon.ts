@@ -310,10 +310,10 @@ export interface MegalodonInterface {
   /**
    * GET /api/v1/accounts/relationships
    *
-   * @param ids Array of account IDs.
+   * @param id The account ID.
    * @return Relationship
    */
-  getRelationship(ids: Array<string>): Promise<Response<Entity.Relationship>>
+  getRelationship(id: string): Promise<Response<Entity.Relationship>>
   /**
    * GET /api/v1/accounts/search
    *
