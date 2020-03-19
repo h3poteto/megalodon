@@ -226,6 +226,19 @@ client.fetchAccessToken(clientId, clientSecret, code)
   .catch((err: Error) => console.error(err))
 ```
 
+### Detect each SNS
+You have to provide SNS name `mastodon`, `pleroma` or `misskey` to `generator` function.
+But when you only know the URL and not the SNS, `detector` function can detect the SNS.
+
+```typescript
+import { detector } from 'megalodon'
+
+const URL = 'https://misskey.io'
+
+const sns = await detector(URL)
+console.log(sns)
+```
+
 ## License
 
 The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
