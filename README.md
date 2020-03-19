@@ -5,7 +5,8 @@
 [![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
 [![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
 
-A Mastodon and Pleroma API Client library for node.js and browser. It provides REST API and streaming methods.
+A Mastodon, Pleroma and Misskey API Client library for node.js and browser. It provides REST API and streaming methods.
+By using this library, you can take Mastodon, Pleroma and Misskey with the same interface.
 
 ## Features
 
@@ -51,180 +52,83 @@ These libraries are for node.js, so can not use in browser.
 [Here](example/browser/webpack.config.js) is example Webpack configuration.
 
 ## Usage
-I prepared [examples](example).
+I prepared [examples](example), and please refer [documents](https://h3poteto.github.io/megalodon/) about each methods.
 
-### Authorization
-First, you should register the application.
+I explain some typical methods.
+At first, please get your access token for a fediverse server.
+If you don't have access token, or you want to register applications and get access token programmably, please refer [Authorization section](#authorization).
 
-```typescript
-import Mastodon from 'megalodon'
 
-const SCOPES: string = 'read write follow'
-const BASE_URL: string = 'https://friends.nico'
-
-let clientId: string
-let clientSecret: string
-
-Mastodon.registerApp('Test App', {
-  scopes: SCOPES
-}, BASE_URL).then(appData => {
-  clientId = appData.clientId
-  clientSecret = appData.clientSecret
-  console.log('Authorization URL is generated.')
-  console.log(appData.url)
-})
-```
-
-And, get an access token.
+### Home timeline
 
 ```typescript
-const code = '...' // Authorization code
+import generator, { Entity, Response } from 'megalodon'
 
-Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
-})
-  .then((tokenData: Partial<{ accessToken: string }>) => {
-    console.log(tokenData.accessToken)
-  })
-  .catch((err: Error) => console.error(err))
-```
-
-### Get timeline
-
-```typescript
-import Mastodon, { Status, Response } from 'megalodon'
-
-const BASE_URL: string = 'https://friends.nico'
-
+const BASE_URL: string = 'https://mastodon.social'
 const access_token: string = '...'
 
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
-
-client.get<[Status]>('/timelines/home')
-  .then((resp: Response<[Status]>) => {
-    console.log(resp.data)
+const client = generator('mastodon', BASE_URL, access_token)
+client.getHomeTimeline()
+  .then((res: Response<Array<Entity.Status>>) => {
+    console.log(res.data)
   })
 ```
 
 ### Post toot
 
 ```typescript
-import Mastodon, { Status, Response } from 'megalodon'
+import generator, { Entity, Response } from 'megalodon'
 
-const BASE_URL: string = 'https://friends.nico'
-
+const BASE_URL: string = 'https://mastodon.social'
 const access_token: string = '...'
-
 const toot: string = 'test toot'
 
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
-
-client.post<Status>('/statuses', {
-  status: toot
-})
-  .then((res: Response<Status>) => {
+const client = generator('mastodon', BASE_URL, access_token)
+client.postStatus(toot)
+  .then((res: Response<Entity.Status>) => {
     console.log(res.data)
   })
-
 ```
 
 ### Post medias
-The POST method is wrapper of [axios](https://github.com/axios/axios): https://github.com/h3poteto/megalodon/blob/master/src/mastodon.ts#L245-L266
-
-So you can use the same way of axios to post medias.
+Please provide a file to the argument.
 
 ```typescript
-import Mastodon, { Status, Response } from 'megalodon'
+import generator, { Entity, Response } from 'megalodon'
 import fs from 'fs'
 
-const BASE_URL: string = 'https://friends.nico'
-
+const BASE_URL: string = 'https://mastodon.social'
 const access_token: string = '...'
-
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
-
 const image = fs.readFileSync("test.image")
-const formData = new FormData()
-formData.append('file', image)
 
-client.post<Attachment>('/media', formData)
-  .then((res: Response<Attachment>) => {
+const client = generator('mastodon', BASE_URL, access_token)
+client.uploadMedia(image)
+  .then((res: Response<Entity.Attachment>) => {
     console.log(res.data)
   })
 ```
 
-
-
-### Streaming for Mastodon
-This method provides streaming method for Mastodon. If you want to use Pleroma, [please use WebSocket](#websocket-for-pleroma).
+### WebSocket streaming
+Mastodon, Pleroma and Misskey provide WebSocket for streaming.
 
 ```typescript
-import Mastodon, { Status, Notification, StreamListener } from 'megalodon'
-
-const BASE_URL: string = 'https://friends.nico'
-
-const access_token: string = '...'
-
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
-
-
-const stream: StreamListener = client.stream('/streaming/public')
-stream.on('update', (status: Status) => {
-  console.log(status)
-})
-
-stream.on('notification', (notification: Notification) => {
-  console.log(notification)
-})
-
-stream.on('delete', (id: number) => {
-  console.log(id)
-})
-
-stream.on('error', (err: Error) => {
-  console.error(err)
-})
-
-stream.on('heartbeat', () => {
-  console.log('thump.')
-})
-```
-### WebSocket for Pleroma
-This method provides streaming method for Pleroma.
-
-```typescript
-import Mastodon, { Status, Notification, WebSocket } from 'megalodon'
+import generator, { Entity, WebSocketInterface } from 'megalodon'
 
 const BASE_URL: string = 'wss://pleroma.io'
-
 const access_token: string = '...'
 
-const client = new Mastodon(
-  access_token,
-  BASE_URL + '/api/v1'
-)
+const client = generator('pleroma', BASE_URL, access_token)
+const stream: WebSocketInterface = client.userSocket()
 
-const stream: WebSocket = client.socket('/streaming', 'user')
 stream.on('connect', () => {
   console.log('connect')
 })
 
-stream.on('update', (status: Status) => {
+stream.on('update', (status: Entity.Status) => {
   console.log(status)
 })
 
-stream.on('notification', (notification: Notification) => {
+stream.on('notification', (notification: Entity.Notification) => {
   console.log(notification)
 })
 
@@ -247,6 +151,79 @@ stream.on('close', () => {
 stream.on('parser-error', (err: Error) => {
   console.error(err)
 })
+```
+
+### HTTP Streaming
+Mastodon provides HTTP streaming.
+
+```typescript
+import generator, { Entity, StreamListenerInterface } from 'megalodon'
+
+const BASE_URL: string = 'https://mastodon.social'
+const access_token: string = '...'
+
+const client = generator('mastodon', BASE_URL, access_token)
+const stream: StreamListenerInterface
+
+stream.on('update', (status: Entity.Status) => {
+  console.log(status)
+})
+
+stream.on('notification', (notification: Entity.Notification) => {
+  console.log(notification)
+})
+
+stream.on('delete', (id: number) => {
+  console.log(id)
+})
+
+stream.on('error', (err: Error) => {
+  console.error(err)
+})
+
+stream.on('heartbeat', () => {
+  console.log('thump.')
+})
+```
+
+
+### Authorization
+You can register applications, and get access tokens to use this method.
+
+```typescript
+import generator, { OAuth } from 'megalodon'
+
+const BASE_URL: string = 'https://mastodon.social'
+
+let clientId: string
+let clientSecret: string
+
+const client = generator('mastodon', BASE_URL)
+
+client.registerApp('Test App')
+  .then(appData => {
+    clientId = appData.clientId
+    clientSecret = appData.clientSecret
+    console.log('Authorization URL is generated.')
+    console.log(appData.url)
+  })
+```
+
+Please open `Autorhization URL` in your browser, and authorize this app.
+In this time, you can get authorization code.
+
+After that, get an access token.
+
+```typescript
+const code = '...' // Authorization code
+
+client.fetchAccessToken(clientId, clientSecret, code)
+})
+  .then((tokenData: OAuth.TokenData) => {
+    console.log(tokenData.accessToken)
+    console.log(tokenData.refreshToken)
+  })
+  .catch((err: Error) => console.error(err))
 ```
 
 ## License
