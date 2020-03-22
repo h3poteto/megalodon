@@ -72,7 +72,8 @@
 					<a href="https://github.com/h3poteto/megalodon/releases"><img src="https://img.shields.io/github/release/h3poteto/megalodon.svg" alt="GitHub release"></a>
 					<a href="https://www.npmjs.com/package/megalodon"><img src="https://img.shields.io/npm/dm/megalodon" alt="npm"></a>
 				<a href="/LICENSE.txt"><img src="https://img.shields.io/npm/l/megalodon" alt="NPM"></a></p>
-				<p>A Mastodon and Pleroma API Client library for node.js and browser. It provides REST API and streaming methods.</p>
+				<p>A Mastodon, Pleroma and Misskey API Client library for node.js and browser. It provides REST API and streaming methods.
+				By using this library, you can take Mastodon, Pleroma and Misskey with the same interface.</p>
 				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
 					<h2>Features</h2>
 				</a>
@@ -110,163 +111,74 @@
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
-				<p>I prepared <a href="example">examples</a>.</p>
-				<a href="#authorization" id="authorization" style="color: inherit; text-decoration: none;">
-					<h3>Authorization</h3>
+				<p>I prepared <a href="example">examples</a>, and please refer <a href="https://h3poteto.github.io/megalodon/">documents</a> about each methods.</p>
+				<p>I explain some typical methods.
+					At first, please get your access token for a fediverse server.
+				If you don&#39;t have access token, or you want to register applications and get access token programmably, please refer <a href="#authorization">Authorization section</a>.</p>
+				<a href="#home-timeline" id="home-timeline" style="color: inherit; text-decoration: none;">
+					<h3>Home timeline</h3>
 				</a>
-				<p>First, you should register the application.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Mastodon <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> generator, { Entity, Response } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
 
-<span class="hljs-keyword">const</span> SCOPES: <span class="hljs-built_in">string</span> = <span class="hljs-string">'read write follow'</span>
-<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://friends.nico'</span>
-
-<span class="hljs-keyword">let</span> clientId: <span class="hljs-built_in">string</span>
-<span class="hljs-keyword">let</span> clientSecret: <span class="hljs-built_in">string</span>
-
-Mastodon.registerApp(<span class="hljs-string">'Test App'</span>, {
-  scopes: SCOPES
-}, BASE_URL).then(<span class="hljs-function"><span class="hljs-params">appData</span> =&gt;</span> {
-  clientId = appData.clientId
-  clientSecret = appData.clientSecret
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Authorization URL is generated.'</span>)
-  <span class="hljs-built_in">console</span>.log(appData.url)
-})</code></pre>
-				<p>And, get an access token.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> code = <span class="hljs-string">'...'</span> <span class="hljs-comment">// Authorization code</span>
-
-Mastodon.fetchAccessToken(clientId, clientSecret, code, BASE_URL)
-})
-  .then(<span class="hljs-function">(<span class="hljs-params">tokenData: Partial&lt;{ accessToken: <span class="hljs-built_in">string</span> }&gt;</span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(tokenData.accessToken)
-  })
-  .catch(<span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">Error</span></span>) =&gt;</span> <span class="hljs-built_in">console</span>.error(err))</code></pre>
-				<a href="#get-timeline" id="get-timeline" style="color: inherit; text-decoration: none;">
-					<h3>Get timeline</h3>
-				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Mastodon, { Status, Response } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
-
-<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://friends.nico'</span>
-
+<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://mastodon.social'</span>
 <span class="hljs-keyword">const</span> access_token: <span class="hljs-built_in">string</span> = <span class="hljs-string">'...'</span>
 
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Mastodon(
-  access_token,
-  BASE_URL + <span class="hljs-string">'/api/v1'</span>
-)
-
-client.get&lt;[Status]&gt;(<span class="hljs-string">'/timelines/home'</span>)
-  .then(<span class="hljs-function">(<span class="hljs-params">resp: Response&lt;[Status]&gt;</span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(resp.data)
+<span class="hljs-keyword">const</span> client = generator(<span class="hljs-string">'mastodon'</span>, BASE_URL, access_token)
+client.getHomeTimeline()
+  .then(<span class="hljs-function">(<span class="hljs-params">res: Response&lt;<span class="hljs-built_in">Array</span>&lt;Entity.Status&gt;&gt;</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(res.data)
   })</code></pre>
 				<a href="#post-toot" id="post-toot" style="color: inherit; text-decoration: none;">
 					<h3>Post toot</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Mastodon, { Status, Response } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> generator, { Entity, Response } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
 
-<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://friends.nico'</span>
-
+<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://mastodon.social'</span>
 <span class="hljs-keyword">const</span> access_token: <span class="hljs-built_in">string</span> = <span class="hljs-string">'...'</span>
-
 <span class="hljs-keyword">const</span> toot: <span class="hljs-built_in">string</span> = <span class="hljs-string">'test toot'</span>
 
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Mastodon(
-  access_token,
-  BASE_URL + <span class="hljs-string">'/api/v1'</span>
-)
-
-client.post&lt;Status&gt;(<span class="hljs-string">'/statuses'</span>, {
-  status: toot
-})
-  .then(<span class="hljs-function">(<span class="hljs-params">res: Response&lt;Status&gt;</span>) =&gt;</span> {
+<span class="hljs-keyword">const</span> client = generator(<span class="hljs-string">'mastodon'</span>, BASE_URL, access_token)
+client.postStatus(toot)
+  .then(<span class="hljs-function">(<span class="hljs-params">res: Response&lt;Entity.Status&gt;</span>) =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(res.data)
-  })
-</code></pre>
+  })</code></pre>
 				<a href="#post-medias" id="post-medias" style="color: inherit; text-decoration: none;">
 					<h3>Post medias</h3>
 				</a>
-				<p>The POST method is wrapper of <a href="https://github.com/axios/axios">axios</a>: <a href="https://github.com/h3poteto/megalodon/blob/master/src/mastodon.ts#L245-L266">https://github.com/h3poteto/megalodon/blob/master/src/mastodon.ts#L245-L266</a></p>
-				<p>So you can use the same way of axios to post medias.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Mastodon, { Status, Response } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+				<p>Please provide a file to the argument.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> generator, { Entity, Response } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
 <span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>
 
-<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://friends.nico'</span>
-
+<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://mastodon.social'</span>
 <span class="hljs-keyword">const</span> access_token: <span class="hljs-built_in">string</span> = <span class="hljs-string">'...'</span>
-
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Mastodon(
-  access_token,
-  BASE_URL + <span class="hljs-string">'/api/v1'</span>
-)
-
 <span class="hljs-keyword">const</span> image = fs.readFileSync(<span class="hljs-string">"test.image"</span>)
-<span class="hljs-keyword">const</span> formData = <span class="hljs-keyword">new</span> FormData()
-formData.append(<span class="hljs-string">'file'</span>, image)
 
-client.post&lt;Attachment&gt;(<span class="hljs-string">'/media'</span>, formData)
-  .then(<span class="hljs-function">(<span class="hljs-params">res: Response&lt;Attachment&gt;</span>) =&gt;</span> {
+<span class="hljs-keyword">const</span> client = generator(<span class="hljs-string">'mastodon'</span>, BASE_URL, access_token)
+client.uploadMedia(image)
+  .then(<span class="hljs-function">(<span class="hljs-params">res: Response&lt;Entity.Attachment&gt;</span>) =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(res.data)
   })</code></pre>
-				<a href="#streaming-for-mastodon" id="streaming-for-mastodon" style="color: inherit; text-decoration: none;">
-					<h3>Streaming for Mastodon</h3>
+				<a href="#websocket-streaming" id="websocket-streaming" style="color: inherit; text-decoration: none;">
+					<h3>WebSocket streaming</h3>
 				</a>
-				<p>This method provides streaming method for Mastodon. If you want to use Pleroma, <a href="#websocket-for-pleroma">please use WebSocket</a>.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Mastodon, { Status, Notification, StreamListener } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
-
-<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://friends.nico'</span>
-
-<span class="hljs-keyword">const</span> access_token: <span class="hljs-built_in">string</span> = <span class="hljs-string">'...'</span>
-
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Mastodon(
-  access_token,
-  BASE_URL + <span class="hljs-string">'/api/v1'</span>
-)
-
-
-<span class="hljs-keyword">const</span> stream: StreamListener = client.stream(<span class="hljs-string">'/streaming/public'</span>)
-stream.on(<span class="hljs-string">'update'</span>, <span class="hljs-function">(<span class="hljs-params">status: Status</span>) =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(status)
-})
-
-stream.on(<span class="hljs-string">'notification'</span>, <span class="hljs-function">(<span class="hljs-params">notification: Notification</span>) =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(notification)
-})
-
-stream.on(<span class="hljs-string">'delete'</span>, <span class="hljs-function">(<span class="hljs-params">id: <span class="hljs-built_in">number</span></span>) =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(id)
-})
-
-stream.on(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">Error</span></span>) =&gt;</span> {
-  <span class="hljs-built_in">console</span>.error(err)
-})
-
-stream.on(<span class="hljs-string">'heartbeat'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'thump.'</span>)
-})</code></pre>
-				<a href="#websocket-for-pleroma" id="websocket-for-pleroma" style="color: inherit; text-decoration: none;">
-					<h3>WebSocket for Pleroma</h3>
-				</a>
-				<p>This method provides streaming method for Pleroma.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Mastodon, { Status, Notification, WebSocket } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+				<p>Mastodon, Pleroma and Misskey provide WebSocket for streaming.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> generator, { Entity, WebSocketInterface } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
 
 <span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'wss://pleroma.io'</span>
-
 <span class="hljs-keyword">const</span> access_token: <span class="hljs-built_in">string</span> = <span class="hljs-string">'...'</span>
 
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Mastodon(
-  access_token,
-  BASE_URL + <span class="hljs-string">'/api/v1'</span>
-)
+<span class="hljs-keyword">const</span> client = generator(<span class="hljs-string">'pleroma'</span>, BASE_URL, access_token)
+<span class="hljs-keyword">const</span> stream: WebSocketInterface = client.userSocket()
 
-<span class="hljs-keyword">const</span> stream: WebSocket = client.socket(<span class="hljs-string">'/streaming'</span>, <span class="hljs-string">'user'</span>)
 stream.on(<span class="hljs-string">'connect'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'connect'</span>)
 })
 
-stream.on(<span class="hljs-string">'update'</span>, <span class="hljs-function">(<span class="hljs-params">status: Status</span>) =&gt;</span> {
+stream.on(<span class="hljs-string">'update'</span>, <span class="hljs-function">(<span class="hljs-params">status: Entity.Status</span>) =&gt;</span> {
   <span class="hljs-built_in">console</span>.log(status)
 })
 
-stream.on(<span class="hljs-string">'notification'</span>, <span class="hljs-function">(<span class="hljs-params">notification: Notification</span>) =&gt;</span> {
+stream.on(<span class="hljs-string">'notification'</span>, <span class="hljs-function">(<span class="hljs-params">notification: Entity.Notification</span>) =&gt;</span> {
   <span class="hljs-built_in">console</span>.log(notification)
 })
 
@@ -289,6 +201,80 @@ stream.on(<span class="hljs-string">'close'</span>, <span class="hljs-function">
 stream.on(<span class="hljs-string">'parser-error'</span>, <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">Error</span></span>) =&gt;</span> {
   <span class="hljs-built_in">console</span>.error(err)
 })</code></pre>
+				<a href="#http-streaming" id="http-streaming" style="color: inherit; text-decoration: none;">
+					<h3>HTTP Streaming</h3>
+				</a>
+				<p>Mastodon provides HTTP streaming.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> generator, { Entity, StreamListenerInterface } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+
+<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://mastodon.social'</span>
+<span class="hljs-keyword">const</span> access_token: <span class="hljs-built_in">string</span> = <span class="hljs-string">'...'</span>
+
+<span class="hljs-keyword">const</span> client = generator(<span class="hljs-string">'mastodon'</span>, BASE_URL, access_token)
+<span class="hljs-keyword">const</span> stream: StreamListenerInterface
+
+stream.on(<span class="hljs-string">'update'</span>, <span class="hljs-function">(<span class="hljs-params">status: Entity.Status</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(status)
+})
+
+stream.on(<span class="hljs-string">'notification'</span>, <span class="hljs-function">(<span class="hljs-params">notification: Entity.Notification</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(notification)
+})
+
+stream.on(<span class="hljs-string">'delete'</span>, <span class="hljs-function">(<span class="hljs-params">id: <span class="hljs-built_in">number</span></span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(id)
+})
+
+stream.on(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">Error</span></span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(err)
+})
+
+stream.on(<span class="hljs-string">'heartbeat'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'thump.'</span>)
+})</code></pre>
+				<a href="#authorization" id="authorization" style="color: inherit; text-decoration: none;">
+					<h3>Authorization</h3>
+				</a>
+				<p>You can register applications, and get access tokens to use this method.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> generator, { OAuth } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+
+<span class="hljs-keyword">const</span> BASE_URL: <span class="hljs-built_in">string</span> = <span class="hljs-string">'https://mastodon.social'</span>
+
+<span class="hljs-keyword">let</span> clientId: <span class="hljs-built_in">string</span>
+<span class="hljs-keyword">let</span> clientSecret: <span class="hljs-built_in">string</span>
+
+<span class="hljs-keyword">const</span> client = generator(<span class="hljs-string">'mastodon'</span>, BASE_URL)
+
+client.registerApp(<span class="hljs-string">'Test App'</span>)
+  .then(<span class="hljs-function"><span class="hljs-params">appData</span> =&gt;</span> {
+    clientId = appData.clientId
+    clientSecret = appData.clientSecret
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Authorization URL is generated.'</span>)
+    <span class="hljs-built_in">console</span>.log(appData.url)
+  })</code></pre>
+				<p>Please open <code>Autorhization URL</code> in your browser, and authorize this app.
+				In this time, you can get authorization code.</p>
+				<p>After that, get an access token.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> code = <span class="hljs-string">'...'</span> <span class="hljs-comment">// Authorization code</span>
+
+client.fetchAccessToken(clientId, clientSecret, code)
+})
+  .then(<span class="hljs-function">(<span class="hljs-params">tokenData: OAuth.TokenData</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(tokenData.accessToken)
+    <span class="hljs-built_in">console</span>.log(tokenData.refreshToken)
+  })
+  .catch(<span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">Error</span></span>) =&gt;</span> <span class="hljs-built_in">console</span>.error(err))</code></pre>
+				<a href="#detect-each-sns" id="detect-each-sns" style="color: inherit; text-decoration: none;">
+					<h3>Detect each SNS</h3>
+				</a>
+				<p>You have to provide SNS name <code>mastodon</code>, <code>pleroma</code> or <code>misskey</code> to <code>generator</code> function.
+				But when you only know the URL and not the SNS, <code>detector</code> function can detect the SNS.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { detector } <span class="hljs-keyword">from</span> <span class="hljs-string">'megalodon'</span>
+
+<span class="hljs-keyword">const</span> URL = <span class="hljs-string">'https://misskey.io'</span>
+
+<span class="hljs-keyword">const</span> sns = <span class="hljs-keyword">await</span> detector(URL)
+<span class="hljs-built_in">console</span>.log(sns)</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
