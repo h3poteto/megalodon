@@ -80,7 +80,7 @@
     "jest": "^25.1.0",
     "jest-worker": "^25.1.0",
     "lodash": "^4.17.14",
-    "prettier": "^1.17.1",
+    "prettier": "^2.0.1",
     "ts-jest": "^25.2.0",
     "typedoc": "^0.16.9"
   }
