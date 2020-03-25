@@ -8,6 +8,10 @@
 A Mastodon, Pleroma and Misskey API Client library for node.js and browser. It provides REST API and streaming methods.
 By using this library, you can take Mastodon, Pleroma and Misskey with the same interface.
 
+## !!Migrate v2.x to v3.0.0
+There are some breaking changes, so you can not update megalodon out of the box.
+Please refer [migration guide](migration_guide.md) before you update megalodon version.
+
 ## Features
 
 - REST API
