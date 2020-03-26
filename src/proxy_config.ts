@@ -1,5 +1,5 @@
-import HttpsProxyAgent from 'https-proxy-agent'
-import SocksProxyAgent from 'socks-proxy-agent'
+import createHttpsProxyAgent, { HttpsProxyAgent } from 'https-proxy-agent'
+import createSocksProxyAgent, { SocksProxyAgent } from 'socks-proxy-agent'
 
 export type ProxyConfig = {
   host: string
@@ -20,16 +20,18 @@ const proxyAgent = (proxyConfig: ProxyConfig): HttpsProxyAgent | SocksProxyAgent
   }
   switch (proxyConfig.protocol) {
     case 'http':
-    case 'https':
-      const httpsAgent = new HttpsProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
+    case 'https': {
+      const httpsAgent = createHttpsProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
       return httpsAgent
+    }
     case 'socks4':
     case 'socks4a':
     case 'socks5':
     case 'socks5h':
-    case 'socks':
-      const socksAgent = new SocksProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
+    case 'socks': {
+      const socksAgent = createSocksProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
       return socksAgent
+    }
     default:
       throw new ProxyProtocolError('protocol is not accepted')
   }
