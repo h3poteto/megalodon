@@ -1,3 +1,4 @@
+dist: bionic
 language: node_js
 node_js:
   - "10"
@@ -6,8 +7,9 @@ node_js:
   - "13"
 cache:
   yarn: false
+  npm: false
 script:
   - yarn run build
   - yarn run test
-  - cd example/browser && npm install && npm run build
-  - cd ../../example/typescript && npm install && npm run build
+  - cd example/browser && rm -rf node_modules && npm install && npm run build
+  - cd ../../example/typescript && rm -rf node_modules && npm install && npm run build
