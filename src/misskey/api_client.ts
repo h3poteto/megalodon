@@ -378,8 +378,6 @@ namespace MisskeyAPI {
    * Usign axios for request, you will handle promises.
    */
   export class Client implements Interface {
-    static DEFAULT_URL = 'https://misskey.io'
-
     private accessToken: string | null
     private baseUrl: string
     private userAgent: string
@@ -401,54 +399,20 @@ namespace MisskeyAPI {
     }
 
     /**
-     * Unauthorized POST request to mastodon REST API.
-     * @param path relative path from baseUrl
-     * @param params Body parameters
-     * @param baseUrl base URL of the target
-     * @param proxyConfig Proxy setting, or set false if don't use proxy.
-     */
-    public static async post<T>(
-      path: string,
-      params = {},
-      baseUrl = this.DEFAULT_URL,
-      proxyConfig: ProxyConfig | false = false
-    ): Promise<Response<T>> {
-      let options: AxiosRequestConfig = {}
-      if (proxyConfig) {
-        options = Object.assign(options, {
-          httpsAgent: proxyAgent(proxyConfig)
-        })
-      }
-      const apiUrl = baseUrl
-      return axios.post<T>(apiUrl + path, params, options).then((resp: AxiosResponse<T>) => {
-        const res: Response<T> = {
-          data: resp.data,
-          status: resp.status,
-          statusText: resp.statusText,
-          headers: resp.headers
-        }
-        return res
-      })
-    }
-
-    /**
      * POST request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data
      */
     public async post<T>(path: string, params = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
-        headers: {
-          'User-Agent': this.userAgent
-        }
+        cancelToken: this.cancelTokenSource.token
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
-      let bodyParams = {}
+      let bodyParams = params
       if (this.accessToken) {
         bodyParams = Object.assign(params, {
           i: this.accessToken

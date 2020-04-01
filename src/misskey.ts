@@ -104,28 +104,28 @@ export default class Misskey implements MegalodonInterface {
        "secret": "string"
      }
     */
-    return MisskeyAPI.Client.post<MisskeyAPI.Entity.App>('/api/app/create', params, this.baseUrl, this.proxyConfig).then(
-      (res: Response<MisskeyAPI.Entity.App>) => {
-        const appData: OAuth.AppDataFromServer = {
-          id: res.data.id,
-          name: res.data.name,
-          website: null,
-          redirect_uri: res.data.callbackUrl,
-          client_id: '',
-          client_secret: res.data.secret
-        }
-        return OAuth.AppData.from(appData)
+    return this.client.post<MisskeyAPI.Entity.App>('/api/app/create', params).then((res: Response<MisskeyAPI.Entity.App>) => {
+      const appData: OAuth.AppDataFromServer = {
+        id: res.data.id,
+        name: res.data.name,
+        website: null,
+        redirect_uri: res.data.callbackUrl,
+        client_id: '',
+        client_secret: res.data.secret
       }
-    )
+      return OAuth.AppData.from(appData)
+    })
   }
 
   /**
    * POST /api/auth/session/generate
    */
   public async generateAuthUrlAndToken(clientSecret: string): Promise<MisskeyAPI.Entity.Session> {
-    return MisskeyAPI.Client.post<MisskeyAPI.Entity.Session>('/api/auth/session/generate', {
-      appSecret: clientSecret
-    }).then((res: Response<MisskeyAPI.Entity.Session>) => res.data)
+    return this.client
+      .post<MisskeyAPI.Entity.Session>('/api/auth/session/generate', {
+        appSecret: clientSecret
+      })
+      .then((res: Response<MisskeyAPI.Entity.Session>) => res.data)
   }
 
   // ======================================
@@ -155,13 +155,15 @@ export default class Misskey implements MegalodonInterface {
     session_token: string,
     _redirect_uri?: string
   ): Promise<OAuth.TokenData> {
-    return MisskeyAPI.Client.post<MisskeyAPI.Entity.UserKey>('/api/auth/session/userkey', {
-      appSecret: client_secret,
-      token: session_token
-    }).then(res => {
-      const token = new OAuth.TokenData(res.data.accessToken, 'misskey', '', 0, null, null)
-      return token
-    })
+    return this.client
+      .post<MisskeyAPI.Entity.UserKey>('/api/auth/session/userkey', {
+        appSecret: client_secret,
+        token: session_token
+      })
+      .then(res => {
+        const token = new OAuth.TokenData(res.data.accessToken, 'misskey', '', 0, null, null)
+        return token
+      })
   }
 
   public async refreshToken(_client_id: string, _client_secret: string, _refresh_token: string): Promise<OAuth.TokenData> {
