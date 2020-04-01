@@ -43,4 +43,6 @@ client
     console.log(tokenData.refreshToken)
     console.log()
   })
-  .catch((err: Error) => console.error(err))
+  .catch((err: any) => {
+    console.error(err)
+  })
