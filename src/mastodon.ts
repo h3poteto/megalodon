@@ -2048,6 +2048,37 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   // ======================================
+  // Emoji reactions
+  // ======================================
+  public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
   // HTTP Streaming
   // ======================================
   public userStream(): StreamListenerInterface {

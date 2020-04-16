@@ -1182,6 +1182,14 @@ export interface MegalodonInterface {
   getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>>
 
   // ======================================
+  // Emoji reactions
+  // ======================================
+  createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>>
+  deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>>
+  getEmojiReactions(id: string): Promise<Response<Array<Entity.Reaction>>>
+  getEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Reaction>>
+
+  // ======================================
   // HTTP Streaming
   // ======================================
   userStream(): StreamListenerInterface

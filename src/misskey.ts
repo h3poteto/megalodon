@@ -1972,7 +1972,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/notes/reactions/create
    *
    * @param {string} id Target note ID.
-   * @param {string} emoji Reaction emoji string. This string is unicode emoji.
+   * @param {string} emoji Reaction emoji string. This string is raw unicode emoji.
    */
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     this.client.post<{}>('/api/notes/reactions/create', {
@@ -1998,6 +1998,20 @@ export default class Misskey implements MegalodonInterface {
         noteId: id
       })
       .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
   }
 
   // ======================================
