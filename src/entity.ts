@@ -20,6 +20,7 @@
 /// <reference path="./entities/poll_option.ts" />
 /// <reference path="./entities/preferences.ts" />
 /// <reference path="./entities/push_subscription.ts" />
+/// <reference path="./entities/reaction.ts" />
 /// <reference path="./entities/relationship.ts" />
 /// <reference path="./entities/report.ts" />
 /// <reference path="./entities/results.ts" />

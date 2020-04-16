@@ -56,6 +56,40 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
       })
     })
   }
+  // ======================================
+  // Emoji reactions
+  // ======================================
+  public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
+    return this.client.put<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/${emoji}`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.status(res.data)
+      })
+    })
+  }
+
+  public async deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
+    return this.client.del<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/${emoji}`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.status(res.data)
+      })
+    })
+  }
+
+  public async getEmojiReactions(id: string): Promise<Response<Array<Entity.Reaction>>> {
+    return this.client.get<Array<PleromaAPI.Entity.Reaction>>(`/api/v1/pleroma/statuses/${id}/reactions`).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(r => PleromaAPI.Converter.reaction(r))
+      })
+    })
+  }
+
+  public async getEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Reaction>> {
+    return this.client.get<PleromaAPI.Entity.Reaction>(`/api/v1/pleroma/statuses/${id}/reactions/${emoji}`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.reaction(res.data)
+      })
+    })
+  }
 
   // ======================================
   // HTTP Streaming
