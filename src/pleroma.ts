@@ -56,9 +56,16 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
       })
     })
   }
+
   // ======================================
   // Emoji reactions
   // ======================================
+  /**
+   * PUT /api/v1/pleroma/statuses/:status_id/reactions/:emoji
+   *
+   * @param {string} id Target status ID.
+   * @param {string} emoji Reaction emoji string. This string is url encoded unicode emoji.
+   */
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     return this.client.put<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/${emoji}`).then(res => {
       return Object.assign(res, {
@@ -67,6 +74,12 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
     })
   }
 
+  /**
+   * DELETE /api/v1/pleroma/statuses/:status_id/reactions/:emoji
+   *
+   * @param {string} id Target status ID.
+   * @param {string} emoji Reaction emoji string. This string is url encoded unicode emoji.
+   */
   public async deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     return this.client.del<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/${emoji}`).then(res => {
       return Object.assign(res, {
@@ -75,6 +88,11 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
     })
   }
 
+  /**
+   * GET /api/v1/pleroma/statuses/:status_id/reactions
+   *
+   * @param {string} id Target status ID.
+   */
   public async getEmojiReactions(id: string): Promise<Response<Array<Entity.Reaction>>> {
     return this.client.get<Array<PleromaAPI.Entity.Reaction>>(`/api/v1/pleroma/statuses/${id}/reactions`).then(res => {
       return Object.assign(res, {
@@ -83,6 +101,12 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
     })
   }
 
+  /**
+   * GET /api/v1/pleroma/statuses/:status_id/reactions/:emoji
+   *
+   * @param {string} id Target status ID.
+   * @param {string} emoji Reaction emoji string. This string is url encoded unicode emoji.
+   */
   public async getEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Reaction>> {
     return this.client.get<PleromaAPI.Entity.Reaction>(`/api/v1/pleroma/statuses/${id}/reactions/${emoji}`).then(res => {
       return Object.assign(res, {

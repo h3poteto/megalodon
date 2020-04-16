@@ -1966,6 +1966,41 @@ export default class Misskey implements MegalodonInterface {
   }
 
   // ======================================
+  // Emoji reactions
+  // ======================================
+  /**
+   * POST /api/notes/reactions/create
+   *
+   * @param {string} id Target note ID.
+   * @param {string} emoji Reaction emoji string. This string is unicode emoji.
+   */
+  public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
+    this.client.post<{}>('/api/notes/reactions/create', {
+      noteId: id,
+      reaction: emoji
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  /**
+   * POST /api/notes/reactions/delete
+   */
+  public async deleteEmojiReaction(id: string, _emoji: string): Promise<Response<Entity.Status>> {
+    this.client.post<{}>('/api/notes/reactions/delete', {
+      noteId: id
+    })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+  }
+
+  // ======================================
   // HTTP Streaming
   // ======================================
   public userStream(): StreamListenerInterface {
