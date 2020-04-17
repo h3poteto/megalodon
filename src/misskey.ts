@@ -1975,7 +1975,7 @@ export default class Misskey implements MegalodonInterface {
    * @param {string} emoji Reaction emoji string. This string is raw unicode emoji.
    */
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
-    this.client.post<{}>('/api/notes/reactions/create', {
+    await this.client.post<{}>('/api/notes/reactions/create', {
       noteId: id,
       reaction: emoji
     })
@@ -1990,7 +1990,7 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/notes/reactions/delete
    */
   public async deleteEmojiReaction(id: string, _emoji: string): Promise<Response<Entity.Status>> {
-    this.client.post<{}>('/api/notes/reactions/delete', {
+    await this.client.post<{}>('/api/notes/reactions/delete', {
       noteId: id
     })
     return this.client
