@@ -353,8 +353,16 @@ namespace MastodonAPI {
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
     export const card = (c: Entity.Card): MegalodonEntity.Card => c
-    export const context = (c: Entity.Context): MegalodonEntity.Context => c
-    export const conversation = (c: Entity.Conversation): MegalodonEntity.Conversation => c
+    export const context = (c: Entity.Context): MegalodonEntity.Context => ({
+      ancestors: c.ancestors.map(a => status(a)),
+      descendants: c.descendants.map(d => status(d))
+    })
+    export const conversation = (c: Entity.Conversation): MegalodonEntity.Conversation => ({
+      id: c.id,
+      accounts: c.accounts.map(a => account(a)),
+      last_status: c.last_status ? status(c.last_status) : null,
+      unread: c.unread
+    })
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
     export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
@@ -365,18 +373,68 @@ namespace MastodonAPI {
     export const list = (l: Entity.List): MegalodonEntity.List => l
     export const marker = (m: Entity.Marker): MegalodonEntity.Marker => m
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
-    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => n
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+      if (n.status) {
+        return {
+          account: account(n.account),
+          created_at: n.created_at,
+          id: n.id,
+          status: status(n.status),
+          type: n.type
+        }
+      } else {
+        return {
+          account: account(n.account),
+          created_at: n.created_at,
+          id: n.id,
+          type: n.type
+        }
+      }
+    }
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p
     export const poll_option = (p: Entity.PollOption): MegalodonEntity.PollOption => p
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
     export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
     export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => r
     export const report = (r: Entity.Report): MegalodonEntity.Report => r
-    export const results = (r: Entity.Results): MegalodonEntity.Results => r
+    export const results = (r: Entity.Results): MegalodonEntity.Results => ({
+      accounts: r.accounts.map(a => account(a)),
+      statuses: r.statuses.map(s => status(s)),
+      hashtags: r.hashtags.map(h => tag(h))
+    })
     export const scheduled_status = (s: Entity.ScheduledStatus): MegalodonEntity.ScheduledStatus => s
     export const source = (s: Entity.Source): MegalodonEntity.Source => s
     export const stats = (s: Entity.Stats): MegalodonEntity.Stats => s
-    export const status = (s: Entity.Status): MegalodonEntity.Status => s
+    export const status = (s: Entity.Status): MegalodonEntity.Status => ({
+      id: s.id,
+      uri: s.uri,
+      url: s.url,
+      account: account(s.account),
+      in_reply_to_id: s.in_reply_to_id,
+      in_reply_to_account_id: s.in_reply_to_account_id,
+      reblog: s.reblog ? status(s.reblog) : null,
+      content: s.content,
+      created_at: s.created_at,
+      emojis: s.emojis.map(e => emoji(e)),
+      replies_count: s.replies_count,
+      reblogs_count: s.reblogs_count,
+      favourites_count: s.favourites_count,
+      reblogged: s.reblogged,
+      favourited: s.favourited,
+      muted: s.muted,
+      sensitive: s.sensitive,
+      spoiler_text: s.spoiler_text,
+      visibility: s.visibility,
+      media_attachments: s.media_attachments.map(m => attachment(m)),
+      mentions: s.mentions.map(m => mention(m)),
+      tags: s.tags.map(t => tag(t)),
+      card: s.card ? card(s.card) : null,
+      poll: s.poll ? poll(s.poll) : null,
+      application: s.application ? application(s.application) : null,
+      language: s.language,
+      pinned: s.pinned,
+      emoji_reactions: []
+    })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
