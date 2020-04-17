@@ -225,8 +225,17 @@ namespace MisskeyAPI {
         poll: n.poll ? poll(n.poll) : null,
         application: null,
         language: null,
-        pinned: null
+        pinned: null,
+        emoji_reactions: reactions(n.reactions)
       }
+    }
+
+    export const reactions = (r: { [key: string]: number }): Array<MegalodonEntity.Reaction> => {
+      return Object.keys(r).map(key => ({
+        count: r[key],
+        me: false,
+        name: key
+      }))
     }
 
     export const noteToConversation = (n: Entity.Note): MegalodonEntity.Conversation => {

@@ -56,7 +56,8 @@ const status: Entity.Status = {
     name: 'Web'
   } as Entity.Application,
   language: null,
-  pinned: null
+  pinned: null,
+  emoji_reactions: []
 }
 ;(axios.CancelToken.source as any).mockImplementation(() => {
   return {

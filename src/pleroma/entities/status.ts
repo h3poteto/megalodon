@@ -8,7 +8,7 @@
 /// <reference path="poll.ts" />
 /// <reference path="reaction.ts" />
 
-namespace Entity {
+namespace PleromaEntity {
   export type Status = {
     id: string
     uri: string
@@ -37,6 +37,18 @@ namespace Entity {
     application: Application | null
     language: string | null
     pinned: boolean | null
-    emoji_reactions: Array<Reaction>
+    pleroma: {
+      context: {
+        'text/plain': string
+      }
+      spoiler_text: {
+        'text/plain': string
+      }
+      conversation_id: string
+      direct_conversation_id: string | null
+      emoji_reactions: Array<Reaction>
+      local: boolean
+      thread_muted: boolean
+    }
   }
 }

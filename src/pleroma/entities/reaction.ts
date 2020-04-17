@@ -5,6 +5,6 @@ namespace PleromaEntity {
     count: number
     me: boolean
     name: string
-    accounts: Array<Account>
+    accounts?: Array<Account>
   }
 }
