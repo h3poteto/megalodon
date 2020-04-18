@@ -1,13 +1,13 @@
 import { OAuth2 } from 'oauth'
 
+import PleromaAPI from './pleroma/api_client'
+import WebSocket from './pleroma/web_socket'
 import { MegalodonInterface, StreamListenerInterface, NoImplementedError, NotificationType } from './megalodon'
 import Response from './response'
 import Entity from './entity'
-import PleromaAPI from './pleroma/api_client'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
-import WebSocket from './pleroma/web_socket'
 
 export default class Pleroma implements MegalodonInterface {
   public client: PleromaAPI.Client

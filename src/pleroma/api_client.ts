@@ -1,6 +1,7 @@
+import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
+
 import MegalodonEntity from '../entity'
 import PleromaEntity from './entity'
-import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'

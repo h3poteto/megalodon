@@ -1,6 +1,7 @@
 import WS from 'ws'
 import moment, { Moment } from 'moment'
 import { EventEmitter } from 'events'
+
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
 import MastodonAPI from './api_client'

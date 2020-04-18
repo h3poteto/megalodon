@@ -1,12 +1,13 @@
 import { OAuth2 } from 'oauth'
+
 import MastodonAPI from './mastodon/api_client'
-import { ProxyConfig } from './proxy_config'
-import OAuth from './oauth'
-import Response from './response'
 import WebSocket from './mastodon/web_socket'
 import { MegalodonInterface, StreamListenerInterface, NoImplementedError, NotificationType } from './megalodon'
+import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
+import { ProxyConfig } from './proxy_config'
+import OAuth from './oauth'
 
 export default class Mastodon implements MegalodonInterface {
   public client: MastodonAPI.Client
