@@ -5,6 +5,7 @@
 /// <reference path="./entities/emoji.ts" /
 /// <reference path="./entities/history.ts" />>
 /// <reference path="./entities/mention.ts" />
+/// <reference path="./entities/notification.ts" />
 /// <reference path="./entities/poll.ts" />
 /// <reference path="./entities/poll_option.ts" />
 /// <reference path="./entities/reaction.ts" />

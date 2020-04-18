@@ -257,7 +257,7 @@ namespace MisskeyAPI {
     })
 
     export const encodeNotificationType = (
-      e: 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll'
+      e: 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' | 'emoji_reaction'
     ): 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollVote' => {
       switch (e) {
         case 'follow':
@@ -265,6 +265,7 @@ namespace MisskeyAPI {
         case 'mention':
           return 'reply'
         case 'favourite':
+        case 'emoji_reaction':
           return 'reaction'
         case 'reblog':
           return 'renote'
@@ -285,7 +286,7 @@ namespace MisskeyAPI {
         | 'receiveFollowRequest'
         | 'followRequestAccepted'
         | 'groupInvited'
-    ): 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' => {
+    ): 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' | 'emoji_reaction' => {
       switch (e) {
         case 'follow':
           return e
@@ -295,7 +296,7 @@ namespace MisskeyAPI {
         case 'renote':
           return 'reblog'
         case 'reaction':
-          return 'favourite'
+          return 'emoji_reaction'
         case 'pollVote':
           return 'poll'
         default:
@@ -313,6 +314,11 @@ namespace MisskeyAPI {
       if (n.note) {
         notification = Object.assign(notification, {
           status: note(n.note)
+        })
+      }
+      if (n.reaction) {
+        notification = Object.assign(notification, {
+          emoji: n.reaction
         })
       }
       return notification
