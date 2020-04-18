@@ -1,4 +1,4 @@
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError, NotificationType } from './megalodon'
 import Mastodon from './mastodon'
 import Response from './response'
 import Entity from './entity'
@@ -53,6 +53,65 @@ export default class Pleroma extends Mastodon implements MegalodonInterface {
     return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.relationship(res.data)
+      })
+    })
+  }
+
+  // ======================================
+  // notifications
+  // ======================================
+  public async getNotifications(options?: {
+    limit?: number
+    max_id?: string
+    since_id?: string
+    min_id?: string
+    exclude_types?: Array<NotificationType>
+    account_id?: string
+  }): Promise<Response<Array<Entity.Notification>>> {
+    let params = {}
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          max_id: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
+        })
+      }
+      if (options.exclude_types) {
+        params = Object.assign(params, {
+          exclude_types: options.exclude_types.map(e => PleromaAPI.Converter.encodeNotificationType(e))
+        })
+      }
+      if (options.account_id) {
+        params = Object.assign(params, {
+          account_id: options.account_id
+        })
+      }
+    }
+    return this.client.get<Array<PleromaAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(n => PleromaAPI.Converter.notification(n))
+      })
+    })
+  }
+
+  public async getNotification(id: string): Promise<Response<Entity.Notification>> {
+    return this.client.get<PleromaAPI.Entity.Notification>(`/api/v1/notifications/${id}`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.notification(res.data)
       })
     })
   }

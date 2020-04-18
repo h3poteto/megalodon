@@ -11,6 +11,7 @@ namespace PleromaAPI {
     export type Emoji = PleromaEntity.Emoji
     export type History = PleromaEntity.History
     export type Mention = PleromaEntity.Mention
+    export type Notification = PleromaEntity.Notification
     export type Poll = PleromaEntity.Poll
     export type PollOption = PleromaEntity.PollOption
     export type Reaction = PleromaEntity.Reaction
@@ -22,6 +23,27 @@ namespace PleromaAPI {
   }
 
   export namespace Converter {
+    export const decodeNotificationType = (
+      t: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction'
+    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'eomji_reaction' => {
+      switch (t) {
+        case 'pleroma:emoji_reaction':
+          return 'eomji_reaction'
+        default:
+          return t
+      }
+    }
+    export const encodeNotificationType = (
+      t: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction'
+    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:eomji_reaction' => {
+      switch (t) {
+        case 'emoji_reaction':
+          return 'pleroma:eomji_reaction'
+        default:
+          return t
+      }
+    }
+
     export const account = (a: Entity.Account): MegalodonEntity.Account => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
@@ -29,6 +51,33 @@ namespace PleromaAPI {
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
     export const history = (h: Entity.History): MegalodonEntity.History => h
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+      if (n.status && n.emoji) {
+        return {
+          id: n.id,
+          account: n.account,
+          created_at: n.created_at,
+          status: status(n.status),
+          emoji: n.emoji,
+          type: decodeNotificationType(n.type)
+        }
+      } else if (n.status) {
+        return {
+          id: n.id,
+          account: n.account,
+          created_at: n.created_at,
+          status: status(n.status),
+          type: decodeNotificationType(n.type)
+        }
+      } else {
+        return {
+          id: n.id,
+          account: n.account,
+          created_at: n.created_at,
+          type: decodeNotificationType(n.type)
+        }
+      }
+    }
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p
     export const pollOption = (p: Entity.PollOption): MegalodonEntity.PollOption => p
     export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => r

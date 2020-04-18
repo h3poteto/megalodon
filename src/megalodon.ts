@@ -1312,7 +1312,8 @@ export enum NotificationType {
   Favourite = 'favourite',
   Reblog = 'reblog',
   Mention = 'mention',
-  Poll = 'poll'
+  Poll = 'poll',
+  EmojiReaction = 'emoji_reaction'
 }
 
 export default generator
