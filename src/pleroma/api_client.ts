@@ -25,20 +25,20 @@ namespace PleromaAPI {
   export namespace Converter {
     export const decodeNotificationType = (
       t: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction'
-    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'eomji_reaction' => {
+    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction' => {
       switch (t) {
         case 'pleroma:emoji_reaction':
-          return 'eomji_reaction'
+          return 'emoji_reaction'
         default:
           return t
       }
     }
     export const encodeNotificationType = (
       t: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction'
-    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:eomji_reaction' => {
+    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction' => {
       switch (t) {
         case 'emoji_reaction':
-          return 'pleroma:eomji_reaction'
+          return 'pleroma:emoji_reaction'
         default:
           return t
       }
