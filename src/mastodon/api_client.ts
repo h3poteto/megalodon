@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
+
 import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import Response from '../response'
@@ -20,7 +21,7 @@ namespace MastodonAPI {
     del(path: string, params: object): Promise<Response<{}>>
     cancel(): void
     stream(path: string, reconnectInterval: number): StreamListener
-    socket(path: string, strea: string): WebSocket
+    socket(path: string, stream: string): WebSocket
   }
 
   /**
