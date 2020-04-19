@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>MegalodonInterface | megalodon</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for megalodon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -80,7 +80,6 @@
 					<li><a href="../classes/mastodon.html" class="tsd-signature-type">Mastodon</a></li>
 					<li><a href="../classes/misskey.html" class="tsd-signature-type">Misskey</a></li>
 					<li><a href="../classes/pleroma.html" class="tsd-signature-type">Pleroma</a></li>
-					<li><a href="../classes/pleroma.html" class="tsd-signature-type">Pleroma</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -98,11 +97,13 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#cancel" class="tsd-kind-icon">cancel</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#cancelscheduledstatus" class="tsd-kind-icon">cancel<wbr>Scheduled<wbr>Status</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#createapp" class="tsd-kind-icon">create<wbr>App</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#createemojireaction" class="tsd-kind-icon">create<wbr>Emoji<wbr>Reaction</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#createfeaturedtag" class="tsd-kind-icon">create<wbr>Featured<wbr>Tag</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#createfilter" class="tsd-kind-icon">create<wbr>Filter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#createlist" class="tsd-kind-icon">create<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#deleteaccountsfromlist" class="tsd-kind-icon">delete<wbr>Accounts<wbr>From<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#deleteconversation" class="tsd-kind-icon">delete<wbr>Conversation</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#deleteemojireaction" class="tsd-kind-icon">delete<wbr>Emoji<wbr>Reaction</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#deletefeaturedtag" class="tsd-kind-icon">delete<wbr>Featured<wbr>Tag</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#deletefilter" class="tsd-kind-icon">delete<wbr>Filter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#deletelist" class="tsd-kind-icon">delete<wbr>List</a></li>
@@ -126,6 +127,8 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getbookmarks" class="tsd-kind-icon">get<wbr>Bookmarks</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getconversationtimeline" class="tsd-kind-icon">get<wbr>Conversation<wbr>Timeline</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getdomainblocks" class="tsd-kind-icon">get<wbr>Domain<wbr>Blocks</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getemojireaction" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reaction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getemojireactions" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reactions</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getendorsements" class="tsd-kind-icon">get<wbr>Endorsements</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getfavourites" class="tsd-kind-icon">get<wbr>Favourites</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="megalodoninterface.html#getfeaturedtags" class="tsd-kind-icon">get<wbr>Featured<wbr>Tags</a></li>
@@ -229,7 +232,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L508">src/megalodon.ts:508</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L508">src/megalodon.ts:508</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -261,7 +264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L987">src/megalodon.ts:987</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L987">src/megalodon.ts:987</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L273">src/megalodon.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L273">src/megalodon.ts:273</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -330,7 +333,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L409">src/megalodon.ts:409</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L409">src/megalodon.ts:409</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -361,7 +364,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L676">src/megalodon.ts:676</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L676">src/megalodon.ts:676</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -393,7 +396,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L36">src/megalodon.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L36">src/megalodon.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -416,7 +419,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L798">src/megalodon.ts:798</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L798">src/megalodon.ts:798</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -447,7 +450,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L56">src/megalodon.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L56">src/megalodon.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -476,6 +479,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="createemojireaction" class="tsd-anchor"></a>
+					<h3>create<wbr>Emoji<wbr>Reaction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Emoji<wbr>Reaction<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, emoji<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1187">src/megalodon.ts:1187</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>emoji: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="createfeaturedtag" class="tsd-anchor"></a>
 					<h3>create<wbr>Featured<wbr>Tag</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -485,7 +514,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L543">src/megalodon.ts:543</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L543">src/megalodon.ts:543</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -517,7 +546,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L442">src/megalodon.ts:442</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L442">src/megalodon.ts:442</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -558,7 +587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L948">src/megalodon.ts:948</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L948">src/megalodon.ts:948</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -590,7 +619,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L994">src/megalodon.ts:994</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L994">src/megalodon.ts:994</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -627,7 +656,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L918">src/megalodon.ts:918</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L918">src/megalodon.ts:918</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -649,6 +678,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="deleteemojireaction" class="tsd-anchor"></a>
+					<h3>delete<wbr>Emoji<wbr>Reaction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Emoji<wbr>Reaction<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, emoji<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1188">src/megalodon.ts:1188</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>emoji: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="deletefeaturedtag" class="tsd-anchor"></a>
 					<h3>delete<wbr>Featured<wbr>Tag</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -658,7 +713,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L550">src/megalodon.ts:550</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L550">src/megalodon.ts:550</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -690,7 +745,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L478">src/megalodon.ts:478</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L478">src/megalodon.ts:478</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -722,7 +777,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L962">src/megalodon.ts:962</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L962">src/megalodon.ts:962</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -753,7 +808,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1094">src/megalodon.ts:1094</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1094">src/megalodon.ts:1094</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -775,7 +830,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L619">src/megalodon.ts:619</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L619">src/megalodon.ts:619</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -807,7 +862,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1202">src/megalodon.ts:1202</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1210">src/megalodon.ts:1210</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></h4>
@@ -824,7 +879,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1192">src/megalodon.ts:1192</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1200">src/megalodon.ts:1200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -841,7 +896,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1051">src/megalodon.ts:1051</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1051">src/megalodon.ts:1051</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -872,7 +927,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1045">src/megalodon.ts:1045</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1045">src/megalodon.ts:1045</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -894,7 +949,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L648">src/megalodon.ts:648</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L648">src/megalodon.ts:648</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -926,7 +981,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L85">src/megalodon.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L85">src/megalodon.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -977,7 +1032,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L259">src/megalodon.ts:259</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L259">src/megalodon.ts:259</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1015,7 +1070,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L162">src/megalodon.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L162">src/megalodon.ts:162</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1047,7 +1102,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L182">src/megalodon.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L182">src/megalodon.ts:182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1082,7 +1137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L213">src/megalodon.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L213">src/megalodon.ts:213</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1117,7 +1172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L230">src/megalodon.ts:230</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L230">src/megalodon.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1152,7 +1207,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L244">src/megalodon.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L244">src/megalodon.ts:244</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1184,7 +1239,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L169">src/megalodon.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L169">src/megalodon.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1219,7 +1274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L973">src/megalodon.ts:973</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L973">src/megalodon.ts:973</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1254,7 +1309,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L391">src/megalodon.ts:391</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L391">src/megalodon.ts:391</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1283,7 +1338,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L355">src/megalodon.ts:355</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L355">src/megalodon.ts:355</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1312,7 +1367,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L907">src/megalodon.ts:907</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L907">src/megalodon.ts:907</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1341,7 +1396,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L403">src/megalodon.ts:403</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L403">src/megalodon.ts:403</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1361,6 +1416,55 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getemojireaction" class="tsd-anchor"></a>
+					<h3>get<wbr>Emoji<wbr>Reaction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Emoji<wbr>Reaction<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, emoji<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1190">src/megalodon.ts:1190</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>emoji: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getemojireactions" class="tsd-anchor"></a>
+					<h3>get<wbr>Emoji<wbr>Reactions</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Emoji<wbr>Reactions<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1189">src/megalodon.ts:1189</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="getendorsements" class="tsd-anchor"></a>
 					<h3>get<wbr>Endorsements</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -1370,7 +1474,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L527">src/megalodon.ts:527</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L527">src/megalodon.ts:527</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1399,7 +1503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L367">src/megalodon.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L367">src/megalodon.ts:367</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1428,7 +1532,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L536">src/megalodon.ts:536</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L536">src/megalodon.ts:536</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1451,7 +1555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L431">src/megalodon.ts:431</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L431">src/megalodon.ts:431</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1483,7 +1587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L424">src/megalodon.ts:424</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L424">src/megalodon.ts:424</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1506,7 +1610,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L501">src/megalodon.ts:501</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L501">src/megalodon.ts:501</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1538,7 +1642,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L869">src/megalodon.ts:869</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L869">src/megalodon.ts:869</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1567,7 +1671,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L251">src/megalodon.ts:251</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L251">src/megalodon.ts:251</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1599,7 +1703,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1133">src/megalodon.ts:1133</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1133">src/megalodon.ts:1133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1621,7 +1725,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1143">src/megalodon.ts:1143</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1143">src/megalodon.ts:1143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1643,7 +1747,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1182">src/megalodon.ts:1182</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1182">src/megalodon.ts:1182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1666,7 +1770,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1167">src/megalodon.ts:1167</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1167">src/megalodon.ts:1167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1695,7 +1799,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1138">src/megalodon.ts:1138</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1138">src/megalodon.ts:1138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1717,7 +1821,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1153">src/megalodon.ts:1153</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1153">src/megalodon.ts:1153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1748,7 +1852,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L941">src/megalodon.ts:941</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L941">src/megalodon.ts:941</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1780,7 +1884,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L886">src/megalodon.ts:886</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L886">src/megalodon.ts:886</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1815,7 +1919,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L934">src/megalodon.ts:934</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L934">src/megalodon.ts:934</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1838,7 +1942,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L829">src/megalodon.ts:829</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L829">src/megalodon.ts:829</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1867,7 +1971,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1004">src/megalodon.ts:1004</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1004">src/megalodon.ts:1004</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1896,7 +2000,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L379">src/megalodon.ts:379</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L379">src/megalodon.ts:379</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1925,7 +2029,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1041">src/megalodon.ts:1041</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1041">src/megalodon.ts:1041</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1957,7 +2061,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1027">src/megalodon.ts:1027</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1027">src/megalodon.ts:1027</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1986,7 +2090,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L751">src/megalodon.ts:751</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L751">src/megalodon.ts:751</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2018,7 +2122,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L565">src/megalodon.ts:565</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L565">src/megalodon.ts:565</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2041,7 +2145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L812">src/megalodon.ts:812</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L812">src/megalodon.ts:812</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2070,7 +2174,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1077">src/megalodon.ts:1077</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1077">src/megalodon.ts:1077</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2093,7 +2197,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L316">src/megalodon.ts:316</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L316">src/megalodon.ts:316</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2125,7 +2229,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L323">src/megalodon.ts:323</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L323">src/megalodon.ts:323</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2157,7 +2261,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L784">src/megalodon.ts:784</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L784">src/megalodon.ts:784</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2189,7 +2293,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L772">src/megalodon.ts:772</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L772">src/megalodon.ts:772</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2218,7 +2322,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L612">src/megalodon.ts:612</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L612">src/megalodon.ts:612</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2250,7 +2354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L627">src/megalodon.ts:627</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L627">src/megalodon.ts:627</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2286,7 +2390,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L641">src/megalodon.ts:641</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L641">src/megalodon.ts:641</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2318,7 +2422,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L634">src/megalodon.ts:634</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L634">src/megalodon.ts:634</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2350,7 +2454,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L556">src/megalodon.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L556">src/megalodon.ts:556</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2373,7 +2477,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L575">src/megalodon.ts:575</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L575">src/megalodon.ts:575</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2405,7 +2509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L848">src/megalodon.ts:848</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L848">src/megalodon.ts:848</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2440,7 +2544,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1201">src/megalodon.ts:1201</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1209">src/megalodon.ts:1209</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2463,7 +2567,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1191">src/megalodon.ts:1191</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1199">src/megalodon.ts:1199</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2486,7 +2590,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1199">src/megalodon.ts:1199</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1207">src/megalodon.ts:1207</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></h4>
@@ -2503,7 +2607,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1189">src/megalodon.ts:1189</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1197">src/megalodon.ts:1197</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -2520,7 +2624,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L288">src/megalodon.ts:288</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L288">src/megalodon.ts:288</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2558,7 +2662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L690">src/megalodon.ts:690</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L690">src/megalodon.ts:690</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2590,7 +2694,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L302">src/megalodon.ts:302</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L302">src/megalodon.ts:302</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2622,7 +2726,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L703">src/megalodon.ts:703</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L703">src/megalodon.ts:703</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2654,7 +2758,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L593">src/megalodon.ts:593</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L593">src/megalodon.ts:593</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2689,7 +2793,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1198">src/megalodon.ts:1198</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1206">src/megalodon.ts:1206</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></h4>
@@ -2706,7 +2810,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1188">src/megalodon.ts:1188</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1196">src/megalodon.ts:1196</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -2723,7 +2827,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L925">src/megalodon.ts:925</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L925">src/megalodon.ts:925</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2755,7 +2859,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L662">src/megalodon.ts:662</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L662">src/megalodon.ts:662</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2787,7 +2891,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L96">src/megalodon.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L96">src/megalodon.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2832,7 +2936,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L122">src/megalodon.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L122">src/megalodon.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2894,7 +2998,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L44">src/megalodon.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L44">src/megalodon.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2932,7 +3036,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L515">src/megalodon.ts:515</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L515">src/megalodon.ts:515</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2964,7 +3068,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L491">src/megalodon.ts:491</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L491">src/megalodon.ts:491</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3005,7 +3109,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L106">src/megalodon.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L106">src/megalodon.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3049,7 +3153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1012">src/megalodon.ts:1012</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1012">src/megalodon.ts:1012</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3078,7 +3182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L792">src/megalodon.ts:792</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L792">src/megalodon.ts:792</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3116,7 +3220,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1112">src/megalodon.ts:1112</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1112">src/megalodon.ts:1112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3157,7 +3261,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L333">src/megalodon.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L333">src/megalodon.ts:333</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3192,7 +3296,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L196">src/megalodon.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L196">src/megalodon.ts:196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3224,7 +3328,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1068">src/megalodon.ts:1068</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1068">src/megalodon.ts:1068</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3272,7 +3376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1200">src/megalodon.ts:1200</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1208">src/megalodon.ts:1208</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3295,7 +3399,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1190">src/megalodon.ts:1190</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1198">src/megalodon.ts:1198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3318,7 +3422,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L280">src/megalodon.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L280">src/megalodon.ts:280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3350,7 +3454,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L415">src/megalodon.ts:415</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L415">src/megalodon.ts:415</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3381,7 +3485,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L683">src/megalodon.ts:683</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L683">src/megalodon.ts:683</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3413,7 +3517,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L655">src/megalodon.ts:655</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L655">src/megalodon.ts:655</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3445,7 +3549,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L266">src/megalodon.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L266">src/megalodon.ts:266</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3477,7 +3581,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L295">src/megalodon.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L295">src/megalodon.ts:295</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3509,7 +3613,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L697">src/megalodon.ts:697</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L697">src/megalodon.ts:697</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3541,7 +3645,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L309">src/megalodon.ts:309</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L309">src/megalodon.ts:309</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3573,7 +3677,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L710">src/megalodon.ts:710</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L710">src/megalodon.ts:710</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3605,7 +3709,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L669">src/megalodon.ts:669</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L669">src/megalodon.ts:669</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3637,7 +3741,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L203">src/megalodon.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L203">src/megalodon.ts:203</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3669,7 +3773,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L141">src/megalodon.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L141">src/megalodon.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3698,7 +3802,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L462">src/megalodon.ts:462</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L462">src/megalodon.ts:462</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3745,7 +3849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L956">src/megalodon.ts:956</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L956">src/megalodon.ts:956</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3783,7 +3887,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L733">src/megalodon.ts:733</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L733">src/megalodon.ts:733</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3818,7 +3922,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1088">src/megalodon.ts:1088</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1088">src/megalodon.ts:1088</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3847,7 +3951,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L722">src/megalodon.ts:722</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L722">src/megalodon.ts:722</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3882,7 +3986,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1197">src/megalodon.ts:1197</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1205">src/megalodon.ts:1205</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></h4>
@@ -3899,7 +4003,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L1187">src/megalodon.ts:1187</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L1195">src/megalodon.ts:1195</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -3916,7 +4020,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L135">src/megalodon.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L135">src/megalodon.ts:135</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3939,7 +4043,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L69">src/megalodon.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L69">src/megalodon.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3962,7 +4066,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/megalodon.ts#L759">src/megalodon.ts:759</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/megalodon.ts#L759">src/megalodon.ts:759</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4074,6 +4178,9 @@
 								<a href="megalodoninterface.html#createapp" class="tsd-kind-icon">create<wbr>App</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="megalodoninterface.html#createemojireaction" class="tsd-kind-icon">create<wbr>Emoji<wbr>Reaction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="megalodoninterface.html#createfeaturedtag" class="tsd-kind-icon">create<wbr>Featured<wbr>Tag</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
@@ -4087,6 +4194,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="megalodoninterface.html#deleteconversation" class="tsd-kind-icon">delete<wbr>Conversation</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="megalodoninterface.html#deleteemojireaction" class="tsd-kind-icon">delete<wbr>Emoji<wbr>Reaction</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="megalodoninterface.html#deletefeaturedtag" class="tsd-kind-icon">delete<wbr>Featured<wbr>Tag</a>
@@ -4156,6 +4266,12 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="megalodoninterface.html#getdomainblocks" class="tsd-kind-icon">get<wbr>Domain<wbr>Blocks</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="megalodoninterface.html#getemojireaction" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reaction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="megalodoninterface.html#getemojireactions" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reactions</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="megalodoninterface.html#getendorsements" class="tsd-kind-icon">get<wbr>Endorsements</a>
@@ -4473,7 +4589,6 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>

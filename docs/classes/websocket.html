@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>WebSocket | megalodon</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for megalodon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -73,6 +73,9 @@
 							Pleroma is not support streaming. It is support websocket instead of streaming.
 							So this class connect to Phoenix websocket for Pleroma.
 							WebSocket
+							Pleroma is not support streaming. It is support websocket instead of streaming.
+							So this class connect to Phoenix websocket for Pleroma.
+							WebSocket
 							Misskey is not support http streaming. It supports websocket instead of streaming.
 						So this class connect to Misskey server with WebSocket.</p>
 					</div>
@@ -81,6 +84,9 @@
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">EventEmitter</span>
+					</li>
 					<li>
 						<span class="tsd-signature-type">EventEmitter</span>
 					</li>
@@ -97,6 +103,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></li>
 					<li><a href="../interfaces/websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></li>
 					<li><a href="../interfaces/websocketinterface.html" class="tsd-signature-type">WebSocketInterface</a></li>
 				</ul>
@@ -183,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L28">src/mastodon/web_socket.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L29">src/pleroma/web_socket.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,8 +254,9 @@
 					<div class="tsd-signature tsd-kind-icon">_access<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L20">src/mastodon/web_socket.ts:20</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L21">src/misskey/web_socket.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L21">src/pleroma/web_socket.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L20">src/mastodon/web_socket.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L21">src/misskey/web_socket.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -258,7 +266,7 @@
 					<div class="tsd-signature tsd-kind-icon">_channelID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L27">src/misskey/web_socket.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L27">src/misskey/web_socket.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -268,8 +276,9 @@
 					<div class="tsd-signature tsd-kind-icon">_client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WS</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L25">src/mastodon/web_socket.ts:25</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L26">src/misskey/web_socket.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L26">src/pleroma/web_socket.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L25">src/mastodon/web_socket.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L26">src/misskey/web_socket.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -279,8 +288,9 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Closed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L24">src/mastodon/web_socket.ts:24</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L25">src/misskey/web_socket.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L25">src/pleroma/web_socket.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L24">src/mastodon/web_socket.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L25">src/misskey/web_socket.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -290,8 +300,9 @@
 					<div class="tsd-signature tsd-kind-icon">_heartbeat<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 60000</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L27">src/mastodon/web_socket.ts:27</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L29">src/misskey/web_socket.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L28">src/pleroma/web_socket.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L27">src/mastodon/web_socket.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L29">src/misskey/web_socket.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -301,8 +312,9 @@
 					<div class="tsd-signature tsd-kind-icon">_pong<wbr>Received<wbr>Timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Moment</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L26">src/mastodon/web_socket.ts:26</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L28">src/misskey/web_socket.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L27">src/pleroma/web_socket.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L26">src/mastodon/web_socket.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L28">src/misskey/web_socket.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -312,8 +324,9 @@
 					<div class="tsd-signature tsd-kind-icon">_pong<wbr>Waiting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L28">src/mastodon/web_socket.ts:28</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L30">src/misskey/web_socket.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L29">src/pleroma/web_socket.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L28">src/mastodon/web_socket.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L30">src/misskey/web_socket.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -323,8 +336,9 @@
 					<div class="tsd-signature tsd-kind-icon">_reconnect<wbr>Current<wbr>Attempts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L23">src/mastodon/web_socket.ts:23</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L24">src/misskey/web_socket.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L24">src/pleroma/web_socket.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L23">src/mastodon/web_socket.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L24">src/misskey/web_socket.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -334,8 +348,9 @@
 					<div class="tsd-signature tsd-kind-icon">_reconnect<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L21">src/mastodon/web_socket.ts:21</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L22">src/misskey/web_socket.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L22">src/pleroma/web_socket.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L21">src/mastodon/web_socket.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L22">src/misskey/web_socket.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -345,8 +360,9 @@
 					<div class="tsd-signature tsd-kind-icon">_reconnect<wbr>Max<wbr>Attempts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L22">src/mastodon/web_socket.ts:22</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L23">src/misskey/web_socket.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L23">src/pleroma/web_socket.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L22">src/mastodon/web_socket.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L23">src/misskey/web_socket.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -356,7 +372,7 @@
 					<div class="tsd-signature tsd-kind-icon">channel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"user"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"localTimeline"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hybridTimeline"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"globalTimeline"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"conversation"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"list"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L16">src/misskey/web_socket.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L16">src/misskey/web_socket.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -366,8 +382,9 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L18">src/mastodon/web_socket.ts:18</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L18">src/misskey/web_socket.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L19">src/pleroma/web_socket.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L18">src/mastodon/web_socket.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L18">src/misskey/web_socket.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -385,7 +402,7 @@
 					<div class="tsd-signature tsd-kind-icon">list<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L20">src/misskey/web_socket.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L20">src/misskey/web_socket.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -395,7 +412,8 @@
 					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L16">src/mastodon/web_socket.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L17">src/pleroma/web_socket.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L16">src/mastodon/web_socket.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -405,8 +423,9 @@
 					<div class="tsd-signature tsd-kind-icon">parser<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Parser</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L17">src/mastodon/web_socket.ts:17</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L17">src/misskey/web_socket.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L18">src/pleroma/web_socket.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L17">src/mastodon/web_socket.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L17">src/misskey/web_socket.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -416,8 +435,9 @@
 					<div class="tsd-signature tsd-kind-icon">proxy<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../globals.html#proxyconfig" class="tsd-signature-type">ProxyConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L19">src/mastodon/web_socket.ts:19</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L19">src/misskey/web_socket.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L20">src/pleroma/web_socket.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L19">src/mastodon/web_socket.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L19">src/misskey/web_socket.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -427,7 +447,8 @@
 					<div class="tsd-signature tsd-kind-icon">stream<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L15">src/mastodon/web_socket.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L16">src/pleroma/web_socket.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L15">src/mastodon/web_socket.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -437,8 +458,9 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L14">src/mastodon/web_socket.ts:14</a></li>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L15">src/misskey/web_socket.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L15">src/pleroma/web_socket.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon/web_socket.ts#L14">src/mastodon/web_socket.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L15">src/misskey/web_socket.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -447,8 +469,8 @@
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> default<wbr>Max<wbr>Listeners</h3>
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Max<wbr>Listeners<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#defaultmaxlisteners">defaultMaxListeners</a></p>
-						<p>Overrides <a href="parser.html">Parser</a>.<a href="parser.html#defaultmaxlisteners">defaultMaxListeners</a></p>
+						<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#defaultmaxlisteners">defaultMaxListeners</a></p>
+						<p>Overrides <a href="websocket.html">WebSocket</a>.<a href="websocket.html#defaultmaxlisteners">defaultMaxListeners</a></p>
 						<ul>
 							<li>Defined in node_modules/@types/node/events.d.ts:9</li>
 						</ul>
@@ -467,7 +489,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L196">src/mastodon/web_socket.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L197">src/pleroma/web_socket.ts:197</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -500,7 +522,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/misskey/web_socket.ts#L133">src/misskey/web_socket.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/misskey/web_socket.ts#L133">src/misskey/web_socket.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -522,7 +544,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L258">src/mastodon/web_socket.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L259">src/pleroma/web_socket.ts:259</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -550,7 +572,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L182">src/mastodon/web_socket.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L183">src/pleroma/web_socket.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -572,12 +594,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L148">src/mastodon/web_socket.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L149">src/pleroma/web_socket.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Connect to the endpoint.</p>
+									<p>Connect to the endpoint.
+									Connect to the endpoint.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -585,13 +608,17 @@
 								<li>
 									<h5>url: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Base url of streaming endpoint.</p>
+										<div class="lead">
+											<p>Base url of streaming endpoint.</p>
+										</div>
 									</div>
 								</li>
 								<li>
 									<h5>stream: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The specified stream name.</p>
+										<div class="lead">
+											<p>The specified stream name.</p>
+										</div>
 									</div>
 								</li>
 								<li>
@@ -600,13 +627,17 @@
 								<li>
 									<h5>accessToken: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Access token.</p>
+										<div class="lead">
+											<p>Access token.</p>
+										</div>
 									</div>
 								</li>
 								<li>
 									<h5>headers: <span class="tsd-signature-symbol">{}</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The specified headers.</p>
+										<div class="lead">
+											<p>The specified headers.</p>
+										</div>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-index-signature">
@@ -617,7 +648,9 @@
 								<li>
 									<h5>proxyConfig: <a href="../globals.html#proxyconfig" class="tsd-signature-type">ProxyConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Proxy setting, or set false if don&#39;t use proxy.</p>
+										<div class="lead">
+											<p>Proxy setting, or set false if don&#39;t use proxy.</p>
+										</div>
 									</div>
 								</li>
 							</ul>
@@ -636,7 +669,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L116">src/mastodon/web_socket.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L117">src/pleroma/web_socket.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -658,7 +691,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L94">src/mastodon/web_socket.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L95">src/pleroma/web_socket.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -680,7 +713,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L109">src/mastodon/web_socket.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L110">src/pleroma/web_socket.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -702,7 +735,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L234">src/mastodon/web_socket.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L235">src/pleroma/web_socket.ts:235</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -724,7 +757,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L75">src/mastodon/web_socket.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L76">src/pleroma/web_socket.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -745,7 +778,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#addlistener">addListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#addlistener">addListener</a></p>
 								<p>Overrides EventEmitter.addListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:11</li>
@@ -791,7 +824,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#emit">emit</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#emit">emit</a></p>
 								<p>Overrides EventEmitter.emit</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:23</li>
@@ -819,7 +852,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#eventnames">eventNames</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#eventnames">eventNames</a></p>
 								<p>Overrides EventEmitter.eventNames</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:24</li>
@@ -838,7 +871,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#getmaxlisteners">getMaxListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#getmaxlisteners">getMaxListeners</a></p>
 								<p>Overrides EventEmitter.getMaxListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:20</li>
@@ -857,7 +890,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#listenercount-1">listenerCount</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listenercount-1">listenerCount</a></p>
 								<p>Overrides EventEmitter.listenerCount</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:25</li>
@@ -882,7 +915,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#listeners">listeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listeners">listeners</a></p>
 								<p>Overrides EventEmitter.listeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:21</li>
@@ -907,7 +940,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#off">off</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#off">off</a></p>
 								<p>Overrides EventEmitter.off</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:17</li>
@@ -953,7 +986,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#on">on</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#on">on</a></p>
 								<p>Overrides EventEmitter.on</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:12</li>
@@ -999,7 +1032,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#once">once</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#once">once</a></p>
 								<p>Overrides EventEmitter.once</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:13</li>
@@ -1045,7 +1078,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#prependlistener">prependListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#prependlistener">prependListener</a></p>
 								<p>Overrides EventEmitter.prependListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:14</li>
@@ -1091,7 +1124,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#prependoncelistener">prependOnceListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#prependoncelistener">prependOnceListener</a></p>
 								<p>Overrides EventEmitter.prependOnceListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:15</li>
@@ -1137,7 +1170,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#rawlisteners">rawListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#rawlisteners">rawListeners</a></p>
 								<p>Overrides EventEmitter.rawListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:22</li>
@@ -1163,7 +1196,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/websocketinterface.html">WebSocketInterface</a>.<a href="../interfaces/websocketinterface.html#removealllisteners">removeAllListeners</a></p>
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#removealllisteners">removeAllListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#removealllisteners">removeAllListeners</a></p>
 								<p>Overrides EventEmitter.removeAllListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:18</li>
@@ -1188,7 +1221,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#removelistener">removeListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#removelistener">removeListener</a></p>
 								<p>Overrides EventEmitter.removeListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:16</li>
@@ -1234,7 +1267,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#setmaxlisteners">setMaxListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#setmaxlisteners">setMaxListeners</a></p>
 								<p>Overrides EventEmitter.setMaxListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:19</li>
@@ -1261,7 +1294,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/websocketinterface.html">WebSocketInterface</a>.<a href="../interfaces/websocketinterface.html#start">start</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L66">src/mastodon/web_socket.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L67">src/pleroma/web_socket.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1284,7 +1317,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/websocketinterface.html">WebSocketInterface</a>.<a href="../interfaces/websocketinterface.html#stop">stop</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon/web_socket.ts#L85">src/mastodon/web_socket.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L86">src/pleroma/web_socket.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1305,8 +1338,8 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#listenercount-1">listenerCount</a></p>
-								<p>Overrides <a href="parser.html">Parser</a>.<a href="parser.html#listenercount-1">listenerCount</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listenercount-1">listenerCount</a></p>
+								<p>Overrides <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listenercount-1">listenerCount</a></p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:8</li>
 								</ul>
@@ -1589,7 +1622,6 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>

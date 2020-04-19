@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Parser | megalodon</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for megalodon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -70,6 +70,8 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Parser
+							This class provides parser for websocket message.
+							Parser
 							Parse response data in streaming.
 							Parser
 							This class provides parser for websocket message.
@@ -81,6 +83,9 @@
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">EventEmitter</span>
+					</li>
 					<li>
 						<span class="tsd-signature-type">EventEmitter</span>
 					</li>
@@ -151,7 +156,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/parser.ts#L9">src/parser.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/parser.ts#L9">src/parser.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="parser.html" class="tsd-signature-type">Parser</a></h4>
@@ -167,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/parser.ts#L9">src/parser.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/parser.ts#L9">src/parser.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,8 +181,8 @@
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> default<wbr>Max<wbr>Listeners</h3>
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Max<wbr>Listeners<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#defaultmaxlisteners">defaultMaxListeners</a></p>
-						<p>Overrides <a href="parser.html">Parser</a>.<a href="parser.html#defaultmaxlisteners">defaultMaxListeners</a></p>
+						<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#defaultmaxlisteners">defaultMaxListeners</a></p>
+						<p>Overrides <a href="websocket.html">WebSocket</a>.<a href="websocket.html#defaultmaxlisteners">defaultMaxListeners</a></p>
 						<ul>
 							<li>Defined in node_modules/@types/node/events.d.ts:9</li>
 						</ul>
@@ -195,7 +200,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#addlistener">addListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#addlistener">addListener</a></p>
 								<p>Overrides EventEmitter.addListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:11</li>
@@ -241,7 +246,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#emit">emit</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#emit">emit</a></p>
 								<p>Overrides EventEmitter.emit</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:23</li>
@@ -269,7 +274,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#eventnames">eventNames</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#eventnames">eventNames</a></p>
 								<p>Overrides EventEmitter.eventNames</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:24</li>
@@ -288,7 +293,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#getmaxlisteners">getMaxListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#getmaxlisteners">getMaxListeners</a></p>
 								<p>Overrides EventEmitter.getMaxListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:20</li>
@@ -307,7 +312,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#listenercount-1">listenerCount</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listenercount-1">listenerCount</a></p>
 								<p>Overrides EventEmitter.listenerCount</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:25</li>
@@ -332,7 +337,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#listeners">listeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listeners">listeners</a></p>
 								<p>Overrides EventEmitter.listeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:21</li>
@@ -357,7 +362,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#off">off</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#off">off</a></p>
 								<p>Overrides EventEmitter.off</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:17</li>
@@ -403,7 +408,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#on">on</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#on">on</a></p>
 								<p>Overrides EventEmitter.on</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:12</li>
@@ -449,7 +454,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#once">once</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#once">once</a></p>
 								<p>Overrides EventEmitter.once</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:13</li>
@@ -490,13 +495,13 @@
 					<a name="parse" class="tsd-anchor"></a>
 					<h3>parse</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">parse<span class="tsd-signature-symbol">(</span>chunk<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">parse<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WS.Data</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/parser.ts#L16">src/parser.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/pleroma/web_socket.ts#L288">src/pleroma/web_socket.ts:288</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -504,7 +509,12 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>chunk: <span class="tsd-signature-type">string</span></h5>
+									<h5>message: <span class="tsd-signature-type">WS.Data</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Message body of websocket.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -520,7 +530,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#prependlistener">prependListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#prependlistener">prependListener</a></p>
 								<p>Overrides EventEmitter.prependListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:14</li>
@@ -566,7 +576,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#prependoncelistener">prependOnceListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#prependoncelistener">prependOnceListener</a></p>
 								<p>Overrides EventEmitter.prependOnceListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:15</li>
@@ -612,7 +622,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#rawlisteners">rawListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#rawlisteners">rawListeners</a></p>
 								<p>Overrides EventEmitter.rawListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:22</li>
@@ -637,7 +647,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#removealllisteners">removeAllListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#removealllisteners">removeAllListeners</a></p>
 								<p>Overrides EventEmitter.removeAllListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:18</li>
@@ -662,7 +672,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#removelistener">removeListener</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#removelistener">removeListener</a></p>
 								<p>Overrides EventEmitter.removeListener</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:16</li>
@@ -708,7 +718,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#setmaxlisteners">setMaxListeners</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#setmaxlisteners">setMaxListeners</a></p>
 								<p>Overrides EventEmitter.setMaxListeners</p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:19</li>
@@ -733,8 +743,8 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="parser.html">Parser</a>.<a href="parser.html#listenercount-1">listenerCount</a></p>
-								<p>Overrides <a href="parser.html">Parser</a>.<a href="parser.html#listenercount-1">listenerCount</a></p>
+								<p>Inherited from <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listenercount-1">listenerCount</a></p>
+								<p>Overrides <a href="websocket.html">WebSocket</a>.<a href="websocket.html#listenercount-1">listenerCount</a></p>
 								<ul>
 									<li>Defined in node_modules/@types/node/events.d.ts:8</li>
 								</ul>
@@ -933,7 +943,6 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>

@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Mastodon | megalodon</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for megalodon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -71,11 +71,6 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">Mastodon</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="pleroma.html" class="tsd-signature-type">Pleroma</a>
-							</li>
-						</ul>
 					</li>
 				</ul>
 			</section>
@@ -113,11 +108,13 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#cancel" class="tsd-kind-icon">cancel</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#cancelscheduledstatus" class="tsd-kind-icon">cancel<wbr>Scheduled<wbr>Status</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#createapp" class="tsd-kind-icon">create<wbr>App</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#createemojireaction" class="tsd-kind-icon">create<wbr>Emoji<wbr>Reaction</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#createfeaturedtag" class="tsd-kind-icon">create<wbr>Featured<wbr>Tag</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#createfilter" class="tsd-kind-icon">create<wbr>Filter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#createlist" class="tsd-kind-icon">create<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#deleteaccountsfromlist" class="tsd-kind-icon">delete<wbr>Accounts<wbr>From<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#deleteconversation" class="tsd-kind-icon">delete<wbr>Conversation</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#deleteemojireaction" class="tsd-kind-icon">delete<wbr>Emoji<wbr>Reaction</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#deletefeaturedtag" class="tsd-kind-icon">delete<wbr>Featured<wbr>Tag</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#deletefilter" class="tsd-kind-icon">delete<wbr>Filter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#deletelist" class="tsd-kind-icon">delete<wbr>List</a></li>
@@ -142,6 +139,8 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getbookmarks" class="tsd-kind-icon">get<wbr>Bookmarks</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getconversationtimeline" class="tsd-kind-icon">get<wbr>Conversation<wbr>Timeline</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getdomainblocks" class="tsd-kind-icon">get<wbr>Domain<wbr>Blocks</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getemojireaction" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reaction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getemojireactions" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reactions</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getendorsements" class="tsd-kind-icon">get<wbr>Endorsements</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getfavourites" class="tsd-kind-icon">get<wbr>Favourites</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mastodon.html#getfeaturedtags" class="tsd-kind-icon">get<wbr>Featured<wbr>Tags</a></li>
@@ -245,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L13">src/mastodon.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L14">src/mastodon.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,7 +297,7 @@
 					<div class="tsd-signature tsd-kind-icon">base<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L13">src/mastodon.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L14">src/mastodon.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -308,7 +307,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="mastodonapi.client.html" class="tsd-signature-type">Client</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L12">src/mastodon.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L13">src/mastodon.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -326,7 +325,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#acceptfollowrequest">acceptFollowRequest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L896">src/mastodon.ts:896</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L897">src/mastodon.ts:897</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -350,7 +349,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#addaccountstolist">addAccountsToList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1723">src/mastodon.ts:1723</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1724">src/mastodon.ts:1724</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -377,7 +376,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#blockaccount">blockAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L447">src/mastodon.ts:447</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L448">src/mastodon.ts:448</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -401,7 +400,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#blockdomain">blockDomain</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L723">src/mastodon.ts:723</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L724">src/mastodon.ts:724</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -425,7 +424,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#bookmarkstatus">bookmarkStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1185">src/mastodon.ts:1185</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1186">src/mastodon.ts:1186</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -449,7 +448,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#cancel">cancel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L39">src/mastodon.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L40">src/mastodon.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -467,7 +466,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#cancelscheduledstatus">cancelScheduledStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1365">src/mastodon.ts:1365</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1366">src/mastodon.ts:1366</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -491,7 +490,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createapp">createApp</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L66">src/mastodon.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L67">src/mastodon.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -520,6 +519,33 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createemojireaction" class="tsd-anchor"></a>
+					<h3>create<wbr>Emoji<wbr>Reaction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Emoji<wbr>Reaction<span class="tsd-signature-symbol">(</span>_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, _emoji<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createemojireaction">createEmojiReaction</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2054">src/mastodon.ts:2054</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>_emoji: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="createfeaturedtag" class="tsd-anchor"></a>
 					<h3>create<wbr>Featured<wbr>Tag</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -530,7 +556,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createfeaturedtag">createFeaturedTag</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L952">src/mastodon.ts:952</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L953">src/mastodon.ts:953</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -553,7 +579,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L755">src/mastodon.ts:755</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L756">src/mastodon.ts:756</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -583,7 +609,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#createlist">createList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1662">src/mastodon.ts:1662</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1663">src/mastodon.ts:1663</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -607,7 +633,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deleteaccountsfromlist">deleteAccountsFromList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1729">src/mastodon.ts:1729</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1730">src/mastodon.ts:1730</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -634,7 +660,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deleteconversation">deleteConversation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1631">src/mastodon.ts:1631</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1632">src/mastodon.ts:1632</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -644,6 +670,33 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deleteemojireaction" class="tsd-anchor"></a>
+					<h3>delete<wbr>Emoji<wbr>Reaction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Emoji<wbr>Reaction<span class="tsd-signature-symbol">(</span>_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, _emoji<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deleteemojireaction">deleteEmojiReaction</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2061">src/mastodon.ts:2061</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>_emoji: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#status-1" class="tsd-signature-type">Status</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -658,7 +711,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletefeaturedtag">deleteFeaturedTag</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L964">src/mastodon.ts:964</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L965">src/mastodon.ts:965</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -682,7 +735,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletefilter">deleteFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L830">src/mastodon.ts:830</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L831">src/mastodon.ts:831</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -706,7 +759,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletelist">deleteList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1686">src/mastodon.ts:1686</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1687">src/mastodon.ts:1687</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -730,7 +783,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletepushsubscription">deletePushSubscription</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1881">src/mastodon.ts:1881</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1882">src/mastodon.ts:1882</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -748,7 +801,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#deletestatus">deleteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1100">src/mastodon.ts:1100</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1101">src/mastodon.ts:1101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -765,17 +818,17 @@
 					<a name="directsocket" class="tsd-anchor"></a>
 					<h3>direct<wbr>Socket</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">direct<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="websocket.html" class="tsd-signature-type">WebSocket</a></li>
+						<li class="tsd-signature tsd-kind-icon">direct<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#directsocket">directSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2100">src/mastodon.ts:2100</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2132">src/mastodon.ts:2132</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WebSocket</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -790,7 +843,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#directstream">directStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2073">src/mastodon.ts:2073</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2105">src/mastodon.ts:2105</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -808,7 +861,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#dismissnotification">dismissNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1831">src/mastodon.ts:1831</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1832">src/mastodon.ts:1832</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -832,7 +885,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#dismissnotifications">dismissNotifications</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1827">src/mastodon.ts:1827</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1828">src/mastodon.ts:1828</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -850,7 +903,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#favouritestatus">favouriteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1153">src/mastodon.ts:1153</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1154">src/mastodon.ts:1154</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -873,7 +926,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L126">src/mastodon.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L127">src/mastodon.ts:127</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -906,7 +959,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#followaccount">followAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L425">src/mastodon.ts:425</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L426">src/mastodon.ts:426</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -932,7 +985,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L97">src/mastodon.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L98">src/mastodon.ts:98</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -976,7 +1029,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccount">getAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L273">src/mastodon.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L274">src/mastodon.ts:274</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -999,7 +1052,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L329">src/mastodon.ts:329</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L330">src/mastodon.ts:330</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1025,7 +1078,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L343">src/mastodon.ts:343</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L344">src/mastodon.ts:344</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1051,7 +1104,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L376">src/mastodon.ts:376</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L377">src/mastodon.ts:377</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1078,7 +1131,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getaccountlists">getAccountLists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L409">src/mastodon.ts:409</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L410">src/mastodon.ts:410</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1101,7 +1154,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L281">src/mastodon.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L282">src/mastodon.ts:282</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1127,7 +1180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1690">src/mastodon.ts:1690</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1691">src/mastodon.ts:1691</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1153,7 +1206,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L672">src/mastodon.ts:672</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L673">src/mastodon.ts:673</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1176,7 +1229,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L572">src/mastodon.ts:572</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L573">src/mastodon.ts:573</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1199,7 +1252,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1595">src/mastodon.ts:1595</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1596">src/mastodon.ts:1596</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1222,7 +1275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L701">src/mastodon.ts:701</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L702">src/mastodon.ts:702</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1236,6 +1289,57 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getemojireaction" class="tsd-anchor"></a>
+					<h3>get<wbr>Emoji<wbr>Reaction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Emoji<wbr>Reaction<span class="tsd-signature-symbol">(</span>_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, _emoji<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getemojireaction">getEmojiReaction</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2075">src/mastodon.ts:2075</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>_emoji: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getemojireactions" class="tsd-anchor"></a>
+					<h3>get<wbr>Emoji<wbr>Reactions</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Emoji<wbr>Reactions<span class="tsd-signature-symbol">(</span>_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getemojireactions">getEmojiReactions</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2068">src/mastodon.ts:2068</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#reaction" class="tsd-signature-type">Reaction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getendorsements" class="tsd-anchor"></a>
 					<h3>get<wbr>Endorsements</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1245,7 +1349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L915">src/mastodon.ts:915</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L916">src/mastodon.ts:916</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1268,7 +1372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L612">src/mastodon.ts:612</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L613">src/mastodon.ts:613</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1292,7 +1396,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfeaturedtags">getFeaturedTags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L944">src/mastodon.ts:944</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L945">src/mastodon.ts:945</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#featuredtag" class="tsd-signature-type">FeaturedTag</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1310,7 +1414,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfilter">getFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L747">src/mastodon.ts:747</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L748">src/mastodon.ts:748</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1334,7 +1438,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfilters">getFilters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L739">src/mastodon.ts:739</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L740">src/mastodon.ts:740</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1352,7 +1456,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getfollowrequests">getFollowRequests</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L876">src/mastodon.ts:876</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L877">src/mastodon.ts:877</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1375,7 +1479,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1511">src/mastodon.ts:1511</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1512">src/mastodon.ts:1512</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1399,7 +1503,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getidentityproof">getIdentityProof</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L417">src/mastodon.ts:417</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L418">src/mastodon.ts:418</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1423,7 +1527,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getinstance">getInstance</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1958">src/mastodon.ts:1958</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1959">src/mastodon.ts:1959</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#instance" class="tsd-signature-type">Instance</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1441,7 +1545,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getinstanceactivity">getInstanceActivity</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1970">src/mastodon.ts:1970</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1971">src/mastodon.ts:1971</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#activity" class="tsd-signature-type">Activity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1459,7 +1563,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getinstancecustomemojis">getInstanceCustomEmojis</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2042">src/mastodon.ts:2042</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2043">src/mastodon.ts:2043</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#emoji" class="tsd-signature-type">Emoji</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1476,7 +1580,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2003">src/mastodon.ts:2003</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2004">src/mastodon.ts:2004</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1500,7 +1604,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getinstancepeers">getInstancePeers</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1966">src/mastodon.ts:1966</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1967">src/mastodon.ts:1967</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1518,7 +1622,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getinstancetrends">getInstanceTrends</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1986">src/mastodon.ts:1986</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1987">src/mastodon.ts:1987</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1550,7 +1654,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getlist">getList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1654">src/mastodon.ts:1654</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1655">src/mastodon.ts:1655</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1573,7 +1677,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1553">src/mastodon.ts:1553</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1554">src/mastodon.ts:1554</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1600,7 +1704,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getlists">getLists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1646">src/mastodon.ts:1646</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1647">src/mastodon.ts:1647</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#list" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1617,7 +1721,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1416">src/mastodon.ts:1416</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1417">src/mastodon.ts:1417</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1641,7 +1745,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getmarker">getMarker</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1738">src/mastodon.ts:1738</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1739">src/mastodon.ts:1739</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1664,7 +1768,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L642">src/mastodon.ts:642</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L643">src/mastodon.ts:643</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1688,7 +1792,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getnotification">getNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1819">src/mastodon.ts:1819</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1820">src/mastodon.ts:1820</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1711,7 +1815,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1771">src/mastodon.ts:1771</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1772">src/mastodon.ts:1772</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1735,7 +1839,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpoll">getPoll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1284">src/mastodon.ts:1284</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1285">src/mastodon.ts:1285</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1759,7 +1863,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpreferences">getPreferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L979">src/mastodon.ts:979</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L980">src/mastodon.ts:980</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#preferences" class="tsd-signature-type">Preferences</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1776,7 +1880,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1372">src/mastodon.ts:1372</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1373">src/mastodon.ts:1373</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1800,7 +1904,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getpushsubscription">getPushSubscription</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1857">src/mastodon.ts:1857</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1858">src/mastodon.ts:1858</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#pushsubscription" class="tsd-signature-type">PushSubscription</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1818,7 +1922,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getrelationship">getRelationship</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L499">src/mastodon.ts:499</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L500">src/mastodon.ts:500</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1842,7 +1946,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getrelationships">getRelationships</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L511">src/mastodon.ts:511</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L512">src/mastodon.ts:512</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1866,7 +1970,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getscheduledstatus">getScheduledStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1343">src/mastodon.ts:1343</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1344">src/mastodon.ts:1344</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1889,7 +1993,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1307">src/mastodon.ts:1307</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1308">src/mastodon.ts:1308</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1913,7 +2017,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatus">getStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1092">src/mastodon.ts:1092</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1093">src/mastodon.ts:1093</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1936,7 +2040,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1108">src/mastodon.ts:1108</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1109">src/mastodon.ts:1109</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1963,7 +2067,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatusfavouritedby">getStatusFavouritedBy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1145">src/mastodon.ts:1145</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1146">src/mastodon.ts:1146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1987,7 +2091,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getstatusrebloggedby">getStatusRebloggedBy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1137">src/mastodon.ts:1137</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1138">src/mastodon.ts:1138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2011,7 +2115,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getsuggestedtags">getSuggestedTags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L968">src/mastodon.ts:968</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L969">src/mastodon.ts:969</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#tag" class="tsd-signature-type">Tag</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2029,7 +2133,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#getsuggestions">getSuggestions</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L990">src/mastodon.ts:990</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L991">src/mastodon.ts:991</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2052,7 +2156,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1460">src/mastodon.ts:1460</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1461">src/mastodon.ts:1461</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2072,14 +2176,14 @@
 					<a name="listsocket" class="tsd-anchor"></a>
 					<h3>list<wbr>Socket</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Socket<span class="tsd-signature-symbol">(</span>list_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="websocket.html" class="tsd-signature-type">WebSocket</a></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Socket<span class="tsd-signature-symbol">(</span>list_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#listsocket">listSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2096">src/mastodon.ts:2096</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2128">src/mastodon.ts:2128</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2088,7 +2192,7 @@
 									<h5>list_id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WebSocket</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2103,7 +2207,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#liststream">listStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2069">src/mastodon.ts:2069</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2101">src/mastodon.ts:2101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2120,17 +2224,17 @@
 					<a name="localsocket" class="tsd-anchor"></a>
 					<h3>local<wbr>Socket</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">local<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="websocket.html" class="tsd-signature-type">WebSocket</a></li>
+						<li class="tsd-signature tsd-kind-icon">local<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#localsocket">localSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2088">src/mastodon.ts:2088</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2120">src/mastodon.ts:2120</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WebSocket</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2145,7 +2249,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#localstream">localStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2061">src/mastodon.ts:2061</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2093">src/mastodon.ts:2093</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -2163,7 +2267,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#muteaccount">muteAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L463">src/mastodon.ts:463</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L464">src/mastodon.ts:464</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2190,7 +2294,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#mutestatus">muteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1201">src/mastodon.ts:1201</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1202">src/mastodon.ts:1202</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2214,7 +2318,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#pinaccount">pinAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L483">src/mastodon.ts:483</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L484">src/mastodon.ts:484</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2238,7 +2342,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#pinstatus">pinStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1217">src/mastodon.ts:1217</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1218">src/mastodon.ts:1218</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2261,7 +2365,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1013">src/mastodon.ts:1013</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1014">src/mastodon.ts:1014</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2307,17 +2411,17 @@
 					<a name="publicsocket" class="tsd-anchor"></a>
 					<h3>public<wbr>Socket</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">public<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="websocket.html" class="tsd-signature-type">WebSocket</a></li>
+						<li class="tsd-signature tsd-kind-icon">public<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#publicsocket">publicSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2084">src/mastodon.ts:2084</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2116">src/mastodon.ts:2116</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WebSocket</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2332,7 +2436,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#publicstream">publicStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2057">src/mastodon.ts:2057</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2089">src/mastodon.ts:2089</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -2350,7 +2454,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#readconversation">readConversation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1635">src/mastodon.ts:1635</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1636">src/mastodon.ts:1636</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2374,7 +2478,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#reblogstatus">reblogStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1169">src/mastodon.ts:1169</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1170">src/mastodon.ts:1170</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2398,7 +2502,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#refreshtoken">refreshToken</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L146">src/mastodon.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L147">src/mastodon.ts:147</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2428,7 +2532,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#registeraccount">registerAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L168">src/mastodon.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L169">src/mastodon.ts:169</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2467,7 +2571,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#registerapp">registerApp</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L43">src/mastodon.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L44">src/mastodon.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2494,7 +2598,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#rejectfollowrequest">rejectFollowRequest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L904">src/mastodon.ts:904</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L905">src/mastodon.ts:905</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2517,7 +2621,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L841">src/mastodon.ts:841</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L842">src/mastodon.ts:842</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2547,7 +2651,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#revoketoken">revokeToken</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L157">src/mastodon.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L158">src/mastodon.ts:158</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2576,7 +2680,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1744">src/mastodon.ts:1744</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1745">src/mastodon.ts:1745</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2600,7 +2704,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#schedulestatus">scheduleStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1351">src/mastodon.ts:1351</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1352">src/mastodon.ts:1352</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2626,7 +2730,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1888">src/mastodon.ts:1888</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1889">src/mastodon.ts:1889</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2655,7 +2759,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L523">src/mastodon.ts:523</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L524">src/mastodon.ts:524</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2682,7 +2786,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#subscribeaccount">subscribeAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L315">src/mastodon.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L316">src/mastodon.ts:316</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2705,7 +2809,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1838">src/mastodon.ts:1838</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1839">src/mastodon.ts:1839</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2741,14 +2845,14 @@
 					<a name="tagsocket" class="tsd-anchor"></a>
 					<h3>tag<wbr>Socket</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">tag<wbr>Socket<span class="tsd-signature-symbol">(</span>tag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="websocket.html" class="tsd-signature-type">WebSocket</a></li>
+						<li class="tsd-signature tsd-kind-icon">tag<wbr>Socket<span class="tsd-signature-symbol">(</span>tag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#tagsocket">tagSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2092">src/mastodon.ts:2092</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2124">src/mastodon.ts:2124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2757,7 +2861,7 @@
 									<h5>tag: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WebSocket</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2772,7 +2876,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#tagstream">tagStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2065">src/mastodon.ts:2065</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2097">src/mastodon.ts:2097</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2796,7 +2900,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unblockaccount">unblockAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L455">src/mastodon.ts:455</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L456">src/mastodon.ts:456</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2820,7 +2924,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unblockdomain">unblockDomain</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L729">src/mastodon.ts:729</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L730">src/mastodon.ts:730</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2844,7 +2948,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unbookmarkstatus">unbookmarkStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1193">src/mastodon.ts:1193</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1194">src/mastodon.ts:1194</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2868,7 +2972,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unfavouritestatus">unfavouriteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1161">src/mastodon.ts:1161</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1162">src/mastodon.ts:1162</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2892,7 +2996,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unfollowaccount">unfollowAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L439">src/mastodon.ts:439</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L440">src/mastodon.ts:440</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2916,7 +3020,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unmuteaccount">unmuteAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L475">src/mastodon.ts:475</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L476">src/mastodon.ts:476</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2940,7 +3044,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unmutestatus">unmuteStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1209">src/mastodon.ts:1209</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1210">src/mastodon.ts:1210</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2964,7 +3068,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unpinaccount">unpinAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L491">src/mastodon.ts:491</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L492">src/mastodon.ts:492</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2988,7 +3092,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unpinstatus">unpinStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1225">src/mastodon.ts:1225</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1226">src/mastodon.ts:1226</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3012,7 +3116,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unreblogstatus">unreblogStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1177">src/mastodon.ts:1177</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1178">src/mastodon.ts:1178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3036,7 +3140,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#unsubscribeaccount">unsubscribeAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L322">src/mastodon.ts:322</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L323">src/mastodon.ts:323</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3059,7 +3163,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L203">src/mastodon.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L204">src/mastodon.ts:204</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3082,7 +3186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L792">src/mastodon.ts:792</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L793">src/mastodon.ts:793</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3115,7 +3219,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#updatelist">updateList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1674">src/mastodon.ts:1674</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1675">src/mastodon.ts:1675</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3141,7 +3245,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1254">src/mastodon.ts:1254</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1255">src/mastodon.ts:1255</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3167,7 +3271,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1865">src/mastodon.ts:1865</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1866">src/mastodon.ts:1866</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3190,7 +3294,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1236">src/mastodon.ts:1236</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1237">src/mastodon.ts:1237</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3210,17 +3314,17 @@
 					<a name="usersocket" class="tsd-anchor"></a>
 					<h3>user<wbr>Socket</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">user<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="websocket.html" class="tsd-signature-type">WebSocket</a></li>
+						<li class="tsd-signature tsd-kind-icon">user<wbr>Socket<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#usersocket">userSocket</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2080">src/mastodon.ts:2080</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2112">src/mastodon.ts:2112</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="websocket.html" class="tsd-signature-type">WebSocket</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WebSocket</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -3235,7 +3339,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#userstream">userStream</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L2053">src/mastodon.ts:2053</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L2085">src/mastodon.ts:2085</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/streamlistenerinterface.html" class="tsd-signature-type">StreamListenerInterface</a></h4>
@@ -3253,7 +3357,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#verifyaccountcredentials">verifyAccountCredentials</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L195">src/mastodon.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L196">src/mastodon.ts:196</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#account" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3271,7 +3375,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/megalodoninterface.html">MegalodonInterface</a>.<a href="../interfaces/megalodoninterface.html#verifyappcredentials">verifyAppCredentials</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L119">src/mastodon.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L120">src/mastodon.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/entity.html#application" class="tsd-signature-type">Application</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3288,7 +3392,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/631cff7/src/mastodon.ts#L1292">src/mastodon.ts:1292</a></li>
+									<li>Defined in <a href="https://github.com/h3poteto/megalodon/blob/a759b49/src/mastodon.ts#L1293">src/mastodon.ts:1293</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3361,6 +3465,9 @@
 								<a href="mastodon.html#createapp" class="tsd-kind-icon">create<wbr>App</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mastodon.html#createemojireaction" class="tsd-kind-icon">create<wbr>Emoji<wbr>Reaction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mastodon.html#createfeaturedtag" class="tsd-kind-icon">create<wbr>Featured<wbr>Tag</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -3374,6 +3481,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mastodon.html#deleteconversation" class="tsd-kind-icon">delete<wbr>Conversation</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mastodon.html#deleteemojireaction" class="tsd-kind-icon">delete<wbr>Emoji<wbr>Reaction</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mastodon.html#deletefeaturedtag" class="tsd-kind-icon">delete<wbr>Featured<wbr>Tag</a>
@@ -3446,6 +3556,12 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mastodon.html#getdomainblocks" class="tsd-kind-icon">get<wbr>Domain<wbr>Blocks</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mastodon.html#getemojireaction" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reaction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mastodon.html#getemojireactions" class="tsd-kind-icon">get<wbr>Emoji<wbr>Reactions</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mastodon.html#getendorsements" class="tsd-kind-icon">get<wbr>Endorsements</a>
@@ -3796,7 +3912,6 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
