@@ -37,18 +37,19 @@ namespace PleromaEntity {
     application: Application | null
     language: string | null
     pinned: boolean | null
+    // Reblogged status contains only local parameter.
     pleroma: {
-      context: {
+      context?: {
         'text/plain': string
       }
-      spoiler_text: {
+      spoiler_text?: {
         'text/plain': string
       }
-      conversation_id: string
-      direct_conversation_id: string | null
-      emoji_reactions: Array<Reaction>
+      conversation_id?: string
+      direct_conversation_id?: string | null
+      emoji_reactions?: Array<Reaction>
       local: boolean
-      thread_muted: boolean
+      thread_muted?: boolean
     }
   }
 }
