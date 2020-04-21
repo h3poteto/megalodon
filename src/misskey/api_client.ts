@@ -26,6 +26,7 @@ namespace MisskeyAPI {
     export type Note = MisskeyEntity.Note
     export type Notification = MisskeyEntity.Notification
     export type Poll = MisskeyEntity.Poll
+    export type Reaction = MisskeyEntity.Reaction
     export type Relation = MisskeyEntity.Relation
     export type User = MisskeyEntity.User
     export type UserDetail = MisskeyEntity.UserDetail
@@ -226,16 +227,42 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: reactions(n.reactions)
+        emoji_reactions: mapReactions(n.reactions, n.myReaction)
       }
     }
 
-    export const reactions = (r: { [key: string]: number }): Array<MegalodonEntity.Reaction> => {
-      return Object.keys(r).map(key => ({
-        count: r[key],
-        me: false,
-        name: key
-      }))
+    export const mapReactions = (r: { [key: string]: number }, myReaction?: string): Array<MegalodonEntity.Reaction> => {
+      return Object.keys(r).map(key => {
+        if (myReaction && key === myReaction) {
+          return {
+            count: r[key],
+            me: true,
+            name: key
+          }
+        }
+        return {
+          count: r[key],
+          me: false,
+          name: key
+        }
+      })
+    }
+
+    export const reactions = (r: Array<Entity.Reaction>): Array<MegalodonEntity.Reaction> => {
+      const result: Array<MegalodonEntity.Reaction> = []
+      r.map(e => {
+        const i = result.findIndex(res => res.name === e.type)
+        if (i) {
+          result[i].count++
+        } else {
+          result.push({
+            count: 1,
+            me: false,
+            name: e.type
+          })
+        }
+      })
+      return result
     }
 
     export const noteToConversation = (n: Entity.Note): MegalodonEntity.Conversation => {
