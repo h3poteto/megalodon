@@ -27,5 +27,6 @@ namespace MisskeyEntity {
     tags?: Array<string>
     poll?: Poll
     mentions?: Array<string>
+    myReaction?: string
   }
 }

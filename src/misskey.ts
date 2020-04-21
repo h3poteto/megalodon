@@ -2000,11 +2000,15 @@ export default class Misskey implements MegalodonInterface {
       .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
   }
 
-  public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
-    })
+  public async getEmojiReactions(id: string): Promise<Response<Array<Entity.Reaction>>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Reaction>>('/api/notes/reactions', {
+        noteId: id
+      })
+      .then(res => ({
+        ...res,
+        data: MisskeyAPI.Converter.reactions(res.data)
+      }))
   }
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
