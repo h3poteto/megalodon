@@ -252,7 +252,7 @@ namespace MisskeyAPI {
       const result: Array<MegalodonEntity.Reaction> = []
       r.map(e => {
         const i = result.findIndex(res => res.name === e.type)
-        if (i) {
+        if (i >= 0) {
           result[i].count++
         } else {
           result.push({
