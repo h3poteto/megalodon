@@ -9,7 +9,7 @@ namespace MisskeyEntity {
     createdAt: string
     userId: string
     user: User
-    text: string
+    text: string | null
     cw: string | null
     visibility: 'public' | 'home' | 'followers' | 'specified'
     renoteCount: number

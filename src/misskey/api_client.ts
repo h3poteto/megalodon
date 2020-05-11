@@ -207,7 +207,7 @@ namespace MisskeyAPI {
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: null,
         reblog: n.renote ? note(n.renote) : null,
-        content: n.text,
+        content: n.text ? n.text : '',
         created_at: n.createdAt,
         emojis: n.emojis.map(e => emoji(e)),
         replies_count: n.repliesCount,
@@ -227,7 +227,8 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: mapReactions(n.reactions, n.myReaction)
+        emoji_reactions: mapReactions(n.reactions, n.myReaction),
+        quote: n.renote !== undefined && n.text !== null
       }
     }
 
