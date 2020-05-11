@@ -434,7 +434,8 @@ namespace MastodonAPI {
       application: s.application ? application(s.application) : null,
       language: s.language,
       pinned: s.pinned,
-      emoji_reactions: []
+      emoji_reactions: [],
+      quote: s.reblog !== null && s.reblog.content !== s.content
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
