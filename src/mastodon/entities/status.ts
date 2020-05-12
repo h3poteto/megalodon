@@ -36,5 +36,8 @@ namespace MastodonEntity {
     application: Application | null
     language: string | null
     pinned: boolean | null
+    // These parameters are unique parameters in fedibird.com for quote.
+    quote_id?: string
+    quote?: Status | null
   }
 }
