@@ -413,7 +413,7 @@ namespace MastodonAPI {
       account: account(s.account),
       in_reply_to_id: s.in_reply_to_id,
       in_reply_to_account_id: s.in_reply_to_account_id,
-      reblog: s.reblog ? status(s.reblog) : null,
+      reblog: s.reblog ? status(s.reblog) : s.quote ? status(s.quote) : null,
       content: s.content,
       created_at: s.created_at,
       emojis: s.emojis.map(e => emoji(e)),
@@ -435,7 +435,8 @@ namespace MastodonAPI {
       language: s.language,
       pinned: s.pinned,
       emoji_reactions: [],
-      quote: s.reblog !== null && s.reblog.content !== s.content
+      // Now quote is supported only fedibird.com.
+      quote: s.quote !== undefined && s.quote !== null
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
