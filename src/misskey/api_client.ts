@@ -289,7 +289,7 @@ namespace MisskeyAPI {
     ): 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollVote' => {
       switch (e) {
         case 'follow':
-          return e
+          return 'follow'
         case 'mention':
           return 'reply'
         case 'favourite':
@@ -317,11 +317,12 @@ namespace MisskeyAPI {
     ): 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' | 'emoji_reaction' => {
       switch (e) {
         case 'follow':
-          return e
+          return 'follow'
         case 'mention':
         case 'reply':
           return 'mention'
         case 'renote':
+        case 'quote':
           return 'reblog'
         case 'reaction':
           return 'emoji_reaction'
