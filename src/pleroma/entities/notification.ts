@@ -8,6 +8,8 @@ namespace PleromaEntity {
     id: string
     status?: Status
     emoji?: string
-    type: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction'
+    type: NotificationType
   }
+
+  export type NotificationType = 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction' | 'follow_request'
 }

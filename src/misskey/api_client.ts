@@ -284,9 +284,7 @@ namespace MisskeyAPI {
       title: l.name
     })
 
-    export const encodeNotificationType = (
-      e: 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' | 'emoji_reaction'
-    ): 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollVote' => {
+    export const encodeNotificationType = (e: MegalodonEntity.NotificationType): MisskeyEntity.NotificationType => {
       switch (e) {
         case 'follow':
           return 'follow'
@@ -299,22 +297,12 @@ namespace MisskeyAPI {
           return 'renote'
         case 'poll':
           return 'pollVote'
+        case 'follow_request':
+          return 'receiveFollowRequest'
       }
     }
 
-    export const decodeNotificationType = (
-      e:
-        | 'follow'
-        | 'mention'
-        | 'reply'
-        | 'renote'
-        | 'quote'
-        | 'reaction'
-        | 'pollVote'
-        | 'receiveFollowRequest'
-        | 'followRequestAccepted'
-        | 'groupInvited'
-    ): 'follow' | 'favourite' | 'reblog' | 'mention' | 'poll' | 'emoji_reaction' => {
+    export const decodeNotificationType = (e: MisskeyEntity.NotificationType): MegalodonEntity.NotificationType => {
       switch (e) {
         case 'follow':
           return 'follow'
@@ -328,6 +316,10 @@ namespace MisskeyAPI {
           return 'emoji_reaction'
         case 'pollVote':
           return 'poll'
+        case 'receiveFollowRequest':
+          return 'follow_request'
+        case 'followRequestAccepted':
+          return 'follow'
         default:
           return 'follow'
       }

@@ -7,6 +7,8 @@ namespace MastodonEntity {
     created_at: string
     id: string
     status?: Status
-    type: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll'
+    type: NotificationType
   }
+
+  export type NotificationType = 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'follow_request'
 }

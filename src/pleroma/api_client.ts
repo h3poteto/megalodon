@@ -47,9 +47,7 @@ namespace PleromaAPI {
   }
 
   export namespace Converter {
-    export const decodeNotificationType = (
-      t: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction'
-    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction' => {
+    export const decodeNotificationType = (t: PleromaEntity.NotificationType): MegalodonEntity.NotificationType => {
       switch (t) {
         case 'pleroma:emoji_reaction':
           return 'emoji_reaction'
@@ -57,9 +55,7 @@ namespace PleromaAPI {
           return t
       }
     }
-    export const encodeNotificationType = (
-      t: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction'
-    ): 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction' => {
+    export const encodeNotificationType = (t: MegalodonEntity.NotificationType): PleromaEntity.NotificationType => {
       switch (t) {
         case 'emoji_reaction':
           return 'pleroma:emoji_reaction'

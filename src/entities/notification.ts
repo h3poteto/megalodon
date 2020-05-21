@@ -8,6 +8,8 @@ namespace Entity {
     id: string
     status?: Status
     emoji?: string
-    type: 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction'
+    type: NotificationType
   }
+
+  export type NotificationType = 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction' | 'follow_request'
 }
