@@ -10,7 +10,7 @@
     "typescript": "3.9.3"
   },
   "devDependencies": {
-    "@types/node": "^14.0.4",
+    "@types/node": "^14.0.5",
     "log4js": "^6.2.1"
   }
 }
