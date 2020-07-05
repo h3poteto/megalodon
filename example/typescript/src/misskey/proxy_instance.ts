@@ -8,7 +8,7 @@ declare var process: {
   }
 }
 
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://misskey.io'
 
 const proxy: ProxyConfig = {
   host: process.env.PROXY_HOST,
@@ -16,8 +16,11 @@ const proxy: ProxyConfig = {
   protocol: process.env.PROXY_PROTOCOL
 }
 
-const client = generator('mastodon', BASE_URL, '', null, proxy)
+const client = generator('misskey', BASE_URL, '', null, proxy)
 
-client.getInstance().then((res: Response<Entity.Instance>) => {
-  console.log(res)
-})
+client
+  .getInstance()
+  .then((res: Response<Entity.Instance>) => {
+    console.log(res)
+  })
+  .catch(err => console.error(err))
