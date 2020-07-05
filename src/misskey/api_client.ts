@@ -445,6 +445,7 @@ namespace MisskeyAPI {
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }

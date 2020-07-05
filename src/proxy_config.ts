@@ -1,5 +1,5 @@
-import createHttpsProxyAgent, { HttpsProxyAgent } from 'https-proxy-agent'
-import createSocksProxyAgent, { SocksProxyAgent } from 'socks-proxy-agent'
+import { HttpsProxyAgent, HttpsProxyAgentOptions } from 'https-proxy-agent'
+import { SocksProxyAgent, SocksProxyAgentOptions } from 'socks-proxy-agent'
 
 export type ProxyConfig = {
   host: string
@@ -14,22 +14,66 @@ export type ProxyConfig = {
 class ProxyProtocolError extends Error {}
 
 const proxyAgent = (proxyConfig: ProxyConfig): HttpsProxyAgent | SocksProxyAgent => {
-  let auth = ''
-  if (proxyConfig.auth) {
-    auth = `${proxyConfig.auth.username}:${proxyConfig.auth.password}@`
-  }
   switch (proxyConfig.protocol) {
-    case 'http':
+    case 'http': {
+      let options: HttpsProxyAgentOptions = {
+        host: proxyConfig.host,
+        port: proxyConfig.port,
+        secureProxy: false
+      }
+      if (proxyConfig.auth) {
+        options = Object.assign(options, {
+          auth: `${proxyConfig.auth.username}:${proxyConfig.auth.password}`
+        })
+      }
+      const httpsAgent = new HttpsProxyAgent(options)
+      return httpsAgent
+    }
     case 'https': {
-      const httpsAgent = createHttpsProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
+      let options: HttpsProxyAgentOptions = {
+        host: proxyConfig.host,
+        port: proxyConfig.port,
+        secureProxy: true
+      }
+      if (proxyConfig.auth) {
+        options = Object.assign(options, {
+          auth: `${proxyConfig.auth.username}:${proxyConfig.auth.password}`
+        })
+      }
+      const httpsAgent = new HttpsProxyAgent(options)
       return httpsAgent
     }
     case 'socks4':
-    case 'socks4a':
+    case 'socks4a': {
+      let options: SocksProxyAgentOptions = {
+        type: 4,
+        host: proxyConfig.host,
+        port: proxyConfig.port
+      }
+      if (proxyConfig.auth) {
+        options = Object.assign(options, {
+          userId: proxyConfig.auth.username,
+          password: proxyConfig.auth.password
+        })
+      }
+      const socksAgent = new SocksProxyAgent(options)
+      return socksAgent
+    }
     case 'socks5':
     case 'socks5h':
     case 'socks': {
-      const socksAgent = createSocksProxyAgent(`${proxyConfig.protocol}://${auth}${proxyConfig.host}:${proxyConfig.port}`)
+      let options: SocksProxyAgentOptions = {
+        type: 5,
+        host: proxyConfig.host,
+        port: proxyConfig.port
+      }
+      if (proxyConfig.auth) {
+        options = Object.assign(options, {
+          userId: proxyConfig.auth.username,
+          password: proxyConfig.auth.password
+        })
+      }
+      const socksAgent = new SocksProxyAgent(options)
       return socksAgent
     }
     default:

@@ -240,6 +240,7 @@ namespace PleromaAPI {
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
@@ -281,6 +282,7 @@ namespace PleromaAPI {
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
@@ -322,6 +324,7 @@ namespace PleromaAPI {
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
@@ -363,6 +366,7 @@ namespace PleromaAPI {
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
@@ -396,6 +400,7 @@ namespace PleromaAPI {
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
           httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
