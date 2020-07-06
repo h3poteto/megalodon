@@ -1,4 +1,4 @@
-import generator, { Entity, ProxyConfig, Response } from 'megalodon'
+import { detector, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
@@ -8,7 +8,7 @@ declare var process: {
   }
 }
 
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://fedibird.com'
 
 const proxy: ProxyConfig = {
   host: process.env.PROXY_HOST,
@@ -16,8 +16,6 @@ const proxy: ProxyConfig = {
   protocol: process.env.PROXY_PROTOCOL
 }
 
-const client = generator('mastodon', BASE_URL, '', null, proxy)
-
-client.getInstance().then((res: Response<Entity.Instance>) => {
+detector(BASE_URL, proxy).then(res => {
   console.log(res)
 })

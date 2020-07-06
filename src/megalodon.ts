@@ -1269,7 +1269,7 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
       return 'mastodon'
     }
   } catch (err) {
-    await axios.post<{}>(url + '/api/meta', options)
+    await axios.post<{}>(url + '/api/meta', {}, options)
     return 'misskey'
   }
 }
