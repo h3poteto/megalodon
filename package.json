@@ -48,7 +48,8 @@
       "ts-jest": {
         "tsConfig": "tsconfig.json"
       }
-    }
+    },
+    "testEnvironment": "node"
   },
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
