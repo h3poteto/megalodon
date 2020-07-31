@@ -60,7 +60,7 @@
     "moment": "^2.24.0",
     "oauth": "^0.9.15",
     "socks-proxy-agent": "^5.0.0",
-    "typescript": "3.9.6",
+    "typescript": "3.9.7",
     "uuid": "^8.0.0",
     "ws": "^7.2.1"
   },
