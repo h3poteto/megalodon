@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "http-server": "^0.12.3",
-    "ts-loader": "^8.0.1",
+    "ts-loader": "^8.0.2",
     "typescript": "3.9.7",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
