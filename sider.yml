@@ -3,7 +3,7 @@ ignore:
 linter:
   eslint:
     npm_install: true
-    dir:
+    target:
       - src
     config: '.eslintrc.js'
     ext: '.js,.ts'
