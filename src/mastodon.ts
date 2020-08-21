@@ -1022,6 +1022,7 @@ export default class Mastodon implements MegalodonInterface {
       visibility?: 'public' | 'unlisted' | 'private' | 'direct'
       scheduled_at?: string
       language?: string
+      quote_id?: string
     }
   ): Promise<Response<Entity.Status>> {
     let params = {
@@ -1080,6 +1081,11 @@ export default class Mastodon implements MegalodonInterface {
       if (options.language) {
         params = Object.assign(params, {
           language: options.language
+        })
+      }
+      if (options.quote_id) {
+        params = Object.assign(params, {
+          quote_id: options.quote_id
         })
       }
     }

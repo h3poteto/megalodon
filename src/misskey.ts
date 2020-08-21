@@ -975,6 +975,7 @@ export default class Misskey implements MegalodonInterface {
       visibility?: 'public' | 'unlisted' | 'private' | 'direct'
       scheduled_at?: string
       language?: string
+      quote_id?: string
     }
   ): Promise<Response<Entity.Status>> {
     let params = {
@@ -1018,6 +1019,11 @@ export default class Misskey implements MegalodonInterface {
       if (options.visibility) {
         params = Object.assign(params, {
           visibility: MisskeyAPI.Converter.encodeVisibility(options.visibility)
+        })
+      }
+      if (options.quote_id) {
+        params = Object.assign(params, {
+          renoteId: options.quote_id
         })
       }
     }
