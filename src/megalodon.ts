@@ -588,6 +588,7 @@ export interface MegalodonInterface {
    * @param options.visibility Visibility of the posted status.
    * @param options.scheduled_at ISO 8601 Datetime at which to schedule a status.
    * @param options.language ISO 639 language code for this status.
+   * @param options.quote_id ID of the status being quoted to, if status is a quote.
    * @return Status
    */
   postStatus(
@@ -601,6 +602,7 @@ export interface MegalodonInterface {
       visibility?: 'public' | 'unlisted' | 'private' | 'direct'
       scheduled_at?: string
       language?: string
+      quote_id?: string
     }
   ): Promise<Response<Entity.Status>>
   /**
