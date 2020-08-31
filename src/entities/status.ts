@@ -39,5 +39,6 @@ namespace Entity {
     pinned: boolean | null
     emoji_reactions: Array<Reaction>
     quote: boolean
+    bookmarked: boolean
   }
 }
