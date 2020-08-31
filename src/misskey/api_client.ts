@@ -228,6 +228,7 @@ namespace MisskeyAPI {
         language: null,
         pinned: null,
         emoji_reactions: mapReactions(n.reactions, n.myReaction),
+        bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }
     }

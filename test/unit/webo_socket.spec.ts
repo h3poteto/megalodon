@@ -53,6 +53,7 @@ const status: Entity.Status = {
   language: null,
   pinned: null,
   emoji_reactions: [],
+  bookmarked: false,
   quote: false
 }
 
