@@ -168,7 +168,7 @@ export interface MegalodonInterface {
    */
   getAccountStatuses(
     id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean }
+    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean; exclude_replies?: boolean; exclude_reblogs?: boolean }
   ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/pleroma/accounts/:id/favourites
