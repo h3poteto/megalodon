@@ -288,7 +288,7 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getAccountStatuses(
     id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean }
+    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean; exclude_replies: boolean; exclude_reblogs: boolean }
   ): Promise<Response<Array<Entity.Status>>> {
     if (options && options.pinned) {
       return this.client
@@ -320,6 +320,16 @@ export default class Misskey implements MegalodonInterface {
       if (options.since_id) {
         params = Object.assign(params, {
           sinceId: options.since_id
+        })
+      }
+      if (options.exclude_replies) {
+        params = Object.assign(params, {
+          includeReplies: false
+        })
+      }
+      if (options.exclude_reblogs) {
+        params = Object.assign(params, {
+          includeMyRenotes: false
         })
       }
     }
