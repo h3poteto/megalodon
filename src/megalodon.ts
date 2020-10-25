@@ -164,11 +164,27 @@ export interface MegalodonInterface {
    * GET /api/v1/accounts/:id/statuses
    *
    * @param id The account ID.
+
+   * @param options.limit Max number of results to return. Defaults to 20.
+   * @param options.max_id Return results older than ID.
+   * @param options.since_id Return results newer than ID.
+   * @param options.pinned Return statuses which include pinned statuses.
+   * @param options.exclude_replies Return statuses which exclude replies.
+   * @param options.exclude_reblogs Return statuses which exclude reblogs.
+   * @param options.only_media Show only statuses with media attached? Defaults to false.
    * @return Account's statuses.
    */
   getAccountStatuses(
     id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean; exclude_replies?: boolean; exclude_reblogs?: boolean }
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+      pinned?: boolean
+      exclude_replies?: boolean
+      exclude_reblogs?: boolean
+      only_media?: boolean
+    }
   ): Promise<Response<Array<Entity.Status>>>
   /**
    * GET /api/v1/pleroma/accounts/:id/favourites
