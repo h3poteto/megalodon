@@ -281,7 +281,15 @@ export default class Mastodon implements MegalodonInterface {
 
   public async getAccountStatuses(
     id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string; pinned?: boolean; exclude_replies?: boolean; exclude_reblogs?: boolean }
+    options?: {
+      limit?: number
+      max_id?: string
+      since_id?: string
+      pinned?: boolean
+      exclude_replies?: boolean
+      exclude_reblogs?: boolean
+      only_media: boolean
+    }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (options) {
@@ -313,6 +321,11 @@ export default class Mastodon implements MegalodonInterface {
       if (options.exclude_reblogs) {
         params = Object.assign(params, {
           exclude_reblogs: options.exclude_reblogs
+        })
+      }
+      if (options.only_media) {
+        params = Object.assign(params, {
+          only_media: options.only_media
         })
       }
     }
