@@ -5,6 +5,7 @@ node_js:
   - "11"
   - "12"
   - "13"
+  - "14"
 cache:
   yarn: false
   npm: false
