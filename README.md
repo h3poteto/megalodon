@@ -1,5 +1,5 @@
 # Megalodon
-[![Build Status](https://travis-ci.com/h3poteto/megalodon.svg?branch=master)](https://travis-ci.com/h3poteto/megalodon)
+[![Test](https://github.com/h3poteto/megalodon/workflows/Test/badge.svg)](https://github.com/h3poteto/megalodon/actions?query=branch%3Amaster+workflow%3ATest)
 [![NPM Version](https://img.shields.io/npm/v/megalodon.svg)](https://www.npmjs.com/package/megalodon)
 [![GitHub release](https://img.shields.io/github/release/h3poteto/megalodon.svg)](https://github.com/h3poteto/megalodon/releases)
 [![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
