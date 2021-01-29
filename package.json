@@ -82,7 +82,7 @@
     "jest-worker": "^26.0.0",
     "lodash": "^4.17.14",
     "prettier": "^2.0.2",
-    "ts-jest": "^25.2.0",
+    "ts-jest": "^26.4.4",
     "typedoc": "^0.20.19"
   }
 }
