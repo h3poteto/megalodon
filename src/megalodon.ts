@@ -1047,7 +1047,7 @@ export interface MegalodonInterface {
     max_id?: string
     since_id?: string
     min_id?: string
-    exclude_types?: Array<NotificationType>
+    exclude_types?: Array<Entity.NotificationType>
     account_id?: string
   }): Promise<Response<Array<Entity.Notification>>>
   /**
@@ -1323,15 +1323,6 @@ const generator = (
       return mastodon
     }
   }
-}
-
-export enum NotificationType {
-  Follow = 'follow',
-  Favourite = 'favourite',
-  Reblog = 'reblog',
-  Mention = 'mention',
-  Poll = 'poll',
-  EmojiReaction = 'emoji_reaction'
 }
 
 export default generator

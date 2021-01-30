@@ -11,5 +11,5 @@ namespace PleromaEntity {
     type: NotificationType
   }
 
-  export type NotificationType = 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'pleroma:emoji_reaction' | 'follow_request'
+  export type NotificationType = string
 }

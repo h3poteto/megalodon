@@ -9,8 +9,7 @@ import {
   WebSocketInterface,
   NoImplementedError,
   ArgumentError,
-  UnexpectedError,
-  NotificationType
+  UnexpectedError
 } from './megalodon'
 
 export default class Misskey implements MegalodonInterface {
@@ -1735,7 +1734,7 @@ export default class Misskey implements MegalodonInterface {
     max_id?: string
     since_id?: string
     min_id?: string
-    exclude_type?: Array<NotificationType>
+    exclude_type?: Array<Entity.NotificationType>
     account_id?: string
   }): Promise<Response<Array<Entity.Notification>>> {
     let params = {}

@@ -11,5 +11,5 @@ namespace Entity {
     type: NotificationType
   }
 
-  export type NotificationType = 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'emoji_reaction' | 'follow_request'
+  export type NotificationType = string
 }

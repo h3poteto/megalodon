@@ -6,6 +6,8 @@ import Response from '../response'
 import MisskeyEntity from './entity'
 import MegalodonEntity from '../entity'
 import WebSocket from './web_socket'
+import MisskeyNotificationType from './notification'
+import NotificationType from '../notification'
 
 namespace MisskeyAPI {
   export namespace Entity {
@@ -287,42 +289,44 @@ namespace MisskeyAPI {
 
     export const encodeNotificationType = (e: MegalodonEntity.NotificationType): MisskeyEntity.NotificationType => {
       switch (e) {
-        case 'follow':
-          return 'follow'
-        case 'mention':
-          return 'reply'
-        case 'favourite':
-        case 'emoji_reaction':
-          return 'reaction'
-        case 'reblog':
-          return 'renote'
-        case 'poll':
-          return 'pollVote'
-        case 'follow_request':
-          return 'receiveFollowRequest'
+        case NotificationType.Follow:
+          return MisskeyNotificationType.Follow
+        case NotificationType.Mention:
+          return MisskeyNotificationType.Reply
+        case NotificationType.Favourite:
+        case NotificationType.EmojiReaction:
+          return MisskeyNotificationType.Reaction
+        case NotificationType.Reblog:
+          return MisskeyNotificationType.Renote
+        case NotificationType.Poll:
+          return MisskeyNotificationType.PollVote
+        case NotificationType.FollowRequest:
+          return MisskeyNotificationType.ReceiveFollowRequest
+        default:
+          return e
       }
     }
 
     export const decodeNotificationType = (e: MisskeyEntity.NotificationType): MegalodonEntity.NotificationType => {
       switch (e) {
-        case 'follow':
-          return 'follow'
-        case 'mention':
-        case 'reply':
-          return 'mention'
-        case 'renote':
-        case 'quote':
-          return 'reblog'
-        case 'reaction':
-          return 'emoji_reaction'
-        case 'pollVote':
-          return 'poll'
-        case 'receiveFollowRequest':
-          return 'follow_request'
-        case 'followRequestAccepted':
-          return 'follow'
+        case MisskeyNotificationType.Follow:
+          return NotificationType.Follow
+        case MisskeyNotificationType.Mention:
+        case MisskeyNotificationType.Reply:
+          return NotificationType.Mention
+        case MisskeyNotificationType.Renote:
+        case MisskeyNotificationType.Quote:
+          return NotificationType.Reblog
+        case MisskeyNotificationType.Reaction:
+          return NotificationType.EmojiReaction
+        case MisskeyNotificationType.PollVote:
+          return NotificationType.Poll
+        case MisskeyNotificationType.ReceiveFollowRequest:
+          return NotificationType.FollowRequest
+        case MisskeyNotificationType.FollowRequestAccepted:
+          return NotificationType.Follow
         default:
-          return 'follow'
+          return e
       }
     }
 

@@ -13,15 +13,5 @@ namespace MisskeyEntity {
     reaction?: string
   }
 
-  export type NotificationType =
-    | 'follow'
-    | 'mention'
-    | 'reply'
-    | 'renote'
-    | 'quote'
-    | 'reaction'
-    | 'pollVote'
-    | 'receiveFollowRequest'
-    | 'followRequestAccepted'
-    | 'groupInvited'
+  export type NotificationType = string
 }

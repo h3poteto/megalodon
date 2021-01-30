@@ -2,7 +2,7 @@ import { OAuth2 } from 'oauth'
 
 import PleromaAPI from './pleroma/api_client'
 import WebSocket from './pleroma/web_socket'
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError, NotificationType } from './megalodon'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
@@ -1818,7 +1818,7 @@ export default class Pleroma implements MegalodonInterface {
     max_id?: string
     since_id?: string
     min_id?: string
-    exclude_types?: Array<NotificationType>
+    exclude_types?: Array<Entity.NotificationType>
     account_id?: string
   }): Promise<Response<Array<Entity.Notification>>> {
     let params = {}
