@@ -354,6 +354,44 @@ namespace MastodonAPI {
   }
 
   export namespace Converter {
+    export const decodeNotificationType = (t: MastodonEntity.NotificationType): MegalodonEntity.NotificationType => {
+      switch (t) {
+        case MastodonEntity.NotificationTypeFavourite:
+          return MegalodonEntity.NotificationTypeFavourite
+        case MastodonEntity.NotificationTypeFollow:
+          return MegalodonEntity.NotificationTypeFollow
+        case MastodonEntity.NotificationTypeFollowRequest:
+          return MegalodonEntity.NotificationTypeFollowRequest
+        case MastodonEntity.NotificationTypeMention:
+          return MegalodonEntity.NotificationTypeMention
+        case MastodonEntity.NotificationTypePoll:
+          return MegalodonEntity.NotificationTypePoll
+        case MastodonEntity.NotificationTypeReblog:
+          return MegalodonEntity.NotificationTypeReblog
+        default:
+          return MegalodonEntity.NotificationTypeUnknown
+      }
+    }
+
+    export const encodeNotificationType = (t: MegalodonEntity.NotificationType): MastodonEntity.NotificationType => {
+      switch (t) {
+        case MegalodonEntity.NotificationTypeFavourite:
+          return MastodonEntity.NotificationTypeFavourite
+        case MegalodonEntity.NotificationTypeFollow:
+          return MastodonEntity.NotificationTypeFollow
+        case MegalodonEntity.NotificationTypeFollowRequest:
+          return MastodonEntity.NotificationTypeFollowRequest
+        case MegalodonEntity.NotificationTypeMention:
+          return MastodonEntity.NotificationTypeMention
+        case MegalodonEntity.NotificationTypePoll:
+          return MastodonEntity.NotificationTypePoll
+        case MegalodonEntity.NotificationTypeReblog:
+          return MastodonEntity.NotificationTypeReblog
+        default:
+          return MastodonEntity.NotificationTypeUnknown
+      }
+    }
+
     export const account = (a: Entity.Account): MegalodonEntity.Account => a
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
@@ -386,14 +424,14 @@ namespace MastodonAPI {
           created_at: n.created_at,
           id: n.id,
           status: status(n.status),
-          type: n.type
+          type: decodeNotificationType(n.type)
         }
       } else {
         return {
           account: account(n.account),
           created_at: n.created_at,
           id: n.id,
-          type: n.type
+          type: decodeNotificationType(n.type)
         }
       }
     }

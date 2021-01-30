@@ -10,5 +10,13 @@ namespace MastodonEntity {
     type: NotificationType
   }
 
-  export type NotificationType = 'mention' | 'reblog' | 'favourite' | 'follow' | 'poll' | 'follow_request'
+  export type NotificationType = string
+
+  export const NotificationTypeMention: NotificationType = 'mention'
+  export const NotificationTypeReblog: NotificationType = 'reblog'
+  export const NotificationTypeFavourite: NotificationType = 'favourite'
+  export const NotificationTypeFollow: NotificationType = 'follow'
+  export const NotificationTypePoll: NotificationType = 'poll'
+  export const NotificationTypeFollowRequest: NotificationType = 'follow_request'
+  export const NotificationTypeUnknown: NotificationType = 'unknown'
 }

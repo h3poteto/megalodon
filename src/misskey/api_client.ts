@@ -287,42 +287,44 @@ namespace MisskeyAPI {
 
     export const encodeNotificationType = (e: MegalodonEntity.NotificationType): MisskeyEntity.NotificationType => {
       switch (e) {
-        case 'follow':
-          return 'follow'
-        case 'mention':
-          return 'reply'
-        case 'favourite':
-        case 'emoji_reaction':
-          return 'reaction'
-        case 'reblog':
-          return 'renote'
-        case 'poll':
-          return 'pollVote'
-        case 'follow_request':
-          return 'receiveFollowRequest'
+        case MegalodonEntity.NotificationTypeFollow:
+          return MisskeyEntity.NotificationTypeFollow
+        case MegalodonEntity.NotificationTypeMention:
+          return MisskeyEntity.NotificationTypeReply
+        case MegalodonEntity.NotificationTypeFavourite:
+        case MegalodonEntity.NotificationTypeEmojiReaction:
+          return MisskeyEntity.NotificationTypeReaction
+        case MegalodonEntity.NotificationTypeReblog:
+          return MisskeyEntity.NotificationTypeRenote
+        case MegalodonEntity.NotificationTypePoll:
+          return MisskeyEntity.NotificationTypePollVote
+        case MegalodonEntity.NotificationTypeFollowRequest:
+          return MisskeyEntity.NotificationTypeReceiveFollowRequest
+        default:
+          return MisskeyEntity.NotificationTypeUnknown
       }
     }
 
     export const decodeNotificationType = (e: MisskeyEntity.NotificationType): MegalodonEntity.NotificationType => {
       switch (e) {
-        case 'follow':
-          return 'follow'
-        case 'mention':
-        case 'reply':
-          return 'mention'
-        case 'renote':
-        case 'quote':
-          return 'reblog'
-        case 'reaction':
-          return 'emoji_reaction'
-        case 'pollVote':
-          return 'poll'
-        case 'receiveFollowRequest':
-          return 'follow_request'
-        case 'followRequestAccepted':
-          return 'follow'
+        case MisskeyEntity.NotificationTypeFollow:
+          return MegalodonEntity.NotificationTypeFollow
+        case MisskeyEntity.NotificationTypeMention:
+        case MisskeyEntity.NotificationTypeReply:
+          return MegalodonEntity.NotificationTypeMention
+        case MisskeyEntity.NotificationTypeRenote:
+        case MisskeyEntity.NotificationTypeQuote:
+          return MegalodonEntity.NotificationTypeReblog
+        case MisskeyEntity.NotificationTypeReaction:
+          return MegalodonEntity.NotificationTypeEmojiReaction
+        case MisskeyEntity.NotificationTypePollVote:
+          return MegalodonEntity.NotificationTypePoll
+        case MisskeyEntity.NotificationTypeReceiveFollowRequest:
+          return MegalodonEntity.NotificationTypeFollowRequest
+        case MisskeyEntity.NotificationTypeFollowRequestAccepted:
+          return MegalodonEntity.NotificationTypeFollow
         default:
-          return 'follow'
+          return MegalodonEntity.NotificationTypeUnknown
       }
     }
 

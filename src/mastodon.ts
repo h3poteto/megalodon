@@ -1830,7 +1830,7 @@ export default class Mastodon implements MegalodonInterface {
       }
       if (options.exclude_types) {
         params = Object.assign(params, {
-          exclude_types: options.exclude_types
+          exclude_types: options.exclude_types.map(e => MastodonAPI.Converter.encodeNotificationType(e))
         })
       }
       if (options.account_id) {

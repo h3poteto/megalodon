@@ -13,15 +13,17 @@ namespace MisskeyEntity {
     reaction?: string
   }
 
-  export type NotificationType =
-    | 'follow'
-    | 'mention'
-    | 'reply'
-    | 'renote'
-    | 'quote'
-    | 'reaction'
-    | 'pollVote'
-    | 'receiveFollowRequest'
-    | 'followRequestAccepted'
-    | 'groupInvited'
+  export type NotificationType = string
+
+  export const NotificationTypeFollow: NotificationType = 'follow'
+  export const NotificationTypeMention: NotificationType = 'mention'
+  export const NotificationTypeReply: NotificationType = 'reply'
+  export const NotificationTypeRenote: NotificationType = 'renote'
+  export const NotificationTypeQuote: NotificationType = 'quote'
+  export const NotificationTypeReaction: NotificationType = 'reaction'
+  export const NotificationTypePollVote: NotificationType = 'pollVote'
+  export const NotificationTypeReceiveFollowRequest: NotificationType = 'receiveFollowRequest'
+  export const NotificationTypeFollowRequestAccepted: NotificationType = 'followRequestAccepted'
+  export const NotificationTypeGroupInvited: NotificationType = 'groupInvited'
+  export const NotificationTypeUnknown: NotificationType = 'unknown'
 }

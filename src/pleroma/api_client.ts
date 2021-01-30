@@ -49,18 +49,42 @@ namespace PleromaAPI {
   export namespace Converter {
     export const decodeNotificationType = (t: PleromaEntity.NotificationType): MegalodonEntity.NotificationType => {
       switch (t) {
-        case 'pleroma:emoji_reaction':
-          return 'emoji_reaction'
+        case PleromaEntity.NotificationTypeFavourite:
+          return MegalodonEntity.NotificationTypeFavourite
+        case PleromaEntity.NotificationTypeFollow:
+          return MegalodonEntity.NotificationTypeFollow
+        case PleromaEntity.NotificationTypeFollowRequest:
+          return MegalodonEntity.NotificationTypeFollowRequest
+        case PleromaEntity.NotificationTypeMention:
+          return MegalodonEntity.NotificationTypeMention
+        case PleromaEntity.NotificationTypePleromaEmojiReaction:
+          return MegalodonEntity.NotificationTypeEmojiReaction
+        case PleromaEntity.NotificationTypePoll:
+          return MegalodonEntity.NotificationTypePoll
+        case PleromaEntity.NotificationTypeReblog:
+          return MegalodonEntity.NotificationTypeReblog
         default:
-          return t
+          return MegalodonEntity.NotificationTypeUnknown
       }
     }
     export const encodeNotificationType = (t: MegalodonEntity.NotificationType): PleromaEntity.NotificationType => {
       switch (t) {
-        case 'emoji_reaction':
-          return 'pleroma:emoji_reaction'
+        case MegalodonEntity.NotificationTypeFavourite:
+          return PleromaEntity.NotificationTypeFavourite
+        case MegalodonEntity.NotificationTypeFollow:
+          return PleromaEntity.NotificationTypeFollow
+        case MegalodonEntity.NotificationTypeFollowRequest:
+          return PleromaEntity.NotificationTypeFollowRequest
+        case MegalodonEntity.NotificationTypeMention:
+          return PleromaEntity.NotificationTypeMention
+        case MegalodonEntity.NotificationTypePoll:
+          return PleromaEntity.NotificationTypePoll
+        case MegalodonEntity.NotificationTypeReblog:
+          return PleromaEntity.NotificationTypeReblog
+        case MegalodonEntity.NotificationTypeEmojiReaction:
+          return PleromaEntity.NotificationTypePleromaEmojiReaction
         default:
-          return t
+          return PleromaEntity.NotificationTypeUnknown
       }
     }
 
