@@ -1,5 +1,5 @@
 import WS from 'ws'
-import moment, { Moment } from 'moment'
+import dayjs, { Dayjs } from 'dayjs'
 import { v4 as uuid } from 'uuid'
 import { EventEmitter } from 'events'
 import { WebSocketInterface } from '../megalodon'
@@ -25,7 +25,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _connectionClosed: boolean
   private _client: WS | null = null
   private _channelID: string
-  private _pongReceivedTimestamp: Moment
+  private _pongReceivedTimestamp: Dayjs
   private _heartbeatInterval: number = 60000
   private _pongWaiting: boolean = false
 
@@ -58,7 +58,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this._reconnectCurrentAttempts = 0
     this._connectionClosed = false
     this._channelID = uuid()
-    this._pongReceivedTimestamp = moment()
+    this._pongReceivedTimestamp = dayjs()
   }
 
   /**
@@ -253,7 +253,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     client.on('pong', () => {
       this._pongWaiting = false
       this.emit('pong', {})
-      this._pongReceivedTimestamp = moment()
+      this._pongReceivedTimestamp = dayjs()
       // It is required to anonymous function since get this scope in checkAlive.
       setTimeout(() => this._checkAlive(this._pongReceivedTimestamp), this._heartbeatInterval)
     })
@@ -294,8 +294,8 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   /**
    * Call ping and wait to pong.
    */
-  private _checkAlive(timestamp: Moment) {
-    const now: Moment = moment()
+  private _checkAlive(timestamp: Dayjs) {
+    const now: Dayjs = dayjs()
     // Block multiple calling, if multiple pong event occur.
     // It the duration is less than interval, through ping.
     if (now.diff(timestamp) > this._heartbeatInterval - 1000 && !this._connectionClosed) {

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { DEFAULT_UA } from '../default'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
@@ -184,8 +184,8 @@ namespace MisskeyAPI {
     }
 
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => {
-      const now = moment()
-      const expire = moment(p.expiresAt)
+      const now = dayjs()
+      const expire = dayjs(p.expiresAt)
       const count = p.choices.reduce((sum, choice) => sum + choice.votes, 0)
       return {
         id: '',
