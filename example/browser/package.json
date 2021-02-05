@@ -13,7 +13,7 @@
     "http-server": "^0.12.3",
     "ts-loader": "^8.0.14",
     "typescript": "4.1.3",
-    "webpack": "^4.46.0",
+    "webpack": "^5.20.2",
     "webpack-cli": "^4.5.0"
   }
 }
