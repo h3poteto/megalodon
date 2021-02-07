@@ -7,7 +7,7 @@ const rl: readline.ReadLine = readline.createInterface({
 })
 
 const SCOPES: Array<string> = ['read', 'write', 'follow']
-const BASE_URL: string = 'https://pixelfed.tokyo'
+const BASE_URL: string = 'https://pixelfed.social'
 
 let clientId: string
 let clientSecret: string
