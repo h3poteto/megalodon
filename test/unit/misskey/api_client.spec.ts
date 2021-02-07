@@ -1,6 +1,94 @@
 import MisskeyAPI from '@/misskey/api_client'
+import MegalodonEntity from '@/entity'
+import MisskeyEntity from '@/misskey/entity'
+import MegalodonNotificationType from '@/notification'
+import MisskeyNotificationType from '@/misskey/notification'
 
 describe('api_client', () => {
+  describe('notification', () => {
+    describe('encode', () => {
+      it('megalodon notification type should be encoded to misskey notification type', () => {
+        const cases: Array<{ src: MegalodonEntity.NotificationType; dist: MisskeyEntity.NotificationType }> = [
+          {
+            src: MegalodonNotificationType.Follow,
+            dist: MisskeyNotificationType.Follow
+          },
+          {
+            src: MegalodonNotificationType.Mention,
+            dist: MisskeyNotificationType.Reply
+          },
+          {
+            src: MegalodonNotificationType.Favourite,
+            dist: MisskeyNotificationType.Reaction
+          },
+          {
+            src: MegalodonNotificationType.EmojiReaction,
+            dist: MisskeyNotificationType.Reaction
+          },
+          {
+            src: MegalodonNotificationType.Reblog,
+            dist: MisskeyNotificationType.Renote
+          },
+          {
+            src: MegalodonNotificationType.Poll,
+            dist: MisskeyNotificationType.PollVote
+          },
+          {
+            src: MegalodonNotificationType.FollowRequest,
+            dist: MisskeyNotificationType.ReceiveFollowRequest
+          }
+        ]
+        cases.forEach(c => {
+          expect(MisskeyAPI.Converter.encodeNotificationType(c.src)).toEqual(c.dist)
+        })
+      })
+    })
+    describe('decode', () => {
+      it('misskey notification type should be decoded to megalodon notification type', () => {
+        const cases: Array<{ src: MisskeyEntity.NotificationType; dist: MegalodonEntity.NotificationType }> = [
+          {
+            src: MisskeyNotificationType.Follow,
+            dist: MegalodonNotificationType.Follow
+          },
+          {
+            src: MisskeyNotificationType.Mention,
+            dist: MegalodonNotificationType.Mention
+          },
+          {
+            src: MisskeyNotificationType.Reply,
+            dist: MegalodonNotificationType.Mention
+          },
+          {
+            src: MisskeyNotificationType.Renote,
+            dist: MegalodonNotificationType.Reblog
+          },
+          {
+            src: MisskeyNotificationType.Quote,
+            dist: MegalodonNotificationType.Reblog
+          },
+          {
+            src: MisskeyNotificationType.Reaction,
+            dist: MegalodonNotificationType.EmojiReaction
+          },
+          {
+            src: MisskeyNotificationType.PollVote,
+            dist: MegalodonNotificationType.Poll
+          },
+          {
+            src: MisskeyNotificationType.ReceiveFollowRequest,
+            dist: MegalodonNotificationType.FollowRequest
+          },
+          {
+            src: MisskeyNotificationType.FollowRequestAccepted,
+            dist: MegalodonNotificationType.Follow
+          }
+        ]
+        cases.forEach(c => {
+          expect(MisskeyAPI.Converter.decodeNotificationType(c.src)).toEqual(c.dist)
+        })
+      })
+    })
+  })
   describe('reactions', () => {
     it('should be mapped', () => {
       const misskeyReactions = [

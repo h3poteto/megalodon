@@ -7,6 +7,8 @@ import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
 import WebSocket from './web_socket'
+import NotificationType from '../notification'
+import PleromaNotificationType from './notification'
 
 namespace PleromaAPI {
   export namespace Entity {
@@ -49,16 +51,40 @@ namespace PleromaAPI {
   export namespace Converter {
     export const decodeNotificationType = (t: PleromaEntity.NotificationType): MegalodonEntity.NotificationType => {
       switch (t) {
-        case 'pleroma:emoji_reaction':
-          return 'emoji_reaction'
+        case PleromaNotificationType.Mention:
+          return NotificationType.Mention
+        case PleromaNotificationType.Reblog:
+          return NotificationType.Reblog
+        case PleromaNotificationType.Favourite:
+          return NotificationType.Favourite
+        case PleromaNotificationType.Follow:
+          return NotificationType.Follow
+        case PleromaNotificationType.Poll:
+          return NotificationType.Poll
+        case PleromaNotificationType.PleromaEmojiReaction:
+          return NotificationType.EmojiReaction
+        case PleromaNotificationType.FollowRequest:
+          return NotificationType.FollowRequest
         default:
           return t
       }
     }
     export const encodeNotificationType = (t: MegalodonEntity.NotificationType): PleromaEntity.NotificationType => {
       switch (t) {
-        case 'emoji_reaction':
-          return 'pleroma:emoji_reaction'
+        case NotificationType.Follow:
+          return PleromaNotificationType.Follow
+        case NotificationType.Favourite:
+          return PleromaNotificationType.Favourite
+        case NotificationType.Reblog:
+          return PleromaNotificationType.Reblog
+        case NotificationType.Mention:
+          return PleromaNotificationType.Mention
+        case NotificationType.Poll:
+          return PleromaNotificationType.Poll
+        case NotificationType.EmojiReaction:
+          return PleromaNotificationType.PleromaEmojiReaction
+        case NotificationType.FollowRequest:
+          return PleromaNotificationType.FollowRequest
         default:
           return t
       }

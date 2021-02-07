@@ -2,7 +2,7 @@ import { OAuth2 } from 'oauth'
 
 import MastodonAPI from './mastodon/api_client'
 import WebSocket from './mastodon/web_socket'
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError, NotificationType } from './megalodon'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
@@ -1803,7 +1803,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string
     since_id?: string
     min_id?: string
-    exclude_types?: Array<NotificationType>
+    exclude_types?: Array<Entity.NotificationType>
     account_id?: string
   }): Promise<Response<Array<Entity.Notification>>> {
     let params = {}
@@ -1830,7 +1830,7 @@ export default class Mastodon implements MegalodonInterface {
       }
       if (options.exclude_types) {
         params = Object.assign(params, {
-          exclude_types: options.exclude_types
+          exclude_types: options.exclude_types.map(e => MastodonAPI.Converter.encodeNotificationType(e))
         })
       }
       if (options.account_id) {
