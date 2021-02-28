@@ -8,6 +8,7 @@ namespace NotificationType {
   export const Poll: Entity.NotificationType = 'poll'
   export const EmojiReaction: Entity.NotificationType = 'emoji_reaction'
   export const FollowRequest: Entity.NotificationType = 'follow_request'
+  export const Status: Entity.NotificationType = 'status'
 }
 
 export default NotificationType
