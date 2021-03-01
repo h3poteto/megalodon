@@ -32,6 +32,10 @@ describe('api_client', () => {
           {
             src: MegalodonNotificationType.FollowRequest,
             dist: MastodonNotificationType.FollowRequest
+          },
+          {
+            src: MegalodonNotificationType.Status,
+            dist: MastodonNotificationType.Status
           }
         ]
         cases.forEach(c => {
