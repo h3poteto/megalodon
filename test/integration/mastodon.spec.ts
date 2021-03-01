@@ -106,6 +106,14 @@ const followRequest: MastodonEntity.Notification = {
   type: MastodonNotificationType.FollowRequest
 }
 
+const toot: MastodonEntity.Notification = {
+  account: account,
+  created_at: '2021-01-31T23:33:26',
+  id: '7',
+  status: status,
+  type: MastodonNotificationType.Status
+}
+
 ;(axios.CancelToken.source as any).mockImplementation(() => {
   return {
     token: 'cancelToken'
@@ -144,6 +152,11 @@ describe('getNotifications', () => {
       event: followRequest,
       expected: MegalodonNotificationType.FollowRequest,
       title: 'followRequest'
+    },
+    {
+      event: toot,
+      expected: MegalodonNotificationType.Status,
+      title: 'status'
     }
   ]
   cases.forEach(c => {

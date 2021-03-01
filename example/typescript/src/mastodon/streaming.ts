@@ -6,13 +6,13 @@ declare var process: {
   }
 }
 
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://fedibird.com'
 
 const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
 const client = generator('mastodon', BASE_URL, access_token)
 
-const stream: StreamListenerInterface = client.publicStream()
+const stream: StreamListenerInterface = client.userStream()
 stream.on('connect', _ => {
   console.log('connect')
 })
@@ -44,7 +44,3 @@ stream.on('heartbeat', () => {
 stream.on('connection-limit-exceeded', (err: Error) => {
   console.error(err)
 })
-
-setTimeout(() => {
-  stream.stop()
-}, 10000)

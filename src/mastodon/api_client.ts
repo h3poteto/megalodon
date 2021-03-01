@@ -370,6 +370,8 @@ namespace MastodonAPI {
           return MastodonNotificationType.Poll
         case NotificationType.FollowRequest:
           return MastodonNotificationType.FollowRequest
+        case NotificationType.Status:
+          return MastodonNotificationType.Status
         default:
           return t
       }
@@ -389,6 +391,8 @@ namespace MastodonAPI {
           return NotificationType.Poll
         case MastodonNotificationType.FollowRequest:
           return NotificationType.FollowRequest
+        case MastodonNotificationType.Status:
+          return NotificationType.Status
         default:
           return t
       }

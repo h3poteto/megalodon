@@ -6,7 +6,7 @@ declare var process: {
   }
 }
 
-const BASE_URL: string = 'https://mstdn.jp'
+const BASE_URL: string = 'https://fedibird.com'
 
 const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
