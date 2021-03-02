@@ -272,7 +272,13 @@ export interface MegalodonInterface {
    * @param reblog Receive this account's reblogs in home timeline.
    * @return Relationship
    */
-  followAccount(id: string, reblog?: boolean): Promise<Response<Entity.Relationship>>
+  followAccount(
+    id: string,
+    options?: {
+      reblog?: boolean
+      notify?: boolean
+    }
+  ): Promise<Response<Entity.Relationship>>
   /**
    * POST /api/v1/accounts/:id/unfollow
    *
