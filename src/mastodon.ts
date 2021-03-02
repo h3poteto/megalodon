@@ -446,12 +446,19 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async followAccount(id: string, reblog?: boolean): Promise<Response<Entity.Relationship>> {
+  public async followAccount(id: string, options?: { reblog?: boolean; notify?: boolean }): Promise<Response<Entity.Relationship>> {
     let params = {}
-    if (reblog !== undefined) {
-      params = Object.assign(params, {
-        reblog: reblog
-      })
+    if (options) {
+      if (options.reblog !== undefined) {
+        params = Object.assign(params, {
+          reblog: options.reblog
+        })
+      }
+      if (options.notify !== undefined) {
+        params = Object.assign(params, {
+          notify: options.notify
+        })
+      }
     }
     return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
       return Object.assign(res, {

@@ -454,7 +454,7 @@ export default class Misskey implements MegalodonInterface {
   /**
    * POST /api/following/create
    */
-  public async followAccount(id: string, _reblog?: boolean): Promise<Response<Entity.Relationship>> {
+  public async followAccount(id: string, _options?: { reblog?: boolean; notify?: boolean }): Promise<Response<Entity.Relationship>> {
     await this.client.post<{}>('/api/following/create', {
       userId: id
     })
