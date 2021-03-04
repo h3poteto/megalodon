@@ -147,7 +147,20 @@ namespace PleromaAPI {
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
     export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
     export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => r
-    export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => r
+    export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => ({
+      id: r.id,
+      following: r.following,
+      followed_by: r.followed_by,
+      blocking: r.blocking,
+      blocked_by: r.blocked_by,
+      muting: r.muting,
+      muting_notifications: r.muting_notifications,
+      requested: r.requested,
+      domain_blocking: r.domain_blocking,
+      showing_reblogs: r.showing_reblogs,
+      endorsed: r.endorsed,
+      notifying: r.subscribing
+    })
     export const report = (r: Entity.Report): MegalodonEntity.Report => r
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
       accounts: r.accounts.map(a => account(a)),
