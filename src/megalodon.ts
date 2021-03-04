@@ -276,7 +276,6 @@ export interface MegalodonInterface {
     id: string,
     options?: {
       reblog?: boolean
-      notify?: boolean
     }
   ): Promise<Response<Entity.Relationship>>
   /**

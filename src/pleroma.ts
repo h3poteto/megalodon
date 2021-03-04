@@ -467,17 +467,12 @@ export default class Pleroma implements MegalodonInterface {
     })
   }
 
-  public async followAccount(id: string, options?: { reblog?: boolean; notify?: boolean }): Promise<Response<Entity.Relationship>> {
+  public async followAccount(id: string, options?: { reblog?: boolean }): Promise<Response<Entity.Relationship>> {
     let params = {}
     if (options) {
       if (options.reblog !== undefined) {
         params = Object.assign(params, {
           reblog: options.reblog
-        })
-      }
-      if (options.notify !== undefined) {
-        params = Object.assign(params, {
-          notify: options.notify
         })
       }
     }

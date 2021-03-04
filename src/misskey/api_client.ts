@@ -169,12 +169,14 @@ namespace MisskeyAPI {
         following: r.isFollowing,
         followed_by: r.isFollowed,
         blocking: r.isBlocking,
+        blocked_by: r.isBlocked,
         muting: r.isMuted,
         muting_notifications: false,
         requested: r.hasPendingFollowRequestFromYou,
         domain_blocking: false,
         showing_reblogs: true,
-        endorsed: false
+        endorsed: false,
+        notifying: false
       }
     }
 
