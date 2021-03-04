@@ -336,17 +336,25 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public subscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
-      reject(err)
+  public async subscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
+    const params = {
+      notify: true
+    }
+    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.relationship(res.data)
+      })
     })
   }
 
-  public unsubscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
-      reject(err)
+  public async unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
+    const params = {
+      notify: false
+    }
+    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.relationship(res.data)
+      })
     })
   }
 
@@ -446,17 +454,12 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async followAccount(id: string, options?: { reblog?: boolean; notify?: boolean }): Promise<Response<Entity.Relationship>> {
+  public async followAccount(id: string, options?: { reblog?: boolean }): Promise<Response<Entity.Relationship>> {
     let params = {}
     if (options) {
       if (options.reblog !== undefined) {
         params = Object.assign(params, {
           reblog: options.reblog
-        })
-      }
-      if (options.notify !== undefined) {
-        params = Object.assign(params, {
-          notify: options.notify
         })
       }
     }
