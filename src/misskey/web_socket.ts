@@ -391,6 +391,7 @@ export class Parser extends EventEmitter {
       case 'readAllUnreadSpecifiedNotes':
       case 'readAllAntennas':
       case 'readAllUnreadMentions':
+      case 'unreadNotification':
         // Ignore these events
         break
       default:
