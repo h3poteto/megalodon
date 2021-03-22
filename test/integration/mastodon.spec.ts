@@ -145,7 +145,7 @@ describe('getNotifications', () => {
     },
     {
       event: poll,
-      expected: MegalodonNotificationType.Poll,
+      expected: MegalodonNotificationType.PollExpired,
       title: 'poll'
     },
     {

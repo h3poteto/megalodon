@@ -366,12 +366,12 @@ namespace MastodonAPI {
           return MastodonNotificationType.Reblog
         case NotificationType.Mention:
           return MastodonNotificationType.Mention
-        case NotificationType.Poll:
-          return MastodonNotificationType.Poll
         case NotificationType.FollowRequest:
           return MastodonNotificationType.FollowRequest
         case NotificationType.Status:
           return MastodonNotificationType.Status
+        case NotificationType.PollExpired:
+          return MastodonNotificationType.Poll
         default:
           return t
       }
@@ -387,12 +387,12 @@ namespace MastodonAPI {
           return NotificationType.Mention
         case MastodonNotificationType.Reblog:
           return NotificationType.Reblog
-        case MastodonNotificationType.Poll:
-          return NotificationType.Poll
         case MastodonNotificationType.FollowRequest:
           return NotificationType.FollowRequest
         case MastodonNotificationType.Status:
           return NotificationType.Status
+        case MastodonNotificationType.Poll:
+          return NotificationType.PollExpired
         default:
           return t
       }

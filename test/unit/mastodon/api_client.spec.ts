@@ -26,7 +26,7 @@ describe('api_client', () => {
             dist: MastodonNotificationType.Mention
           },
           {
-            src: MegalodonNotificationType.Poll,
+            src: MegalodonNotificationType.PollExpired,
             dist: MastodonNotificationType.Poll
           },
           {
@@ -64,7 +64,7 @@ describe('api_client', () => {
           },
           {
             src: MastodonNotificationType.Poll,
-            dist: MegalodonNotificationType.Poll
+            dist: MegalodonNotificationType.PollExpired
           },
           {
             src: MastodonNotificationType.FollowRequest,

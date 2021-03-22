@@ -300,7 +300,7 @@ namespace MisskeyAPI {
           return MisskeyNotificationType.Reaction
         case NotificationType.Reblog:
           return MisskeyNotificationType.Renote
-        case NotificationType.Poll:
+        case NotificationType.PollVote:
           return MisskeyNotificationType.PollVote
         case NotificationType.FollowRequest:
           return MisskeyNotificationType.ReceiveFollowRequest
@@ -322,7 +322,7 @@ namespace MisskeyAPI {
         case MisskeyNotificationType.Reaction:
           return NotificationType.EmojiReaction
         case MisskeyNotificationType.PollVote:
-          return NotificationType.Poll
+          return NotificationType.PollVote
         case MisskeyNotificationType.ReceiveFollowRequest:
           return NotificationType.FollowRequest
         case MisskeyNotificationType.FollowRequestAccepted:
