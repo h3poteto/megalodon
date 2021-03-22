@@ -10,10 +10,20 @@
     "megalodon": "file:../../"
   },
   "devDependencies": {
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "events": "^3.3.0",
     "http-server": "^0.12.3",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.1.1",
     "ts-loader": "^8.0.18",
     "typescript": "4.2.3",
-    "webpack": "^4.46.0",
+    "url": "^0.11.0",
+    "webpack": "^5.27.2",
     "webpack-cli": "^4.5.0"
   }
 }
