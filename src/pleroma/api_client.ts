@@ -60,7 +60,7 @@ namespace PleromaAPI {
         case PleromaNotificationType.Follow:
           return NotificationType.Follow
         case PleromaNotificationType.Poll:
-          return NotificationType.Poll
+          return NotificationType.PollExpired
         case PleromaNotificationType.PleromaEmojiReaction:
           return NotificationType.EmojiReaction
         case PleromaNotificationType.FollowRequest:
@@ -79,7 +79,7 @@ namespace PleromaAPI {
           return PleromaNotificationType.Reblog
         case NotificationType.Mention:
           return PleromaNotificationType.Mention
-        case NotificationType.Poll:
+        case NotificationType.PollExpired:
           return PleromaNotificationType.Poll
         case NotificationType.EmojiReaction:
           return PleromaNotificationType.PleromaEmojiReaction

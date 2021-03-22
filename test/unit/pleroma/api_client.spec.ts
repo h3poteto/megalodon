@@ -26,7 +26,7 @@ describe('api_client', () => {
             dist: PleromaNotificationType.Mention
           },
           {
-            src: MegalodonNotificationType.Poll,
+            src: MegalodonNotificationType.PollExpired,
             dist: PleromaNotificationType.Poll
           },
           {
@@ -64,7 +64,7 @@ describe('api_client', () => {
           },
           {
             src: PleromaNotificationType.Poll,
-            dist: MegalodonNotificationType.Poll
+            dist: MegalodonNotificationType.PollExpired
           },
           {
             src: PleromaNotificationType.PleromaEmojiReaction,

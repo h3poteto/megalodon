@@ -162,7 +162,7 @@ describe('getNotifications', () => {
     },
     {
       event: pollVote,
-      expected: MegalodonNotificationType.Poll,
+      expected: MegalodonNotificationType.PollVote,
       title: 'pollVote'
     },
     {

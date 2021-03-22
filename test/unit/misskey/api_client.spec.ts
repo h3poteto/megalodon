@@ -30,7 +30,7 @@ describe('api_client', () => {
             dist: MisskeyNotificationType.Renote
           },
           {
-            src: MegalodonNotificationType.Poll,
+            src: MegalodonNotificationType.PollVote,
             dist: MisskeyNotificationType.PollVote
           },
           {
@@ -72,7 +72,7 @@ describe('api_client', () => {
           },
           {
             src: MisskeyNotificationType.PollVote,
-            dist: MegalodonNotificationType.Poll
+            dist: MegalodonNotificationType.PollVote
           },
           {
             src: MisskeyNotificationType.ReceiveFollowRequest,
