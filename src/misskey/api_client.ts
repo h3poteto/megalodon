@@ -414,7 +414,7 @@ namespace MisskeyAPI {
    * Interface
    */
   export interface Interface {
-    post<T = any>(path: string, params?: any): Promise<Response<T>>
+    post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
     socket(channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list', listId?: string): WebSocket
   }
@@ -450,9 +450,10 @@ namespace MisskeyAPI {
      * @param path relative path from baseUrl
      * @param params Form data
      */
-    public async post<T>(path: string, params = {}): Promise<Response<T>> {
+    public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token
+        cancelToken: this.cancelTokenSource.token,
+        headers: headers
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
