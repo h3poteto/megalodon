@@ -13,7 +13,7 @@ import {
 } from './megalodon'
 
 export default class Misskey implements MegalodonInterface {
-  public client: MisskeyAPI.Client
+  public client: MisskeyAPI.Interface
   public baseUrl: string
   public proxyConfig: ProxyConfig | false
 

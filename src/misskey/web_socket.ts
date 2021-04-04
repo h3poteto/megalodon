@@ -39,7 +39,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     url: string,
     channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
     accessToken: string,
-    listId: string | null,
+    listId: string | undefined,
     userAgent: string,
     proxyConfig: ProxyConfig | false = false
   ) {
@@ -50,7 +50,11 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this.headers = {
       'User-Agent': userAgent
     }
-    this.listId = listId
+    if (listId === undefined) {
+      this.listId = null
+    } else {
+      this.listId = listId
+    }
     this.proxyConfig = proxyConfig
     this._accessToken = accessToken
     this._reconnectInterval = 10000
