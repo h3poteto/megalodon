@@ -703,6 +703,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/object-assign-deep@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.0.tgz#23c66300f2d04676b927ee700308d0d1b5f8df89"
+  integrity sha512-3D0F3rHRNDc8cQSXNzwF1jBrJi28Mdrhc10ZLlqbJWDPYRWTTWB9Tc8JoKrgBvLKioXoPoHT6Uzf3s2F7akCUg==
+
 "@types/prettier@^2.0.0":
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.6.tgz#f4b1efa784e8db479cdb8b14403e2144b1e9ff03"
@@ -3472,6 +3477,11 @@ oauth@^0.9.15:
   version "0.9.15"
   resolved "https://registry.yarnpkg.com/oauth/-/oauth-0.9.15.tgz#bd1fefaf686c96b75475aed5196412ff60cfb9c1"
   integrity sha1-vR/vr2hslrdUda7VGWQS/2DPucE=
+
+object-assign-deep@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/object-assign-deep/-/object-assign-deep-0.4.0.tgz#43505d3679abb9686ab359b97ac14cc837a9d143"
+  integrity sha512-54Uvn3s+4A/cMWx9tlRez1qtc7pN7pbQ+Yi7mjLjcBpWLlP+XbSHiHbQW6CElDiV4OvuzqnMrBdkgxI1mT8V/Q==
 
 object-copy@^0.1.0:
   version "0.1.0"

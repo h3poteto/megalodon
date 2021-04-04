@@ -121,7 +121,13 @@ const followRequest: PleromaEntity.Notification = {
 
 ;(axios.CancelToken.source as any).mockImplementation(() => {
   return {
-    token: 'cancelToken'
+    token: {
+      throwIfRequested: () => {},
+      promise: {
+        then: () => {},
+        catch: () => {}
+      }
+    }
   }
 })
 

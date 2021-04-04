@@ -1,5 +1,7 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
 import dayjs from 'dayjs'
+import FormData from 'form-data'
+
 import { DEFAULT_UA } from '../default'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
@@ -414,7 +416,7 @@ namespace MisskeyAPI {
    * Interface
    */
   export interface Interface {
-    post<T = any>(path: string, params?: any): Promise<Response<T>>
+    post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
     socket(channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list', listId?: string): WebSocket
   }
@@ -443,6 +445,11 @@ namespace MisskeyAPI {
       this.userAgent = userAgent
       this.cancelTokenSource = axios.CancelToken.source()
       this.proxyConfig = proxyConfig
+
+      // https://github.com/axios/axios/issues/978
+      this.cancelTokenSource.token.throwIfRequested = this.cancelTokenSource.token.throwIfRequested
+      this.cancelTokenSource.token.promise.then = this.cancelTokenSource.token.promise.then.bind(this.cancelTokenSource.token.promise)
+      this.cancelTokenSource.token.promise.catch = this.cancelTokenSource.token.promise.catch.bind(this.cancelTokenSource.token.promise)
     }
 
     /**
@@ -450,9 +457,10 @@ namespace MisskeyAPI {
      * @param path relative path from baseUrl
      * @param params Form data
      */
-    public async post<T>(path: string, params = {}): Promise<Response<T>> {
+    public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token
+        cancelToken: this.cancelTokenSource.token,
+        headers: headers
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {
@@ -462,9 +470,13 @@ namespace MisskeyAPI {
       }
       let bodyParams = params
       if (this.accessToken) {
-        bodyParams = Object.assign(params, {
-          i: this.accessToken
-        })
+        if (params instanceof FormData) {
+          bodyParams.append('i', this.accessToken)
+        } else {
+          bodyParams = Object.assign(params, {
+            i: this.accessToken
+          })
+        }
       }
       return axios.post<T>(this.baseUrl + path, bodyParams, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
