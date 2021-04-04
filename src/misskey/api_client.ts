@@ -456,6 +456,7 @@ namespace MisskeyAPI {
      * POST request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data
+     * @param headers Request header object
      */
     public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {

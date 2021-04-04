@@ -271,6 +271,7 @@ namespace PleromaAPI {
      * GET request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Query parameters
+     * @param headers Request header object
      */
     public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
@@ -315,6 +316,7 @@ namespace PleromaAPI {
      * PUT request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
+     * @param headers Request header object
      */
     public async put<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
@@ -358,6 +360,7 @@ namespace PleromaAPI {
      * PATCH request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
+     * @param headers Request header object
      */
     public async patch<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
@@ -401,6 +404,7 @@ namespace PleromaAPI {
      * POST request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data
+     * @param headers Request header object
      */
     public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
@@ -435,6 +439,7 @@ namespace PleromaAPI {
      * DELETE request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data
+     * @param headers Request header object
      */
     public async del<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
