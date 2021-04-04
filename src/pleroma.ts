@@ -1292,7 +1292,11 @@ export default class Pleroma implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    return this.client.post<PleromaAPI.Entity.Attachment>('/api/v1/media', formData, formData.getHeaders()).then(res => {
+    let headers: { [key: string]: string } = {}
+    if (typeof formData.getHeaders === 'function') {
+      headers = formData.getHeaders()
+    }
+    return this.client.post<PleromaAPI.Entity.Attachment>('/api/v1/media', formData, headers).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.attachment(res.data)
       })
@@ -1319,7 +1323,11 @@ export default class Pleroma implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    return this.client.put<PleromaAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData, formData.getHeaders()).then(res => {
+    let headers: { [key: string]: string } = {}
+    if (typeof formData.getHeaders === 'function') {
+      headers = formData.getHeaders()
+    }
+    return this.client.put<PleromaAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData, headers).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.attachment(res.data)
       })
