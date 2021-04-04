@@ -10,7 +10,7 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 
 export default class Pleroma implements MegalodonInterface {
-  public client: PleromaAPI.Client
+  public client: PleromaAPI.Interface
   public baseUrl: string
 
   /**
