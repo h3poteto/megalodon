@@ -1,5 +1,7 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
 import dayjs from 'dayjs'
+import FormData from 'form-data'
+
 import { DEFAULT_UA } from '../default'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
@@ -455,7 +457,7 @@ namespace MisskeyAPI {
      * @param path relative path from baseUrl
      * @param params Form data
      */
-    public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
+    public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         cancelToken: this.cancelTokenSource.token,
         headers: headers
@@ -468,9 +470,13 @@ namespace MisskeyAPI {
       }
       let bodyParams = params
       if (this.accessToken) {
-        bodyParams = Object.assign(params, {
-          i: this.accessToken
-        })
+        if (params instanceof FormData) {
+          bodyParams.append('i', this.accessToken)
+        } else {
+          bodyParams = Object.assign(params, {
+            i: this.accessToken
+          })
+        }
       }
       return axios.post<T>(this.baseUrl + path, bodyParams, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {

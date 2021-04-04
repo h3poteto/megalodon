@@ -1285,7 +1285,7 @@ export default class Mastodon implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    return this.client.post<MastodonAPI.Entity.Attachment>('/api/v1/media', formData).then(res => {
+    return this.client.post<MastodonAPI.Entity.Attachment>('/api/v1/media', formData, formData.getHeaders()).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.attachment(res.data)
       })
@@ -1312,7 +1312,7 @@ export default class Mastodon implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    return this.client.put<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData).then(res => {
+    return this.client.put<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData, formData.getHeaders()).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.attachment(res.data)
       })

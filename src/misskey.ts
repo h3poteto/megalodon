@@ -1256,7 +1256,7 @@ export default class Misskey implements MegalodonInterface {
     const formData = new FormData()
     formData.append('file', file)
     return this.client
-      .post<MisskeyAPI.Entity.File>('/api/drive/files/create', formData)
+      .post<MisskeyAPI.Entity.File>('/api/drive/files/create', formData, formData.getHeaders())
       .then(res => ({ ...res, data: MisskeyAPI.Converter.file(res.data) }))
   }
 

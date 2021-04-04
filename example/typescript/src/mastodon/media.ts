@@ -1,7 +1,7 @@
 import generator, { Entity, Response } from 'megalodon'
 import * as fs from 'fs'
 
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://fedibird.com'
 
 const access_token: string = process.env.MASTODON_ACCESS_TOKEN as string
 
