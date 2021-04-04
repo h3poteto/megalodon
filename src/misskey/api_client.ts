@@ -413,7 +413,11 @@ namespace MisskeyAPI {
   /**
    * Interface
    */
-  export interface Interface {}
+  export interface Interface {
+    post<T = any>(path: string, params?: any): Promise<Response<T>>
+    cancel(): void
+    socket(channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list', listId?: string): WebSocket
+  }
 
   /**
    * Misskey API client.
@@ -489,7 +493,7 @@ namespace MisskeyAPI {
      */
     public socket(
       channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
-      listId: string | null = null
+      listId?: string
     ): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')

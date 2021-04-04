@@ -37,7 +37,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   constructor(
     url: string,
     stream: string,
-    params: string | null,
+    params: string | undefined,
     accessToken: string,
     userAgent: string,
     proxyConfig: ProxyConfig | false = false
@@ -45,7 +45,11 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     super()
     this.url = url
     this.stream = stream
-    this.params = params
+    if (params === undefined) {
+      this.params = null
+    } else {
+      this.params = params
+    }
     this.parser = new Parser()
     this.headers = {
       'User-Agent': userAgent
