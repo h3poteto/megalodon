@@ -60,6 +60,7 @@
     "form-data": "^4.0.0",
     "https-proxy-agent": "^5.0.0",
     "oauth": "^0.9.15",
+    "object-assign-deep": "^0.4.0",
     "socks-proxy-agent": "^5.0.0",
     "typescript": "4.2.3",
     "uuid": "^8.0.0",
@@ -68,6 +69,7 @@
   "devDependencies": {
     "@types/core-js": "^2.5.0",
     "@types/jest": "^26.0.20",
+    "@types/object-assign-deep": "^0.4.0",
     "@types/uuid": "^8.0.0",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",

@@ -1,4 +1,5 @@
 import { OAuth2 } from 'oauth'
+import FormData from 'form-data'
 
 import MastodonAPI from './mastodon/api_client'
 import WebSocket from './mastodon/web_socket'

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
+import objectAssignDeep from 'object-assign-deep'
 
 import MegalodonEntity from '../entity'
 import PleromaEntity from './entity'
@@ -217,11 +218,11 @@ namespace PleromaAPI {
    * Interface
    */
   export interface Interface {
-    get<T = any>(path: string, params?: any): Promise<Response<T>>
-    put<T = any>(path: string, params?: any): Promise<Response<T>>
-    patch<T = any>(path: string, params?: any): Promise<Response<T>>
-    post<T = any>(path: string, params?: any): Promise<Response<T>>
-    del<T = any>(path: string, params?: any): Promise<Response<T>>
+    get<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    put<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    patch<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
     socket(path: string, stream: string, params?: string): WebSocket
   }
@@ -266,13 +267,14 @@ namespace PleromaAPI {
      * @param path relative path from baseUrl
      * @param params Query parameters
      */
-    public async get<T>(path: string, params = {}): Promise<Response<T>> {
+    public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         cancelToken: this.cancelTokenSource.token,
-        params: params
+        params: params,
+        headers: headers
       }
       if (this.accessToken) {
-        options = Object.assign(options, {
+        options = objectAssignDeep({}, options, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
@@ -309,12 +311,13 @@ namespace PleromaAPI {
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
      */
-    public async put<T>(path: string, params = {}): Promise<Response<T>> {
+    public async put<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token
+        cancelToken: this.cancelTokenSource.token,
+        headers: headers
       }
       if (this.accessToken) {
-        options = Object.assign(options, {
+        options = objectAssignDeep({}, options, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
@@ -351,12 +354,13 @@ namespace PleromaAPI {
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
      */
-    public async patch<T>(path: string, params = {}): Promise<Response<T>> {
+    public async patch<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token
+        cancelToken: this.cancelTokenSource.token,
+        headers: headers
       }
       if (this.accessToken) {
-        options = Object.assign(options, {
+        options = objectAssignDeep({}, options, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
@@ -393,12 +397,13 @@ namespace PleromaAPI {
      * @param path relative path from baseUrl
      * @param params Form data
      */
-    public async post<T>(path: string, params = {}): Promise<Response<T>> {
+    public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token
+        cancelToken: this.cancelTokenSource.token,
+        headers: headers
       }
       if (this.accessToken) {
-        options = Object.assign(options, {
+        options = objectAssignDeep({}, options, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
@@ -426,13 +431,14 @@ namespace PleromaAPI {
      * @param path relative path from baseUrl
      * @param params Form data
      */
-    public async del<T>(path: string, params = {}): Promise<Response<T>> {
+    public async del<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         cancelToken: this.cancelTokenSource.token,
-        data: params
+        data: params,
+        headers: headers
       }
       if (this.accessToken) {
-        options = Object.assign(options, {
+        options = objectAssignDeep({}, options, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }

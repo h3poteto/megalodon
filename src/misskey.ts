@@ -1,3 +1,5 @@
+import FormData from 'form-data'
+
 import MisskeyAPI from './misskey/api_client'
 import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
