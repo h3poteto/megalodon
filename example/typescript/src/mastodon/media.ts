@@ -1,0 +1,14 @@
+import generator, { Entity, Response } from 'megalodon'
+import * as fs from 'fs'
+
+const BASE_URL: string = 'https://mastodon.social'
+
+const access_token: string = process.env.MASTODON_ACCESS_TOKEN as string
+
+const client = generator('mastodon', BASE_URL, access_token)
+
+const image = fs.createReadStream('test.png')
+
+client.uploadMedia(image).then((resp: Response<Entity.Attachment>) => {
+  console.log(resp.data)
+})
