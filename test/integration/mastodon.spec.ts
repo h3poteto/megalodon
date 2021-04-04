@@ -116,7 +116,13 @@ const toot: MastodonEntity.Notification = {
 
 ;(axios.CancelToken.source as any).mockImplementation(() => {
   return {
-    token: 'cancelToken'
+    token: {
+      throwIfRequested: () => {},
+      promise: {
+        then: () => {},
+        catch: () => {}
+      }
+    }
   }
 })
 
