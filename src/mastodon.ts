@@ -10,7 +10,7 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 
 export default class Mastodon implements MegalodonInterface {
-  public client: MastodonAPI.Client
+  public client: MastodonAPI.Interface
   public baseUrl: string
 
   /**

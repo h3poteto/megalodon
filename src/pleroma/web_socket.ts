@@ -46,7 +46,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     super()
     this.url = url
     this.stream = stream
-    if (params == undefined) {
+    if (params === undefined) {
       this.params = null
     } else {
       this.params = params

@@ -16,14 +16,14 @@ namespace MastodonAPI {
    * Interface
    */
   export interface Interface {
-    get<T = any>(path: string, params: object): Promise<Response<T>>
-    put<T = any>(path: string, params: object): Promise<Response<T>>
-    patch<T = any>(path: string, params: object): Promise<Response<T>>
-    post<T = any>(path: string, params: object): Promise<Response<T>>
-    del(path: string, params: object): Promise<Response<{}>>
+    get<T = any>(path: string, params?: any): Promise<Response<T>>
+    put<T = any>(path: string, params?: any): Promise<Response<T>>
+    patch<T = any>(path: string, params?: any): Promise<Response<T>>
+    post<T = any>(path: string, params?: any): Promise<Response<T>>
+    del<T = any>(path: string, params?: any): Promise<Response<T>>
     cancel(): void
-    stream(path: string, reconnectInterval: number): StreamListener
-    socket(path: string, stream: string): WebSocket
+    stream(path: string, reconnectInterval?: number): StreamListener
+    socket(path: string, stream: string, params?: string): WebSocket
   }
 
   /**
@@ -280,7 +280,7 @@ namespace MastodonAPI {
      * @param reconnectInterval interval of reconnect
      * @returns streamListener, which inherits from EventEmitter
      */
-    public stream(path: string, reconnectInterval = 1000): StreamListener {
+    public stream(path: string, reconnectInterval: number = 1000): StreamListener {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
@@ -306,7 +306,7 @@ namespace MastodonAPI {
      * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
      * @returns WebSocket, which inherits from EventEmitter
      */
-    public socket(path: string, stream: string, params: string | null = null): WebSocket {
+    public socket(path: string, stream: string, params?: string): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
