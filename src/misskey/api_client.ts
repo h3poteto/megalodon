@@ -443,6 +443,11 @@ namespace MisskeyAPI {
       this.userAgent = userAgent
       this.cancelTokenSource = axios.CancelToken.source()
       this.proxyConfig = proxyConfig
+
+      // https://github.com/axios/axios/issues/978
+      this.cancelTokenSource.token.throwIfRequested = this.cancelTokenSource.token.throwIfRequested
+      this.cancelTokenSource.token.promise.then = this.cancelTokenSource.token.promise.then.bind(this.cancelTokenSource.token.promise)
+      this.cancelTokenSource.token.promise.catch = this.cancelTokenSource.token.promise.catch.bind(this.cancelTokenSource.token.promise)
     }
 
     /**
