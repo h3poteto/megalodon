@@ -855,7 +855,7 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.post<MastodonAPI.Entity.Filter>(`/api/v1/filters/${id}`, params).then(res => {
+    return this.client.put<MastodonAPI.Entity.Filter>(`/api/v1/filters/${id}`, params).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.filter(res.data)
       })
