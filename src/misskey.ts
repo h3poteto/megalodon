@@ -794,7 +794,7 @@ export default class Misskey implements MegalodonInterface {
 
   public async createFilter(
     _phrase: string,
-    _context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    _context: Array<string>,
     _options?: {
       irreversible?: boolean
       whole_word?: boolean
@@ -810,7 +810,7 @@ export default class Misskey implements MegalodonInterface {
   public async updateFilter(
     _id: string,
     _phrase: string,
-    _context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    _context: Array<string>,
     _options?: {
       irreversible?: boolean
       whole_word?: boolean

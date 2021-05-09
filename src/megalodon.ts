@@ -454,7 +454,7 @@ export interface MegalodonInterface {
    * POST /api/v1/filters
    *
    * @param phrase Text to be filtered.
-   * @param context Array of enumerable strings home, notifications, public, thread. At least one context must be specified.
+   * @param context Array of enumerable strings home, notifications, public, thread, account. At least one context must be specified.
    * @param options.irreversible Should the server irreversibly drop matching entities from home and notifications?
    * @param options.whole_word Consider word boundaries?
    * @param options.expires_in ISO 8601 Datetime for when the filter expires.
@@ -462,7 +462,7 @@ export interface MegalodonInterface {
    */
   createFilter(
     phrase: string,
-    context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    context: Array<string>,
     options?: {
       irreversible?: boolean
       whole_word?: boolean
@@ -474,7 +474,7 @@ export interface MegalodonInterface {
    *
    * @param id The filter ID.
    * @param phrase Text to be filtered.
-   * @param context Array of enumerable strings home, notifications, public, thread. At least one context must be specified.
+   * @param context Array of enumerable strings home, notifications, public, thread, account. At least one context must be specified.
    * @param options.irreversible Should the server irreversibly drop matching entities from home and notifications?
    * @param options.whole_word Consider word boundaries?
    * @param options.expires_in ISO 8601 Datetime for when the filter expires.
@@ -483,7 +483,7 @@ export interface MegalodonInterface {
   updateFilter(
     id: string,
     phrase: string,
-    context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    context: Array<string>,
     options?: {
       irreversible?: boolean
       whole_word?: boolean
