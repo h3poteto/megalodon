@@ -802,7 +802,7 @@ export default class Pleroma implements MegalodonInterface {
 
   public async createFilter(
     phrase: string,
-    context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    context: Array<string>,
     options?: {
       irreversible?: boolean
       whole_word?: boolean
@@ -840,7 +840,7 @@ export default class Pleroma implements MegalodonInterface {
   public async updateFilter(
     id: string,
     phrase: string,
-    context: Array<'home' | 'notifications' | 'public' | 'thread'>,
+    context: Array<string>,
     options?: {
       irreversible?: boolean
       whole_word?: boolean
