@@ -868,7 +868,7 @@ export default class Pleroma implements MegalodonInterface {
         })
       }
     }
-    return this.client.post<PleromaAPI.Entity.Filter>(`/api/v1/filters/${id}`, params).then(res => {
+    return this.client.put<PleromaAPI.Entity.Filter>(`/api/v1/filters/${id}`, params).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.filter(res.data)
       })
