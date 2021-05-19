@@ -8,6 +8,7 @@ import Pleroma from './pleroma'
 import Misskey from './misskey'
 import Entity from './entity'
 import NotificationType from './notification'
+import FilterContext from './filter_context'
 
 export {
   Response,
@@ -20,6 +21,7 @@ export {
   WebSocketInterface,
   StreamListenerInterface,
   NotificationType,
+  FilterContext,
   Mastodon,
   Pleroma,
   Misskey,
