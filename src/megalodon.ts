@@ -462,7 +462,7 @@ export interface MegalodonInterface {
    */
   createFilter(
     phrase: string,
-    context: Array<string>,
+    context: Array<Entity.FilterContext>,
     options?: {
       irreversible?: boolean
       whole_word?: boolean
@@ -483,7 +483,7 @@ export interface MegalodonInterface {
   updateFilter(
     id: string,
     phrase: string,
-    context: Array<string>,
+    context: Array<Entity.FilterContext>,
     options?: {
       irreversible?: boolean
       whole_word?: boolean
