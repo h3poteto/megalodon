@@ -1713,14 +1713,14 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  public async getMarker(_timeline: Array<'home' | 'notifications'>): Promise<Response<Entity.Marker | {}>> {
+  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | {}>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
     })
   }
 
-  public async saveMarker(_options?: {
+  public async saveMarkers(_options?: {
     home?: { last_read_id: string }
     notifications?: { last_read_id: string }
   }): Promise<Response<Entity.Marker>> {

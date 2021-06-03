@@ -1024,7 +1024,7 @@ export interface MegalodonInterface {
    * @param timelines Array of timeline names, String enum anyOf home, notifications.
    * @return Marker or empty object.
    */
-  getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Entity.Marker | {}>>
+  getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | {}>>
   /**
    * POST /api/v1/markers
    *
@@ -1032,7 +1032,7 @@ export interface MegalodonInterface {
    * @param options.notifications Marker position of the last read notification ID in notifications.
    * @return Marker.
    */
-  saveMarker(options?: { home?: { last_read_id: string }; notifications?: { last_read_id: string } }): Promise<Response<Entity.Marker>>
+  saveMarkers(options?: { home?: { last_read_id: string }; notifications?: { last_read_id: string } }): Promise<Response<Entity.Marker>>
   // ======================================
   // notifications
   // ======================================
