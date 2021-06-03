@@ -1791,13 +1791,13 @@ export default class Pleroma implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  public async getMarker(timeline: Array<'home' | 'notifications'>): Promise<Response<Entity.Marker | {}>> {
+  public async getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | {}>> {
     return this.client.get<PleromaAPI.Entity.Marker | {}>('/api/v1/markers', {
       timeline: timeline
     })
   }
 
-  public async saveMarker(options?: {
+  public async saveMarkers(options?: {
     home?: { last_read_id: string }
     notifications?: { last_read_id: string }
   }): Promise<Response<Entity.Marker>> {
