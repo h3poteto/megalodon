@@ -15,6 +15,7 @@ module.exports = {
       net: false,
       tls: false,
       dns: false,
+      zlib: false,
       stream: require.resolve('stream-browserify'),
       events: require.resolve('events/'),
       buffer: require.resolve('buffer/'),
