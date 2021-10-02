@@ -1,5 +1,5 @@
 import MastodonAPI from '@/mastodon/api_client'
-import Worker from 'jest-worker'
+import { Worker } from 'jest-worker'
 
 jest.mock('axios', () => {
   const mockAxios = jest.requireActual('axios')
