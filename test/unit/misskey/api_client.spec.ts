@@ -4,6 +4,16 @@ import MisskeyEntity from '@/misskey/entity'
 import MegalodonNotificationType from '@/notification'
 import MisskeyNotificationType from '@/misskey/notification'
 
+const user: MisskeyEntity.User = {
+  id: '1',
+  name: 'test_user',
+  username: 'TestUser',
+  host: 'misskey.io',
+  avatarUrl: 'https://example.com/icon.png',
+  avatarColor: '#000000',
+  emojis: []
+}
+
 describe('api_client', () => {
   describe('notification', () => {
     describe('encode', () => {
@@ -163,6 +173,59 @@ describe('api_client', () => {
           name: '☺'
         }
       ])
+    })
+  })
+
+  describe('status', () => {
+    describe('plain content', () => {
+      it('should be exported plain content and html content', () => {
+        const plainContent = 'hoge\nfuga\nfuga'
+        const content = 'hoge<br>fuga<br>fuga'
+        const note: MisskeyEntity.Note = {
+          id: '1',
+          createdAt: '2021-02-01T01:49:29',
+          userId: '1',
+          user: user,
+          text: plainContent,
+          cw: null,
+          visibility: 'public',
+          renoteCount: 0,
+          repliesCount: 0,
+          reactions: {},
+          emojis: [],
+          fileIds: [],
+          files: [],
+          replyId: null,
+          renoteId: null
+        }
+        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        expect(megalodonStatus.plain_content).toEqual(plainContent)
+        expect(megalodonStatus.content).toEqual(content)
+      })
+      it('html tags should be escaped', () => {
+        const plainContent = '<p>hoge\nfuga\nfuga<p>'
+        const content = '&lt;p&gt;hoge<br>fuga<br>fuga&lt;p&gt;'
+        const note: MisskeyEntity.Note = {
+          id: '1',
+          createdAt: '2021-02-01T01:49:29',
+          userId: '1',
+          user: user,
+          text: plainContent,
+          cw: null,
+          visibility: 'public',
+          renoteCount: 0,
+          repliesCount: 0,
+          reactions: {},
+          emojis: [],
+          fileIds: [],
+          files: [],
+          replyId: null,
+          renoteId: null
+        }
+        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        expect(megalodonStatus.plain_content).toEqual(plainContent)
+        expect(megalodonStatus.content).toEqual(content)
+      })
     })
   })
 })

@@ -213,7 +213,17 @@ namespace MisskeyAPI {
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: null,
         reblog: n.renote ? note(n.renote) : null,
-        content: n.text ? n.text : '',
+        content: n.text
+          ? n.text
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;')
+              .replace(/`/g, '&#x60;')
+              .replace(/\r?\n/g, '<br>')
+          : '',
+        plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
         emojis: n.emojis.map(e => emoji(e)),
         replies_count: n.repliesCount,

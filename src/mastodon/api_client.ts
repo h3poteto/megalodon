@@ -480,6 +480,7 @@ namespace MastodonAPI {
       in_reply_to_account_id: s.in_reply_to_account_id,
       reblog: s.reblog ? status(s.reblog) : s.quote ? status(s.quote) : null,
       content: s.content,
+      plain_content: null,
       created_at: s.created_at,
       emojis: s.emojis.map(e => emoji(e)),
       replies_count: s.replies_count,
