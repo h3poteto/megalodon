@@ -185,6 +185,7 @@ namespace PleromaAPI {
       in_reply_to_account_id: s.in_reply_to_account_id,
       reblog: s.reblog ? status(s.reblog) : null,
       content: s.content,
+      plain_content: s.pleroma.context?.['text/plain'] ? s.pleroma.context['text/plain'] : null,
       created_at: s.created_at,
       emojis: s.emojis.map(e => emoji(e)),
       replies_count: s.replies_count,

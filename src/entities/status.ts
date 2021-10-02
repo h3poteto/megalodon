@@ -18,6 +18,7 @@ namespace Entity {
     in_reply_to_account_id: string | null
     reblog: Status | null
     content: string
+    plain_content: string | null
     created_at: string
     emojis: Emoji[]
     replies_count: number
