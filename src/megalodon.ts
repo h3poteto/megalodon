@@ -1072,6 +1072,14 @@ export interface MegalodonInterface {
    * @param id Target notification ID.
    */
   dismissNotification(id: string): Promise<Response<{}>>
+  /**
+   * POST /api/v1/pleroma/notifcations/read
+   *
+   * @param id A single notification ID to read
+   * @param max_id Read all notifications up to this ID
+   * @return Array of notifications
+   */
+  readNotifications(options: { id?: string; max_id?: string }): Promise<Response<Entity.Notification | Array<Entity.Notification>>>
   // ======================================
   // notifications/push
   // ======================================

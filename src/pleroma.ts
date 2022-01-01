@@ -3,7 +3,7 @@ import FormData from 'form-data'
 
 import PleromaAPI from './pleroma/api_client'
 import WebSocket from './pleroma/web_socket'
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
+import { MegalodonInterface, StreamListenerInterface, NoImplementedError, ArgumentError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
@@ -1886,6 +1886,38 @@ export default class Pleroma implements MegalodonInterface {
 
   public dismissNotification(id: string): Promise<Response<{}>> {
     return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
+  }
+
+  public async readNotifications(options: {
+    id?: string
+    max_id?: string
+  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+    if (options.id) {
+      return this.client
+        .post<PleromaAPI.Entity.Notification>('/api/v1/pleroma/notifications/read', {
+          id: options.id
+        })
+        .then(res => {
+          return Object.assign(res, {
+            data: PleromaAPI.Converter.notification(res.data)
+          })
+        })
+    } else if (options.max_id) {
+      return this.client
+        .post<Array<PleromaAPI.Entity.Notification>>('/api/v1/pleroma/notifications/read', {
+          max_id: options.max_id
+        })
+        .then(res => {
+          return Object.assign(res, {
+            data: res.data.map(n => PleromaAPI.Converter.notification(n))
+          })
+        })
+    } else {
+      return new Promise((_, reject) => {
+        const err = new ArgumentError('id or max_id is required')
+        reject(err)
+      })
+    }
   }
 
   // ======================================

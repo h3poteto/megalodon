@@ -1793,6 +1793,16 @@ export default class Misskey implements MegalodonInterface {
     })
   }
 
+  public async readNotifications(_options: {
+    id?: string
+    max_id?: string
+  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('mastodon does not support')
+      reject(err)
+    })
+  }
+
   // ======================================
   // notifications/push
   // ======================================
