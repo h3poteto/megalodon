@@ -198,7 +198,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * @param client A WebSocket instance.
    */
   private _bindSocket(client: WS) {
-    client.on('close', (code: number, _reason: string) => {
+    client.on('close', (code: number, _reason: Buffer) => {
       // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
       if (code === 1000) {
         this.emit('close', {})
@@ -224,8 +224,8 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
         client.ping('')
       }, 10000)
     })
-    client.on('message', (data: WS.Data) => {
-      this.parser.parse(data)
+    client.on('message', (data: WS.Data, isBinary: boolean) => {
+      this.parser.parse(data, isBinary)
     })
     client.on('error', (err: Error) => {
       this.emit('error', err)
@@ -288,7 +288,8 @@ export class Parser extends EventEmitter {
   /**
    * @param message Message body of websocket.
    */
-  public parse(message: WS.Data) {
+  public parse(data: WS.Data, isBinary: boolean) {
+    const message = isBinary ? data : data.toString()
     if (typeof message !== 'string') {
       this.emit('heartbeat', {})
       return
