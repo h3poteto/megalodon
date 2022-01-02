@@ -28,19 +28,13 @@ jobs:
           yarn install
       - name: Build
         run: |
-          yarn run build
+          yarn workspace megalodon run build
       - name: Testing
         run: |
-          yarn run test
+          yarn workspace megalodon run test
       - name: Browser example
-        working-directory: example/browser
         run: |
-          rm -rf node_modules
-          npm install
-          npm run build
-      - name: Browser typescript
-        working-directory: example/typescript
+          yarn workspace browser run build
+      - name: Typescript example
         run: |
-          rm -rf node_modules
-          npm install
-          npm run build
+          yarn workspace example run build
