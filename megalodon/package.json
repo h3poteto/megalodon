@@ -10,6 +10,9 @@
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
   },
+  "engines": {
+    "node": ">=15.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/h3poteto/megalodon.git"
