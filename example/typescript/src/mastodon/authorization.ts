@@ -7,7 +7,7 @@ const rl: readline.ReadLine = readline.createInterface({
 })
 
 const SCOPES: Array<string> = ['read', 'write', 'follow']
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://fedibird.com'
 
 let clientId: string
 let clientSecret: string

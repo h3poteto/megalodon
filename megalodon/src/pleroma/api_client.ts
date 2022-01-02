@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, CancelTokenSource, AxiosRequestConfig } from 'axios'
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
 import MegalodonEntity from '../entity'
@@ -241,7 +241,7 @@ namespace PleromaAPI {
     private accessToken: string | null
     private baseUrl: string
     private userAgent: string
-    private cancelTokenSource: CancelTokenSource
+    private abortController: AbortController
     private proxyConfig: ProxyConfig | false = false
 
     /**
@@ -259,13 +259,9 @@ namespace PleromaAPI {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
-      this.cancelTokenSource = axios.CancelToken.source()
       this.proxyConfig = proxyConfig
-
-      // https://github.com/axios/axios/issues/978
-      this.cancelTokenSource.token.throwIfRequested = this.cancelTokenSource.token.throwIfRequested
-      this.cancelTokenSource.token.promise.then = this.cancelTokenSource.token.promise.then.bind(this.cancelTokenSource.token.promise)
-      this.cancelTokenSource.token.promise.catch = this.cancelTokenSource.token.promise.catch.bind(this.cancelTokenSource.token.promise)
+      this.abortController = new AbortController()
+      axios.defaults.signal = this.abortController.signal
     }
 
     /**
@@ -276,7 +272,6 @@ namespace PleromaAPI {
      */
     public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
         params: params,
         headers: headers
       }
@@ -321,7 +316,6 @@ namespace PleromaAPI {
      */
     public async put<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
         headers: headers
       }
       if (this.accessToken) {
@@ -365,7 +359,6 @@ namespace PleromaAPI {
      */
     public async patch<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
         headers: headers
       }
       if (this.accessToken) {
@@ -409,7 +402,6 @@ namespace PleromaAPI {
      */
     public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
         headers: headers
       }
       if (this.accessToken) {
@@ -444,7 +436,6 @@ namespace PleromaAPI {
      */
     public async del<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        cancelToken: this.cancelTokenSource.token,
         data: params,
         headers: headers
       }
@@ -486,7 +477,7 @@ namespace PleromaAPI {
      * @returns void
      */
     public cancel(): void {
-      return this.cancelTokenSource.cancel('Request is canceled by user')
+      return this.abortController.abort()
     }
 
     /**
