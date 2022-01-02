@@ -244,7 +244,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * @param client A WebSocket instance.
    */
   private _bindSocket(client: WS) {
-    client.on('close', (code: number, _reason: string) => {
+    client.on('close', (code: number, _reason: Buffer) => {
       if (code === 1000) {
         this.emit('close', {})
       } else {
@@ -269,8 +269,8 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
         client.ping('')
       }, 10000)
     })
-    client.on('message', (data: WS.Data) => {
-      this.parser.parse(data, this._channelID)
+    client.on('message', (data: WS.Data, isBinary: boolean) => {
+      this.parser.parse(data, isBinary, this._channelID)
     })
     client.on('error', (err: Error) => {
       this.emit('error', err)
@@ -328,7 +328,8 @@ export class Parser extends EventEmitter {
    * @param message Message body of websocket.
    * @param channelID Parse only messages which has same channelID.
    */
-  public parse(message: WS.Data, channelID: string) {
+  public parse(data: WS.Data, isBinary: boolean, channelID: string) {
+    const message = isBinary ? data : data.toString()
     if (typeof message !== 'string') {
       this.emit('heartbeat', {})
       return

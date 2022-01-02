@@ -88,7 +88,7 @@ describe('Parser', () => {
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('heartbeat', spy)
-          parser.parse(message)
+          parser.parse(message, true)
           expect(spy).toHaveBeenCalledWith({})
         })
       })
@@ -98,7 +98,7 @@ describe('Parser', () => {
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('heartbeat', spy)
-          parser.parse(message)
+          parser.parse(Buffer.from(message), false)
           expect(spy).toHaveBeenCalledWith({})
         })
       })
@@ -114,7 +114,7 @@ describe('Parser', () => {
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('delete', spy)
-          parser.parse(message)
+          parser.parse(Buffer.from(message), false)
           expect(spy).toHaveBeenCalledWith('12asdf34')
         })
       })
@@ -129,7 +129,7 @@ describe('Parser', () => {
           const deleted = jest.fn()
           parser.once('error', error)
           parser.once('delete', deleted)
-          parser.parse(message)
+          parser.parse(Buffer.from(message), false)
           expect(error).toHaveBeenCalled()
           expect(deleted).not.toHaveBeenCalled()
         })
@@ -145,7 +145,7 @@ describe('Parser', () => {
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('update', spy)
-          parser.parse(message)
+          parser.parse(Buffer.from(message), false)
           expect(spy).toHaveBeenCalledWith(status)
         })
       })
@@ -158,7 +158,7 @@ describe('Parser', () => {
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('notification', spy)
-          parser.parse(message)
+          parser.parse(Buffer.from(message), false)
           expect(spy).toHaveBeenCalledWith(notification)
         })
       })
@@ -171,7 +171,7 @@ describe('Parser', () => {
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('conversation', spy)
-          parser.parse(message)
+          parser.parse(Buffer.from(message), false)
           expect(spy).toHaveBeenCalledWith(conversation)
         })
       })
