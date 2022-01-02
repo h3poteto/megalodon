@@ -1,6 +1,6 @@
 import generator, { Entity, Response } from 'megalodon'
 
-const BASE_URL: string = 'http://mastodon.social'
+const BASE_URL: string = 'http://fedibird.com'
 
 const client = generator('mastodon', BASE_URL)
 

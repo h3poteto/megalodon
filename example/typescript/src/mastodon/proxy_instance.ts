@@ -8,7 +8,7 @@ declare var process: {
   }
 }
 
-const BASE_URL: string = 'https://mastodon.social'
+const BASE_URL: string = 'https://fedibird.com'
 
 const proxy: ProxyConfig = {
   host: process.env.PROXY_HOST,

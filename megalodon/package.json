@@ -10,6 +10,9 @@
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
   },
+  "engines": {
+    "node": ">=15.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/h3poteto/megalodon.git"
@@ -54,7 +57,7 @@
   "dependencies": {
     "@types/oauth": "^0.9.0",
     "@types/ws": "^8.2.0",
-    "axios": "0.21.4",
+    "axios": "^0.24.0",
     "dayjs": "^1.10.4",
     "form-data": "^4.0.0",
     "https-proxy-agent": "^5.0.0",
