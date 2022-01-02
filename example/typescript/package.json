@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "private": true,
   "scripts": {
     "build": "tsc -p ./"
@@ -8,7 +8,7 @@
   "author": "h3poteto",
   "license": "MIT",
   "dependencies": {
-    "megalodon": "3.7.1",
+    "megalodon": "3.7.2",
     "typescript": "4.5.4"
   },
   "devDependencies": {
