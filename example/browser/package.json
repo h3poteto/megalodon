@@ -1,5 +1,7 @@
 {
   "name": "browser",
+  "version": "3.7.0",
+  "private": true,
   "scripts": {
     "build": "webpack",
     "start": "http-server -p 8000 -s index.html"
@@ -7,7 +9,7 @@
   "author": "Akira Fukushima <h3.poteto@gmail.com> (https://github.com/h3poteto)",
   "license": "MIT",
   "dependencies": {
-    "megalodon": "file:../../"
+    "megalodon": "3.7.0"
   },
   "devDependencies": {
     "assert": "^2.0.0",
