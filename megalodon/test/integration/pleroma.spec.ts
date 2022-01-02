@@ -2,7 +2,7 @@ import PleromaEntity from '@/pleroma/entity'
 import Pleroma from '@/pleroma'
 import MegalodonNotificationType from '@/notification'
 import PleromaNotificationType from '@/pleroma/notification'
-import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 jest.mock('axios')
 
@@ -176,7 +176,7 @@ describe('getNotifications', () => {
         data: [c.event],
         status: 200,
         statusText: '200OK',
-        headers: {} as AxiosResponseHeaders,
+        headers: {},
         config: {}
       }
       ;(axios.get as any).mockResolvedValue(mockResponse)
