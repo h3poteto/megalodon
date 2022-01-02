@@ -1,7 +1,7 @@
 import MastodonAPI from '@/mastodon/api_client'
 import Entity from '@/entity'
 import Response from '@/response'
-import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 jest.mock('axios')
 
@@ -80,7 +80,7 @@ describe('get', () => {
     data: [status],
     status: 200,
     statusText: '200OK',
-    headers: {} as AxiosResponseHeaders,
+    headers: {},
     config: {}
   }
   it('should be responsed', async () => {
@@ -96,7 +96,7 @@ describe('put', () => {
     data: account,
     status: 200,
     statusText: '200OK',
-    headers: {} as AxiosResponseHeaders,
+    headers: {},
     config: {}
   }
   it('should be responsed', async () => {
@@ -114,7 +114,7 @@ describe('patch', () => {
     data: account,
     status: 200,
     statusText: '200OK',
-    headers: {} as AxiosResponseHeaders,
+    headers: {},
     config: {}
   }
   it('should be responsed', async () => {
@@ -132,7 +132,7 @@ describe('post', () => {
     data: status,
     status: 200,
     statusText: '200OK',
-    headers: {} as AxiosResponseHeaders,
+    headers: {},
     config: {}
   }
   it('should be responsed', async () => {
@@ -150,7 +150,7 @@ describe('del', () => {
     data: {},
     status: 200,
     statusText: '200OK',
-    headers: {} as AxiosResponseHeaders,
+    headers: {},
     config: {}
   }
   it('should be responsed', async () => {

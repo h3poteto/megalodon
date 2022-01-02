@@ -2,7 +2,7 @@ import MastodonEntity from '@/mastodon/entity'
 import MastodonNotificationType from '@/mastodon/notification'
 import Mastodon from '@/mastodon'
 import MegalodonNotificationType from '@/notification'
-import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 jest.mock('axios')
 
@@ -171,7 +171,7 @@ describe('getNotifications', () => {
         data: [c.event],
         status: 200,
         statusText: '200OK',
-        headers: {} as AxiosResponseHeaders,
+        headers: {},
         config: {}
       }
       ;(axios.get as any).mockResolvedValue(mockResponse)
