@@ -5,18 +5,3 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 20
-- package-ecosystem: npm
-  directory: "/megalodon"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 20
-- package-ecosystem: npm
-  directory: "/example/browser"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 20
-- package-ecosystem: npm
-  directory: "/example/typescript"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 20
