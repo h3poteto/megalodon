@@ -1404,6 +1404,11 @@ export default class Misskey implements MegalodonInterface {
           sinceId: options.since_id
         })
       }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/global-timeline', params)
@@ -1440,6 +1445,11 @@ export default class Misskey implements MegalodonInterface {
       if (options.since_id) {
         params = Object.assign(params, {
           sinceId: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
         })
       }
     }
@@ -1486,6 +1496,11 @@ export default class Misskey implements MegalodonInterface {
           sinceId: options.since_id
         })
       }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/search-by-tag', params)
@@ -1519,6 +1534,11 @@ export default class Misskey implements MegalodonInterface {
       if (options.since_id) {
         params = Object.assign(params, {
           sinceId: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
         })
       }
     }
@@ -1559,6 +1579,11 @@ export default class Misskey implements MegalodonInterface {
           sinceId: options.since_id
         })
       }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/user-list-timeline', params)
@@ -1594,6 +1619,11 @@ export default class Misskey implements MegalodonInterface {
       if (options.since_id) {
         params = Object.assign(params, {
           sinceId: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
         })
       }
     }
@@ -1758,7 +1788,12 @@ export default class Misskey implements MegalodonInterface {
       }
       if (options.since_id) {
         params = Object.assign(params, {
-          since_id: options.since_id
+          sinceId: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
         })
       }
       if (options.exclude_type) {
@@ -1903,6 +1938,21 @@ export default class Misskey implements MegalodonInterface {
           if (options.offset) {
             params = Object.assign(params, {
               offset: options.offset
+            })
+          }
+          if (options.max_id) {
+            params = Object.assign(params, {
+              untilId: options.max_id
+            })
+          }
+          if (options.min_id) {
+            params = Object.assign(params, {
+              sinceId: options.min_id
+            })
+          }
+          if (options.account_id) {
+            params = Object.assign(params, {
+              userId: options.account_id
             })
           }
         }
