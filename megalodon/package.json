@@ -63,7 +63,7 @@
     "https-proxy-agent": "^5.0.0",
     "oauth": "^0.9.15",
     "object-assign-deep": "^0.4.0",
-    "socks-proxy-agent": "^6.1.0",
+    "socks-proxy-agent": "^6.2.0",
     "typescript": "4.5.5",
     "uuid": "^8.0.0",
     "ws": "8.5.0"
