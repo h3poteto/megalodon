@@ -15,6 +15,10 @@ jobs:
       with:
         node-version: '16.x'
         registry-url: 'https://registry.npmjs.org'
+    - name: Copy README
+      run: |
+        cp README.md ./megalodon/
+        cp LICENSE.txt ./megalodon/
     - name: Install dependencies
       run: |
         yarn install
