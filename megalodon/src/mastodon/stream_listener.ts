@@ -66,7 +66,9 @@ export default class StreamListener extends EventEmitter implements StreamListen
     let options: AxiosRequestConfig = {
       responseType: 'stream',
       adapter: httpAdapter,
-      cancelToken: this._cancelSource.token
+      cancelToken: this._cancelSource.token,
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
     }
     if (this.proxyConfig) {
       options = Object.assign(options, {

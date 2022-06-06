@@ -466,7 +466,9 @@ namespace MisskeyAPI {
      */
     public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
       if (this.proxyConfig) {
         options = Object.assign(options, {

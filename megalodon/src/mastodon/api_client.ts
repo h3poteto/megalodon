@@ -72,7 +72,9 @@ namespace MastodonAPI {
     public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         params: params,
-        headers: headers
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
       if (this.accessToken) {
         options = objectAssignDeep({}, options, {
@@ -115,7 +117,9 @@ namespace MastodonAPI {
      */
     public async put<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
       if (this.accessToken) {
         options = objectAssignDeep({}, options, {
@@ -158,7 +162,9 @@ namespace MastodonAPI {
      */
     public async patch<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
       if (this.accessToken) {
         options = objectAssignDeep({}, options, {
@@ -201,7 +207,9 @@ namespace MastodonAPI {
      */
     public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
       if (this.accessToken) {
         options = objectAssignDeep({}, options, {
@@ -236,7 +244,9 @@ namespace MastodonAPI {
     public async del<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         data: params,
-        headers: headers
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
       if (this.accessToken) {
         options = objectAssignDeep({}, options, {
