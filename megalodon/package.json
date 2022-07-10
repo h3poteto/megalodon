@@ -71,7 +71,7 @@
   "devDependencies": {
     "@types/core-js": "^2.5.0",
     "@types/form-data": "^2.5.0",
-    "@types/jest": "^28.1.1",
+    "@types/jest": "^28.1.4",
     "@types/object-assign-deep": "^0.4.0",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
@@ -84,7 +84,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
-    "jest": "^28.1.0",
+    "jest": "^28.1.2",
     "jest-worker": "^28.1.1",
     "lodash": "^4.17.14",
     "prettier": "^2.7.1",
