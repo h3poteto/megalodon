@@ -114,6 +114,7 @@ export default class Misskey implements MegalodonInterface {
         client_id: '',
         client_secret: res.data.secret
       }
+      const hoge = 'fuga'
       return OAuth.AppData.from(appData)
     })
   }
