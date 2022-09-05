@@ -85,7 +85,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^28.1.2",
-    "jest-worker": "^28.1.1",
+    "jest-worker": "^29.0.2",
     "lodash": "^4.17.14",
     "prettier": "^2.7.1",
     "ts-jest": "^28.0.5",
