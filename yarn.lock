@@ -3454,6 +3454,15 @@ jest-worker@^28.1.1:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
+jest-worker@^29.1.0:
+  version "29.1.0"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-29.1.0.tgz#374d741b976a868e39141d63fb401abacc07a8c9"
+  integrity sha512-yr7RFRAxI+vhL/cGB9B0FhD+QfaWh1qSxurx7gLP16dfmqhG8w75D/CQFU8ZetvhiQqLZh8X0C4rxwsZy6HITQ==
+  dependencies:
+    "@types/node" "*"
+    merge-stream "^2.0.0"
+    supports-color "^8.0.0"
+
 jest@^28.1.2:
   version "28.1.2"
   resolved "https://registry.yarnpkg.com/jest/-/jest-28.1.2.tgz#451ff24081ce31ca00b07b60c61add13aa96f8eb"
