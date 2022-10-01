@@ -185,7 +185,7 @@ namespace PleromaAPI {
       in_reply_to_account_id: s.in_reply_to_account_id,
       reblog: s.reblog ? status(s.reblog) : null,
       content: s.content,
-      plain_content: s.pleroma.context?.['text/plain'] ? s.pleroma.context['text/plain'] : null,
+      plain_content: s.pleroma.content?.['text/plain'] ? s.pleroma.content['text/plain'] : null,
       created_at: s.created_at,
       emojis: s.emojis.map(e => emoji(e)),
       replies_count: s.replies_count,
@@ -206,7 +206,7 @@ namespace PleromaAPI {
       language: s.language,
       pinned: s.pinned,
       emoji_reactions: s.pleroma.emoji_reactions ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
-      bookmarked: s.bookmarked,
+      bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: s.reblog !== null && s.reblog.content !== s.content
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s

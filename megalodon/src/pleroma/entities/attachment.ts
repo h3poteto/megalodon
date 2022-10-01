@@ -8,5 +8,6 @@ namespace PleromaEntity {
     text_url: string | null
     meta: object | null
     description: string | null
+    blurhash: string | null
   }
 }

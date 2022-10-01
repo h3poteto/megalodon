@@ -153,7 +153,8 @@ namespace MisskeyAPI {
         preview_url: f.thumbnailUrl,
         text_url: f.url,
         meta: null,
-        description: null
+        description: null,
+        blurhash: null
       }
     }
 

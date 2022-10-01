@@ -37,10 +37,10 @@ namespace PleromaEntity {
     application: Application | null
     language: string | null
     pinned: boolean | null
-    bookmarked: boolean
+    bookmarked?: boolean
     // Reblogged status contains only local parameter.
     pleroma: {
-      context?: {
+      content?: {
         'text/plain': string
       }
       spoiler_text?: {
