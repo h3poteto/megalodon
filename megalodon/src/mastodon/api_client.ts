@@ -502,7 +502,7 @@ namespace MastodonAPI {
       language: s.language,
       pinned: s.pinned,
       emoji_reactions: [],
-      bookmarked: s.bookmarked,
+      bookmarked: s.bookmarked ? s.bookmarked : false,
       // Now quote is supported only fedibird.com.
       quote: s.quote !== undefined && s.quote !== null
     })

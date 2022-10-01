@@ -141,7 +141,7 @@ describe('api_client', () => {
           pinned: null,
           bookmarked: false,
           pleroma: {
-            context: {
+            content: {
               'text/plain': plainContent
             },
             local: false
