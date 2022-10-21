@@ -58,7 +58,7 @@
     "@types/oauth": "^0.9.0",
     "@types/ws": "^8.2.3",
     "axios": "^0.27.2",
-    "dayjs": "^1.11.3",
+    "dayjs": "^1.11.6",
     "form-data": "^4.0.0",
     "https-proxy-agent": "^5.0.1",
     "oauth": "^0.9.15",
