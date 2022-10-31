@@ -286,6 +286,7 @@ export default class Mastodon implements MegalodonInterface {
       limit?: number
       max_id?: string
       since_id?: string
+      min_id?: string
       pinned?: boolean
       exclude_replies?: boolean
       exclude_reblogs?: boolean
@@ -307,6 +308,11 @@ export default class Mastodon implements MegalodonInterface {
       if (options.since_id) {
         params = Object.assign(params, {
           since_id: options.since_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          min_id: options.min_id
         })
       }
       if (options.pinned) {
