@@ -167,7 +167,8 @@ export interface MegalodonInterface {
 
    * @param options.limit Max number of results to return. Defaults to 20.
    * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
+   * @param options.since_id Return results newer than ID but starting with most recent.
+   * @param options.min_id Return results newer than ID.
    * @param options.pinned Return statuses which include pinned statuses.
    * @param options.exclude_replies Return statuses which exclude replies.
    * @param options.exclude_reblogs Return statuses which exclude reblogs.
@@ -180,6 +181,7 @@ export interface MegalodonInterface {
       limit?: number
       max_id?: string
       since_id?: string
+      min_id?: string
       pinned?: boolean
       exclude_replies?: boolean
       exclude_reblogs?: boolean
