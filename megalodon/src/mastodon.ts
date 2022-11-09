@@ -1,5 +1,6 @@
 import { OAuth2 } from 'oauth'
 import FormData from 'form-data'
+import parseLinkHeader from 'parse-link-header';
 
 import MastodonAPI from './mastodon/api_client'
 import WebSocket from './mastodon/web_socket'
@@ -418,6 +419,7 @@ export default class Mastodon implements MegalodonInterface {
       limit?: number
       max_id?: string
       since_id?: string
+      get_all?: boolean
     }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
@@ -438,11 +440,17 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonEntity.Account>>(`/api/v1/accounts/${id}/following`, params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
-      })
-    })
+    const res = await this.client.get<Array<MastodonEntity.Account>>(`/api/v1/accounts/${id}/following`, params)
+    res.data = res.data.map(a => MastodonAPI.Converter.account(a));
+    if (options?.get_all && res.headers.link) {
+      let parsed = parseLinkHeader(res.headers.link);
+      while (parsed?.next) {
+        const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
+        res.data.push(...res.data.map(a => MastodonAPI.Converter.account(a)))
+        parsed = parseLinkHeader(nextRes.headers.link);
+      }
+    }
+    return res;
   }
 
   public async getAccountLists(id: string): Promise<Response<Array<Entity.List>>> {

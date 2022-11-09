@@ -17,7 +17,7 @@ namespace MastodonAPI {
    * Interface
    */
   export interface Interface {
-    get<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    get<T = any>(path: string, params?: any, headers?: { [key: string]: string }, pathIsFullyQualified?: boolean): Promise<Response<T>>
     put<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     patch<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
@@ -69,7 +69,7 @@ namespace MastodonAPI {
      * @param params Query parameters
      * @param headers Request header object
      */
-    public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
+    public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}, pathIsFullyQualified = false): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         params: params,
         headers: headers,
@@ -90,7 +90,7 @@ namespace MastodonAPI {
         })
       }
       return axios
-        .get<T>(this.baseUrl + path, options)
+        .get<T>((pathIsFullyQualified ? '' : this.baseUrl) + path, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {
             throw new RequestCanceledError(err.message)
