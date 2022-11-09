@@ -448,7 +448,7 @@ export default class Mastodon implements MegalodonInterface {
       const sleep_ms = options?.sleep_ms || 0;
       while (parsed?.next) {
         const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
-        res.data.push(...res.data.map(a => MastodonAPI.Converter.account(a)))
+        res.data.push(...nextRes.data.map(a => MastodonAPI.Converter.account(a)))
         parsed = parseLinkHeader(nextRes.headers.link);
         if (sleep_ms) {
           await new Promise<void>(res => setTimeout(() => res(), sleep_ms))
