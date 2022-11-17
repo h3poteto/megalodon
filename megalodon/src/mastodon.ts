@@ -408,21 +408,12 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    const res = await this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/accounts/${id}/followers`, params);
-    res.data = res.data.map(a=> MastodonAPI.Converter.account(a));
-    if (options?.get_all && res.headers.link) {
-      let parsed = parseLinkHeader(res.headers.link);
-      const sleep_ms = options?.sleep_ms || 0;
-      while (parsed?.next) {
-        const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
-        res.data.push(...nextRes.data.map(a => MastodonAPI.Converter.account(a)))
-        parsed = parseLinkHeader(nextRes.headers.link);
-        if (sleep_ms) {
-          await new Promise<void>(res => setTimeout(() => res(), sleep_ms))
-        }
-      }
-    }
-    return res;
+    return this.urlToAccounts(
+      `/api/v1/accounts/${id}/followers`,
+      params,
+      options?.get_all || false,
+      options?.sleep_ms || 0,
+    )
   }
 
   public async getAccountFollowing(
@@ -453,17 +444,26 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    const res = await this.client.get<Array<MastodonEntity.Account>>(`/api/v1/accounts/${id}/following`, params)
-    res.data = res.data.map(a => MastodonAPI.Converter.account(a));
-    if (options?.get_all && res.headers.link) {
+    return this.urlToAccounts(
+      `/api/v1/accounts/${id}/following`,
+      params,
+      options?.get_all || false,
+      options?.sleep_ms || 0,
+    )
+  }
+
+  /** Helper function to optionally follow Link headers as pagination */
+  private async urlToAccounts(url:string, params:Record<string,string>, get_all: boolean, sleep_ms: number) {
+    const res = await this.client.get<Array<MastodonAPI.Entity.Account>>(url, params);
+    res.data = res.data.map(a=> MastodonAPI.Converter.account(a));
+    if (get_all && res.headers.link) {
       let parsed = parseLinkHeader(res.headers.link);
-      const sleep_ms = options?.sleep_ms || 0;
       while (parsed?.next) {
         const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
         res.data.push(...nextRes.data.map(a => MastodonAPI.Converter.account(a)))
         parsed = parseLinkHeader(nextRes.headers.link);
         if (sleep_ms) {
-          await new Promise<void>(res => setTimeout(() => res(), sleep_ms))
+          await new Promise<void>(res => setTimeout(res, sleep_ms))
         }
       }
     }
