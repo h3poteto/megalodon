@@ -386,6 +386,8 @@ export default class Mastodon implements MegalodonInterface {
       limit?: number
       max_id?: string
       since_id?: string
+      get_all?: boolean
+      sleep_ms?: number
     }
   ): Promise<Response<Array<Entity.Account>>> {
     let params = {}
@@ -406,11 +408,21 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/accounts/${id}/followers`, params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
-      })
-    })
+    const res = await this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/accounts/${id}/followers`, params);
+    res.data = res.data.map(a=> MastodonAPI.Converter.account(a));
+    if (options?.get_all && res.headers.link) {
+      let parsed = parseLinkHeader(res.headers.link);
+      const sleep_ms = options?.sleep_ms || 0;
+      while (parsed?.next) {
+        const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
+        res.data.push(...nextRes.data.map(a => MastodonAPI.Converter.account(a)))
+        parsed = parseLinkHeader(nextRes.headers.link);
+        if (sleep_ms) {
+          await new Promise<void>(res => setTimeout(() => res(), sleep_ms))
+        }
+      }
+    }
+    return res;
   }
 
   public async getAccountFollowing(
