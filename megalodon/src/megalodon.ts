@@ -234,6 +234,8 @@ export interface MegalodonInterface {
       limit?: number
       max_id?: string
       since_id?: string
+      get_all?: boolean
+      sleep_ms?: number
     }
   ): Promise<Response<Array<Entity.Account>>>
   /**
@@ -251,6 +253,8 @@ export interface MegalodonInterface {
       limit?: number
       max_id?: string
       since_id?: string
+      get_all?: boolean
+      sleep_ms?: number
     }
   ): Promise<Response<Array<Entity.Account>>>
   /**
