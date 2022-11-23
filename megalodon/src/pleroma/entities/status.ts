@@ -46,10 +46,14 @@ namespace PleromaEntity {
       spoiler_text?: {
         'text/plain': string
       }
-      conversation_id?: string
-      direct_conversation_id?: string | null
+      conversation_id?: number
+      direct_conversation_id?: number | null
       emoji_reactions?: Array<Reaction>
+      expires_at?: string
+      in_reply_to_account_acct?: string
       local: boolean
+      parent_visible?: boolean
+      pinned_at?: string
       thread_muted?: boolean
     }
   }
