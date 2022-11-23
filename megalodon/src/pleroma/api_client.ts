@@ -114,7 +114,16 @@ namespace PleromaAPI {
     export const identity_proof = (i: Entity.IdentityProof): MegalodonEntity.IdentityProof => i
     export const instance = (i: Entity.Instance): MegalodonEntity.Instance => i
     export const list = (l: Entity.List): MegalodonEntity.List => l
-    export const marker = (m: Entity.Marker): MegalodonEntity.Marker => m
+    export const marker = (m: Entity.Marker): MegalodonEntity.Marker => {
+      return {
+        notifications: {
+          last_read_id: m.notifications.last_read_id,
+          version: m.notifications.version,
+          updated_at: m.notifications.updated_at,
+          unread_count: m.notifications.pleroma.unread_count
+        }
+      }
+    }
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
     export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
       if (n.status && n.emoji) {
