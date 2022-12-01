@@ -131,7 +131,7 @@ namespace MisskeyAPI {
       }
     }
 
-    export const fileType = (s: string): 'unknown' | 'image' | 'gifv' | 'video' => {
+    export const fileType = (s: string): 'unknown' | 'image' | 'gifv' | 'video' | 'audio' => {
       if (s === 'image/gif') {
         return 'gifv'
       }
@@ -140,6 +140,9 @@ namespace MisskeyAPI {
       }
       if (s.includes('video')) {
         return 'video'
+      }
+      if (s.includes('audio')) {
+        return 'audio'
       }
       return 'unknown'
     }
