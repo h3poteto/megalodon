@@ -1,10 +1,10 @@
 import { OAuth2 } from 'oauth'
 import FormData from 'form-data'
-import parseLinkHeader from 'parse-link-header';
+import parseLinkHeader from 'parse-link-header'
 
 import MastodonAPI from './mastodon/api_client'
 import WebSocket from './mastodon/web_socket'
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError } from './megalodon'
+import { MegalodonInterface, NoImplementedError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
@@ -408,12 +408,7 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.urlToAccounts(
-      `/api/v1/accounts/${id}/followers`,
-      params,
-      options?.get_all || false,
-      options?.sleep_ms || 0,
-    )
+    return this.urlToAccounts(`/api/v1/accounts/${id}/followers`, params, options?.get_all || false, options?.sleep_ms || 0)
   }
 
   public async getAccountFollowing(
@@ -444,30 +439,25 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.urlToAccounts(
-      `/api/v1/accounts/${id}/following`,
-      params,
-      options?.get_all || false,
-      options?.sleep_ms || 0,
-    )
+    return this.urlToAccounts(`/api/v1/accounts/${id}/following`, params, options?.get_all || false, options?.sleep_ms || 0)
   }
 
   /** Helper function to optionally follow Link headers as pagination */
-  private async urlToAccounts(url:string, params:Record<string,string>, get_all: boolean, sleep_ms: number) {
-    const res = await this.client.get<Array<MastodonAPI.Entity.Account>>(url, params);
-    res.data = res.data.map(a=> MastodonAPI.Converter.account(a));
+  private async urlToAccounts(url: string, params: Record<string, string>, get_all: boolean, sleep_ms: number) {
+    const res = await this.client.get<Array<MastodonAPI.Entity.Account>>(url, params)
+    res.data = res.data.map(a => MastodonAPI.Converter.account(a))
     if (get_all && res.headers.link) {
-      let parsed = parseLinkHeader(res.headers.link);
+      let parsed = parseLinkHeader(res.headers.link)
       while (parsed?.next) {
         const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
         res.data.push(...nextRes.data.map(a => MastodonAPI.Converter.account(a)))
-        parsed = parseLinkHeader(nextRes.headers.link);
+        parsed = parseLinkHeader(nextRes.headers.link)
         if (sleep_ms) {
           await new Promise<void>(res => setTimeout(res, sleep_ms))
         }
       }
     }
-    return res;
+    return res
   }
 
   public async getAccountLists(id: string): Promise<Response<Array<Entity.List>>> {
@@ -2166,33 +2156,6 @@ export default class Mastodon implements MegalodonInterface {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
     })
-  }
-
-  // ======================================
-  // HTTP Streaming
-  // ======================================
-  public userStream(): StreamListenerInterface {
-    return this.client.stream('/api/v1/streaming/user')
-  }
-
-  public publicStream(): StreamListenerInterface {
-    return this.client.stream('/api/v1/streaming/public')
-  }
-
-  public localStream(): StreamListenerInterface {
-    return this.client.stream('/api/v1/streaming/public/local')
-  }
-
-  public tagStream(tag: string): StreamListenerInterface {
-    return this.client.stream(`/api/v1/streaming/hashtag?tag=${tag}`)
-  }
-
-  public listStream(list_id: string): StreamListenerInterface {
-    return this.client.stream(`/api/v1/streaming/list?list=${list_id}`)
-  }
-
-  public directStream(): StreamListenerInterface {
-    return this.client.stream('/api/v1/streaming/direct')
   }
 
   // ======================================

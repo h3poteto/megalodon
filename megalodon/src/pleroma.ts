@@ -3,7 +3,7 @@ import FormData from 'form-data'
 
 import PleromaAPI from './pleroma/api_client'
 import WebSocket from './pleroma/web_socket'
-import { MegalodonInterface, StreamListenerInterface, NoImplementedError, ArgumentError } from './megalodon'
+import { MegalodonInterface, ArgumentError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
@@ -2191,33 +2191,6 @@ export default class Pleroma implements MegalodonInterface {
         data: PleromaAPI.Converter.reaction(res.data)
       })
     })
-  }
-
-  // ======================================
-  // HTTP Streaming
-  // ======================================
-  public userStream(): StreamListenerInterface {
-    throw new NoImplementedError('pleroma does not support')
-  }
-
-  public publicStream(): StreamListenerInterface {
-    throw new NoImplementedError('pleroma does not support')
-  }
-
-  public localStream(): StreamListenerInterface {
-    throw new NoImplementedError('pleroma does not support')
-  }
-
-  public tagStream(_tag: string): StreamListenerInterface {
-    throw new NoImplementedError('pleroma does not support')
-  }
-
-  public listStream(_list_id: string): StreamListenerInterface {
-    throw new NoImplementedError('pleroma does not support')
-  }
-
-  public directStream(): StreamListenerInterface {
-    throw new NoImplementedError('pleroma does not support')
   }
 
   // ======================================

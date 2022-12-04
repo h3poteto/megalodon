@@ -5,14 +5,7 @@ import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
-import {
-  MegalodonInterface,
-  StreamListenerInterface,
-  WebSocketInterface,
-  NoImplementedError,
-  ArgumentError,
-  UnexpectedError
-} from './megalodon'
+import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 
 export default class Misskey implements MegalodonInterface {
   public client: MisskeyAPI.Interface
@@ -2111,33 +2104,6 @@ export default class Misskey implements MegalodonInterface {
       const err = new NoImplementedError('misskey does not support')
       reject(err)
     })
-  }
-
-  // ======================================
-  // HTTP Streaming
-  // ======================================
-  public userStream(): StreamListenerInterface {
-    throw new NoImplementedError('misskey does not support')
-  }
-
-  public publicStream(): StreamListenerInterface {
-    throw new NoImplementedError('misskey does not support')
-  }
-
-  public localStream(): StreamListenerInterface {
-    throw new NoImplementedError('misskey does not support')
-  }
-
-  public tagStream(_tag: string): StreamListenerInterface {
-    throw new NoImplementedError('misskey does not support')
-  }
-
-  public listStream(_list_id: string): StreamListenerInterface {
-    throw new NoImplementedError('misskey does not support')
-  }
-
-  public directStream(): StreamListenerInterface {
-    throw new NoImplementedError('misskey does not support')
   }
 
   public userSocket(): WebSocketInterface {

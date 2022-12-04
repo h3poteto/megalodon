@@ -1,7 +1,6 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
-import StreamListener from './stream_listener'
 import WebSocket from './web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
@@ -23,7 +22,6 @@ namespace MastodonAPI {
     post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
-    stream(path: string, reconnectInterval?: number): StreamListener
     socket(path: string, stream: string, params?: string): WebSocket
   }
 
@@ -69,7 +67,12 @@ namespace MastodonAPI {
      * @param params Query parameters
      * @param headers Request header object
      */
-    public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}, pathIsFullyQualified = false): Promise<Response<T>> {
+    public async get<T>(
+      path: string,
+      params = {},
+      headers: { [key: string]: string } = {},
+      pathIsFullyQualified = false
+    ): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         params: params,
         headers: headers,
@@ -287,33 +290,6 @@ namespace MastodonAPI {
      */
     public cancel(): void {
       return this.abortController.abort()
-    }
-
-    /**
-     * Receive Server-sent Events from Mastodon Streaming API.
-     * Create streaming connection, and start streamin.
-     *
-     * @param path relative path from baseUrl
-     * @param reconnectInterval interval of reconnect
-     * @returns streamListener, which inherits from EventEmitter
-     */
-    public stream(path: string, reconnectInterval: number = 1000): StreamListener {
-      if (!this.accessToken) {
-        throw new Error('accessToken is required')
-      }
-      const headers = {
-        'Cache-Control': 'no-cache',
-        Accept: 'text/event-stream',
-        'Content-Type': 'text/event-stream',
-        Authorization: `Bearer ${this.accessToken}`,
-        'User-Agent': this.userAgent
-      }
-      const url = this.baseUrl + path + `?access_token=${this.accessToken}`
-      const streaming = new StreamListener(url, headers, this.proxyConfig, reconnectInterval)
-      process.nextTick(() => {
-        streaming.start()
-      })
-      return streaming
     }
 
     /**

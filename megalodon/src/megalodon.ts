@@ -17,16 +17,6 @@ export interface WebSocketInterface {
   removeAllListeners(event?: string | symbol): this
 }
 
-export interface StreamListenerInterface {
-  start(): void
-  stop(): void
-  // EventEmitter
-  on(event: string | symbol, listener: (...args: any[]) => void): this
-  once(event: string | symbol, listener: (...args: any[]) => void): this
-  removeListener(event: string | symbol, listener: (...args: any[]) => void): this
-  removeAllListeners(event?: string | symbol): this
-}
-
 export interface MegalodonInterface {
   /**
    * Cancel all requests in this instance.
@@ -1225,16 +1215,6 @@ export interface MegalodonInterface {
   deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>>
   getEmojiReactions(id: string): Promise<Response<Array<Entity.Reaction>>>
   getEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Reaction>>
-
-  // ======================================
-  // HTTP Streaming
-  // ======================================
-  userStream(): StreamListenerInterface
-  publicStream(): StreamListenerInterface
-  localStream(): StreamListenerInterface
-  tagStream(tag: string): StreamListenerInterface
-  listStream(list_id: string): StreamListenerInterface
-  directStream(): StreamListenerInterface
 
   // ======================================
   // WebSocket
