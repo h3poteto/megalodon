@@ -738,7 +738,7 @@ export interface MegalodonInterface {
    * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
    * @return Attachment
    */
-  uploadMedia(file: any, options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>>
+  uploadMedia(file: any, options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment | Entity.AsyncAttachment>>
   /**
    * PUT /api/v1/media/:id
    *

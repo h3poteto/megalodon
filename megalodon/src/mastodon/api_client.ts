@@ -316,6 +316,7 @@ namespace MastodonAPI {
     export type Account = MastodonEntity.Account
     export type Activity = MastodonEntity.Activity
     export type Application = MastodonEntity.Application
+    export type AsyncAttachment = MegalodonEntity.AsyncAttachment
     export type Attachment = MastodonEntity.Attachment
     export type Card = MastodonEntity.Card
     export type Context = MastodonEntity.Context
@@ -395,6 +396,23 @@ namespace MastodonAPI {
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
+    export const async_attachment = (a: Entity.AsyncAttachment) => {
+      if (a.url) {
+        return {
+          id: a.id,
+          type: a.type,
+          url: a.url!,
+          remote_url: a.remote_url,
+          preview_url: a.preview_url,
+          text_url: a.text_url,
+          meta: a.meta,
+          description: a.description,
+          blurhash: a.blurhash
+        } as MegalodonEntity.Attachment
+      } else {
+        return a as MegalodonEntity.AsyncAttachment
+      }
+    }
     export const card = (c: Entity.Card): MegalodonEntity.Card => c
     export const context = (c: Entity.Context): MegalodonEntity.Context => ({
       ancestors: c.ancestors.map(a => status(a)),

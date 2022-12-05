@@ -1295,7 +1295,10 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // statuses/media
   // ======================================
-  public async uploadMedia(file: any, options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>> {
+  public async uploadMedia(
+    file: any,
+    options?: { description?: string; focus?: string }
+  ): Promise<Response<Entity.Attachment | Entity.AsyncAttachment>> {
     const formData = new FormData()
     formData.append('file', file)
     if (options) {
@@ -1310,9 +1313,9 @@ export default class Mastodon implements MegalodonInterface {
     if (typeof formData.getHeaders === 'function') {
       headers = formData.getHeaders()
     }
-    return this.client.post<MastodonAPI.Entity.Attachment>('/api/v1/media', formData, headers).then(res => {
+    return this.client.post<MastodonAPI.Entity.AsyncAttachment>('/api/v2/media', formData, headers).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.attachment(res.data)
+        data: MastodonAPI.Converter.async_attachment(res.data)
       })
     })
   }
