@@ -1320,6 +1320,14 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
+  public async getMedia(id: string): Promise<Response<Entity.Attachment>> {
+    const res = await this.client.get<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`)
+
+    return Object.assign(res, {
+      data: MastodonAPI.Converter.attachment(res.data)
+    })
+  }
+
   public async updateMedia(
     id: string,
     options?: {

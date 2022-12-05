@@ -731,7 +731,7 @@ export interface MegalodonInterface {
   // statuses/media
   // ======================================
   /**
-   * POST /api/v1/media
+   * POST /api/v2/media
    *
    * @param file The file to be attached, using multipart form data.
    * @param options.description A plain-text description of the media.
@@ -739,6 +739,13 @@ export interface MegalodonInterface {
    * @return Attachment
    */
   uploadMedia(file: any, options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment | Entity.AsyncAttachment>>
+  /**
+   * GET /api/v1/media/:id
+   *
+   * @param id Target media ID.
+   * @return Attachment
+   */
+  getMedia(id: string): Promise<Response<Entity.Attachment>>
   /**
    * PUT /api/v1/media/:id
    *

@@ -1306,6 +1306,14 @@ export default class Pleroma implements MegalodonInterface {
     })
   }
 
+  public async getMedia(id: string): Promise<Response<Entity.Attachment>> {
+    const res = await this.client.get<PleromaAPI.Entity.Attachment>(`/api/v1/media/${id}`)
+
+    return Object.assign(res, {
+      data: PleromaAPI.Converter.attachment(res.data)
+    })
+  }
+
   public async updateMedia(
     id: string,
     options?: {

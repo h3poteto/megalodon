@@ -1257,6 +1257,11 @@ export default class Misskey implements MegalodonInterface {
       .then(res => ({ ...res, data: MisskeyAPI.Converter.file(res.data) }))
   }
 
+  public async getMedia(id: string): Promise<Response<Entity.Attachment>> {
+    const res = await this.client.post<MisskeyAPI.Entity.File>('/api/drive/files/show', { fileId: id })
+    return { ...res, data: MisskeyAPI.Converter.file(res.data) }
+  }
+
   /**
    * POST /api/drive/files/update
    */
