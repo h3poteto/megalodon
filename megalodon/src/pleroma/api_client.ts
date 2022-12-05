@@ -16,6 +16,7 @@ namespace PleromaAPI {
     export type Account = PleromaEntity.Account
     export type Activity = PleromaEntity.Activity
     export type Application = PleromaEntity.Application
+    export type AsyncAttachment = PleromaEntity.AsyncAttachment
     export type Attachment = PleromaEntity.Attachment
     export type Card = PleromaEntity.Card
     export type Context = PleromaEntity.Context
@@ -95,6 +96,23 @@ namespace PleromaAPI {
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
+    export const async_attachment = (a: Entity.AsyncAttachment) => {
+      if (a.url) {
+        return {
+          id: a.id,
+          type: a.type,
+          url: a.url!,
+          remote_url: a.remote_url,
+          preview_url: a.preview_url,
+          text_url: a.text_url,
+          meta: a.meta,
+          description: a.description,
+          blurhash: a.blurhash
+        } as MegalodonEntity.Attachment
+      } else {
+        return a as MegalodonEntity.AsyncAttachment
+      }
+    }
     export const card = (c: Entity.Card): MegalodonEntity.Card => c
     export const context = (c: Entity.Context): MegalodonEntity.Context => ({
       ancestors: c.ancestors.map(a => status(a)),
