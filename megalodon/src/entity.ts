@@ -1,6 +1,7 @@
 /// <reference path="./entities/account.ts" />
 /// <reference path="./entities/activity.ts" />
 /// <reference path="./entities/application.ts" />
+/// <reference path="./entities/async_attachment.ts" />
 /// <reference path="./entities/attachment.ts" />
 /// <reference path="./entities/card.ts" />
 /// <reference path="./entities/context.ts" />
