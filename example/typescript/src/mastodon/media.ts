@@ -9,6 +9,6 @@ const client = generator('mastodon', BASE_URL, access_token)
 
 const image = fs.createReadStream('test.png')
 
-client.uploadMedia(image).then((resp: Response<Entity.Attachment>) => {
+client.uploadMedia(image).then((resp: Response<Entity.Attachment | Entity.AsyncAttachment>) => {
   console.log(resp.data)
 })

@@ -1,4 +1,4 @@
-import generator, { Entity, StreamListenerInterface, ProxyConfig } from 'megalodon'
+import generator, { Entity, WebSocketInterface, ProxyConfig } from 'megalodon'
 
 declare var process: {
   env: {
@@ -9,7 +9,7 @@ declare var process: {
   }
 }
 
-const BASE_URL: string = 'https://fedibird.com'
+const BASE_URL: string = 'wss://streaming.fedibird.com'
 
 const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 
@@ -21,13 +21,13 @@ const proxy: ProxyConfig = {
 
 const client = generator('mastodon', BASE_URL, access_token, null, proxy)
 
-const stream: StreamListenerInterface = client.userStream()
-stream.on('connect', _ => {
+const stream: WebSocketInterface = client.userSocket()
+stream.on('connect', () => {
   console.log('connect')
 })
 
-stream.on('not-event-stream', (mes: string) => {
-  console.log(mes)
+stream.on('pong', () => {
+  console.log('pong')
 })
 
 stream.on('update', (status: Entity.Status) => {
@@ -50,6 +50,10 @@ stream.on('heartbeat', () => {
   console.log('thump.')
 })
 
-stream.on('connection-limit-exceeded', (err: Error) => {
+stream.on('close', () => {
+  console.log('close')
+})
+
+stream.on('parser-error', (err: Error) => {
   console.error(err)
 })
