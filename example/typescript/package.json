@@ -8,7 +8,7 @@
   "author": "h3poteto",
   "license": "MIT",
   "dependencies": {
-    "megalodon": "5.0.1",
+    "megalodon": "*",
     "typescript": "4.9.4"
   },
   "devDependencies": {

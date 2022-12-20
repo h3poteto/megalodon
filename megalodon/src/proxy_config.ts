@@ -47,7 +47,7 @@ const proxyAgent = (proxyConfig: ProxyConfig): HttpsProxyAgent | SocksProxyAgent
     case 'socks4a': {
       let options: SocksProxyAgentOptions = {
         type: 4,
-        host: proxyConfig.host,
+        hostname: proxyConfig.host,
         port: proxyConfig.port
       }
       if (proxyConfig.auth) {
@@ -64,7 +64,7 @@ const proxyAgent = (proxyConfig: ProxyConfig): HttpsProxyAgent | SocksProxyAgent
     case 'socks': {
       let options: SocksProxyAgentOptions = {
         type: 5,
-        host: proxyConfig.host,
+        hostname: proxyConfig.host,
         port: proxyConfig.port
       }
       if (proxyConfig.auth) {
