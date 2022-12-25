@@ -18,8 +18,11 @@ namespace MastodonAPI {
   export interface Interface {
     get<T = any>(path: string, params?: any, headers?: { [key: string]: string }, pathIsFullyQualified?: boolean): Promise<Response<T>>
     put<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    putForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     patch<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    patchForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
+    postForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
     socket(path: string, stream: string, params?: string): WebSocket
@@ -158,6 +161,51 @@ namespace MastodonAPI {
     }
 
     /**
+     * PUT request to mastodon REST API for multipart.
+     * @param path relative path from baseUrl
+     * @param params Form data. If you want to post file, please use FormData()
+     * @param headers Request header object
+     */
+    public async putForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
+      let options: AxiosRequestConfig = {
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
+      }
+      if (this.accessToken) {
+        options = objectAssignDeep({}, options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
+      }
+      if (this.proxyConfig) {
+        options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
+          httpsAgent: proxyAgent(this.proxyConfig)
+        })
+      }
+      return axios
+        .putForm<T>(this.baseUrl + path, params, options)
+        .catch((err: Error) => {
+          if (axios.isCancel(err)) {
+            throw new RequestCanceledError(err.message)
+          } else {
+            throw err
+          }
+        })
+        .then((resp: AxiosResponse<T>) => {
+          const res: Response<T> = {
+            data: resp.data,
+            status: resp.status,
+            statusText: resp.statusText,
+            headers: resp.headers
+          }
+          return res
+        })
+    }
+
+    /**
      * PATCH request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
@@ -203,6 +251,51 @@ namespace MastodonAPI {
     }
 
     /**
+     * PATCH request to mastodon REST API for multipart.
+     * @param path relative path from baseUrl
+     * @param params Form data. If you want to post file, please use FormData()
+     * @param headers Request header object
+     */
+    public async patchForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
+      let options: AxiosRequestConfig = {
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
+      }
+      if (this.accessToken) {
+        options = objectAssignDeep({}, options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
+      }
+      if (this.proxyConfig) {
+        options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
+          httpsAgent: proxyAgent(this.proxyConfig)
+        })
+      }
+      return axios
+        .patchForm<T>(this.baseUrl + path, params, options)
+        .catch((err: Error) => {
+          if (axios.isCancel(err)) {
+            throw new RequestCanceledError(err.message)
+          } else {
+            throw err
+          }
+        })
+        .then((resp: AxiosResponse<T>) => {
+          const res: Response<T> = {
+            data: resp.data,
+            status: resp.status,
+            statusText: resp.statusText,
+            headers: resp.headers
+          }
+          return res
+        })
+    }
+
+    /**
      * POST request to mastodon REST API.
      * @param path relative path from baseUrl
      * @param params Form data
@@ -228,6 +321,42 @@ namespace MastodonAPI {
         })
       }
       return axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
+    }
+
+    /**
+     * POST request to mastodon REST API for multipart.
+     * @param path relative path from baseUrl
+     * @param params Form data
+     * @param headers Request header object
+     */
+    public async postForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
+      let options: AxiosRequestConfig = {
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
+      }
+      if (this.accessToken) {
+        options = objectAssignDeep({}, options, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
+          }
+        })
+      }
+      if (this.proxyConfig) {
+        options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
+          httpsAgent: proxyAgent(this.proxyConfig)
+        })
+      }
+      return axios.postForm<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
           status: resp.status,

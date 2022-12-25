@@ -1309,11 +1309,7 @@ export default class Mastodon implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    let headers: { [key: string]: string } = {}
-    if (typeof formData.getHeaders === 'function') {
-      headers = formData.getHeaders()
-    }
-    return this.client.post<MastodonAPI.Entity.AsyncAttachment>('/api/v2/media', formData, headers).then(res => {
+    return this.client.postForm<MastodonAPI.Entity.AsyncAttachment>('/api/v2/media', formData).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.async_attachment(res.data)
       })
@@ -1348,11 +1344,7 @@ export default class Mastodon implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    let headers: { [key: string]: string } = {}
-    if (typeof formData.getHeaders === 'function') {
-      headers = formData.getHeaders()
-    }
-    return this.client.put<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData, headers).then(res => {
+    return this.client.putForm<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.attachment(res.data)
       })
