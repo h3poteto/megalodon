@@ -10,7 +10,7 @@ describe('detector', () => {
   })
 
   describe('pleroma', () => {
-    const url = 'https://pleroma.io'
+    const url = 'https://pleroma.soykaf.com'
     it('should be pleroma', async () => {
       const pleroma = await detector(url)
       expect(pleroma).toEqual('pleroma')
@@ -18,7 +18,7 @@ describe('detector', () => {
   })
 
   describe('misskey', () => {
-    const url = 'https://misskey.io'
+    const url = 'https://sushi.ski'
     it('should be misskey', async () => {
       const misskey = await detector(url)
       expect(misskey).toEqual('misskey')
