@@ -17,7 +17,7 @@ describe('detector', () => {
     })
   })
 
-  describe('misskey', () => {
+  describe.skip('misskey', () => {
     const url = 'https://sushi.ski'
     it('should be misskey', async () => {
       const misskey = await detector(url)
