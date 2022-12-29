@@ -1282,9 +1282,7 @@ type Instance = {
 export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'misskey'> => {
   let options: AxiosRequestConfig = {
     headers: {
-      'User-Agent': DEFAULT_UA,
-      // To avoid: https://github.com/axios/axios/issues/5346
-      'Accept-Encoding': 'gzip,deflate,compress'
+      'User-Agent': DEFAULT_UA
     }
   }
   if (proxyConfig) {

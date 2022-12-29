@@ -53,9 +53,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     }
     this.parser = new Parser()
     this.headers = {
-      'User-Agent': userAgent,
-      // To avoid: https://github.com/axios/axios/issues/5346
-      'Accept-Encoding': 'gzip,deflate,compress'
+      'User-Agent': userAgent
     }
     this.proxyConfig = proxyConfig
     this._accessToken = accessToken
