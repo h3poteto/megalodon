@@ -472,9 +472,7 @@ namespace MisskeyAPI {
       let options: AxiosRequestConfig = {
         headers: Object.assign(
           {
-            'User-Agent': this.userAgent,
-            // To avoid: https://github.com/axios/axios/issues/5346
-            'Accept-Encoding': 'gzip,deflate,compress'
+            'User-Agent': this.userAgent
           },
           headers
         ),
