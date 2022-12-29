@@ -78,7 +78,14 @@ namespace MastodonAPI {
     ): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         params: params,
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -123,7 +130,14 @@ namespace MastodonAPI {
      */
     public async put<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -168,7 +182,14 @@ namespace MastodonAPI {
      */
     public async putForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -213,7 +234,14 @@ namespace MastodonAPI {
      */
     public async patch<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -258,7 +286,14 @@ namespace MastodonAPI {
      */
     public async patchForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -303,7 +338,14 @@ namespace MastodonAPI {
      */
     public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -339,7 +381,14 @@ namespace MastodonAPI {
      */
     public async postForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -376,7 +425,14 @@ namespace MastodonAPI {
     public async del<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         data: params,
-        headers: headers,
+        headers: Object.assign(
+          {
+            'User-Agent': this.userAgent,
+            // To avoid: https://github.com/axios/axios/issues/5346
+            'Accept-Encoding': 'gzip,deflate,compress'
+          },
+          headers
+        ),
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }

@@ -6,6 +6,7 @@ import Mastodon from './mastodon'
 import Entity from './entity'
 import axios, { AxiosRequestConfig } from 'axios'
 import Misskey from './misskey'
+import { DEFAULT_UA } from './default'
 
 export interface WebSocketInterface {
   start(): void
@@ -1279,7 +1280,13 @@ type Instance = {
  * @return SNS name.
  */
 export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'misskey'> => {
-  let options: AxiosRequestConfig = {}
+  let options: AxiosRequestConfig = {
+    headers: {
+      'User-Agent': DEFAULT_UA,
+      // To avoid: https://github.com/axios/axios/issues/5346
+      'Accept-Encoding': 'gzip,deflate,compress'
+    }
+  }
   if (proxyConfig) {
     options = Object.assign(options, {
       httpsAgent: proxyAgent(proxyConfig)
