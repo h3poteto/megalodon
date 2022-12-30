@@ -470,12 +470,7 @@ namespace MisskeyAPI {
      */
     public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }

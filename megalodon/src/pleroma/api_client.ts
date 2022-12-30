@@ -303,12 +303,7 @@ namespace PleromaAPI {
     public async get<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         params: params,
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        )
+        headers: headers
       }
       if (this.accessToken) {
         options = objectAssignDeep({}, options, {
@@ -351,12 +346,7 @@ namespace PleromaAPI {
      */
     public async put<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -401,12 +391,7 @@ namespace PleromaAPI {
      */
     public async putForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -451,12 +436,7 @@ namespace PleromaAPI {
      */
     public async patch<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -501,12 +481,7 @@ namespace PleromaAPI {
      */
     public async patchForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -551,12 +526,7 @@ namespace PleromaAPI {
      */
     public async post<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -592,12 +562,7 @@ namespace PleromaAPI {
      */
     public async postForm<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
@@ -634,12 +599,7 @@ namespace PleromaAPI {
     public async del<T>(path: string, params = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         data: params,
-        headers: Object.assign(
-          {
-            'User-Agent': this.userAgent
-          },
-          headers
-        ),
+        headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
