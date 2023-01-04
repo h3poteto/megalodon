@@ -1,5 +1,6 @@
 /// <reference path="emoji.ts" />
 /// <reference path="source.ts" />
+/// <reference path="field.ts" />
 namespace Entity {
   export type Account = {
     id: string
@@ -19,7 +20,7 @@ namespace Entity {
     header_static: string
     emojis: Array<Emoji>
     moved: Account | null
-    fields: object | null
+    fields: Array<Field>
     bot: boolean | null
     source?: Source
   }
