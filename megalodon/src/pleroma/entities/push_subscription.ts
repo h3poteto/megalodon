@@ -3,6 +3,14 @@ namespace PleromaEntity {
     id: string
     endpoint: string
     server_key: string
-    alerts: object
+    alerts: Alerts
+  }
+
+  export type Alerts = {
+    follow: boolean
+    favourite: boolean
+    mention: boolean
+    reblog: boolean
+    poll: boolean
   }
 }
