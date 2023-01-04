@@ -1,6 +1,6 @@
 /// <reference path="emoji.ts" />
 /// <reference path="source.ts" />
-
+/// <reference path="field.ts" />
 namespace PleromaEntity {
   export type Account = {
     id: string
@@ -20,7 +20,7 @@ namespace PleromaEntity {
     header_static: string
     emojis: Array<Emoji>
     moved: Account | null
-    fields: object | null
+    fields: Array<Field>
     bot: boolean | null
     source?: Source
   }

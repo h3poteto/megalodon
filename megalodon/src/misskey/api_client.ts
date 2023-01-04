@@ -72,7 +72,7 @@ namespace MisskeyAPI {
         header_static: '',
         emojis: u.emojis.map(e => emoji(e)),
         moved: null,
-        fields: null,
+        fields: [],
         bot: null
       }
     }
@@ -100,7 +100,7 @@ namespace MisskeyAPI {
         header_static: u.bannerColor,
         emojis: u.emojis.map(e => emoji(e)),
         moved: null,
-        fields: null,
+        fields: [],
         bot: u.isBot
       }
     }
@@ -155,7 +155,10 @@ namespace MisskeyAPI {
         remote_url: f.url,
         preview_url: f.thumbnailUrl,
         text_url: f.url,
-        meta: null,
+        meta: {
+          width: f.properties.width,
+          height: f.properties.height
+        },
         description: null,
         blurhash: null
       }

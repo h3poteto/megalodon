@@ -1,3 +1,4 @@
+/// <reference path="attachment.ts" />
 namespace PleromaEntity {
   export type AsyncAttachment = {
     id: string
@@ -6,7 +7,7 @@ namespace PleromaEntity {
     remote_url: string | null
     preview_url: string
     text_url: string | null
-    meta: object | null
+    meta: Meta | null
     description: string | null
     blurhash: string | null
   }
