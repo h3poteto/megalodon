@@ -155,7 +155,10 @@ namespace MisskeyAPI {
         remote_url: f.url,
         preview_url: f.thumbnailUrl,
         text_url: f.url,
-        meta: null,
+        meta: {
+          width: f.properties.width,
+          height: f.properties.height
+        },
         description: null,
         blurhash: null
       }
