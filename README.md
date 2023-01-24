@@ -8,9 +8,7 @@
 A Mastodon, Pleroma and Misskey API Client library for node.js and browser. It provides REST API and streaming methods.
 By using this library, you can take Mastodon, Pleroma and Misskey with the same interface.
 
-## !!Migrate v2.x to v3.0.0
-There are some breaking changes, so you can not update megalodon out of the box.
-Please refer [migration guide](migration_guide.md) before you update megalodon version.
+The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
 ## Features
 
@@ -37,22 +35,7 @@ $ yarn add megalodon
 ### Build for browser
 **Important**: In browser, you can not use proxy.
 
-If you want to build for browser, please use Webpack and set empty value for these libraries.
-
-- net
-- tls
-- dns
-
-```javascript
-  node: {
-    net: 'empty',
-    tls: 'empty',
-    dns: 'empty'
-  }
-```
-
-These libraries are for node.js, so can not use in browser.
-
+If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in Node.js.
 [Here](example/browser/webpack.config.js) is example Webpack configuration.
 
 ## Usage
@@ -154,39 +137,6 @@ stream.on('close', () => {
 
 stream.on('parser-error', (err: Error) => {
   console.error(err)
-})
-```
-
-### HTTP Streaming
-Mastodon provides HTTP streaming.
-
-```typescript
-import generator, { Entity, StreamListenerInterface } from 'megalodon'
-
-const BASE_URL: string = 'https://mastodon.social'
-const access_token: string = '...'
-
-const client = generator('mastodon', BASE_URL, access_token)
-const stream: StreamListenerInterface
-
-stream.on('update', (status: Entity.Status) => {
-  console.log(status)
-})
-
-stream.on('notification', (notification: Entity.Notification) => {
-  console.log(notification)
-})
-
-stream.on('delete', (id: number) => {
-  console.log(id)
-})
-
-stream.on('error', (err: Error) => {
-  console.error(err)
-})
-
-stream.on('heartbeat', () => {
-  console.log('thump.')
 })
 ```
 
