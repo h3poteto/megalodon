@@ -4,7 +4,7 @@ import { EventEmitter } from 'events'
 
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
-import MastodonAPI from './api_client'
+import PleromaAPI from './api_client'
 
 /**
  * WebSocket
@@ -237,17 +237,20 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * Set up parser when receive message.
    */
   private _setupParser() {
-    this.parser.on('update', (status: MastodonAPI.Entity.Status) => {
-      this.emit('update', MastodonAPI.Converter.status(status))
+    this.parser.on('update', (status: PleromaAPI.Entity.Status) => {
+      this.emit('update', PleromaAPI.Converter.status(status))
     })
-    this.parser.on('notification', (notification: MastodonAPI.Entity.Notification) => {
-      this.emit('notification', MastodonAPI.Converter.notification(notification))
+    this.parser.on('notification', (notification: PleromaAPI.Entity.Notification) => {
+      this.emit('notification', PleromaAPI.Converter.notification(notification))
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)
     })
-    this.parser.on('conversation', (conversation: MastodonAPI.Entity.Conversation) => {
-      this.emit('conversation', MastodonAPI.Converter.conversation(conversation))
+    this.parser.on('conversation', (conversation: PleromaAPI.Entity.Conversation) => {
+      this.emit('conversation', PleromaAPI.Converter.conversation(conversation))
+    })
+    this.parser.on('status_update', (status: PleromaAPI.Entity.Status) => {
+      this.emit('status_update', PleromaAPI.Converter.status(status))
     })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)
@@ -319,16 +322,19 @@ export class Parser extends EventEmitter {
 
     switch (event) {
       case 'update':
-        this.emit('update', mes as MastodonAPI.Entity.Status)
+        this.emit('update', mes as PleromaAPI.Entity.Status)
         break
       case 'notification':
-        this.emit('notification', mes as MastodonAPI.Entity.Notification)
+        this.emit('notification', mes as PleromaAPI.Entity.Notification)
         break
       case 'conversation':
-        this.emit('conversation', mes as MastodonAPI.Entity.Conversation)
+        this.emit('conversation', mes as PleromaAPI.Entity.Conversation)
         break
       case 'delete':
         this.emit('delete', payload)
+        break
+      case 'status.update':
+        this.emit('status_update', mes as PleromaAPI.Entity.Status)
         break
       default:
         this.emit('error', new Error(`Unknown event has received: ${message}`))

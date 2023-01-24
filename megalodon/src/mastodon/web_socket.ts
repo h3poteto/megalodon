@@ -248,6 +248,9 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this.parser.on('conversation', (conversation: MastodonAPI.Entity.Conversation) => {
       this.emit('conversation', MastodonAPI.Converter.conversation(conversation))
     })
+    this.parser.on('status_update', (status: MastodonAPI.Entity.Status) => {
+      this.emit('status_update', MastodonAPI.Converter.status(status))
+    })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)
     })
@@ -328,6 +331,9 @@ export class Parser extends EventEmitter {
         break
       case 'delete':
         this.emit('delete', payload)
+        break
+      case 'status.update':
+        this.emit('status_update', mes as MastodonAPI.Entity.Status)
         break
       default:
         this.emit('error', new Error(`Unknown event has received: ${message}`))
