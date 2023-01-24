@@ -37,6 +37,10 @@ stream.on('error', (err: Error) => {
   console.error(err)
 })
 
+stream.on('status_update', (status: Entity.Status) => {
+  console.log('updated: ', status.url)
+})
+
 stream.on('heartbeat', () => {
   console.log('thump.')
 })

@@ -45,6 +45,10 @@ stream.on('heartbeat', () => {
   logger.debug('thump.')
 })
 
+stream.on('status_update', (status: Entity.Status) => {
+  logger.debug('updated: ', status.url)
+})
+
 stream.on('close', () => {
   logger.debug('close')
 })
