@@ -1159,6 +1159,70 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
+  public async editStatus(
+    id: string,
+    options: {
+      status?: string
+      spoiler_text?: string
+      sensitive?: boolean
+      media_ids?: Array<string>
+      poll?: { options?: Array<string>; expires_in?: number; multiple?: boolean; hide_totals?: boolean }
+    }
+  ): Promise<Response<Entity.Status>> {
+    let params = {}
+    if (options.status) {
+      params = Object.assign(params, {
+        status: options.status
+      })
+    }
+    if (options.spoiler_text) {
+      params = Object.assign(params, {
+        spoiler_text: options.spoiler_text
+      })
+    }
+    if (options.sensitive) {
+      params = Object.assign(params, {
+        sensitive: options.sensitive
+      })
+    }
+    if (options.media_ids) {
+      params = Object.assign(params, {
+        media_ids: options.media_ids
+      })
+    }
+    if (options.poll) {
+      let pollParam = {}
+      if (options.poll.options !== undefined) {
+        pollParam = Object.assign(pollParam, {
+          options: options.poll.options
+        })
+      }
+      if (options.poll.expires_in !== undefined) {
+        pollParam = Object.assign(pollParam, {
+          expires_in: options.poll.expires_in
+        })
+      }
+      if (options.poll.multiple !== undefined) {
+        pollParam = Object.assign(pollParam, {
+          multiple: options.poll.multiple
+        })
+      }
+      if (options.poll.hide_totals !== undefined) {
+        pollParam = Object.assign(pollParam, {
+          hide_totals: options.poll.hide_totals
+        })
+      }
+      params = Object.assign(params, {
+        poll: pollParam
+      })
+    }
+    return this.client.put<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}`, params).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.status(res.data)
+      })
+    })
+  }
+
   public async deleteStatus(id: string): Promise<Response<Entity.Status>> {
     return this.client.del<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
       return Object.assign(res, {
