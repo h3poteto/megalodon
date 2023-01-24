@@ -631,6 +631,22 @@ export interface MegalodonInterface {
    */
   getStatus(id: string): Promise<Response<Entity.Status>>
   /**
+     PUT /api/v1/statuses/:id
+     *
+     * @param id The target status id.
+     * @return Status
+   */
+  editStatus(
+    id: string,
+    options: {
+      status?: string
+      spoiler_text?: string
+      sensitive?: boolean
+      media_ids?: Array<string>
+      poll?: { options?: Array<string>; expires_in?: number; multiple?: boolean; hide_totals?: boolean }
+    }
+  ): Promise<Response<Entity.Status>>
+  /**
    * DELETE /api/v1/statuses/:id
    *
    * @param id The target status id.

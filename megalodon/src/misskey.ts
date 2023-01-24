@@ -1061,6 +1061,22 @@ export default class Misskey implements MegalodonInterface {
       .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
   }
 
+  public async editStatus(
+    _id: string,
+    _options: {
+      status?: string
+      spoiler_text?: string
+      sensitive?: boolean
+      media_ids?: Array<string>
+      poll?: { options?: Array<string>; expires_in?: number; multiple?: boolean; hide_totals?: boolean }
+    }
+  ): Promise<Response<Entity.Status>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
   /**
    * POST /api/notes/delete
    */
