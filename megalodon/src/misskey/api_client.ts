@@ -403,7 +403,8 @@ namespace MisskeyAPI {
       return {
         name: h.tag,
         url: h.tag,
-        history: null
+        history: null,
+        following: false
       }
     }
   }

@@ -1064,6 +1064,33 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   // ======================================
+  // accounts/tags
+  // ======================================
+  public async getTag(id: string): Promise<Response<Entity.Tag>> {
+    return this.client.get<MastodonAPI.Entity.Tag>(`/api/v1/tags/${id}`).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.tag(res.data)
+      })
+    })
+  }
+
+  public async followTag(id: string): Promise<Response<Entity.Tag>> {
+    return this.client.post<MastodonAPI.Entity.Tag>(`/api/v1/tags/${id}/follow`).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.tag(res.data)
+      })
+    })
+  }
+
+  public async unfollowTag(id: string): Promise<Response<Entity.Tag>> {
+    return this.client.post<MastodonAPI.Entity.Tag>(`/api/v1/tags/${id}/unfollow`).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.tag(res.data)
+      })
+    })
+  }
+
+  // ======================================
   // statuses
   // ======================================
   public async postStatus(
