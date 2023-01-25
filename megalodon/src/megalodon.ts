@@ -592,6 +592,30 @@ export interface MegalodonInterface {
    */
   getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>>
   // ======================================
+  // accounts/tag
+  // ======================================
+  /**
+   * GET /api/v1/tags/:id
+   *
+   * @param id Target hashtag id.
+   * @return Tag
+   */
+  getTag(id: string): Promise<Response<Entity.Tag>>
+  /**
+   * POST /api/v1/tags/:id/follow
+   *
+   * @param id Target hashtag id.
+   * @return Tag
+   */
+  followTag(id: string): Promise<Response<Entity.Tag>>
+  /**
+   * POST /api/v1/tags/:id/unfollow
+   *
+   * @param id Target hashtag id.
+   * @return Tag
+   */
+  unfollowTag(id: string): Promise<Response<Entity.Tag>>
+  // ======================================
   // statuses
   // ======================================
   /**

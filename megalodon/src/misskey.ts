@@ -979,6 +979,30 @@ export default class Misskey implements MegalodonInterface {
   }
 
   // ======================================
+  // accounts/tags
+  // ======================================
+  public async getTag(_id: string): Promise<Response<Entity.Tag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async followTag(_id: string): Promise<Response<Entity.Tag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async unfollowTag(_id: string): Promise<Response<Entity.Tag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
   // statuses
   // ======================================
   public async postStatus(
@@ -2000,7 +2024,7 @@ export default class Misskey implements MegalodonInterface {
           data: {
             accounts: [],
             statuses: [],
-            hashtags: res.data.map(h => ({ name: h, url: h, history: null }))
+            hashtags: res.data.map(h => ({ name: h, url: h, history: null, following: false }))
           }
         }))
       }

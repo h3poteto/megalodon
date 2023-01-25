@@ -5,5 +5,6 @@ namespace MastodonEntity {
     name: string
     url: string
     history: Array<History> | null
+    following: boolean
   }
 }
