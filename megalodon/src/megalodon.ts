@@ -592,7 +592,7 @@ export interface MegalodonInterface {
    */
   getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>>
   // ======================================
-  // accounts/tag
+  // accounts/tags
   // ======================================
   /**
    * GET /api/v1/tags/:id
