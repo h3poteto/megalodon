@@ -5,6 +5,6 @@ namespace PleromaEntity {
     name: string
     url: string
     history: Array<History> | null
-    following: boolean
+    following?: boolean
   }
 }
