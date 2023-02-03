@@ -10,6 +10,7 @@ import MegalodonEntity from '../entity'
 import WebSocket from './web_socket'
 import MisskeyNotificationType from './notification'
 import NotificationType from '../notification'
+export const isEmojiArr = (item: any): item is MisskeyEntity.Emoji[] => Array.isArray(item)
 
 namespace MisskeyAPI {
   export namespace Entity {
@@ -18,6 +19,7 @@ namespace MisskeyAPI {
     export type Choice = MisskeyEntity.Choice
     export type CreatedNote = MisskeyEntity.CreatedNote
     export type Emoji = MisskeyEntity.Emoji
+    export type EmojiKeyValue = MisskeyEntity.EmojiKeyValue
     export type Favorite = MisskeyEntity.Favorite
     export type File = MisskeyEntity.File
     export type Follower = MisskeyEntity.Follower
@@ -49,6 +51,20 @@ namespace MisskeyAPI {
       }
     }
 
+    export const emojiConverter = (e: MisskeyEntity.EmojiKeyValue | MisskeyEntity.Emoji[]) => {
+      if (isEmojiArr(e)) return e
+      const emojiKeys = Object.keys(e)
+      const emojiArr: MisskeyEntity.Emoji[] = emojiKeys.map((emoji, i) => {
+        return {
+          name: emojiKeys[i],
+          host: null,
+          url: emoji,
+          aliases: []
+        }
+      })
+      return emojiArr
+    }
+
     export const user = (u: Entity.User): MegalodonEntity.Account => {
       let acct = u.username
       if (u.host) {
@@ -70,7 +86,7 @@ namespace MisskeyAPI {
         avatar_static: u.avatarColor,
         header: '',
         header_static: '',
-        emojis: u.emojis.map(e => emoji(e)),
+        emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
         bot: null
@@ -98,7 +114,7 @@ namespace MisskeyAPI {
         avatar_static: u.avatarColor,
         header: u.bannerUrl,
         header_static: u.bannerColor,
-        emojis: u.emojis.map(e => emoji(e)),
+        emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
         bot: u.isBot
@@ -222,13 +238,13 @@ namespace MisskeyAPI {
         reblog: n.renote ? note(n.renote) : null,
         content: n.text
           ? n.text
-              .replace(/&/g, '&amp;')
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;')
-              .replace(/"/g, '&quot;')
-              .replace(/'/g, '&#39;')
-              .replace(/`/g, '&#x60;')
-              .replace(/\r?\n/g, '<br>')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/`/g, '&#x60;')
+            .replace(/\r?\n/g, '<br>')
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,

@@ -2094,8 +2094,8 @@ export default class Misskey implements MegalodonInterface {
    */
   public async getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>> {
     return this.client
-      .post<MisskeyAPI.Entity.Meta>('/api/meta')
-      .then(res => ({ ...res, data: res.data.emojis.map(e => MisskeyAPI.Converter.emoji(e)) }))
+      .post<MisskeyAPI.Entity.Emoji[]>('/api/emojis')
+      .then(res => ({ ...res, data: res.data.map(e => MisskeyAPI.Converter.emoji(e)) }))
   }
 
   // ======================================
