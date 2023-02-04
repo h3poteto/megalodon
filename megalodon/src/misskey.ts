@@ -57,6 +57,7 @@ export default class Misskey implements MegalodonInterface {
     })
   }
 
+
   /**
    * POST /api/app/create
    *

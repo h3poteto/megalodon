@@ -52,13 +52,13 @@ namespace MisskeyAPI {
     }
 
     export const emojiConverter = (e: MisskeyEntity.EmojiKeyValue | MisskeyEntity.Emoji[]) => {
+      if (!e) return []
       if (isEmojiArr(e)) return e
-      const emojiKeys = Object.keys(e)
-      const emojiArr: MisskeyEntity.Emoji[] = emojiKeys.map((emoji, i) => {
+      const emojiArr: MisskeyEntity.Emoji[] = Object.entries(e).map(([key, value], i) => {
         return {
-          name: emojiKeys[i],
+          name: key,
           host: null,
-          url: emoji,
+          url: value,
           aliases: []
         }
       })
@@ -67,8 +67,10 @@ namespace MisskeyAPI {
 
     export const user = (u: Entity.User): MegalodonEntity.Account => {
       let acct = u.username
+      let acctUrl = `https://${u.host || 'example.com'}/@${u.username}`
       if (u.host) {
         acct = `${u.username}@${u.host}`
+        acctUrl = `https://${u.host}/@${u.username}`
       }
       return {
         id: u.id,
@@ -76,27 +78,29 @@ namespace MisskeyAPI {
         acct: acct,
         display_name: u.name,
         locked: false,
-        created_at: '',
+        created_at: new Date().toISOString(),
         followers_count: 0,
         following_count: 0,
         statuses_count: 0,
         note: '',
-        url: acct,
+        url: acctUrl,
         avatar: u.avatarUrl,
-        avatar_static: u.avatarColor,
+        avatar_static: u.avatarUrl,
         header: '',
         header_static: '',
         emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
-        bot: null
+        bot: false
       }
     }
 
     export const userDetail = (u: Entity.UserDetail): MegalodonEntity.Account => {
       let acct = u.username
+      let acctUrl = `https://${u.host || 'example.com'}/@${u.username}`
       if (u.host) {
         acct = `${u.username}@${u.host}`
+        acctUrl = `https://${u.host}/@${u.username}`
       }
       return {
         id: u.id,
@@ -109,15 +113,15 @@ namespace MisskeyAPI {
         following_count: u.followingCount,
         statuses_count: u.notesCount,
         note: u.description,
-        url: acct,
+        url: acctUrl,
         avatar: u.avatarUrl,
-        avatar_static: u.avatarColor,
+        avatar_static: u.avatarUrl,
         header: u.bannerUrl,
-        header_static: u.bannerColor,
+        header_static: u.bannerUrl,
         emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
-        bot: u.isBot
+        bot: u.isBot || false
       }
     }
 
@@ -248,7 +252,7 @@ namespace MisskeyAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: n.emojis.map(e => emoji(e)),
+        emojis: emojiConverter(n.emojis).map(e => emoji(e)),
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -366,11 +370,35 @@ namespace MisskeyAPI {
           return e
       }
     }
+    const modelOfAcct = {
+      id: "1",
+      username: 'none',
+      acct: 'none',
+      display_name: 'none',
+      locked: true,
+      bot: true,
+      discoverable: false,
+      group: false,
+      created_at: '1971-01-01T00:00:00.000Z',
+      note: '',
+      url: 'https://example.com',
+      avatar: '/missing',
+      avatar_static: '/missing',
+      header: '/missing',
+      header_static: '/missing',
+      followers_count: -1,
+      following_count: 0,
+      statuses_count: 0,
+      last_status_at: '1971-01-01T00:00:00.000Z',
+      noindex: true,
+      emojis: [],
+      fields: []
+  }
 
     export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
       let notification = {
         id: n.id,
-        account: user(n.user),
+        account: n.user ? user(n.user) : modelOfAcct,
         created_at: n.createdAt,
         type: decodeNotificationType(n.type)
       }

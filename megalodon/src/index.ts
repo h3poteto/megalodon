@@ -9,6 +9,7 @@ import Misskey from './misskey'
 import Entity from './entity'
 import NotificationType from './notification'
 import FilterContext from './filter_context'
+import Converter from './converter'
 
 export {
   Response,
@@ -24,7 +25,8 @@ export {
   Mastodon,
   Pleroma,
   Misskey,
-  Entity
+  Entity,
+  Converter
 }
 
 export default generator
