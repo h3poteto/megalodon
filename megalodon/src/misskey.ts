@@ -38,7 +38,7 @@ export default class Misskey implements MegalodonInterface {
     this.proxyConfig = proxyConfig
   }
 
-  public baseUrlToHost(baseUrl: string): string {
+  private baseUrlToHost(baseUrl: string): string {
     return baseUrl.replace('https://', '')
   }
 

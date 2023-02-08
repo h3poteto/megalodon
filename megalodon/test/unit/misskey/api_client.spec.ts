@@ -198,7 +198,7 @@ describe('api_client', () => {
           replyId: null,
           renoteId: null
         }
-        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        const megalodonStatus = MisskeyAPI.Converter.note(note, user.host || 'misskey.io')
         expect(megalodonStatus.plain_content).toEqual(plainContent)
         expect(megalodonStatus.content).toEqual(content)
       })
@@ -222,7 +222,7 @@ describe('api_client', () => {
           replyId: null,
           renoteId: null
         }
-        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        const megalodonStatus = MisskeyAPI.Converter.note(note, user.host || 'misskey.io')
         expect(megalodonStatus.plain_content).toEqual(plainContent)
         expect(megalodonStatus.content).toEqual(content)
       })
