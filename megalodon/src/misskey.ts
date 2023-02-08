@@ -405,7 +405,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<Array<MisskeyAPI.Entity.Follower>>('/api/users/followers', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(f => MisskeyAPI.Converter.follower(f, this.baseUrlToHost(this.baseUrl)))
+        data: res.data.map(f => MisskeyAPI.Converter.follower(f))
       })
     })
   }
@@ -433,7 +433,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<Array<MisskeyAPI.Entity.Following>>('/api/users/following', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(f => MisskeyAPI.Converter.following(f, this.baseUrlToHost(this.baseUrl)))
+        data: res.data.map(f => MisskeyAPI.Converter.following(f))
       })
     })
   }

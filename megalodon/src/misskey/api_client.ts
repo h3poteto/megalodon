@@ -52,10 +52,10 @@ namespace MisskeyAPI {
 
     export const user = (u: Entity.User): MegalodonEntity.Account => {
       let acct = u.username
-      let acctUrl = `https://${host || u.host || 'example.com'}/@${u.username}`
-      if (host || u.host) {
-        acct = `${u.username}@${host || u.host}`
-        acctUrl = `https://${host || u.host}/@${u.username}`
+      let acctUrl = `https://${u.host || 'example.com'}/@${u.username}`
+      if (u.host) {
+        acct = `${u.username}@${u.host}`
+        acctUrl = `https://${u.host}/@${u.username}`
       }
       return {
         id: u.id,
@@ -82,10 +82,8 @@ namespace MisskeyAPI {
 
     export const userDetail = (u: Entity.UserDetail, host: string): MegalodonEntity.Account => {
       let acct = u.username
-      let acctUrl = `https://${host || u.host || 'example.com'}/@${u.username}`
       if (host || u.host) {
         acct = `${u.username}@${host || u.host}`
-        acctUrl = `https://${host || u.host}/@${u.username}`
       }
       return {
         id: u.id,
@@ -169,12 +167,12 @@ namespace MisskeyAPI {
       }
     }
 
-    export const follower = (f: Entity.Follower, host: string): MegalodonEntity.Account => {
-      return user(f.follower, host)
+    export const follower = (f: Entity.Follower): MegalodonEntity.Account => {
+      return user(f.follower)
     }
 
-    export const following = (f: Entity.Following, host: string): MegalodonEntity.Account => {
-      return user(f.followee, host)
+    export const following = (f: Entity.Following): MegalodonEntity.Account => {
+      return user(f.followee)
     }
 
     export const relation = (r: Entity.Relation): MegalodonEntity.Relationship => {
@@ -221,7 +219,7 @@ namespace MisskeyAPI {
         id: n.id,
         uri: n.uri ? n.uri : `https://${host}/notes/${n.id}`,
         url: n.uri ? n.uri : `https://${host}/notes/${n.id}`,
-        account: user(n.user, host),
+        account: user(n.user),
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: null,
         reblog: n.renote ? note(n.renote, host) : null,
@@ -237,7 +235,7 @@ namespace MisskeyAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: emojiConverter(n.emojis).map(e => emoji(e)),
+        emojis: n.emojis.map(e => emoji(e)),
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -296,9 +294,9 @@ namespace MisskeyAPI {
     }
 
     export const noteToConversation = (n: Entity.Note, host: string): MegalodonEntity.Conversation => {
-      const accounts: Array<MegalodonEntity.Account> = [user(n.user, host)]
+      const accounts: Array<MegalodonEntity.Account> = [user(n.user)]
       if (n.reply) {
-        accounts.push(user(n.reply.user, host))
+        accounts.push(user(n.reply.user))
       }
       return {
         id: n.id,
@@ -384,7 +382,7 @@ namespace MisskeyAPI {
     export const notification = (n: Entity.Notification, host: string): MegalodonEntity.Notification => {
       let notification = {
         id: n.id,
-        account: n.user ? user(n.user, host) : modelOfAcct,
+        account: n.user ? user(n.user) : modelOfAcct,
         created_at: n.createdAt,
         type: decodeNotificationType(n.type)
       }
