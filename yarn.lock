@@ -608,6 +608,25 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cutls/megalodon@5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@cutls/megalodon/-/megalodon-5.1.6.tgz#d8b9ac758266bf4d0d5767f4e467af372de224a4"
+  integrity sha512-GI9WVrFKrUILgNOqHmh1JnLPx4SrEIfgZqrSn3nGLjD09dhvzkvpqUCUQ1XFIa547iBmJYqdroEYMMTyyaMHPw==
+  dependencies:
+    "@types/oauth" "^0.9.0"
+    "@types/ws" "^8.5.4"
+    axios "1.2.2"
+    dayjs "^1.11.7"
+    form-data "^4.0.0"
+    https-proxy-agent "^5.0.1"
+    oauth "^0.10.0"
+    object-assign-deep "^0.4.0"
+    parse-link-header "^2.0.0"
+    socks-proxy-agent "^7.0.0"
+    typescript "4.9.4"
+    uuid "^9.0.0"
+    ws "8.12.0"
+
 "@discoveryjs/json-ext@^0.5.0":
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.6.tgz#d5e0706cf8c6acd8c6032f8d54070af261bbbb2f"

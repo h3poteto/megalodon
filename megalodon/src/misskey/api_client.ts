@@ -54,7 +54,7 @@ namespace MisskeyAPI {
     export const emojiConverter = (e: MisskeyEntity.EmojiKeyValue | MisskeyEntity.Emoji[]) => {
       if (!e) return []
       if (isEmojiArr(e)) return e
-      const emojiArr: MisskeyEntity.Emoji[] = Object.entries(e).map(([key, value], i) => {
+      const emojiArr: MisskeyEntity.Emoji[] = Object.entries(e).map(([key, value]) => {
         return {
           name: key,
           host: null,
@@ -65,18 +65,18 @@ namespace MisskeyAPI {
       return emojiArr
     }
 
-    export const user = (u: Entity.User): MegalodonEntity.Account => {
+    export const user = (u: Entity.User, host: string): MegalodonEntity.Account => {
       let acct = u.username
-      let acctUrl = `https://${u.host || 'example.com'}/@${u.username}`
-      if (u.host) {
-        acct = `${u.username}@${u.host}`
-        acctUrl = `https://${u.host}/@${u.username}`
+      let acctUrl = `https://${host || u.host || 'example.com'}/@${u.username}`
+      if (host || u.host) {
+        acct = `${u.username}@${host || u.host}`
+        acctUrl = `https://${host || u.host}/@${u.username}`
       }
       return {
         id: u.id,
         username: u.username,
         acct: acct,
-        display_name: u.name,
+        display_name: u.name || u.username,
         locked: false,
         created_at: new Date().toISOString(),
         followers_count: 0,
@@ -86,8 +86,8 @@ namespace MisskeyAPI {
         url: acctUrl,
         avatar: u.avatarUrl,
         avatar_static: u.avatarUrl,
-        header: '',
-        header_static: '',
+        header: u.avatarUrl,
+        header_static: u.avatarUrl,
         emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
@@ -95,18 +95,18 @@ namespace MisskeyAPI {
       }
     }
 
-    export const userDetail = (u: Entity.UserDetail): MegalodonEntity.Account => {
+    export const userDetail = (u: Entity.UserDetail, host: string): MegalodonEntity.Account => {
       let acct = u.username
-      let acctUrl = `https://${u.host || 'example.com'}/@${u.username}`
-      if (u.host) {
-        acct = `${u.username}@${u.host}`
-        acctUrl = `https://${u.host}/@${u.username}`
+      let acctUrl = `https://${host || u.host || 'example.com'}/@${u.username}`
+      if (host || u.host) {
+        acct = `${u.username}@${host || u.host}`
+        acctUrl = `https://${host || u.host}/@${u.username}`
       }
       return {
         id: u.id,
         username: u.username,
         acct: acct,
-        display_name: u.name,
+        display_name: u.name || u.username,
         locked: u.isLocked,
         created_at: u.createdAt,
         followers_count: u.followersCount,
@@ -116,8 +116,8 @@ namespace MisskeyAPI {
         url: acctUrl,
         avatar: u.avatarUrl,
         avatar_static: u.avatarUrl,
-        header: u.bannerUrl,
-        header_static: u.bannerUrl,
+        header: u.bannerUrl || u.avatarUrl,
+        header_static: u.bannerUrl || u.avatarUrl,
         emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
@@ -184,12 +184,12 @@ namespace MisskeyAPI {
       }
     }
 
-    export const follower = (f: Entity.Follower): MegalodonEntity.Account => {
-      return user(f.follower)
+    export const follower = (f: Entity.Follower, host: string): MegalodonEntity.Account => {
+      return user(f.follower, host)
     }
 
-    export const following = (f: Entity.Following): MegalodonEntity.Account => {
-      return user(f.followee)
+    export const following = (f: Entity.Following, host: string): MegalodonEntity.Account => {
+      return user(f.followee, host)
     }
 
     export const relation = (r: Entity.Relation): MegalodonEntity.Relationship => {
@@ -231,15 +231,15 @@ namespace MisskeyAPI {
       }
     }
 
-    export const note = (n: Entity.Note): MegalodonEntity.Status => {
+    export const note = (n: Entity.Note, host: string): MegalodonEntity.Status => {
       return {
         id: n.id,
-        uri: n.uri ? n.uri : '',
-        url: n.uri ? n.uri : '',
-        account: user(n.user),
+        uri: n.uri ? n.uri : `https://${host}/notes/${n.id}`,
+        url: n.uri ? n.uri : `https://${host}/notes/${n.id}`,
+        account: user(n.user, host),
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: null,
-        reblog: n.renote ? note(n.renote) : null,
+        reblog: n.renote ? note(n.renote, host) : null,
         content: n.text
           ? n.text
             .replace(/&/g, '&amp;')
@@ -257,7 +257,7 @@ namespace MisskeyAPI {
         reblogs_count: n.renoteCount,
         favourites_count: 0,
         reblogged: false,
-        favourited: false,
+        favourited: !!n.myReaction,
         muted: false,
         sensitive: n.files ? n.files.some(f => f.isSensitive) : false,
         spoiler_text: n.cw ? n.cw : '',
@@ -295,7 +295,7 @@ namespace MisskeyAPI {
 
     export const reactions = (r: Array<Entity.Reaction>): Array<MegalodonEntity.Reaction> => {
       const result: Array<MegalodonEntity.Reaction> = []
-      r.map(e => {
+      for (const e of r) {
         const i = result.findIndex(res => res.name === e.type)
         if (i >= 0) {
           result[i].count++
@@ -306,19 +306,19 @@ namespace MisskeyAPI {
             name: e.type
           })
         }
-      })
+      }
       return result
     }
 
-    export const noteToConversation = (n: Entity.Note): MegalodonEntity.Conversation => {
-      const accounts: Array<MegalodonEntity.Account> = [user(n.user)]
+    export const noteToConversation = (n: Entity.Note, host: string): MegalodonEntity.Conversation => {
+      const accounts: Array<MegalodonEntity.Account> = [user(n.user, host)]
       if (n.reply) {
-        accounts.push(user(n.reply.user))
+        accounts.push(user(n.reply.user, host))
       }
       return {
         id: n.id,
         accounts: accounts,
-        last_status: note(n),
+        last_status: note(n, host),
         unread: false
       }
     }
@@ -381,30 +381,31 @@ namespace MisskeyAPI {
       group: false,
       created_at: '1971-01-01T00:00:00.000Z',
       note: '',
-      url: 'https://example.com',
-      avatar: '/missing',
-      avatar_static: '/missing',
-      header: '/missing',
-      header_static: '/missing',
+      url: 'https://http.cat/404',
+      avatar: 'https://http.cat/404',
+      avatar_static: 'https://http.cat/404',
+      header: 'https://http.cat/404',
+      header_static: 'https://http.cat/404',
       followers_count: -1,
       following_count: 0,
       statuses_count: 0,
       last_status_at: '1971-01-01T00:00:00.000Z',
       noindex: true,
       emojis: [],
-      fields: []
+      fields: [],
+      moved: null
   }
 
-    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+    export const notification = (n: Entity.Notification, host: string): MegalodonEntity.Notification => {
       let notification = {
         id: n.id,
-        account: n.user ? user(n.user) : modelOfAcct,
+        account: n.user ? user(n.user, host) : modelOfAcct,
         created_at: n.createdAt,
         type: decodeNotificationType(n.type)
       }
       if (n.note) {
         notification = Object.assign(notification, {
-          status: note(n.note)
+          status: note(n.note, host)
         })
       }
       if (n.reaction) {
