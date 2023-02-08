@@ -39,6 +39,7 @@ namespace MisskeyAPI {
     export type UserKey = MisskeyEntity.UserKey
     export type Session = MisskeyEntity.Session
     export type Stats = MisskeyEntity.Stats
+    export type APIEmoji = { emojis: Emoji[] }
   }
 
   export namespace Converter {
@@ -107,17 +108,17 @@ namespace MisskeyAPI {
         username: u.username,
         acct: acct,
         display_name: u.name || u.username,
-        locked: u.isLocked,
-        created_at: u.createdAt,
-        followers_count: u.followersCount,
-        following_count: u.followingCount,
-        statuses_count: u.notesCount,
-        note: u.description,
+        locked: !!u.isLocked,
+        created_at: u.createdAt || new Date().toISOString(),
+        followers_count: u.followersCount || 0,
+        following_count: u.followingCount || 0,
+        statuses_count: u.notesCount || 0,
+        note: u.description || '',
         url: acctUrl,
-        avatar: u.avatarUrl,
-        avatar_static: u.avatarUrl,
-        header: u.bannerUrl || u.avatarUrl,
-        header_static: u.bannerUrl || u.avatarUrl,
+        avatar: u.avatarUrl || 'https://http.cat/404',
+        avatar_static: u.avatarUrl || 'https://http.cat/404',
+        header: u.bannerUrl || u.avatarUrl || 'https://http.cat/404',
+        header_static: u.bannerUrl || u.avatarUrl || 'https://http.cat/404',
         emojis: emojiConverter(u.emojis).map(e => emoji(e)),
         moved: null,
         fields: [],
