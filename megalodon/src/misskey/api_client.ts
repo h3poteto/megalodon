@@ -10,7 +10,6 @@ import MegalodonEntity from '../entity'
 import WebSocket from './web_socket'
 import MisskeyNotificationType from './notification'
 import NotificationType from '../notification'
-export const isEmojiArr = (item: any): item is MisskeyEntity.Emoji[] => Array.isArray(item)
 
 namespace MisskeyAPI {
   export namespace Entity {
@@ -19,7 +18,6 @@ namespace MisskeyAPI {
     export type Choice = MisskeyEntity.Choice
     export type CreatedNote = MisskeyEntity.CreatedNote
     export type Emoji = MisskeyEntity.Emoji
-    export type EmojiKeyValue = MisskeyEntity.EmojiKeyValue
     export type Favorite = MisskeyEntity.Favorite
     export type File = MisskeyEntity.File
     export type Follower = MisskeyEntity.Follower
@@ -52,21 +50,7 @@ namespace MisskeyAPI {
       }
     }
 
-    export const emojiConverter = (e: MisskeyEntity.EmojiKeyValue | MisskeyEntity.Emoji[]) => {
-      if (!e) return []
-      if (isEmojiArr(e)) return e
-      const emojiArr: MisskeyEntity.Emoji[] = Object.entries(e).map(([key, value]) => {
-        return {
-          name: key,
-          host: null,
-          url: value,
-          aliases: []
-        }
-      })
-      return emojiArr
-    }
-
-    export const user = (u: Entity.User, host: string): MegalodonEntity.Account => {
+    export const user = (u: Entity.User): MegalodonEntity.Account => {
       let acct = u.username
       let acctUrl = `https://${host || u.host || 'example.com'}/@${u.username}`
       if (host || u.host) {
@@ -86,10 +70,10 @@ namespace MisskeyAPI {
         note: '',
         url: acctUrl,
         avatar: u.avatarUrl,
-        avatar_static: u.avatarUrl,
-        header: u.avatarUrl,
-        header_static: u.avatarUrl,
-        emojis: emojiConverter(u.emojis).map(e => emoji(e)),
+        avatar_static: u.avatarColor,
+        header: '',
+        header_static: '',
+        emojis: u.emojis.map(e => emoji(e)),
         moved: null,
         fields: [],
         bot: false
@@ -107,22 +91,22 @@ namespace MisskeyAPI {
         id: u.id,
         username: u.username,
         acct: acct,
-        display_name: u.name || u.username,
-        locked: !!u.isLocked,
-        created_at: u.createdAt || new Date().toISOString(),
-        followers_count: u.followersCount || 0,
-        following_count: u.followingCount || 0,
-        statuses_count: u.notesCount || 0,
-        note: u.description || '',
-        url: acctUrl,
-        avatar: u.avatarUrl || 'https://http.cat/404',
-        avatar_static: u.avatarUrl || 'https://http.cat/404',
-        header: u.bannerUrl || u.avatarUrl || 'https://http.cat/404',
-        header_static: u.bannerUrl || u.avatarUrl || 'https://http.cat/404',
-        emojis: emojiConverter(u.emojis).map(e => emoji(e)),
+        display_name: u.name,
+        locked: u.isLocked,
+        created_at: u.createdAt,
+        followers_count: u.followersCount,
+        following_count: u.followingCount,
+        statuses_count: u.notesCount,
+        note: u.description,
+        url: acct,
+        avatar: u.avatarUrl,
+        avatar_static: u.avatarColor,
+        header: u.bannerUrl,
+        header_static: u.bannerColor,
+        emojis: u.emojis.map(e => emoji(e)),
         moved: null,
         fields: [],
-        bot: u.isBot || false
+        bot: u.isBot
       }
     }
 
@@ -243,13 +227,13 @@ namespace MisskeyAPI {
         reblog: n.renote ? note(n.renote, host) : null,
         content: n.text
           ? n.text
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;')
-            .replace(/`/g, '&#x60;')
-            .replace(/\r?\n/g, '<br>')
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;')
+              .replace(/`/g, '&#x60;')
+              .replace(/\r?\n/g, '<br>')
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
@@ -572,7 +556,7 @@ namespace MisskeyAPI {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
-      const url = this.baseUrl + '/streaming'
+      const url = `${this.baseUrl}/streaming`
       const streaming = new WebSocket(url, channel, this.accessToken, listId, this.userAgent, this.proxyConfig)
       process.nextTick(() => {
         streaming.start()

@@ -8,6 +8,6 @@ namespace MisskeyEntity {
     host: string | null
     avatarUrl: string
     avatarColor: string
-    emojis: Array<Emoji> | EmojiKeyValue
+    emojis: Array<Emoji>
   }
 }

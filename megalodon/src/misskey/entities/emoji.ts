@@ -5,7 +5,4 @@ namespace MisskeyEntity {
     url: string
     aliases: Array<string>
   }
-  export type EmojiKeyValue = {
-    [key: string]: string
-  }
 }

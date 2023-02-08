@@ -1,6 +1,6 @@
 {
-  "name": "@cutls/megalodon",
-  "version": "5.1.15",
+  "name": "@thatonecalculator/megalodon",
+  "version": "5.1.2",
   "description": "Mastodon API client for node.js and browser",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
