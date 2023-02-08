@@ -1,5 +1,6 @@
 {
   "name": "@thatonecalculator/megalodon",
+  "private": false,
   "version": "5.1.2",
   "description": "Mastodon+Calckey API client for node.js and browser",
   "main": "./lib/src/index.js",

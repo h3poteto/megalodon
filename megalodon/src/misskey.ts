@@ -298,7 +298,7 @@ export default class Misskey implements MegalodonInterface {
       only_media?: boolean
     }
   ): Promise<Response<Array<Entity.Status>>> {
-    if (options && options.pinned) {
+    if (options?.pinned) {
       return this.client
         .post<MisskeyAPI.Entity.UserDetail>('/api/users/show', {
           userId: id
@@ -870,7 +870,7 @@ export default class Misskey implements MegalodonInterface {
   public async getFollowRequests(_limit?: number): Promise<Response<Array<Entity.Account>>> {
     return this.client.post<Array<MisskeyAPI.Entity.FollowRequest>>('/api/following/requests/list').then(res => {
       return Object.assign(res, {
-        data: res.data.map(r => MisskeyAPI.Converter.user(r.follower, this.baseUrlToHost(this.baseUrl)))
+        data: res.data.map(r => MisskeyAPI.Converter.user(r.follower))
       })
     })
   }
@@ -1165,7 +1165,7 @@ export default class Misskey implements MegalodonInterface {
       })
       .then(res => ({
         ...res,
-        data: res.data.map(n => MisskeyAPI.Converter.user(n.user, this.baseUrlToHost(this.baseUrl)))
+        data: res.data.map(n => MisskeyAPI.Converter.user(n.user))
       }))
   }
 
