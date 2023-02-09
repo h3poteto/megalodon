@@ -82,8 +82,11 @@ namespace MisskeyAPI {
 
     export const userDetail = (u: Entity.UserDetail, host: string): MegalodonEntity.Account => {
       let acct = u.username
-      if (host || u.host) {
-        acct = `${u.username}@${host || u.host}`
+      host = host.replace('https://', '')
+      let acctUrl = `https://${host || u.host || 'example.com'}/@${u.username}`
+      if (u.host) {
+        acct = `${u.username}@${u.host}`
+        acctUrl = `https://${u.host}/@${u.username}`
       }
       return {
         id: u.id,
@@ -104,7 +107,7 @@ namespace MisskeyAPI {
         emojis: u.emojis.map(e => emoji(e)),
         moved: null,
         fields: [],
-        bot: u.isBot
+        bot: u.isBot,
       }
     }
 
@@ -215,6 +218,7 @@ namespace MisskeyAPI {
     }
 
     export const note = (n: Entity.Note, host: string): MegalodonEntity.Status => {
+      host = host.replace('https://', '')
       return {
         id: n.id,
         uri: n.uri ? n.uri : `https://${host}/notes/${n.id}`,
