@@ -646,7 +646,7 @@ export interface MegalodonInterface {
       language?: string
       quote_id?: string
     }
-  ): Promise<Response<Entity.Status>>
+  ): Promise<Response<Entity.Status|Entity.ScheduledStatus>>
   /**
    * GET /api/v1/statuses/:id
    *

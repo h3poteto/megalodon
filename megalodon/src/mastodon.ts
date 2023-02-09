@@ -1106,7 +1106,7 @@ export default class Mastodon implements MegalodonInterface {
       language?: string
       quote_id?: string
     }
-  ): Promise<Response<Entity.Status>> {
+  ): Promise<Response<Entity.Status|Entity.ScheduledStatus>> {
     let params = {
       status: status
     }
@@ -1170,6 +1170,13 @@ export default class Mastodon implements MegalodonInterface {
           quote_id: options.quote_id
         })
       }
+    }
+    if (options.scheduled_at) {
+      return this.client.post<MastodonAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
+        return Object.assign(res, {
+          data: MastodonAPI.Converter.scheduled_status(res.data)
+        })
+      })
     }
     return this.client.post<MastodonAPI.Entity.Status>('/api/v1/statuses', params).then(res => {
       return Object.assign(res, {
