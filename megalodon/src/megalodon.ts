@@ -631,7 +631,7 @@ export interface MegalodonInterface {
    * @param options.scheduled_at ISO 8601 Datetime at which to schedule a status.
    * @param options.language ISO 639 language code for this status.
    * @param options.quote_id ID of the status being quoted to, if status is a quote.
-   * @return Status
+   * @return Status. When options.scheduled_at is present, ScheduledStatus is returned instead.
    */
   postStatus(
     status: string,
