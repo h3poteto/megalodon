@@ -115,12 +115,12 @@ namespace PleromaAPI {
     }
     export const card = (c: Entity.Card): MegalodonEntity.Card => c
     export const context = (c: Entity.Context): MegalodonEntity.Context => ({
-      ancestors: c.ancestors.map(a => status(a)),
-      descendants: c.descendants.map(d => status(d))
+      ancestors: Array.isArray(c.ancestors) ? c.ancestors.map(a => status(a)) : [],
+      descendants: Array.isArray(c.descendants) ? c.descendants.map(d => status(d)) : []
     })
     export const conversation = (c: Entity.Conversation): MegalodonEntity.Conversation => ({
       id: c.id,
-      accounts: c.accounts.map(a => account(a)),
+      accounts: Array.isArray(c.accounts) ? c.accounts.map(a => account(a)) : [],
       last_status: c.last_status ? status(c.last_status) : null,
       unread: c.unread
     })
@@ -191,15 +191,15 @@ namespace PleromaAPI {
     })
     export const report = (r: Entity.Report): MegalodonEntity.Report => r
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
-      accounts: r.accounts.map(a => account(a)),
-      statuses: r.statuses.map(s => status(s)),
-      hashtags: r.hashtags.map(h => tag(h))
+      accounts: Array.isArray(r.accounts) ? r.accounts.map(a => account(a)) : [],
+      statuses: Array.isArray(r.statuses) ? r.statuses.map(s => status(s)) : [],
+      hashtags: Array.isArray(r.hashtags) ? r.hashtags.map(h => tag(h)) : []
     })
     export const scheduled_status = (s: Entity.ScheduledStatus): MegalodonEntity.ScheduledStatus => ({
       id: s.id,
       scheduled_at: s.scheduled_at,
       params: s.params,
-      media_attachments: s.media_attachments.map(m => attachment(m))
+      media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : []
     })
     export const source = (s: Entity.Source): MegalodonEntity.Source => s
     export const stats = (s: Entity.Stats): MegalodonEntity.Stats => s
@@ -214,7 +214,7 @@ namespace PleromaAPI {
       content: s.content,
       plain_content: s.pleroma.content?.['text/plain'] ? s.pleroma.content['text/plain'] : null,
       created_at: s.created_at,
-      emojis: s.emojis.map(e => emoji(e)),
+      emojis: Array.isArray(s.emojis) ? s.emojis.map(e => emoji(e)) : [],
       replies_count: s.replies_count,
       reblogs_count: s.reblogs_count,
       favourites_count: s.favourites_count,
@@ -224,15 +224,15 @@ namespace PleromaAPI {
       sensitive: s.sensitive,
       spoiler_text: s.spoiler_text,
       visibility: s.visibility,
-      media_attachments: s.media_attachments.map(m => attachment(m)),
-      mentions: s.mentions.map(m => mention(m)),
-      tags: s.tags.map(t => tag(t)),
+      media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
+      mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
+      tags: Array.isArray(s.tags) ? s.tags.map(t => tag(t)) : [],
       card: s.card ? card(s.card) : null,
       poll: s.poll ? poll(s.poll) : null,
       application: s.application ? application(s.application) : null,
       language: s.language,
       pinned: s.pinned,
-      emoji_reactions: s.pleroma.emoji_reactions ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
+      emoji_reactions: Array.isArray(s.pleroma.emoji_reactions) ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: s.reblog !== null && s.reblog.content !== s.content
     })

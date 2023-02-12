@@ -70,7 +70,7 @@ namespace MisskeyAPI {
         avatar_static: u.avatarColor,
         header: '',
         header_static: '',
-        emojis: u.emojis.map(e => emoji(e)),
+        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
         moved: null,
         fields: [],
         bot: null
@@ -98,7 +98,7 @@ namespace MisskeyAPI {
         avatar_static: u.avatarColor,
         header: u.bannerUrl,
         header_static: u.bannerColor,
-        emojis: u.emojis.map(e => emoji(e)),
+        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
         moved: null,
         fields: [],
         bot: u.isBot
@@ -206,8 +206,8 @@ namespace MisskeyAPI {
         expired: now.isAfter(expire),
         multiple: p.multiple,
         votes_count: count,
-        options: p.choices.map(c => choice(c)),
-        voted: p.choices.some(c => c.isVoted)
+        options: Array.isArray(p.choices) ? p.choices.map(c => choice(c)) : [],
+        voted: Array.isArray(p.choices) ? p.choices.some(c => c.isVoted) : false
       }
     }
 
@@ -232,17 +232,17 @@ namespace MisskeyAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: n.emojis.map(e => emoji(e)),
+        emojis: Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : [],
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
         reblogged: false,
         favourited: false,
         muted: false,
-        sensitive: n.files ? n.files.some(f => f.isSensitive) : false,
+        sensitive: Array.isArray(n.files) ? n.files.some(f => f.isSensitive) : false,
         spoiler_text: n.cw ? n.cw : '',
         visibility: visibility(n.visibility),
-        media_attachments: n.files ? n.files.map(f => file(f)) : [],
+        media_attachments: Array.isArray(n.files) ? n.files.map(f => file(f)) : [],
         mentions: [],
         tags: [],
         card: null,
@@ -250,7 +250,7 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: mapReactions(n.reactions, n.myReaction),
+        emoji_reactions: typeof n.reactions === "object" ? mapReactions(n.reactions, n.myReaction) : [],
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }
