@@ -24,7 +24,7 @@ new Promise(resolve => {
   rl.question('Toot: ', status => {
     client
       .postStatus(status, options)
-      .then((res: Response<Entity.Status>) => {
+      .then((res: Response<Entity.Status|Entity.ScheduledStatus>) => {
         console.log(res)
         rl.close()
         resolve(res)
