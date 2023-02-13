@@ -1,3 +1,6 @@
+## Warning
+This fork isnt yet feature complete with all calckey features and thus we recommend using other libraries over this for the time being. Thanks to everyone who helps make this a better library.
+
 # Megalodon
 [![NPM Version](https://img.shields.io/npm/v/@calckey/megalodon)](https://www.npmjs.com/package/@calckey/megalodon)
 [![npm](https://img.shields.io/npm/dm/@calckey/megalodon)](https://www.npmjs.com/package/@calckey/megalodon)
