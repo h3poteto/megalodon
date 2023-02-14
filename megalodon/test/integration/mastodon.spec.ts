@@ -2,7 +2,7 @@ import MastodonEntity from '@/mastodon/entity'
 import MastodonNotificationType from '@/mastodon/notification'
 import Mastodon from '@/mastodon'
 import MegalodonNotificationType from '@/notification'
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosHeaders } from 'axios'
 
 jest.mock('axios')
 
@@ -167,12 +167,15 @@ describe('getNotifications', () => {
   ]
   cases.forEach(c => {
     it(`should be ${c.title} event`, async () => {
+      const config: InternalAxiosRequestConfig<any> = {
+        headers: new AxiosHeaders()
+      }
       const mockResponse: AxiosResponse<Array<MastodonEntity.Notification>> = {
         data: [c.event],
         status: 200,
         statusText: '200OK',
         headers: {},
-        config: {}
+        config: config
       }
       ;(axios.get as any).mockResolvedValue(mockResponse)
       const res = await client.getNotifications()

@@ -1,7 +1,7 @@
 import MastodonAPI from '@/mastodon/api_client'
 import Entity from '@/entity'
 import Response from '@/response'
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosHeaders } from 'axios'
 
 jest.mock('axios')
 
@@ -74,6 +74,10 @@ const status: Entity.Status = {
   }
 })
 
+const config: InternalAxiosRequestConfig<any> = {
+  headers: new AxiosHeaders()
+}
+
 describe('get', () => {
   const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
   const mockResponse: AxiosResponse<Array<Entity.Status>> = {
@@ -81,7 +85,7 @@ describe('get', () => {
     status: 200,
     statusText: '200OK',
     headers: {},
-    config: {}
+    config: config
   }
   it('should be responsed', async () => {
     ;(axios.get as any).mockResolvedValue(mockResponse)
@@ -97,7 +101,7 @@ describe('put', () => {
     status: 200,
     statusText: '200OK',
     headers: {},
-    config: {}
+    config: config
   }
   it('should be responsed', async () => {
     ;(axios.put as any).mockResolvedValue(mockResponse)
@@ -115,7 +119,7 @@ describe('patch', () => {
     status: 200,
     statusText: '200OK',
     headers: {},
-    config: {}
+    config: config
   }
   it('should be responsed', async () => {
     ;(axios.patch as any).mockResolvedValue(mockResponse)
@@ -133,7 +137,7 @@ describe('post', () => {
     status: 200,
     statusText: '200OK',
     headers: {},
-    config: {}
+    config: config
   }
   it('should be responsed', async () => {
     ;(axios.post as any).mockResolvedValue(mockResponse)
@@ -151,7 +155,7 @@ describe('del', () => {
     status: 200,
     statusText: '200OK',
     headers: {},
-    config: {}
+    config: config
   }
   it('should be responsed', async () => {
     ;(axios.delete as any).mockResolvedValue(mockResponse)
