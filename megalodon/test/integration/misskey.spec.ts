@@ -2,7 +2,7 @@ import MisskeyEntity from '@/misskey/entity'
 import MisskeyNotificationType from '@/misskey/notification'
 import Misskey from '@/misskey'
 import MegalodonNotificationType from '@/notification'
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 jest.mock('axios')
 
@@ -189,12 +189,15 @@ describe('getNotifications', () => {
   ]
   cases.forEach(c => {
     it(`should be ${c.title} event`, async () => {
+      const config: InternalAxiosRequestConfig<any> = {
+        headers: new AxiosHeaders()
+      }
       const mockResponse: AxiosResponse<Array<MisskeyEntity.Notification>> = {
         data: [c.event],
         status: 200,
         statusText: '200OK',
         headers: {},
-        config: {}
+        config: config
       }
       ;(axios.post as any).mockResolvedValue(mockResponse)
       const res = await client.getNotifications()
