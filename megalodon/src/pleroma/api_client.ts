@@ -45,6 +45,7 @@ namespace PleromaAPI {
     export type Stats = PleromaEntity.Stats
     export type Status = PleromaEntity.Status
     export type StatusParams = PleromaEntity.StatusParams
+    export type StatusSource = PleromaEntity.StatusSource
     export type Tag = PleromaEntity.Tag
     export type Token = PleromaEntity.Token
     export type URLs = PleromaEntity.URLs
@@ -237,6 +238,7 @@ namespace PleromaAPI {
       quote: s.reblog !== null && s.reblog.content !== s.content
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
+    export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
     export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
