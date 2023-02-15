@@ -1149,6 +1149,13 @@ export default class Misskey implements MegalodonInterface {
     })
   }
 
+  public async getStatusSource(_id: string): Promise<Response<Entity.StatusSource>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
   /**
    * POST /api/notes/renotes
    */

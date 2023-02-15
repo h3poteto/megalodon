@@ -646,7 +646,7 @@ export interface MegalodonInterface {
       language?: string
       quote_id?: string
     }
-  ): Promise<Response<Entity.Status|Entity.ScheduledStatus>>
+  ): Promise<Response<Entity.Status | Entity.ScheduledStatus>>
   /**
    * GET /api/v1/statuses/:id
    *
@@ -685,6 +685,14 @@ export interface MegalodonInterface {
    * @return Context
    */
   getStatusContext(id: string, options?: { limit?: number; max_id?: string; since_id?: string }): Promise<Response<Entity.Context>>
+  /**
+   * GET /api/v1/statuses/:id/source
+   *
+   * Obtain the source properties for a status so that it can be edited.
+   * @param id The target status id.
+   * @return StatusSource
+   */
+  getStatusSource(id: string): Promise<Response<Entity.StatusSource>>
   /**
    * GET /api/v1/statuses/:id/reblogged_by
    *

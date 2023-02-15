@@ -29,6 +29,7 @@
 /// <reference path="./entities/stats.ts" />
 /// <reference path="./entities/status.ts" />
 /// <reference path="./entities/status_params.ts" />
+/// <reference path="./entities/status_source.ts" />
 /// <reference path="./entities/tag.ts" />
 /// <reference path="./entities/token.ts" />
 /// <reference path="./entities/urls.ts" />

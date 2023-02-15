@@ -473,6 +473,7 @@ namespace MastodonAPI {
     export type Stats = MastodonEntity.Stats
     export type Status = MastodonEntity.Status
     export type StatusParams = MastodonEntity.StatusParams
+    export type StatusSource = MastodonEntity.StatusSource
     export type Tag = MastodonEntity.Tag
     export type Token = MastodonEntity.Token
     export type URLs = MastodonEntity.URLs
@@ -630,6 +631,7 @@ namespace MastodonAPI {
       quote: s.quote !== undefined && s.quote !== null
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
+    export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
     export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
