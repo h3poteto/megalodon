@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
-    "log4js": "^6.7.1"
+    "log4js": "^6.8.0"
   }
 }
