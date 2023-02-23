@@ -258,31 +258,44 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: mapReactions(n.reactions, n.myReaction),
+        emoji_reactions: mapReactions(host, n.reactions, n.myReaction || '', n.reactionEmojis || {}),
         bookmarked: false,
         quote: n.renote && n.text ? note(n.renote, host) : null
       }
     }
-
-    export const mapReactions = (r: { [key: string]: number }, myReaction?: string): Array<MegalodonEntity.Reaction> => {
+    export const mapReactions = (host: string, r: { [key: string]: number }, myReaction: string, emojiData: MisskeyEntity.Emoji[] | MisskeyEntity.EmojiKeyValue): Array<MegalodonEntity.Reaction> => {
+      if (isEmojiArr(emojiData)) {
+        return emojiData.map((e) => {return {
+          count: 0, me: false, name: e.name, url: e.url, static_url: e.url
+        }})
+      }
       return Object.keys(r).map(key => {
         if (myReaction && key === myReaction) {
           return {
             count: r[key],
             me: true,
-            name: key
+            name: key,
+            url: emojiData[key] || `https://${host}/${key.replace(/[:@.]/g, '')}.webp`,
+            static_url: emojiData[key] || `https://${host}/${key.replace(/[:@.]/g, '')}.webp`
           }
         }
         return {
           count: r[key],
           me: false,
-          name: key
+          name: key,
+          url: emojiData[key] || `https://${host}/${key.replace(/[:@.]/g, '')}.webp`,
+          static_url: emojiData[key] || `https://${host}/${key.replace(/[:@.]/g, '')}.webp`
         }
       })
     }
 
-    export const reactions = (r: Array<Entity.Reaction>): Array<MegalodonEntity.Reaction> => {
+    export const reactions = (r: Array<Entity.Reaction>, host: string, emojiData: MisskeyEntity.Emoji[] | MisskeyEntity.EmojiKeyValue): Array<MegalodonEntity.Reaction> => {
       const result: Array<MegalodonEntity.Reaction> = []
+      if (isEmojiArr(emojiData)) {
+        return emojiData.map((e) => {return {
+          count: 0, me: false, name: e.name, url: e.url, static_url: e.url
+        }})
+      }
       for (const e of r) {
         const i = result.findIndex(res => res.name === e.type)
         if (i >= 0) {
@@ -291,7 +304,9 @@ namespace MisskeyAPI {
           result.push({
             count: 1,
             me: false,
-            name: e.type
+            name: e.type,
+            url: emojiData[e.type] || `https://${host}/${e.type.replace(/[:@.]/g, '')}.webp`,
+            static_url: emojiData[e.type] || `https://${host}/${e.type.replace(/[:@.]/g, '')}.webp`
           })
         }
       }
