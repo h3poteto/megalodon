@@ -234,7 +234,7 @@ namespace PleromaAPI {
       pinned: s.pinned,
       emoji_reactions: s.pleroma.emoji_reactions ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      quote: s.reblog !== null && s.reblog.content !== s.content
+      quote: null
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t

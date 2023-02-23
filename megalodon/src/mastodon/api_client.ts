@@ -627,7 +627,7 @@ namespace MastodonAPI {
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
       // Now quote is supported only fedibird.com.
-      quote: s.quote !== undefined && s.quote !== null
+      quote: s.quote ? status(s.quote) : null
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t

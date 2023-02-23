@@ -56,7 +56,7 @@ const status: Entity.Status = {
   pinned: null,
   emoji_reactions: [],
   bookmarked: false,
-  quote: false
+  quote: null
 }
 
 const notification: Entity.Notification = {
