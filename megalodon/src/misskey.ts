@@ -1293,7 +1293,10 @@ export default class Misskey implements MegalodonInterface {
    */
   public async uploadMedia(file: any, _options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>> {
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('file', file.buffer, {
+      contentType: file.mimetype,
+      filename: file.originalname,
+    })
     let headers: { [key: string]: string } = {}
     if (typeof formData.getHeaders === 'function') {
       headers = formData.getHeaders()
