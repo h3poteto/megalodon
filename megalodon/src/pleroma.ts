@@ -888,16 +888,16 @@ export default class Pleroma implements MegalodonInterface {
   // ======================================
   public async report(
     account_id: string,
-    comment: string,
     options?: {
       status_ids?: Array<string>
-
+      comment: string
       forward?: boolean
+      category?: Entity.Category
+      rule_ids?: Array<number>
     }
   ): Promise<Response<Entity.Report>> {
     let params = {
-      account_id: account_id,
-      comment: comment
+      account_id: account_id
     }
     if (options) {
       if (options.status_ids) {
@@ -905,9 +905,24 @@ export default class Pleroma implements MegalodonInterface {
           status_ids: options.status_ids
         })
       }
+      if (options.comment) {
+        params = Object.assign(params, {
+          comment: options.comment
+        })
+      }
       if (options.forward !== undefined) {
         params = Object.assign(params, {
           forward: options.forward
+        })
+      }
+      if (options.category) {
+        params = Object.assign(params, {
+          category: options.category
+        })
+      }
+      if (options.rule_ids) {
+        params = Object.assign(params, {
+          rule_ids: options.rule_ids
         })
       }
     }

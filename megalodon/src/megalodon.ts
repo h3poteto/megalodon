@@ -501,12 +501,23 @@ export interface MegalodonInterface {
    * POST /api/v1/reports
    *
    * @param account_id Target account ID.
-   * @param comment Reason of the report.
    * @param options.status_ids Array of Statuses ids to attach to the report.
+   * @param options.comment The reason for the report. Default maximum of 1000 characters.
    * @param options.forward If the account is remote, should the report be forwarded to the remote admin?
+   * @param options.category Specify if the report is due to spam, violation of enumerated instance rules, or some other reason. Defaults to other. Will be set to violation if rule_ids[] is provided (regardless of any category value you provide).
+   * @param options.rule_ids For violation category reports, specify the ID of the exact rules broken. Rules and their IDs are available via GET /api/v1/instance/rules and GET /api/v1/instance.
    * @return Report
    */
-  report(account_id: string, comment: string, options?: { status_ids?: Array<string>; forward?: boolean }): Promise<Response<Entity.Report>>
+  report(
+    account_id: string,
+    options?: {
+      status_ids?: Array<string>
+      comment: string
+      forward?: boolean
+      category?: Entity.Category
+      rule_ids?: Array<number>
+    }
+  ): Promise<Response<Entity.Report>>
   // ======================================
   // accounts/follow_requests
   // ======================================
