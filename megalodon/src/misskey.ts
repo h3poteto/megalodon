@@ -831,25 +831,30 @@ export default class Misskey implements MegalodonInterface {
    */
   public async report(
     account_id: string,
-    comment: string,
-    _options?: {
+    options: {
       status_ids?: Array<string>
+      comment: string
       forward?: boolean
+      category: Entity.Category
+      rule_ids?: Array<number>
     }
   ): Promise<Response<Entity.Report>> {
+    const category: Entity.Category = 'other'
     return this.client
       .post<{}>('/api/users/report-abuse', {
         userId: account_id,
-        comment: comment
+        comment: options.comment
       })
       .then(res => {
         return Object.assign(res, {
           data: {
             id: '',
-            action_taken: '',
-            comment: comment,
-            account_id: account_id,
-            status_ids: []
+            action_taken: false,
+            comment: options.comment,
+            category: category,
+            forwarded: false,
+            status_ids: null,
+            rule_ids: null
           }
         })
       })
