@@ -5,5 +5,5 @@ const BASE_URL: string = 'http://pleroma.io'
 const client = generator('pleroma', BASE_URL)
 
 client.getInstance().then((res: Response<Entity.Instance>) => {
-  console.log(res)
+  console.log(res.data)
 })

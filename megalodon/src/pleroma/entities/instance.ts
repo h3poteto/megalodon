@@ -13,29 +13,34 @@ namespace PleromaEntity {
     urls: URLs
     stats: Stats
     languages: Array<string>
-    contact_account: Account | null
-    max_toot_chars?: number
-    registrations?: boolean
-    configuration?: {
-      statuses: {
-        max_characters: number
-        max_media_attachments: number
-        characters_reserved_per_url: number
+    registrations: boolean
+    approval_required: boolean
+    max_toot_chars: number
+    max_media_attachments?: number
+    pleroma: {
+      metadata: {
+        account_activation_required: boolean
+        birthday_min_age: number
+        birthday_required: boolean
+        features: Array<string>
+        federation: {
+          enabled: boolean
+          exclusions: boolean
+        }
+        fields_limit: {
+          max_fields: number
+          max_remote_fields: number
+          name_length: number
+          value_length: number
+        }
+        post_format: Array<string>
       }
-      media_attachments: {
-        supported_mime_types: Array<string>
-        image_size_limit: number
-        image_matrix_limit: number
-        video_size_limit: number
-        video_frame_limit: number
-        video_matrix_limit: number
-      }
-      polls: {
-        max_options: number
-        max_characters_per_option: number
-        min_expiration: number
-        max_expiration: number
-      }
+    }
+    poll_limits: {
+      max_expiration: number
+      min_expiration: number
+      max_option_chars: number
+      max_options: number
     }
   }
 }

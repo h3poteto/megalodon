@@ -13,10 +13,11 @@ namespace MastodonEntity {
     urls: URLs
     stats: Stats
     languages: Array<string>
-    contact_account: Account | null
+    registrations: boolean
+    approval_required: boolean
+    invites_enabled: boolean
     max_toot_chars?: number
-    registrations?: boolean
-    configuration?: {
+    configuration: {
       statuses: {
         max_characters: number
         max_media_attachments: number
@@ -37,5 +38,12 @@ namespace MastodonEntity {
         max_expiration: number
       }
     }
+    contact_account: Account
+    rules: Array<InstanceRule>
+  }
+
+  export type InstanceRule = {
+    id: string
+    text: string
   }
 }

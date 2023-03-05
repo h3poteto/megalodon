@@ -250,7 +250,7 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: typeof n.reactions === "object" ? mapReactions(n.reactions, n.myReaction) : [],
+        emoji_reactions: typeof n.reactions === 'object' ? mapReactions(n.reactions, n.myReaction) : [],
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }
@@ -393,9 +393,14 @@ namespace MisskeyAPI {
         },
         stats: stats(s),
         languages: m.langs,
-        contact_account: null,
-        max_toot_chars: m.maxNoteTextLength,
-        registrations: !m.disableRegistration
+        registrations: !m.disableRegistration,
+        approval_required: false,
+        configuration: {
+          statuses: {
+            max_characters: m.maxNoteTextLength,
+            max_media_attachments: m.policies.clipLimit
+          }
+        }
       }
     }
 
