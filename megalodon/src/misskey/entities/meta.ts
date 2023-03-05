@@ -12,7 +12,36 @@ namespace MisskeyEntity {
     disableRegistration: boolean
     disableLocalTimeline: boolean
     bannerUrl: string
-    maxNoteTextLength: 300
+    maxNoteTextLength: number
     emojis: Array<Emoji>
+    policies: {
+      gtlAvailable: boolean
+      ltlAvailable: boolean
+      canPublicNote: boolean
+      canInvite: boolean
+      canManageCustomEmojis: boolean
+      canHideAds: boolean
+      driveCapacityMb: number
+      pinLimit: number
+      antennaLimit: number
+      wordMuteLimit: number
+      webhookLimit: number
+      clipLimit: number
+      noteEachClipsLimit: number
+      userListLimit: number
+      userEachUserListsLimit: number
+      rateLimitFactor: number
+    }
+    features: {
+      registration: boolean
+      emailRequiredForSignup: boolean
+      elasticsearch: boolean
+      hcaptcha: boolean
+      recaptcha: boolean
+      turnstile: boolean
+      objectStorage: boolean
+      serviceWorker: boolean
+      miauth: boolean
+    }
   }
 }

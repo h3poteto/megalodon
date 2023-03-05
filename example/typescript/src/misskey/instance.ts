@@ -7,6 +7,6 @@ const client = generator('misskey', BASE_URL)
 client
   .getInstance()
   .then((res: Response<Entity.Instance>) => {
-    console.log(res)
+    console.log(res.data)
   })
   .catch(err => console.error(err))

@@ -2051,7 +2051,9 @@ export default class Misskey implements MegalodonInterface {
    * POST /api/stats
    */
   public async getInstance(): Promise<Response<Entity.Instance>> {
-    const meta = await this.client.post<MisskeyAPI.Entity.Meta>('/api/meta').then(res => res.data)
+    const meta = await this.client
+      .post<MisskeyAPI.Entity.Meta>('/api/meta', { detail: true })
+      .then(res => res.data)
     return this.client
       .post<MisskeyAPI.Entity.Stats>('/api/stats')
       .then(res => ({ ...res, data: MisskeyAPI.Converter.meta(meta, res.data) }))

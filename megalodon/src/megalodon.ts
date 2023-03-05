@@ -1328,6 +1328,8 @@ type Instance = {
     streaming_api: string
   }
   version: string
+  configuration?: any
+  pleroma?: any
 }
 
 /**
@@ -1351,7 +1353,7 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
   }
   try {
     const res = await axios.get<Instance>(url + '/api/v1/instance', options)
-    if (res.data.version.includes('Pleroma')) {
+    if (res.data.pleroma) {
       return 'pleroma'
     } else {
       return 'mastodon'

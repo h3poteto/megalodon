@@ -131,7 +131,31 @@ namespace PleromaAPI {
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
     export const history = (h: Entity.History): MegalodonEntity.History => h
     export const identity_proof = (i: Entity.IdentityProof): MegalodonEntity.IdentityProof => i
-    export const instance = (i: Entity.Instance): MegalodonEntity.Instance => i
+    export const instance = (i: Entity.Instance): MegalodonEntity.Instance => ({
+      uri: i.uri,
+      title: i.title,
+      description: i.description,
+      email: i.email,
+      version: i.version,
+      thumbnail: i.thumbnail,
+      urls: urls(i.urls),
+      stats: stats(i.stats),
+      languages: i.languages,
+      registrations: i.registrations,
+      approval_required: i.approval_required,
+      configuration: {
+        statuses: {
+          max_characters: i.max_toot_chars,
+          max_media_attachments: i.max_media_attachments
+        },
+        polls: {
+          max_options: i.poll_limits.max_options,
+          max_characters_per_option: i.poll_limits.max_option_chars,
+          min_expiration: i.poll_limits.min_expiration,
+          max_expiration: i.poll_limits.max_expiration
+        }
+      }
+    })
     export const list = (l: Entity.List): MegalodonEntity.List => l
     export const marker = (m: Entity.Marker): MegalodonEntity.Marker => {
       return {
