@@ -27,13 +27,13 @@ namespace PleromaEntity {
           enabled: boolean
           exclusions: boolean
         }
-        fields_limit: {
+        fields_limits: {
           max_fields: number
           max_remote_fields: number
           name_length: number
           value_length: number
         }
-        post_format: Array<string>
+        post_formats: Array<string>
       }
     }
     poll_limits: {
