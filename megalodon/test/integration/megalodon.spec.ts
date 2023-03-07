@@ -24,4 +24,12 @@ describe('detector', () => {
       expect(misskey).toEqual('misskey')
     })
   })
+
+  describe('unknown', () => {
+    const url = 'https://google.com'
+    it('should be null', async () => {
+      const unknown = await detector(url)
+      expect(unknown).toEqual(null)
+    })
+  })
 })

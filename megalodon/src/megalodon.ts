@@ -1334,13 +1334,16 @@ type Instance = {
 
 /**
  * Detect SNS type.
- * Now support Mastodon, Pleroma and Pixelfed.
+ * Now support Mastodon, Pleroma and Pixelfed. Returns null when no known platform can be detected.
  *
  * @param url Base URL of SNS.
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return SNS name.
  */
-export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'misskey'> => {
+export const detector = async (
+  url: string,
+  proxyConfig: ProxyConfig | false = false
+): Promise<'mastodon' | 'pleroma' | 'misskey' | null> => {
   let options: AxiosRequestConfig = {
     headers: {
       'User-Agent': DEFAULT_UA
@@ -1352,16 +1355,26 @@ export const detector = async (url: string, proxyConfig: ProxyConfig | false = f
     })
   }
 
-  const res = await axios.get<Instance>(url + '/api/v1/instance', options)
-  if (res.data.title) {
-    if (res.data.pleroma) {
-      return 'pleroma'
+  try {
+    const res = await axios.get<Instance>(url + '/api/v1/instance', options)
+    if (res.data.title) {
+      if (res.data.pleroma) {
+        return 'pleroma'
+      } else {
+        return 'mastodon'
+      }
     } else {
-      return 'mastodon'
+      return null
     }
-  } else {
-    await axios.post<{}>(url + '/api/meta', {}, options)
-    return 'misskey'
+  } catch (err: any) {
+    if (err?.response?.status === 404) {
+      try {
+        await axios.post<{}>(url + '/api/meta', {}, options)
+        return 'misskey'
+      } catch (err) {}
+    }
+
+    return null
   }
 }
 
