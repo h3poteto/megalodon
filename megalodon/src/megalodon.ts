@@ -1334,7 +1334,7 @@ type Instance = {
 
 /**
  * Detect SNS type.
- * Now support Mastodon, Pleroma and Pixelfed. Returns null when no known platform can be detected.
+ * Now support Mastodon, Pleroma and Pixelfed. Throws an error when no known platform can be detected.
  *
  * @param url Base URL of SNS.
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
@@ -1364,17 +1364,19 @@ export const detector = async (
         return 'mastodon'
       }
     } else {
-      return null
+      throw new Error('no known platform could be detected')
     }
   } catch (err: any) {
     if (err && err.response && err.response.status === 404) {
       try {
         await axios.post<{}>(url + '/api/meta', {}, options)
         return 'misskey'
-      } catch (err) {}
+      } catch (err) {
+        throw new Error('no known platform could be detected')
+      }
     }
 
-    return null
+    throw err
   }
 }
 
