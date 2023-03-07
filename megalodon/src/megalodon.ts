@@ -1367,7 +1367,7 @@ export const detector = async (
       return null
     }
   } catch (err: any) {
-    if (err?.response?.status === 404) {
+    if (err && err.response && err.response.status === 404) {
       try {
         await axios.post<{}>(url + '/api/meta', {}, options)
         return 'misskey'
