@@ -1340,10 +1340,7 @@ type Instance = {
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return SNS name.
  */
-export const detector = async (
-  url: string,
-  proxyConfig: ProxyConfig | false = false
-): Promise<'mastodon' | 'pleroma' | 'misskey' | null> => {
+export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'misskey'> => {
   let options: AxiosRequestConfig = {
     headers: {
       'User-Agent': DEFAULT_UA
