@@ -15,7 +15,7 @@ namespace MisskeyEntity {
     renoteCount: number
     repliesCount: number
     reactions: { [key: string]: number }
-    emojis: Array<Emoji> | EmojiKeyValue
+    emojis: Array<Emoji>
     fileIds: Array<string>
     files: Array<File>
     replyId: string | null
@@ -27,7 +27,6 @@ namespace MisskeyEntity {
     tags?: Array<string>
     poll?: Poll
     mentions?: Array<string>
-    myReaction?: string,
-    reactionEmojis?: EmojiKeyValue
+    myReaction?: string
   }
 }
