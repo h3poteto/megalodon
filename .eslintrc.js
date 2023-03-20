@@ -9,11 +9,11 @@ module.exports = {
     browser: true,
     node: true
   },
-  extends: ['standard', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   globals: {
     __static: true
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint'],
   rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
@@ -31,6 +31,7 @@ module.exports = {
     camelcase: 'off',
     '@typescript-eslint/camelcase': 'off',
     'space-before-function-paren': 'off',
-    'promise/param-names': 'off'
+    'promise/param-names': 'off',
+    '@typescript-eslint/triple-slash-reference': 'off'
   }
 }
