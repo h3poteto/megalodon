@@ -1111,6 +1111,7 @@ export default class Pleroma implements MegalodonInterface {
       visibility?: 'public' | 'unlisted' | 'private' | 'direct'
       scheduled_at?: string
       language?: string
+      quote_id?: string
     }
   ): Promise<Response<Entity.Status | Entity.ScheduledStatus>> {
     let params = {
@@ -1171,7 +1172,12 @@ export default class Pleroma implements MegalodonInterface {
           language: options.language
         })
       }
-    }
+      if (options.quote_id) {
+        params = Object.assign(params, {
+          quote_id: options.quote_id
+        })
+	  }
+	}
     if (options.scheduled_at) {
       return this.client.post<PleromaAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
         return Object.assign(res, {
