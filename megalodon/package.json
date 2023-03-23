@@ -1,7 +1,7 @@
 {
   "name": "@calckey/megalodon",
   "private": false,
-  "version": "5.1.21",
+  "version": "5.1.22",
   "description": "Mastodon+Calckey API client for node.js and browser",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
