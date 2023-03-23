@@ -46,7 +46,8 @@ namespace MisskeyAPI {
         shortcode: e.name,
         static_url: e.url,
         url: e.url,
-        visible_in_picker: true
+        visible_in_picker: true,
+        category: e.category
       }
     }
 

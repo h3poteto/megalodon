@@ -4,5 +4,6 @@ namespace MisskeyEntity {
     host: string | null
     url: string
     aliases: Array<string>
+    category: string
   }
 }
