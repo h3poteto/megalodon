@@ -5,6 +5,7 @@ namespace MisskeyEntity {
     id: string
     createdAt: string
     user: User
+    url?: string
     type: string
   }
 }

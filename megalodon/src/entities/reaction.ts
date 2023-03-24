@@ -5,6 +5,7 @@ namespace Entity {
     count: number
     me: boolean
     name: string
+    url?: string
     accounts?: Array<Account>
   }
 }
