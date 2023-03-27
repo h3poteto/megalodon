@@ -12,7 +12,7 @@
     "typescript": "5.0.2"
   },
   "devDependencies": {
-    "@types/node": "^18.15.3",
+    "@types/node": "^18.15.10",
     "log4js": "^6.9.1"
   }
 }
