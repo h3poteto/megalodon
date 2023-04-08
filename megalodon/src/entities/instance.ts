@@ -20,6 +20,7 @@ namespace Entity {
       statuses: {
         max_characters: number
         max_media_attachments?: number
+        characters_reserved_per_url?: number
       }
       polls?: {
         max_options: number
