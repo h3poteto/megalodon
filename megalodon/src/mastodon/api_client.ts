@@ -496,6 +496,8 @@ namespace MastodonAPI {
           return MastodonNotificationType.Status
         case NotificationType.PollExpired:
           return MastodonNotificationType.Poll
+        case NotificationType.Update:
+          return MastodonNotificationType.Update
         default:
           return t
       }
@@ -517,6 +519,8 @@ namespace MastodonAPI {
           return NotificationType.Status
         case MastodonNotificationType.Poll:
           return NotificationType.PollExpired
+        case MastodonNotificationType.Update:
+          return NotificationType.Update
         default:
           return t
       }

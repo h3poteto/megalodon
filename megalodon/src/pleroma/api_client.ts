@@ -68,6 +68,8 @@ namespace PleromaAPI {
           return NotificationType.EmojiReaction
         case PleromaNotificationType.FollowRequest:
           return NotificationType.FollowRequest
+        case PleromaNotificationType.Update:
+          return NotificationType.Update
         default:
           return t
       }
@@ -88,6 +90,8 @@ namespace PleromaAPI {
           return PleromaNotificationType.PleromaEmojiReaction
         case NotificationType.FollowRequest:
           return PleromaNotificationType.FollowRequest
+        case NotificationType.Update:
+          return PleromaNotificationType.Update
         default:
           return t
       }
