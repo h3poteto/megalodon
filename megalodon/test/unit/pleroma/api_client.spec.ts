@@ -58,6 +58,14 @@ describe('api_client', () => {
           {
             src: MegalodonNotificationType.FollowRequest,
             dist: PleromaNotificationType.FollowRequest
+          },
+          {
+            src: MegalodonNotificationType.Update,
+            dist: PleromaNotificationType.Update
+          },
+          {
+            src: MegalodonNotificationType.Move,
+            dist: PleromaNotificationType.Move
           }
         ]
         cases.forEach(c => {
@@ -95,6 +103,14 @@ describe('api_client', () => {
           {
             src: PleromaNotificationType.FollowRequest,
             dist: MegalodonNotificationType.FollowRequest
+          },
+          {
+            src: PleromaNotificationType.Update,
+            dist: MegalodonNotificationType.Update
+          },
+          {
+            src: PleromaNotificationType.Move,
+            dist: MegalodonNotificationType.Move
           }
         ]
         cases.forEach(c => {
