@@ -70,6 +70,8 @@ namespace PleromaAPI {
           return NotificationType.FollowRequest
         case PleromaNotificationType.Update:
           return NotificationType.Update
+        case PleromaNotificationType.Move:
+          return NotificationType.Move
         default:
           return t
       }
@@ -92,6 +94,8 @@ namespace PleromaAPI {
           return PleromaNotificationType.FollowRequest
         case NotificationType.Update:
           return PleromaNotificationType.Update
+        case NotificationType.Move:
+          return PleromaNotificationType.Move
         default:
           return t
       }
@@ -188,6 +192,14 @@ namespace PleromaAPI {
           account: n.account,
           created_at: n.created_at,
           status: status(n.status),
+          type: decodeNotificationType(n.type)
+        }
+      } else if (n.target) {
+        return {
+          id: n.id,
+          account: n.account,
+          created_at: n.created_at,
+          target: n.target,
           type: decodeNotificationType(n.type)
         }
       } else {

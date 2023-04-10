@@ -11,6 +11,7 @@ namespace NotificationType {
   export const PollVote: Entity.NotificationType = 'poll_vote'
   export const PollExpired: Entity.NotificationType = 'poll_expired'
   export const Update: Entity.NotificationType = 'update'
+  export const Move: Entity.NotificationType = 'move'
 }
 
 export default NotificationType

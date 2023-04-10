@@ -9,6 +9,7 @@ namespace Entity {
     status?: Status
     emoji?: string
     type: NotificationType
+    target?: Account
   }
 
   export type NotificationType = string
