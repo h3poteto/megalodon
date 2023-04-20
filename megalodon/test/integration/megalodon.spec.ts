@@ -25,6 +25,14 @@ describe('detector', () => {
     })
   })
 
+  describe('fedibird', () => {
+    const url = 'https://fedibird.com'
+    it('should be mastodon', async () => {
+      const fedibird = await detector(url)
+      expect(fedibird).toEqual('mastodon')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {

@@ -1,12 +1,10 @@
 import Response from './response'
 import OAuth from './oauth'
 import Pleroma from './pleroma'
-import proxyAgent, { ProxyConfig } from './proxy_config'
+import { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
 import Entity from './entity'
-import axios, { AxiosRequestConfig } from 'axios'
 import Misskey from './misskey'
-import { DEFAULT_UA } from './default'
 
 export interface WebSocketInterface {
   start(): void
@@ -1321,59 +1319,12 @@ export class UnexpectedError extends Error {
   }
 }
 
-type Instance = {
-  title: string
-  uri: string
-  urls: {
-    streaming_api: string
-  }
-  version: string
-  configuration?: any
-  pleroma?: any
-}
+export class NodeinfoError extends Error {
+  constructor(err?: string) {
+    super(err)
 
-/**
- * Detect SNS type.
- * Now support Mastodon, Pleroma and Pixelfed. Throws an error when no known platform can be detected.
- *
- * @param url Base URL of SNS.
- * @param proxyConfig Proxy setting, or set false if don't use proxy.
- * @return SNS name.
- */
-export const detector = async (url: string, proxyConfig: ProxyConfig | false = false): Promise<'mastodon' | 'pleroma' | 'misskey'> => {
-  let options: AxiosRequestConfig = {
-    headers: {
-      'User-Agent': DEFAULT_UA
-    }
-  }
-  if (proxyConfig) {
-    options = Object.assign(options, {
-      httpsAgent: proxyAgent(proxyConfig)
-    })
-  }
-
-  try {
-    const res = await axios.get<Instance>(url + '/api/v1/instance', options)
-    if (res.data.title) {
-      if (res.data.pleroma) {
-        return 'pleroma'
-      } else {
-        return 'mastodon'
-      }
-    } else {
-      throw new Error('no known platform could be detected')
-    }
-  } catch (err: any) {
-    if (err && err.response && err.response.status === 404) {
-      try {
-        await axios.post<{}>(url + '/api/meta', {}, options)
-        return 'misskey'
-      } catch (err) {
-        throw new Error('no known platform could be detected')
-      }
-    }
-
-    throw err
+    this.name = new.target.name
+    Object.setPrototypeOf(this, new.target.prototype)
   }
 }
 
