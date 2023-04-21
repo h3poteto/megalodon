@@ -2,7 +2,7 @@ import { detector } from '../../src/index'
 
 describe('detector', () => {
   describe('mastodon', () => {
-    const url = 'https://fedibird.com'
+    const url = 'https://mastodon.social'
     it('should be mastodon', async () => {
       const mastodon = await detector(url)
       expect(mastodon).toEqual('mastodon')
