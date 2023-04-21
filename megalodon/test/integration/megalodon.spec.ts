@@ -33,6 +33,14 @@ describe('detector', () => {
     })
   })
 
+  describe('friendica', () => {
+    const url = 'https://squeet.me'
+    it('should be friendica', async () => {
+      const friendica = await detector(url)
+      expect(friendica).toEqual('friendica')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {
