@@ -535,7 +535,7 @@ namespace FriendicaAPI {
         return {
           id: a.id,
           type: a.type,
-          url: a.url!,
+          url: a.url,
           remote_url: a.remote_url,
           preview_url: a.preview_url,
           text_url: a.text_url,

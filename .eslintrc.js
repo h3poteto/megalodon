@@ -32,6 +32,8 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     'space-before-function-paren': 'off',
     'promise/param-names': 'off',
-    '@typescript-eslint/triple-slash-reference': 'off'
+    '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-namespace': 'off'
   }
 }

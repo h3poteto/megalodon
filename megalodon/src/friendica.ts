@@ -27,7 +27,7 @@ export default class Friendica implements MegalodonInterface {
     userAgent: string | null = DEFAULT_UA,
     proxyConfig: ProxyConfig | false = false
   ) {
-    let token: string = ''
+    let token = ''
     if (accessToken) {
       token = accessToken
     }
@@ -157,8 +157,8 @@ export default class Friendica implements MegalodonInterface {
       .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
-  public async revokeToken(client_id: string, client_secret: string, token: string): Promise<Response<{}>> {
-    return this.client.post<{}>('/oauth/revoke', {
+  public async revokeToken(client_id: string, client_secret: string, token: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>('/oauth/revoke', {
       client_id,
       client_secret,
       token
@@ -455,7 +455,7 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public async muteAccount(id: string, notifications: boolean = true): Promise<Response<Entity.Relationship>> {
+  public async muteAccount(id: string, notifications = true): Promise<Response<Entity.Relationship>> {
     return this.client
       .post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/mute`, {
         notifications: notifications
@@ -698,14 +698,14 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public blockDomain(_domain: string): Promise<Response<{}>> {
+  public blockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }
 
-  public unblockDomain(_domain: string): Promise<Response<{}>> {
+  public unblockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('friendica does not support')
       reject(err)
@@ -873,7 +873,7 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public deleteFeaturedTag(_id: string): Promise<Response<{}>> {
+  public deleteFeaturedTag(_id: string): Promise<Response<Record<string, unknown>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('friendica does not support')
       reject(err)
@@ -1387,8 +1387,8 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public cancelScheduledStatus(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/scheduled_statuses/${id}`)
+  public cancelScheduledStatus(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/scheduled_statuses/${id}`)
   }
 
   // ======================================
@@ -1653,8 +1653,8 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public deleteConversation(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/conversations/${id}`)
+  public deleteConversation(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/conversations/${id}`)
   }
 
   public async readConversation(id: string): Promise<Response<Entity.Conversation>> {
@@ -1708,8 +1708,8 @@ export default class Friendica implements MegalodonInterface {
       })
   }
 
-  public deleteList(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/lists/${id}`)
+  public deleteList(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}`)
   }
 
   public async getAccountsInList(
@@ -1745,14 +1745,14 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return this.client.post<{}>(`/api/v1/lists/${id}/accounts`, {
+  public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>(`/api/v1/lists/${id}/accounts`, {
       account_ids: account_ids
     })
   }
 
-  public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/lists/${id}/accounts`, {
+  public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}/accounts`, {
       account_ids: account_ids
     })
   }
@@ -1760,7 +1760,7 @@ export default class Friendica implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | {}>> {
+  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | Record<string, unknown>>> {
     return new Promise(resolve => {
       const res: Response<Entity.Marker> = {
         data: {},
@@ -1846,12 +1846,12 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public dismissNotifications(): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/v1/notifications/clear')
+  public dismissNotifications(): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>('/api/v1/notifications/clear')
   }
 
-  public dismissNotification(id: string): Promise<Response<{}>> {
-    return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
+  public dismissNotification(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>(`/api/v1/notifications/${id}/dismiss`)
   }
 
   public readNotifications(_options: {
@@ -1910,8 +1910,8 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public deletePushSubscription(): Promise<Response<{}>> {
-    return this.client.del<{}>('/api/v1/push/subscription')
+  public deletePushSubscription(): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>('/api/v1/push/subscription')
   }
 
   // ======================================
