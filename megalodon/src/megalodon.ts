@@ -61,7 +61,6 @@ export interface MegalodonInterface {
   // ======================================
   // apps/oauth
   // ======================================
-
   /**
    * POST /oauth/token
    *
