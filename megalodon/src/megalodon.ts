@@ -1257,6 +1257,22 @@ export interface MegalodonInterface {
   getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>>
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  /**
+   * GET /api/v1/announcements
+   *
+   * @param with_dismissed Include announcements dismissed by the user. Defaults to false.
+   * @return Array of announcements.
+   */
+  getInstanceAnnouncements(with_dismissed?: boolean | null): Promise<Response<Array<Entity.Announcement>>>
+
+  /**
+   * POST /api/v1/announcements/:id/dismiss
+   */
+  dismissInstanceAnnouncement(id: string): Promise<Response<{}>>
+
+  // ======================================
   // Emoji reactions
   // ======================================
   createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>>

@@ -15,6 +15,7 @@ namespace PleromaAPI {
   export namespace Entity {
     export type Account = PleromaEntity.Account
     export type Activity = PleromaEntity.Activity
+    export type Announcement = PleromaEntity.Announcement
     export type Application = PleromaEntity.Application
     export type AsyncAttachment = PleromaEntity.AsyncAttachment
     export type Attachment = PleromaEntity.Attachment
@@ -94,6 +95,7 @@ namespace PleromaAPI {
 
     export const account = (a: Entity.Account): MegalodonEntity.Account => a
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
+    export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
     export const async_attachment = (a: Entity.AsyncAttachment) => {

@@ -14,6 +14,7 @@ import NotificationType from '../notification'
 namespace MisskeyAPI {
   export namespace Entity {
     export type App = MisskeyEntity.App
+    export type Announcement = MisskeyEntity.Announcement
     export type Blocking = MisskeyEntity.Blocking
     export type Choice = MisskeyEntity.Choice
     export type CreatedNote = MisskeyEntity.CreatedNote
@@ -383,6 +384,34 @@ namespace MisskeyAPI {
       fields: [],
       moved: null
   }
+
+    export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => {
+      // Reused from Note converter.
+      const escapeHTML = (text: string) => text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/`/g, '&#x60;')
+        .replace(/\r?\n/g, '<br>');
+      return {
+        id: a.id,
+        content: `<h1>${escapeHTML(a.title)}</h1>${escapeHTML(a.text)}`,
+        starts_at: null,
+        ends_at: null,
+        published: true,
+        all_day: false,
+        published_at: a.createdAt,
+        updated_at: a.updatedAt,
+        read: a.isRead,
+        mentions: [],
+        statuses: [],
+        tags: [],
+        emojis: [],
+        reactions: [],
+      };
+    }
 
     export const notification = (n: Entity.Notification, host: string): MegalodonEntity.Notification => {
       let notification = {

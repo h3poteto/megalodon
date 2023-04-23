@@ -2108,6 +2108,26 @@ export default class Misskey implements MegalodonInterface {
   }
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  public async getInstanceAnnouncements(with_dismissed?: boolean | null): Promise<Response<Array<Entity.Announcement>>> {
+    let params = {}
+    if (with_dismissed) {
+      params = Object.assign(params, {
+        withUnreads: with_dismissed
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Announcement>>('/api/announcements', params).then(res => ({
+      ...res,
+      data: res.data.map(t => MisskeyAPI.Converter.announcement(t))
+    }))
+  }
+
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>('/api/i/read-announcement', { announcementId: id })
+  }
+
+  // ======================================
   // Emoji reactions
   // ======================================
   /**
