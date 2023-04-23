@@ -2,8 +2,8 @@ import { OAuth2 } from 'oauth'
 import FormData from 'form-data'
 import parseLinkHeader from 'parse-link-header'
 
-import MastodonAPI from './mastodon/api_client'
-import WebSocket from './mastodon/web_socket'
+import FriendicaAPI from './friendica/api_client'
+import WebSocket from './friendica/web_socket'
 import { MegalodonInterface, NoImplementedError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
@@ -11,8 +11,8 @@ import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 
-export default class Mastodon implements MegalodonInterface {
-  public client: MastodonAPI.Interface
+export default class Friendica implements MegalodonInterface {
+  public client: FriendicaAPI.Interface
   public baseUrl: string
 
   /**
@@ -27,7 +27,7 @@ export default class Mastodon implements MegalodonInterface {
     userAgent: string | null = DEFAULT_UA,
     proxyConfig: ProxyConfig | false = false
   ) {
-    let token: string = ''
+    let token = ''
     if (accessToken) {
       token = accessToken
     }
@@ -35,7 +35,7 @@ export default class Mastodon implements MegalodonInterface {
     if (userAgent) {
       agent = userAgent
     }
-    this.client = new MastodonAPI.Client(baseUrl, token, agent, proxyConfig)
+    this.client = new FriendicaAPI.Client(baseUrl, token, agent, proxyConfig)
     this.baseUrl = baseUrl
   }
 
@@ -157,8 +157,8 @@ export default class Mastodon implements MegalodonInterface {
       .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
   }
 
-  public async revokeToken(client_id: string, client_secret: string, token: string): Promise<Response<{}>> {
-    return this.client.post<{}>('/oauth/revoke', {
+  public async revokeToken(client_id: string, client_secret: string, token: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>('/oauth/revoke', {
       client_id,
       client_secret,
       token
@@ -169,41 +169,28 @@ export default class Mastodon implements MegalodonInterface {
   // accounts
   // ======================================
   public async registerAccount(
-    username: string,
-    email: string,
-    password: string,
-    agreement: boolean,
-    locale: string,
-    reason?: string | null
+    _username: string,
+    _email: string,
+    _password: string,
+    _agreement: boolean,
+    _locale: string,
+    _reason?: string | null
   ): Promise<Response<Entity.Token>> {
-    let params = {
-      username: username,
-      email: email,
-      password: password,
-      agreement: agreement,
-      locale: locale
-    }
-    if (reason) {
-      params = Object.assign(params, {
-        reason: reason
-      })
-    }
-    return this.client.post<MastodonAPI.Entity.Token>('/api/v1/accounts', params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.token(res.data)
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
   public async verifyAccountCredentials(): Promise<Response<Entity.Account>> {
-    return this.client.get<MastodonAPI.Entity.Account>('/api/v1/accounts/verify_credentials').then(res => {
+    return this.client.get<FriendicaAPI.Entity.Account>('/api/v1/accounts/verify_credentials').then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.account(res.data)
+        data: FriendicaAPI.Converter.account(res.data)
       })
     })
   }
 
-  public async updateCredentials(options?: {
+  public async updateCredentials(_options?: {
     discoverable?: boolean
     bot?: boolean
     display_name?: string
@@ -218,65 +205,16 @@ export default class Mastodon implements MegalodonInterface {
     }
     fields_attributes?: Array<{ name: string; value: string }>
   }): Promise<Response<Entity.Account>> {
-    let params = {}
-    if (options) {
-      if (options.discoverable !== undefined) {
-        params = Object.assign(params, {
-          discoverable: options.discoverable
-        })
-      }
-      if (options.bot !== undefined) {
-        params = Object.assign(params, {
-          bot: options.bot
-        })
-      }
-      if (options.display_name) {
-        params = Object.assign(params, {
-          display_name: options.display_name
-        })
-      }
-      if (options.note) {
-        params = Object.assign(params, {
-          note: options.note
-        })
-      }
-      if (options.avatar) {
-        params = Object.assign(params, {
-          avatar: options.avatar
-        })
-      }
-      if (options.header) {
-        params = Object.assign(params, {
-          header: options.header
-        })
-      }
-      if (options.locked !== undefined) {
-        params = Object.assign(params, {
-          locked: options.locked
-        })
-      }
-      if (options.source) {
-        params = Object.assign(params, {
-          source: options.source
-        })
-      }
-      if (options.fields_attributes) {
-        params = Object.assign(params, {
-          fields_attributes: options.fields_attributes
-        })
-      }
-    }
-    return this.client.patch<MastodonAPI.Entity.Account>('/api/v1/accounts/update_credentials', params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.account(res.data)
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
   public async getAccount(id: string): Promise<Response<Entity.Account>> {
-    return this.client.get<MastodonAPI.Entity.Account>(`/api/v1/accounts/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Account>(`/api/v1/accounts/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.account(res.data)
+        data: FriendicaAPI.Converter.account(res.data)
       })
     })
   }
@@ -337,9 +275,10 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/accounts/${id}/statuses`, params).then(res => {
+
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>(`/api/v1/accounts/${id}/statuses`, params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -348,9 +287,9 @@ export default class Mastodon implements MegalodonInterface {
     const params = {
       notify: true
     }
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
@@ -359,9 +298,9 @@ export default class Mastodon implements MegalodonInterface {
     const params = {
       notify: false
     }
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
@@ -375,7 +314,7 @@ export default class Mastodon implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }
@@ -444,13 +383,13 @@ export default class Mastodon implements MegalodonInterface {
 
   /** Helper function to optionally follow Link headers as pagination */
   private async urlToAccounts(url: string, params: Record<string, string>, get_all: boolean, sleep_ms: number) {
-    const res = await this.client.get<Array<MastodonAPI.Entity.Account>>(url, params)
-    res.data = res.data.map(a => MastodonAPI.Converter.account(a))
+    const res = await this.client.get<Array<FriendicaAPI.Entity.Account>>(url, params)
+    res.data = res.data.map(a => FriendicaAPI.Converter.account(a))
     if (get_all && res.headers.link) {
       let parsed = parseLinkHeader(res.headers.link)
       while (parsed?.next) {
-        const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
-        res.data.push(...nextRes.data.map(a => MastodonAPI.Converter.account(a)))
+        const nextRes = await this.client.get<Array<FriendicaEntity.Account>>(parsed?.next.url, undefined, undefined, true)
+        res.data.push(...nextRes.data.map(a => FriendicaAPI.Converter.account(a)))
         parsed = parseLinkHeader(nextRes.headers.link)
         if (sleep_ms) {
           await new Promise<void>(res => setTimeout(res, sleep_ms))
@@ -461,17 +400,17 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   public async getAccountLists(id: string): Promise<Response<Array<Entity.List>>> {
-    return this.client.get<Array<MastodonAPI.Entity.List>>(`/api/v1/accounts/${id}/lists`).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.List>>(`/api/v1/accounts/${id}/lists`).then(res => {
       return Object.assign(res, {
-        data: res.data.map(l => MastodonAPI.Converter.list(l))
+        data: res.data.map(l => FriendicaAPI.Converter.list(l))
       })
     })
   }
 
   public async getIdentityProof(id: string): Promise<Response<Array<Entity.IdentityProof>>> {
-    return this.client.get<Array<MastodonAPI.Entity.IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`).then(res => {
       return Object.assign(res, {
-        data: res.data.map(i => MastodonAPI.Converter.identity_proof(i))
+        data: res.data.map(i => FriendicaAPI.Converter.identity_proof(i))
       })
     })
   }
@@ -485,93 +424,91 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
 
   public async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unfollow`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unfollow`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
 
   public async blockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/block`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/block`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
 
   public async unblockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unblock`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unblock`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
 
-  public async muteAccount(id: string, notifications: boolean = true): Promise<Response<Entity.Relationship>> {
+  public async muteAccount(id: string, notifications = true): Promise<Response<Entity.Relationship>> {
     return this.client
-      .post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/mute`, {
+      .post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/mute`, {
         notifications: notifications
       })
       .then(res => {
         return Object.assign(res, {
-          data: MastodonAPI.Converter.relationship(res.data)
+          data: FriendicaAPI.Converter.relationship(res.data)
         })
       })
   }
 
   public async unmuteAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unmute`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unmute`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
 
-  public async pinAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/pin`).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
-      })
+  public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
-  public async unpinAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unpin`).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
-      })
+  public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
   public async getRelationship(id: string): Promise<Response<Entity.Relationship>> {
     return this.client
-      .get<Array<MastodonAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
+      .get<Array<FriendicaAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
         id: [id]
       })
       .then(res => {
         return Object.assign(res, {
-          data: MastodonAPI.Converter.relationship(res.data[0])
+          data: FriendicaAPI.Converter.relationship(res.data[0])
         })
       })
   }
 
   public async getRelationships(ids: Array<string>): Promise<Response<Array<Entity.Relationship>>> {
     return this.client
-      .get<Array<MastodonAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
+      .get<Array<FriendicaAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
         id: ids
       })
       .then(res => {
         return Object.assign(res, {
-          data: res.data.map(r => MastodonAPI.Converter.relationship(r))
+          data: res.data.map(r => FriendicaAPI.Converter.relationship(r))
         })
       })
   }
@@ -614,9 +551,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/accounts/search', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/accounts/search', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
@@ -654,9 +591,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/bookmarks', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/bookmarks', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -684,9 +621,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/favourites', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/favourites', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -714,9 +651,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/mutes', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/mutes', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
@@ -744,9 +681,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/blocks', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/blocks', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
@@ -754,37 +691,24 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // accounts/domain_blocks
   // ======================================
-  public async getDomainBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
-    let params = {}
-    if (options) {
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<string>>('/api/v1/domain_blocks', params)
-  }
-
-  public blockDomain(domain: string): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/v1/domain_blocks', {
-      domain: domain
+  public async getDomainBlocks(_options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
-  public unblockDomain(domain: string): Promise<Response<{}>> {
-    return this.client.del<{}>('/api/v1/domain_blocks', {
-      domain: domain
+  public blockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
+  }
+
+  public unblockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
@@ -793,101 +717,55 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
 
   public async getFilters(): Promise<Response<Array<Entity.Filter>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Filter>>('/api/v1/filters').then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Filter>>('/api/v1/filters').then(res => {
       return Object.assign(res, {
-        data: res.data.map(f => MastodonAPI.Converter.filter(f))
+        data: res.data.map(f => FriendicaAPI.Converter.filter(f))
       })
     })
   }
 
-  public async getFilter(id: string): Promise<Response<Entity.Filter>> {
-    return this.client.get<MastodonAPI.Entity.Filter>(`/api/v1/filters/${id}`).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.filter(res.data)
-      })
+  public async getFilter(_id: string): Promise<Response<Entity.Filter>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
   public async createFilter(
-    phrase: string,
-    context: Array<Entity.FilterContext>,
-    options?: {
+    _phrase: string,
+    _context: Array<Entity.FilterContext>,
+    _options?: {
       irreversible?: boolean
       whole_word?: boolean
       expires_in?: string
     }
   ): Promise<Response<Entity.Filter>> {
-    let params = {
-      phrase: phrase,
-      context: context
-    }
-    if (options) {
-      if (options.irreversible !== undefined) {
-        params = Object.assign(params, {
-          irreversible: options.irreversible
-        })
-      }
-      if (options.whole_word !== undefined) {
-        params = Object.assign(params, {
-          whole_word: options.whole_word
-        })
-      }
-      if (options.expires_in) {
-        params = Object.assign(params, {
-          expires_in: options.expires_in
-        })
-      }
-    }
-    return this.client.post<MastodonAPI.Entity.Filter>('/api/v1/filters', params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.filter(res.data)
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
   public async updateFilter(
-    id: string,
-    phrase: string,
-    context: Array<Entity.FilterContext>,
-    options?: {
+    _id: string,
+    _phrase: string,
+    _context: Array<Entity.FilterContext>,
+    _options?: {
       irreversible?: boolean
       whole_word?: boolean
       expires_in?: string
     }
   ): Promise<Response<Entity.Filter>> {
-    let params = {
-      phrase: phrase,
-      context: context
-    }
-    if (options) {
-      if (options.irreversible !== undefined) {
-        params = Object.assign(params, {
-          irreversible: options.irreversible
-        })
-      }
-      if (options.whole_word !== undefined) {
-        params = Object.assign(params, {
-          whole_word: options.whole_word
-        })
-      }
-      if (options.expires_in) {
-        params = Object.assign(params, {
-          expires_in: options.expires_in
-        })
-      }
-    }
-    return this.client.put<MastodonAPI.Entity.Filter>(`/api/v1/filters/${id}`, params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.filter(res.data)
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
-  public async deleteFilter(id: string): Promise<Response<Entity.Filter>> {
-    return this.client.del<MastodonAPI.Entity.Filter>(`/api/v1/filters/${id}`).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.filter(res.data)
-      })
+  public async deleteFilter(_id: string): Promise<Response<Entity.Filter>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
@@ -895,8 +773,8 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/reports
   // ======================================
   public async report(
-    account_id: string,
-    options?: {
+    _account_id: string,
+    _options?: {
       status_ids?: Array<string>
       comment: string
       forward?: boolean
@@ -904,40 +782,9 @@ export default class Mastodon implements MegalodonInterface {
       rule_ids?: Array<number>
     }
   ): Promise<Response<Entity.Report>> {
-    let params = {
-      account_id: account_id
-    }
-    if (options) {
-      if (options.status_ids) {
-        params = Object.assign(params, {
-          status_ids: options.status_ids
-        })
-      }
-      if (options.comment) {
-        params = Object.assign(params, {
-          comment: options.comment
-        })
-      }
-      if (options.forward !== undefined) {
-        params = Object.assign(params, {
-          forward: options.forward
-        })
-      }
-      if (options.category) {
-        params = Object.assign(params, {
-          category: options.category
-        })
-      }
-      if (options.rule_ids) {
-        params = Object.assign(params, {
-          rule_ids: options.rule_ids
-        })
-      }
-    }
-    return this.client.post<MastodonAPI.Entity.Report>('/api/v1/reports', params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.report(res.data)
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
@@ -947,35 +794,35 @@ export default class Mastodon implements MegalodonInterface {
   public async getFollowRequests(limit?: number): Promise<Response<Array<Entity.Account>>> {
     if (limit) {
       return this.client
-        .get<Array<MastodonAPI.Entity.Account>>('/api/v1/follow_requests', {
+        .get<Array<FriendicaAPI.Entity.Account>>('/api/v1/follow_requests', {
           limit: limit
         })
         .then(res => {
           return Object.assign(res, {
-            data: res.data.map(a => MastodonAPI.Converter.account(a))
+            data: res.data.map(a => FriendicaAPI.Converter.account(a))
           })
         })
     } else {
-      return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/follow_requests').then(res => {
+      return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/follow_requests').then(res => {
         return Object.assign(res, {
-          data: res.data.map(a => MastodonAPI.Converter.account(a))
+          data: res.data.map(a => FriendicaAPI.Converter.account(a))
         })
       })
     }
   }
 
   public async acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/follow_requests/${id}/authorize`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/follow_requests/${id}/authorize`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
 
   public async rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/follow_requests/${id}/reject`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/follow_requests/${id}/reject`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.relationship(res.data)
+        data: FriendicaAPI.Converter.relationship(res.data)
       })
     })
   }
@@ -1002,9 +849,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/endorsements', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/endorsements', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
@@ -1013,34 +860,30 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/featured_tags
   // ======================================
   public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
-    return this.client.get<Array<MastodonAPI.Entity.FeaturedTag>>('/api/v1/featured_tags').then(res => {
-      return Object.assign(res, {
-        data: res.data.map(f => MastodonAPI.Converter.featured_tag(f))
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
-  public async createFeaturedTag(name: string): Promise<Response<Entity.FeaturedTag>> {
-    return this.client
-      .post<MastodonAPI.Entity.FeaturedTag>('/api/v1/featured_tags', {
-        name: name
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: MastodonAPI.Converter.featured_tag(res.data)
-        })
-      })
+  public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
   }
 
-  public deleteFeaturedTag(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/featured_tags/${id}`)
+  public deleteFeaturedTag(_id: string): Promise<Response<Record<string, unknown>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
   }
 
   public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Tag>>('/api/v1/featured_tags/suggestions').then(res => {
-      return Object.assign(res, {
-        data: res.data.map(t => MastodonAPI.Converter.tag(t))
-      })
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
@@ -1048,9 +891,9 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/preferences
   // ======================================
   public async getPreferences(): Promise<Response<Entity.Preferences>> {
-    return this.client.get<MastodonAPI.Entity.Preferences>('/api/v1/preferences').then(res => {
+    return this.client.get<FriendicaAPI.Entity.Preferences>('/api/v1/preferences').then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.preferences(res.data)
+        data: FriendicaAPI.Converter.preferences(res.data)
       })
     })
   }
@@ -1061,18 +904,18 @@ export default class Mastodon implements MegalodonInterface {
   public async getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>> {
     if (limit) {
       return this.client
-        .get<Array<MastodonAPI.Entity.Account>>('/api/v1/suggestions', {
+        .get<Array<FriendicaAPI.Entity.Account>>('/api/v1/suggestions', {
           limit: limit
         })
         .then(res => {
           return Object.assign(res, {
-            data: res.data.map(a => MastodonAPI.Converter.account(a))
+            data: res.data.map(a => FriendicaAPI.Converter.account(a))
           })
         })
     } else {
-      return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/suggestions').then(res => {
+      return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/suggestions').then(res => {
         return Object.assign(res, {
-          data: res.data.map(a => MastodonAPI.Converter.account(a))
+          data: res.data.map(a => FriendicaAPI.Converter.account(a))
         })
       })
     }
@@ -1082,25 +925,25 @@ export default class Mastodon implements MegalodonInterface {
   // accounts/tags
   // ======================================
   public async getTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.get<MastodonAPI.Entity.Tag>(`/api/v1/tags/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.tag(res.data)
+        data: FriendicaAPI.Converter.tag(res.data)
       })
     })
   }
 
   public async followTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.post<MastodonAPI.Entity.Tag>(`/api/v1/tags/${id}/follow`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}/follow`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.tag(res.data)
+        data: FriendicaAPI.Converter.tag(res.data)
       })
     })
   }
 
   public async unfollowTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.post<MastodonAPI.Entity.Tag>(`/api/v1/tags/${id}/unfollow`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}/unfollow`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.tag(res.data)
+        data: FriendicaAPI.Converter.tag(res.data)
       })
     })
   }
@@ -1187,23 +1030,23 @@ export default class Mastodon implements MegalodonInterface {
       }
     }
     if (options.scheduled_at) {
-      return this.client.post<MastodonAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
+      return this.client.post<FriendicaAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
         return Object.assign(res, {
-          data: MastodonAPI.Converter.scheduled_status(res.data)
+          data: FriendicaAPI.Converter.scheduled_status(res.data)
         })
       })
     }
-    return this.client.post<MastodonAPI.Entity.Status>('/api/v1/statuses', params).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>('/api/v1/statuses', params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async getStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.get<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
@@ -1265,17 +1108,17 @@ export default class Mastodon implements MegalodonInterface {
         poll: pollParam
       })
     }
-    return this.client.put<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}`, params).then(res => {
+    return this.client.put<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`, params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async deleteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.del<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
+    return this.client.del<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
@@ -1302,113 +1145,113 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<MastodonAPI.Entity.Context>(`/api/v1/statuses/${id}/context`, params).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Context>(`/api/v1/statuses/${id}/context`, params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.context(res.data)
+        data: FriendicaAPI.Converter.context(res.data)
       })
     })
   }
 
   public async getStatusSource(id: string): Promise<Response<Entity.StatusSource>> {
-    return this.client.get<MastodonAPI.Entity.StatusSource>(`/api/v1/statuses/${id}/source`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.StatusSource>(`/api/v1/statuses/${id}/source`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status_source(res.data)
+        data: FriendicaAPI.Converter.status_source(res.data)
       })
     })
   }
 
   public async getStatusRebloggedBy(id: string): Promise<Response<Array<Entity.Account>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/statuses/${id}/reblogged_by`).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>(`/api/v1/statuses/${id}/reblogged_by`).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
 
   public async getStatusFavouritedBy(id: string): Promise<Response<Array<Entity.Account>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/statuses/${id}/favourited_by`).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>(`/api/v1/statuses/${id}/favourited_by`).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
 
   public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/favourite`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/favourite`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/unfavourite`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unfavourite`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async reblogStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/reblog`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/reblog`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async unreblogStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/unreblog`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unreblog`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/bookmark`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/bookmark`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/unbookmark`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unbookmark`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async muteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/mute`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/mute`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async unmuteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/unmute`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unmute`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async pinStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/pin`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/pin`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
 
   public async unpinStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<MastodonAPI.Entity.Status>(`/api/v1/statuses/${id}/unpin`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unpin`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.status(res.data)
+        data: FriendicaAPI.Converter.status(res.data)
       })
     })
   }
@@ -1430,18 +1273,18 @@ export default class Mastodon implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    return this.client.postForm<MastodonAPI.Entity.AsyncAttachment>('/api/v2/media', formData).then(res => {
+    return this.client.postForm<FriendicaAPI.Entity.AsyncAttachment>('/api/v2/media', formData).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.async_attachment(res.data)
+        data: FriendicaAPI.Converter.async_attachment(res.data)
       })
     })
   }
 
   public async getMedia(id: string): Promise<Response<Entity.Attachment>> {
-    const res = await this.client.get<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`)
+    const res = await this.client.get<FriendicaAPI.Entity.Attachment>(`/api/v1/media/${id}`)
 
     return Object.assign(res, {
-      data: MastodonAPI.Converter.attachment(res.data)
+      data: FriendicaAPI.Converter.attachment(res.data)
     })
   }
 
@@ -1465,9 +1308,9 @@ export default class Mastodon implements MegalodonInterface {
         formData.append('focus', options.focus)
       }
     }
-    return this.client.putForm<MastodonAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData).then(res => {
+    return this.client.putForm<FriendicaAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.attachment(res.data)
+        data: FriendicaAPI.Converter.attachment(res.data)
       })
     })
   }
@@ -1476,23 +1319,18 @@ export default class Mastodon implements MegalodonInterface {
   // statuses/polls
   // ======================================
   public async getPoll(id: string): Promise<Response<Entity.Poll>> {
-    return this.client.get<MastodonAPI.Entity.Poll>(`/api/v1/polls/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Poll>(`/api/v1/polls/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.poll(res.data)
+        data: FriendicaAPI.Converter.poll(res.data)
       })
     })
   }
 
-  public async votePoll(id: string, choices: Array<number>): Promise<Response<Entity.Poll>> {
-    return this.client
-      .post<MastodonAPI.Entity.Poll>(`/api/v1/polls/${id}/votes`, {
-        choices: choices
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: MastodonAPI.Converter.poll(res.data)
-        })
-      })
+  public async votePoll(_id: string, _choices: Array<number>): Promise<Response<Entity.Poll>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
   }
 
   // ======================================
@@ -1527,37 +1365,30 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.ScheduledStatus>>('/api/v1/scheduled_statuses', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.ScheduledStatus>>('/api/v1/scheduled_statuses', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.scheduled_status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.scheduled_status(s))
       })
     })
   }
 
   public async getScheduledStatus(id: string): Promise<Response<Entity.ScheduledStatus>> {
-    return this.client.get<MastodonAPI.Entity.ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.scheduled_status(res.data)
+        data: FriendicaAPI.Converter.scheduled_status(res.data)
       })
     })
   }
 
-  public async scheduleStatus(id: string, scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
-    let params = {}
-    if (scheduled_at) {
-      params = Object.assign(params, {
-        scheduled_at: scheduled_at
-      })
-    }
-    return this.client.put<MastodonAPI.Entity.ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`, params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.scheduled_status(res.data)
-      })
+  public async scheduleStatus(_id: string, _scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
     })
   }
 
-  public cancelScheduledStatus(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/scheduled_statuses/${id}`)
+  public cancelScheduledStatus(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/scheduled_statuses/${id}`)
   }
 
   // ======================================
@@ -1600,9 +1431,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -1644,9 +1475,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -1695,9 +1526,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/timelines/tag/${hashtag}`, params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>(`/api/v1/timelines/tag/${hashtag}`, params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -1737,9 +1568,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>('/api/v1/timelines/home', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/timelines/home', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -1776,9 +1607,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Status>>(`/api/v1/timelines/list/${list_id}`, params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Status>>(`/api/v1/timelines/list/${list_id}`, params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(s => MastodonAPI.Converter.status(s))
+        data: res.data.map(s => FriendicaAPI.Converter.status(s))
       })
     })
   }
@@ -1815,21 +1646,21 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Conversation>>('/api/v1/conversations', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Conversation>>('/api/v1/conversations', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(c => MastodonAPI.Converter.conversation(c))
+        data: res.data.map(c => FriendicaAPI.Converter.conversation(c))
       })
     })
   }
 
-  public deleteConversation(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/conversations/${id}`)
+  public deleteConversation(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/conversations/${id}`)
   }
 
   public async readConversation(id: string): Promise<Response<Entity.Conversation>> {
-    return this.client.post<MastodonAPI.Entity.Conversation>(`/api/v1/conversations/${id}/read`).then(res => {
+    return this.client.post<FriendicaAPI.Entity.Conversation>(`/api/v1/conversations/${id}/read`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.conversation(res.data)
+        data: FriendicaAPI.Converter.conversation(res.data)
       })
     })
   }
@@ -1838,47 +1669,47 @@ export default class Mastodon implements MegalodonInterface {
   // timelines/lists
   // ======================================
   public async getLists(): Promise<Response<Array<Entity.List>>> {
-    return this.client.get<Array<MastodonAPI.Entity.List>>('/api/v1/lists').then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.List>>('/api/v1/lists').then(res => {
       return Object.assign(res, {
-        data: res.data.map(l => MastodonAPI.Converter.list(l))
+        data: res.data.map(l => FriendicaAPI.Converter.list(l))
       })
     })
   }
 
   public async getList(id: string): Promise<Response<Entity.List>> {
-    return this.client.get<MastodonAPI.Entity.List>(`/api/v1/lists/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.List>(`/api/v1/lists/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.list(res.data)
+        data: FriendicaAPI.Converter.list(res.data)
       })
     })
   }
 
   public async createList(title: string): Promise<Response<Entity.List>> {
     return this.client
-      .post<MastodonAPI.Entity.List>('/api/v1/lists', {
+      .post<FriendicaAPI.Entity.List>('/api/v1/lists', {
         title: title
       })
       .then(res => {
         return Object.assign(res, {
-          data: MastodonAPI.Converter.list(res.data)
+          data: FriendicaAPI.Converter.list(res.data)
         })
       })
   }
 
   public async updateList(id: string, title: string): Promise<Response<Entity.List>> {
     return this.client
-      .put<MastodonAPI.Entity.List>(`/api/v1/lists/${id}`, {
+      .put<FriendicaAPI.Entity.List>(`/api/v1/lists/${id}`, {
         title: title
       })
       .then(res => {
         return Object.assign(res, {
-          data: MastodonAPI.Converter.list(res.data)
+          data: FriendicaAPI.Converter.list(res.data)
         })
       })
   }
 
-  public deleteList(id: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/lists/${id}`)
+  public deleteList(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}`)
   }
 
   public async getAccountsInList(
@@ -1907,21 +1738,21 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>(`/api/v1/lists/${id}/accounts`, params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>(`/api/v1/lists/${id}/accounts`, params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
 
-  public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return this.client.post<{}>(`/api/v1/lists/${id}/accounts`, {
+  public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>(`/api/v1/lists/${id}/accounts`, {
       account_ids: account_ids
     })
   }
 
-  public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/lists/${id}/accounts`, {
+  public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}/accounts`, {
       account_ids: account_ids
     })
   }
@@ -1929,33 +1760,30 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  public async getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | {}>> {
-    return this.client.get<MastodonAPI.Entity.Marker | {}>('/api/v1/markers', {
-      timeline: timeline
+  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | Record<string, unknown>>> {
+    return new Promise(resolve => {
+      const res: Response<Entity.Marker> = {
+        data: {},
+        status: 200,
+        statusText: '200',
+        headers: {}
+      }
+      resolve(res)
     })
   }
 
-  public async saveMarkers(options?: {
+  public async saveMarkers(_options?: {
     home?: { last_read_id: string }
     notifications?: { last_read_id: string }
   }): Promise<Response<Entity.Marker>> {
-    let params = {}
-    if (options) {
-      if (options.home) {
-        params = Object.assign(params, {
-          home: options.home
-        })
+    return new Promise(resolve => {
+      const res: Response<Entity.Marker> = {
+        data: {},
+        status: 200,
+        statusText: '200',
+        headers: {}
       }
-      if (options.notifications) {
-        params = Object.assign(params, {
-          notifications: options.notifications
-        })
-      }
-    }
-    return this.client.post<MastodonAPI.Entity.Marker>('/api/v1/markers', params).then(res => {
-      return Object.assign(res, {
-        data: MastodonAPI.Converter.marker(res.data)
-      })
+      resolve(res)
     })
   }
 
@@ -1994,7 +1822,7 @@ export default class Mastodon implements MegalodonInterface {
       }
       if (options.exclude_types) {
         params = Object.assign(params, {
-          exclude_types: options.exclude_types.map(e => MastodonAPI.Converter.encodeNotificationType(e))
+          exclude_types: options.exclude_types.map(e => FriendicaAPI.Converter.encodeNotificationType(e))
         })
       }
       if (options.account_id) {
@@ -2003,27 +1831,27 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(n => MastodonAPI.Converter.notification(n))
+        data: res.data.map(n => FriendicaAPI.Converter.notification(n))
       })
     })
   }
 
   public async getNotification(id: string): Promise<Response<Entity.Notification>> {
-    return this.client.get<MastodonAPI.Entity.Notification>(`/api/v1/notifications/${id}`).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Notification>(`/api/v1/notifications/${id}`).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.notification(res.data)
+        data: FriendicaAPI.Converter.notification(res.data)
       })
     })
   }
 
-  public dismissNotifications(): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/v1/notifications/clear')
+  public dismissNotifications(): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>('/api/v1/notifications/clear')
   }
 
-  public dismissNotification(id: string): Promise<Response<{}>> {
-    return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
+  public dismissNotification(id: string): Promise<Response<Record<string, unknown>>> {
+    return this.client.post<Record<string, unknown>>(`/api/v1/notifications/${id}/dismiss`)
   }
 
   public readNotifications(_options: {
@@ -2031,7 +1859,7 @@ export default class Mastodon implements MegalodonInterface {
     max_id?: string
   }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }
@@ -2051,17 +1879,17 @@ export default class Mastodon implements MegalodonInterface {
         data
       })
     }
-    return this.client.post<MastodonAPI.Entity.PushSubscription>('/api/v1/push/subscription', params).then(res => {
+    return this.client.post<FriendicaAPI.Entity.PushSubscription>('/api/v1/push/subscription', params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.push_subscription(res.data)
+        data: FriendicaAPI.Converter.push_subscription(res.data)
       })
     })
   }
 
   public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
-    return this.client.get<MastodonAPI.Entity.PushSubscription>('/api/v1/push/subscription').then(res => {
+    return this.client.get<FriendicaAPI.Entity.PushSubscription>('/api/v1/push/subscription').then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.push_subscription(res.data)
+        data: FriendicaAPI.Converter.push_subscription(res.data)
       })
     })
   }
@@ -2075,15 +1903,15 @@ export default class Mastodon implements MegalodonInterface {
         data
       })
     }
-    return this.client.put<MastodonAPI.Entity.PushSubscription>('/api/v1/push/subscription', params).then(res => {
+    return this.client.put<FriendicaAPI.Entity.PushSubscription>('/api/v1/push/subscription', params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.push_subscription(res.data)
+        data: FriendicaAPI.Converter.push_subscription(res.data)
       })
     })
   }
 
-  public deletePushSubscription(): Promise<Response<{}>> {
-    return this.client.del<{}>('/api/v1/push/subscription')
+  public deletePushSubscription(): Promise<Response<Record<string, unknown>>> {
+    return this.client.del<Record<string, unknown>>('/api/v1/push/subscription')
   }
 
   // ======================================
@@ -2149,9 +1977,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<MastodonAPI.Entity.Results>('/api/v2/search', params).then(res => {
+    return this.client.get<FriendicaAPI.Entity.Results>('/api/v2/search', params).then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.results(res.data)
+        data: FriendicaAPI.Converter.results(res.data)
       })
     })
   }
@@ -2160,9 +1988,9 @@ export default class Mastodon implements MegalodonInterface {
   // instance
   // ======================================
   public async getInstance(): Promise<Response<Entity.Instance>> {
-    return this.client.get<MastodonAPI.Entity.Instance>('/api/v1/instance').then(res => {
+    return this.client.get<FriendicaAPI.Entity.Instance>('/api/v1/instance').then(res => {
       return Object.assign(res, {
-        data: MastodonAPI.Converter.instance(res.data)
+        data: FriendicaAPI.Converter.instance(res.data)
       })
     })
   }
@@ -2172,9 +2000,9 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   public async getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Activity>>('/api/v1/instance/activity').then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Activity>>('/api/v1/instance/activity').then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.activity(a))
+        data: res.data.map(a => FriendicaAPI.Converter.activity(a))
       })
     })
   }
@@ -2194,9 +2022,9 @@ export default class Mastodon implements MegalodonInterface {
         limit
       })
     }
-    return this.client.get<Array<MastodonAPI.Entity.Tag>>('/api/v1/trends', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Tag>>('/api/v1/trends', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(t => MastodonAPI.Converter.tag(t))
+        data: res.data.map(t => FriendicaAPI.Converter.tag(t))
       })
     })
   }
@@ -2233,9 +2061,9 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonAPI.Entity.Account>>('/api/v1/directory', params).then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/directory', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(a => MastodonAPI.Converter.account(a))
+        data: res.data.map(a => FriendicaAPI.Converter.account(a))
       })
     })
   }
@@ -2244,9 +2072,9 @@ export default class Mastodon implements MegalodonInterface {
   // instance/custom_emojis
   // ======================================
   public async getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>> {
-    return this.client.get<Array<MastodonAPI.Entity.Emoji>>('/api/v1/custom_emojis').then(res => {
+    return this.client.get<Array<FriendicaAPI.Entity.Emoji>>('/api/v1/custom_emojis').then(res => {
       return Object.assign(res, {
-        data: res.data.map(e => MastodonAPI.Converter.emoji(e))
+        data: res.data.map(e => FriendicaAPI.Converter.emoji(e))
       })
     })
   }
@@ -2256,28 +2084,28 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }
 
   public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }
 
   public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NoImplementedError('friendica does not support')
       reject(err)
     })
   }

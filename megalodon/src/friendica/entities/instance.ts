@@ -2,7 +2,7 @@
 /// <reference path="urls.ts" />
 /// <reference path="stats.ts" />
 
-namespace Entity {
+namespace FriendicaEntity {
   export type Instance = {
     uri: string
     title: string
@@ -15,22 +15,10 @@ namespace Entity {
     languages: Array<string>
     registrations: boolean
     approval_required: boolean
-    invites_enabled?: boolean
-    configuration: {
-      statuses: {
-        max_characters: number
-        max_media_attachments?: number
-        characters_reserved_per_url?: number
-      }
-      polls?: {
-        max_options: number
-        max_characters_per_option: number
-        min_expiration: number
-        max_expiration: number
-      }
-    }
-    contact_account?: Account
-    rules?: Array<InstanceRule>
+    invites_enabled: boolean
+    max_toot_chars: number
+    contact_account: Account
+    rules: Array<InstanceRule>
   }
 
   export type InstanceRule = {

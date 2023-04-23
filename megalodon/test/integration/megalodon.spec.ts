@@ -10,7 +10,7 @@ describe('detector', () => {
   })
 
   describe('pleroma', () => {
-    const url = 'https://pleroma.soykaf.com'
+    const url = 'https://pleroma.io'
     it('should be pleroma', async () => {
       const pleroma = await detector(url)
       expect(pleroma).toEqual('pleroma')
@@ -30,6 +30,14 @@ describe('detector', () => {
     it('should be mastodon', async () => {
       const fedibird = await detector(url)
       expect(fedibird).toEqual('mastodon')
+    })
+  })
+
+  describe('friendica', () => {
+    const url = 'https://squeet.me'
+    it('should be friendica', async () => {
+      const friendica = await detector(url)
+      expect(friendica).toEqual('friendica')
     })
   })
 

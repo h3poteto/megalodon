@@ -5,6 +5,7 @@ import { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
 import Entity from './entity'
 import Misskey from './misskey'
+import Friendica from './friendica'
 
 export interface WebSocketInterface {
   start(): void
@@ -1339,7 +1340,7 @@ export class NodeinfoError extends Error {
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma' | 'misskey',
+  sns: 'mastodon' | 'pleroma' | 'misskey' | 'friendica',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null,
@@ -1354,7 +1355,11 @@ const generator = (
       const misskey = new Misskey(baseUrl, accessToken, userAgent, proxyConfig)
       return misskey
     }
-    default: {
+    case 'friendica': {
+      const friendica = new Friendica(baseUrl, accessToken, userAgent, proxyConfig)
+      return friendica
+    }
+    case 'mastodon': {
       const mastodon = new Mastodon(baseUrl, accessToken, userAgent, proxyConfig)
       return mastodon
     }
