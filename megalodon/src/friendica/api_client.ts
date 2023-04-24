@@ -454,6 +454,7 @@ namespace FriendicaAPI {
     export type FeaturedTag = FriendicaEntity.FeaturedTag
     export type Field = FriendicaEntity.Field
     export type Filter = FriendicaEntity.Filter
+    export type FollowRequest = FriendicaEntity.FollowRequest
     export type History = FriendicaEntity.History
     export type IdentityProof = FriendicaEntity.IdentityProof
     export type Instance = FriendicaEntity.Instance
@@ -562,6 +563,7 @@ namespace FriendicaAPI {
     export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
+    export const follow_request = (f: Entity.FollowRequest): MegalodonEntity.FollowRequest => f
     export const history = (h: Entity.History): MegalodonEntity.History => h
     export const identity_proof = (i: Entity.IdentityProof): MegalodonEntity.IdentityProof => i
     export const instance = (i: Entity.Instance): MegalodonEntity.Instance => {
