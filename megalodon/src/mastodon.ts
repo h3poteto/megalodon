@@ -423,15 +423,6 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  /**
-   * GET /api/v1/pleroma/accounts/:id/favourites
-   *
-   * @param id Target account ID.
-   * @param options.limit Max number of results to return.
-   * @param options.max_id Return results order than ID.
-   * @param options.since_id Return results newer than ID.
-   * @return Array of statuses.
-   */
   public getAccountFavourites(
     _id: string,
     _options?: {
@@ -447,7 +438,7 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   /**
-   * POST /api/v1/pleroma/accounts/:id/subscribe
+   * POST /api/v1/accounts/:id/follow
    *
    * @param id Target account ID.
    * @return Relationship.
@@ -464,7 +455,7 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   /**
-   * POST /api/v1/pleroma/accounts/:id/unsubscribe
+   * POST /api/v1/accounts/:id/follow
    *
    * @param id Target account ID.
    * @return Relationship.

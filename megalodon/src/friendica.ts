@@ -348,7 +348,7 @@ export default class Friendica implements MegalodonInterface {
   }
 
   /**
-   * POST /api/v1/pleroma/accounts/:id/subscribe
+   * POST /api/v1/accounts/:id/follow
    *
    * @param id Target account ID.
    * @return Relationship.
@@ -365,7 +365,7 @@ export default class Friendica implements MegalodonInterface {
   }
 
   /**
-   * POST /api/v1/pleroma/accounts/:id/unsubscribe
+   * POST /api/v1/accounts/:id/follow
    *
    * @param id Target account ID.
    * @return Relationship.
