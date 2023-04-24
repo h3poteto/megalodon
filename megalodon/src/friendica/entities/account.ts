@@ -8,6 +8,8 @@ namespace FriendicaEntity {
     acct: string
     display_name: string
     locked: boolean
+    discoverable?: boolean
+    group: boolean | null
     created_at: string
     followers_count: number
     following_count: number
@@ -21,7 +23,7 @@ namespace FriendicaEntity {
     emojis: Array<Emoji>
     moved: Account | null
     fields: Array<Field>
-    bot: boolean | null
-    source?: Source
+    bot: boolean
+    source: Source
   }
 }

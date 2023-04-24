@@ -8,6 +8,8 @@ namespace Entity {
     acct: string
     display_name: string
     locked: boolean
+    discoverable?: boolean
+    group: boolean | null
     created_at: string
     followers_count: number
     following_count: number

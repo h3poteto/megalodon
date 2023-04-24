@@ -101,7 +101,32 @@ namespace PleromaAPI {
       }
     }
 
-    export const account = (a: Entity.Account): MegalodonEntity.Account => a
+    export const account = (a: Entity.Account): MegalodonEntity.Account => {
+      return {
+        id: a.id,
+        username: a.username,
+        acct: a.acct,
+        display_name: a.display_name,
+        locked: a.locked,
+        discoverable: a.discoverable,
+        group: null,
+        created_at: a.created_at,
+        followers_count: a.followers_count,
+        following_count: a.following_count,
+        statuses_count: a.statuses_count,
+        note: a.note,
+        url: a.url,
+        avatar: a.avatar,
+        avatar_static: a.avatar_static,
+        header: a.header,
+        header_static: a.header_static,
+        emojis: a.emojis,
+        moved: a.moved ? account(a.moved) : null,
+        fields: a.fields,
+        bot: a.bot,
+        source: a.source
+      }
+    }
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
@@ -180,7 +205,7 @@ namespace PleromaAPI {
       if (n.status && n.emoji) {
         return {
           id: n.id,
-          account: n.account,
+          account: account(n.account),
           created_at: n.created_at,
           status: status(n.status),
           emoji: n.emoji,
@@ -189,7 +214,7 @@ namespace PleromaAPI {
       } else if (n.status) {
         return {
           id: n.id,
-          account: n.account,
+          account: account(n.account),
           created_at: n.created_at,
           status: status(n.status),
           type: decodeNotificationType(n.type)
@@ -197,15 +222,15 @@ namespace PleromaAPI {
       } else if (n.target) {
         return {
           id: n.id,
-          account: n.account,
+          account: account(n.account),
           created_at: n.created_at,
-          target: n.target,
+          target: account(n.target),
           type: decodeNotificationType(n.type)
         }
       } else {
         return {
           id: n.id,
-          account: n.account,
+          account: account(n.account),
           created_at: n.created_at,
           type: decodeNotificationType(n.type)
         }
@@ -215,7 +240,19 @@ namespace PleromaAPI {
     export const pollOption = (p: Entity.PollOption): MegalodonEntity.PollOption => p
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
     export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
-    export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => r
+    export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => {
+      const p = {
+        count: r.count,
+        me: r.me,
+        name: r.name
+      }
+      if (r.accounts) {
+        return Object.assign({}, p, {
+          accounts: r.accounts.map(a => account(a))
+        })
+      }
+      return p
+    }
     export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => ({
       id: r.id,
       following: r.following,
@@ -230,7 +267,23 @@ namespace PleromaAPI {
       endorsed: r.endorsed,
       notifying: r.subscribing
     })
-    export const report = (r: Entity.Report): MegalodonEntity.Report => r
+    export const report = (r: Entity.Report): MegalodonEntity.Report => {
+      const p = {
+        id: r.id,
+        action_taken: r.action_taken,
+        category: r.category,
+        comment: r.comment,
+        forwarded: r.forwarded,
+        status_ids: r.status_ids,
+        rule_ids: r.rule_ids
+      }
+      if (r.target_account) {
+        return Object.assign({}, p, {
+          target_account: account(r.target_account)
+        })
+      }
+      return p
+    }
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
       accounts: Array.isArray(r.accounts) ? r.accounts.map(a => account(a)) : [],
       statuses: Array.isArray(r.statuses) ? r.statuses.map(s => status(s)) : [],

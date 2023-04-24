@@ -8,6 +8,7 @@ namespace PleromaEntity {
     acct: string
     display_name: string
     locked: boolean
+    discoverable?: boolean
     created_at: string
     followers_count: number
     following_count: number
@@ -21,7 +22,7 @@ namespace PleromaEntity {
     emojis: Array<Emoji>
     moved: Account | null
     fields: Array<Field>
-    bot: boolean | null
-    source?: Source
+    bot: boolean
+    source: Source
   }
 }
