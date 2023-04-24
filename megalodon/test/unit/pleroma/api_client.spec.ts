@@ -23,7 +23,14 @@ const account: PleromaEntity.Account = {
   emojis: [],
   moved: null,
   fields: [],
-  bot: false
+  bot: false,
+  source: {
+    privacy: null,
+    sensitive: false,
+    language: null,
+    note: 'test',
+    fields: []
+  }
 }
 
 describe('api_client', () => {

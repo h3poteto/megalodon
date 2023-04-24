@@ -478,19 +478,23 @@ export default class Friendica implements MegalodonInterface {
   /** Helper function to optionally follow Link headers as pagination */
   private async urlToAccounts(url: string, params: Record<string, string>, get_all: boolean, sleep_ms: number) {
     const res = await this.client.get<Array<FriendicaAPI.Entity.Account>>(url, params)
-    res.data = res.data.map(a => FriendicaAPI.Converter.account(a))
-    if (get_all && res.headers.link) {
-      let parsed = parseLinkHeader(res.headers.link)
+    let converted = Object.assign({}, res, {
+      data: res.data.map(a => FriendicaAPI.Converter.account(a))
+    })
+    if (get_all && converted.headers.link) {
+      let parsed = parseLinkHeader(converted.headers.link)
       while (parsed?.next) {
         const nextRes = await this.client.get<Array<FriendicaEntity.Account>>(parsed?.next.url, undefined, undefined, true)
-        res.data.push(...nextRes.data.map(a => FriendicaAPI.Converter.account(a)))
+        converted = Object.assign({}, converted, {
+          data: [...converted.data, ...nextRes.data.map(a => FriendicaAPI.Converter.account(a))]
+        })
         parsed = parseLinkHeader(nextRes.headers.link)
         if (sleep_ms) {
-          await new Promise<void>(res => setTimeout(res, sleep_ms))
+          await new Promise<void>(converted => setTimeout(converted, sleep_ms))
         }
       }
     }
-    return res
+    return converted
   }
 
   /**
