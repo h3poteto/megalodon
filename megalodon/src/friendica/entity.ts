@@ -10,6 +10,7 @@
 /// <reference path="./entities/featured_tag.ts" />
 /// <reference path="./entities/field.ts" />
 /// <reference path="./entities/filter.ts" />
+/// <reference path="./entities/follow_request.ts" />
 /// <reference path="./entities/history.ts" />
 /// <reference path="./entities/identity_proof.ts" />
 /// <reference path="./entities/instance.ts" />

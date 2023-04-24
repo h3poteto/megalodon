@@ -534,20 +534,20 @@ export interface MegalodonInterface {
    * Get pending follow requests.
    *
    * @param limit Maximum number of results.
-   * @return Array of account.
+   * @return Array of account or follow request.
    */
-  getFollowRequests(limit?: number): Promise<Response<Array<Entity.Account>>>
+  getFollowRequests(limit?: number): Promise<Response<Array<Entity.Account | Entity.FollowRequest>>>
   /**
    * Accept the follow request.
    *
-   * @param id Target account ID.
+   * @param id Target account ID. Or follow request ID in Friendica.
    * @return Relationship.
    */
   acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>>
   /**
    * Reject the follow request.
    *
-   * @param id Target account ID.
+   * @param id Target account ID. Or follow request ID in Friendica.
    * @return Relationship.
    */
   rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>>

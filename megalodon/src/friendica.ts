@@ -1011,21 +1011,21 @@ export default class Friendica implements MegalodonInterface {
    * @param limit Maximum number of results.
    * @return Array of FollowRequest.
    */
-  public async getFollowRequests(limit?: number): Promise<Response<Array<Entity.Account>>> {
+  public async getFollowRequests(limit?: number): Promise<Response<Array<Entity.FollowRequest>>> {
     if (limit) {
       return this.client
-        .get<Array<FriendicaAPI.Entity.Account>>('/api/v1/follow_requests', {
+        .get<Array<FriendicaAPI.Entity.FollowRequest>>('/api/v1/follow_requests', {
           limit: limit
         })
         .then(res => {
           return Object.assign(res, {
-            data: res.data.map(a => FriendicaAPI.Converter.account(a))
+            data: res.data.map(a => FriendicaAPI.Converter.follow_request(a))
           })
         })
     } else {
-      return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/follow_requests').then(res => {
+      return this.client.get<Array<FriendicaAPI.Entity.FollowRequest>>('/api/v1/follow_requests').then(res => {
         return Object.assign(res, {
-          data: res.data.map(a => FriendicaAPI.Converter.account(a))
+          data: res.data.map(a => FriendicaAPI.Converter.follow_request(a))
         })
       })
     }
@@ -1034,7 +1034,7 @@ export default class Friendica implements MegalodonInterface {
   /**
    * POST /api/v1/follow_requests/:id/authorize
    *
-   * @param id Target account ID.
+   * @param id The FollowRequest ID.
    * @return Relationship.
    */
   public async acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
@@ -1048,7 +1048,7 @@ export default class Friendica implements MegalodonInterface {
   /**
    * POST /api/v1/follow_requests/:id/reject
    *
-   * @param id Target account ID.
+   * @param id The FollowRequest ID.
    * @return Relationship.
    */
   public async rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
