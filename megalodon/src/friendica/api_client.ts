@@ -621,7 +621,14 @@ namespace FriendicaAPI {
       statuses: Array.isArray(r.statuses) ? r.statuses.map(s => status(s)) : [],
       hashtags: Array.isArray(r.hashtags) ? r.hashtags.map(h => tag(h)) : []
     })
-    export const scheduled_status = (s: Entity.ScheduledStatus): MegalodonEntity.ScheduledStatus => s
+    export const scheduled_status = (s: Entity.ScheduledStatus): MegalodonEntity.ScheduledStatus => {
+      return {
+        id: s.id,
+        scheduled_at: s.scheduled_at,
+        params: status_params(s.params),
+        media_attachments: s.media_attachments ? s.media_attachments.map(a => attachment(a)) : null
+      }
+    }
     export const source = (s: Entity.Source): MegalodonEntity.Source => s
     export const stats = (s: Entity.Stats): MegalodonEntity.Stats => s
     export const status = (s: Entity.Status): MegalodonEntity.Status => ({
@@ -658,7 +665,18 @@ namespace FriendicaAPI {
       // Now quote is supported only fedibird.com.
       quote: s.quote !== undefined && s.quote !== null
     })
-    export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
+    export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => {
+      return {
+        text: s.text,
+        in_reply_to_id: s.in_reply_to_id,
+        media_ids: s.media_ids,
+        sensitive: s.sensitive,
+        spoiler_text: s.spoiler_text,
+        visibility: s.visibility,
+        scheduled_at: s.scheduled_at,
+        application_id: parseInt(s.application_id)
+      }
+    }
     export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t

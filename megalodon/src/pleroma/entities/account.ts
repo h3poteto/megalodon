@@ -23,6 +23,6 @@ namespace PleromaEntity {
     moved: Account | null
     fields: Array<Field>
     bot: boolean
-    source: Source
+    source?: Source
   }
 }
