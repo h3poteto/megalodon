@@ -20,6 +20,7 @@ namespace MisskeyAPI {
     export type CreatedNote = MisskeyEntity.CreatedNote
     export type Emoji = MisskeyEntity.Emoji
     export type Favorite = MisskeyEntity.Favorite
+    export type Field = MisskeyEntity.Field
     export type File = MisskeyEntity.File
     export type Follower = MisskeyEntity.Follower
     export type Following = MisskeyEntity.Following
@@ -61,6 +62,12 @@ namespace MisskeyAPI {
         category: e.category
       }
     }
+
+    export const field = (f: Entity.Field): MegalodonEntity.Field => ({
+      name: f.name,
+      value: escapeMFM(f.value),
+      verified_at: null
+    })
 
     export const user = (u: Entity.User): MegalodonEntity.Account => {
       let acct = u.username
@@ -118,7 +125,7 @@ namespace MisskeyAPI {
         header_static: u.bannerColor,
         emojis: u.emojis.map(e => emoji(e)),
         moved: null,
-        fields: [],
+        fields: u.fields.map(f => field(f)),
         bot: u.isBot,
       }
     }

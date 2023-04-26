@@ -1,4 +1,5 @@
 /// <reference path="emoji.ts" />
+/// <reference path="field.ts" />
 /// <reference path="note.ts" />
 
 namespace MisskeyEntity {
@@ -28,5 +29,6 @@ namespace MisskeyEntity {
     bannerId: string
     pinnedNoteIds?: Array<string>
     pinnedNotes?: Array<Note>
+    fields: Array<Field>
   }
 }
