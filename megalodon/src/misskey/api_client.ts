@@ -20,6 +20,7 @@ namespace MisskeyAPI {
     export type CreatedNote = MisskeyEntity.CreatedNote
     export type Emoji = MisskeyEntity.Emoji
     export type Favorite = MisskeyEntity.Favorite
+    export type Field = MisskeyEntity.Field
     export type File = MisskeyEntity.File
     export type Follower = MisskeyEntity.Follower
     export type Following = MisskeyEntity.Following
@@ -42,6 +43,16 @@ namespace MisskeyAPI {
   }
 
   export namespace Converter {
+    // FIXME: Properly render MFM instead of just escaping HTML characters.
+    const escapeMFM = (text: string): string => text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/`/g, '&#x60;')
+      .replace(/\r?\n/g, '<br>');
+
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => {
       return {
         shortcode: e.name,
@@ -51,6 +62,12 @@ namespace MisskeyAPI {
         category: e.category
       }
     }
+
+    export const field = (f: Entity.Field): MegalodonEntity.Field => ({
+      name: f.name,
+      value: escapeMFM(f.value),
+      verified_at: null
+    })
 
     export const user = (u: Entity.User): MegalodonEntity.Account => {
       let acct = u.username
@@ -108,7 +125,7 @@ namespace MisskeyAPI {
         header_static: u.bannerColor,
         emojis: u.emojis.map(e => emoji(e)),
         moved: null,
-        fields: [],
+        fields: u.fields.map(f => field(f)),
         bot: u.isBot,
       }
     }
@@ -229,16 +246,7 @@ namespace MisskeyAPI {
         in_reply_to_id: n.replyId,
         in_reply_to_account_id: n.reply?.userId ?? null,
         reblog: n.renote ? note(n.renote, host) : null,
-        content: n.text
-          ? n.text
-              .replace(/&/g, '&amp;')
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;')
-              .replace(/"/g, '&quot;')
-              .replace(/'/g, '&#39;')
-              .replace(/`/g, '&#x60;')
-              .replace(/\r?\n/g, '<br>')
-          : '',
+        content: n.text ? escapeMFM(n.text) : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
         emojis: n.emojis.map(e => emoji(e)),
@@ -385,33 +393,22 @@ namespace MisskeyAPI {
       moved: null
   }
 
-    export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => {
-      // Reused from Note converter.
-      const escapeHTML = (text: string) => text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/`/g, '&#x60;')
-        .replace(/\r?\n/g, '<br>');
-      return {
-        id: a.id,
-        content: `<h1>${escapeHTML(a.title)}</h1>${escapeHTML(a.text)}`,
-        starts_at: null,
-        ends_at: null,
-        published: true,
-        all_day: false,
-        published_at: a.createdAt,
-        updated_at: a.updatedAt,
-        read: a.isRead,
-        mentions: [],
-        statuses: [],
-        tags: [],
-        emojis: [],
-        reactions: [],
-      };
-    }
+    export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => ({
+      id: a.id,
+      content: `<h1>${escapeMFM(a.title)}</h1>${escapeMFM(a.text)}`,
+      starts_at: null,
+      ends_at: null,
+      published: true,
+      all_day: false,
+      published_at: a.createdAt,
+      updated_at: a.updatedAt,
+      read: a.isRead,
+      mentions: [],
+      statuses: [],
+      tags: [],
+      emojis: [],
+      reactions: [],
+    })
 
     export const notification = (n: Entity.Notification, host: string): MegalodonEntity.Notification => {
       let notification = {

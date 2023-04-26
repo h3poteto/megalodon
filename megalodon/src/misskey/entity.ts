@@ -4,6 +4,7 @@
 /// <reference path="entities/createdNote.ts" />
 /// <reference path="entities/emoji.ts" />
 /// <reference path="entities/favorite.ts" />
+/// <reference path="entities/field.ts" />
 /// <reference path="entities/file.ts" />
 /// <reference path="entities/follower.ts" />
 /// <reference path="entities/following.ts" />
