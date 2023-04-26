@@ -6,7 +6,7 @@ const rl: readline.ReadLine = readline.createInterface({
   output: process.stdout
 })
 
-const BASE_URL: string = 'https://pleroma.io'
+const BASE_URL: string = process.env.PLEROMA_URL as string
 
 const access_token: string = process.env.PLEROMA_ACCESS_TOKEN as string
 
@@ -16,7 +16,7 @@ new Promise(resolve => {
   rl.question('Toot: ', status => {
     client
       .postStatus(status)
-      .then((res: Response<Entity.Status|Entity.ScheduledStatus>) => {
+      .then((res: Response<Entity.Status | Entity.ScheduledStatus>) => {
         console.log(res)
         rl.close()
         resolve(res)

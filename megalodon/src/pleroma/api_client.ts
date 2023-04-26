@@ -292,8 +292,8 @@ namespace PleromaAPI {
     export const scheduled_status = (s: Entity.ScheduledStatus): MegalodonEntity.ScheduledStatus => ({
       id: s.id,
       scheduled_at: s.scheduled_at,
-      params: s.params,
-      media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : []
+      params: status_params(s.params),
+      media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : null
     })
     export const source = (s: Entity.Source): MegalodonEntity.Source => s
     export const stats = (s: Entity.Stats): MegalodonEntity.Stats => s
@@ -330,7 +330,18 @@ namespace PleromaAPI {
       bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: s.reblog !== null && s.reblog.content !== s.content
     })
-    export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
+    export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => {
+      return {
+        text: s.text,
+        in_reply_to_id: s.in_reply_to_id,
+        media_ids: Array.isArray(s.media_ids) ? s.media_ids : null,
+        sensitive: s.sensitive,
+        spoiler_text: s.spoiler_text,
+        visibility: s.visibility,
+        scheduled_at: s.scheduled_at,
+        application_id: null
+      }
+    }
     export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t

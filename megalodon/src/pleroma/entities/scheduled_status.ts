@@ -5,6 +5,6 @@ namespace PleromaEntity {
     id: string
     scheduled_at: string
     params: StatusParams
-    media_attachments: Array<Attachment>
+    media_attachments: Array<Attachment> | null
   }
 }
