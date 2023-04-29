@@ -355,16 +355,37 @@ export default class Misskey implements MegalodonInterface {
   }
 
   public async getAccountFavourites(
-    _id: string,
-    _options?: {
+    id: string,
+    options?: {
       limit?: number
       max_id?: string
       since_id?: string
     }
   ): Promise<Response<Array<Entity.Status>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+    let params = {
+      userId: id
+    };
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/users/reactions', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(fav => MisskeyAPI.Converter.note(fav.note, this.baseUrlToHost(this.baseUrl)))
+      })
     })
   }
 
