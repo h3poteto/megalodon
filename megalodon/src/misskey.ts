@@ -700,33 +700,9 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   //  accounts/favourites
   // ======================================
-  /**
-   * POST /api/i/favorites
-   */
   public async getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          untilId: options.max_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          sinceId: options.min_id
-        })
-      }
-    }
-    return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/i/favorites', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(fav => MisskeyAPI.Converter.note(fav.note, this.baseUrlToHost(this.baseUrl)))
-      })
-    })
+    const userId = await this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i').then(res => res.data.id);
+    return this.getAccountFavourites(userId, options);
   }
 
   // ======================================
@@ -1219,32 +1195,22 @@ export default class Misskey implements MegalodonInterface {
     })
   }
 
-  /**
-   * POST /api/notes/favorites/create
-   */
   public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/favorites/create', {
-      noteId: id
-    })
-    return this.client
-      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
-        noteId: id
+    // NOTE: get-unsecure is calckey's extension.
+    //       Misskey doesn't have this endpoint and regular `/i/registry/get` won't work
+    //       unless you have a 'nativeToken', which is reserved for the frontend webapp.
+    const reaction = await this.client
+      .post<Array<string>>('/api/i/registry/get-unsecure', {
+        key: 'reactions',
+        scope: ['client', 'base'],
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
+      .then(res => res.data[0] ?? '⭐');
+    return this.createEmojiReaction(id, reaction);
   }
 
-  /**
-   * POST /api/notes/favorites/delete
-   */
   public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/favorites/delete', {
-      noteId: id
-    })
-    return this.client
-      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
-        noteId: id
-      })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
+    // NOTE: Misskey allows only one reaction per status, so we don't need to care what that emoji was.
+    return this.deleteEmojiReaction(id, '');
   }
 
   /**
