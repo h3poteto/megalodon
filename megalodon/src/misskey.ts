@@ -642,15 +642,37 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // accounts/bookmarks
   // ======================================
-  public async getBookmarks(_options?: {
+  /**
+   * POST /api/i/favorites
+   */
+  public async getBookmarks(options?: {
     limit?: number
     max_id?: string
     since_id?: string
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+    let params = {}
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/i/favorites', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(s => MisskeyAPI.Converter.note(s.note, this.baseUrlToHost(this.baseUrl)))
+      })
     })
   }
 
@@ -1229,18 +1251,32 @@ export default class Misskey implements MegalodonInterface {
       .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
-  public async bookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+  /**
+   * POST /api/notes/favorites/create
+   */
+  public async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/favorites/create', {
+      noteId: id
     })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
-  public async unbookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+  /**
+   * POST /api/notes/favorites/delete
+   */
+  public async unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/favorites/delete', {
+      noteId: id
     })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   public async muteStatus(_id: string): Promise<Response<Entity.Status>> {
