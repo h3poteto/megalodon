@@ -5,20 +5,25 @@
 [![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
 [![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
 
-A Mastodon, Pleroma and Misskey API Client library for node.js and browser. It provides REST API and streaming methods.
-By using this library, you can take Mastodon, Pleroma and Misskey with the same interface.
+A Fediverse API Client library for node.js and browser. It provides REST API and streaming methods.
+By using this library, you can take Mastodon, Pleroma, Friendica, and Misskey with the same interface.
 
 The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
-## Features
+## Supporting
+- [x] Mastodon
+- [x] Pleroma
+- [x] Friendica
+- [x] Misskey
 
-- REST API
-- Streaming with Server-Sent Event
-- Streaming with WebSocket
-- Promisified methods
-- Proxy support
-- Support node.js and browser
-- Written in typescript
+## Features
+- [x] REST API
+- [ ] Admin API
+- [x] WebSocket for Streamings
+- [x] Promisified methods
+- [x] Proxy support
+- [x] Support node.js and browser
+- [x] Written in typescript
 
 ## Install
 
