@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import proxyAgent, { ProxyConfig } from './proxy_config'
-import { DEFAULT_UA } from './default'
 import { NodeinfoError } from './megalodon'
 
 const NODEINFO_10 = 'http://nodeinfo.diaspora.software/ns/schema/1.0'
@@ -53,11 +52,7 @@ export const detector = async (
   url: string,
   proxyConfig: ProxyConfig | false = false
 ): Promise<'mastodon' | 'pleroma' | 'misskey' | 'friendica'> => {
-  let options: AxiosRequestConfig = {
-    headers: {
-      'User-Agent': DEFAULT_UA
-    }
-  }
+  let options: AxiosRequestConfig = {}
   if (proxyConfig) {
     options = Object.assign(options, {
       httpsAgent: proxyAgent(proxyConfig)
