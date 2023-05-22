@@ -444,6 +444,7 @@ namespace MastodonAPI {
   export namespace Entity {
     export type Account = MastodonEntity.Account
     export type Activity = MastodonEntity.Activity
+    export type Announcement = MastodonEntity.Announcement
     export type Application = MastodonEntity.Application
     export type AsyncAttachment = MegalodonEntity.AsyncAttachment
     export type Attachment = MastodonEntity.Attachment
@@ -466,6 +467,7 @@ namespace MastodonAPI {
     export type Preferences = MastodonEntity.Preferences
     export type PushSubscription = MastodonEntity.PushSubscription
     export type Relationship = MastodonEntity.Relationship
+    export type Reaction = MastodonEntity.Reaction
     export type Report = MastodonEntity.Report
     export type Results = MastodonEntity.Results
     export type ScheduledStatus = MastodonEntity.ScheduledStatus
@@ -528,6 +530,10 @@ namespace MastodonAPI {
 
     export const account = (a: Entity.Account): MegalodonEntity.Account => a
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
+    export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => ({
+      ...a,
+      reactions: a.reactions.map(r => reaction(r))
+    })
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
     export const async_attachment = (a: Entity.AsyncAttachment) => {
@@ -591,6 +597,12 @@ namespace MastodonAPI {
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
     export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
     export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => r
+    export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => ({
+      count: r.count,
+      me: r.me ?? false,
+      name: r.name,
+      url: r.url,
+    })
     export const report = (r: Entity.Report): MegalodonEntity.Report => r
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
       accounts: Array.isArray(r.accounts) ? r.accounts.map(a => account(a)) : [],
@@ -632,7 +644,7 @@ namespace MastodonAPI {
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
       // Now quote is supported only fedibird.com.
-      quote: s.quote !== undefined && s.quote !== null
+      quote: s.quote ? status(s.quote) : null
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s

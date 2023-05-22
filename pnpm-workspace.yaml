@@ -1,0 +1,4 @@
+packages:
+  - 'megalodon'
+  - 'example/typescript'
+  - 'example/browser'

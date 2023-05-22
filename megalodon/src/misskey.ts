@@ -5,6 +5,7 @@ import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
+import Entity from './entity'
 import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 
 export default class Misskey implements MegalodonInterface {
@@ -37,6 +38,10 @@ export default class Misskey implements MegalodonInterface {
     this.proxyConfig = proxyConfig
   }
 
+  private baseUrlToHost(baseUrl: string): string {
+    return baseUrl.replace('https://', '')
+  }
+
   public cancel(): void {
     return this.client.cancel()
   }
@@ -56,6 +61,7 @@ export default class Misskey implements MegalodonInterface {
       })
     })
   }
+
 
   /**
    * POST /api/app/create
@@ -197,7 +203,7 @@ export default class Misskey implements MegalodonInterface {
   public async verifyAccountCredentials(): Promise<Response<Entity.Account>> {
     return this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i').then(res => {
       return Object.assign(res, {
-        data: MisskeyAPI.Converter.userDetail(res.data)
+        data: MisskeyAPI.Converter.userDetail(res.data, this.baseUrlToHost(this.baseUrl))
       })
     })
   }
@@ -257,7 +263,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i', params).then(res => {
       return Object.assign(res, {
-        data: MisskeyAPI.Converter.userDetail(res.data)
+        data: MisskeyAPI.Converter.userDetail(res.data, this.baseUrlToHost(this.baseUrl))
       })
     })
   }
@@ -272,7 +278,7 @@ export default class Misskey implements MegalodonInterface {
       })
       .then(res => {
         return Object.assign(res, {
-          data: MisskeyAPI.Converter.userDetail(res.data)
+          data: MisskeyAPI.Converter.userDetail(res.data, this.baseUrlToHost(this.baseUrl))
         })
       })
   }
@@ -292,14 +298,14 @@ export default class Misskey implements MegalodonInterface {
       only_media?: boolean
     }
   ): Promise<Response<Array<Entity.Status>>> {
-    if (options && options.pinned) {
+    if (options?.pinned) {
       return this.client
         .post<MisskeyAPI.Entity.UserDetail>('/api/users/show', {
           userId: id
         })
         .then(res => {
           if (res.data.pinnedNotes) {
-            return { ...res, data: res.data.pinnedNotes.map(n => MisskeyAPI.Converter.note(n)) }
+            return { ...res, data: res.data.pinnedNotes.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))) }
           }
           return { ...res, data: [] }
         })
@@ -341,7 +347,7 @@ export default class Misskey implements MegalodonInterface {
       }
     }
     return this.client.post<Array<MisskeyAPI.Entity.Note>>('/api/users/notes', params).then(res => {
-      const statuses: Array<Entity.Status> = res.data.map(note => MisskeyAPI.Converter.note(note))
+      const statuses: Array<Entity.Status> = res.data.map(note => MisskeyAPI.Converter.note(note, this.baseUrlToHost(this.baseUrl)))
       return Object.assign(res, {
         data: statuses
       })
@@ -349,16 +355,37 @@ export default class Misskey implements MegalodonInterface {
   }
 
   public async getAccountFavourites(
-    _id: string,
-    _options?: {
+    id: string,
+    options?: {
       limit?: number
       max_id?: string
       since_id?: string
     }
   ): Promise<Response<Array<Entity.Status>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+    let params = {
+      userId: id
+    };
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.since_id) {
+        params = Object.assign(params, {
+          sinceId: options.since_id
+        })
+      }
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/users/reactions', params).then(res => {
+      return Object.assign(res, {
+        data: res.data.map(fav => MisskeyAPI.Converter.note(fav.note, this.baseUrlToHost(this.baseUrl)))
+      })
     })
   }
 
@@ -628,7 +655,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/search', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(u => MisskeyAPI.Converter.userDetail(u))
+        data: res.data.map(u => MisskeyAPI.Converter.userDetail(u, this.baseUrlToHost(this.baseUrl)))
       })
     })
   }
@@ -636,25 +663,15 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // accounts/bookmarks
   // ======================================
-  public async getBookmarks(_options?: {
+  /**
+   * POST /api/i/favorites
+   */
+  public async getBookmarks(options?: {
     limit?: number
     max_id?: string
     since_id?: string
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
-    })
-  }
-
-  // ======================================
-  //  accounts/favourites
-  // ======================================
-  /**
-   * POST /api/i/favorites
-   */
-  public async getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>> {
     let params = {}
     if (options) {
       if (options.limit) {
@@ -675,9 +692,17 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<Array<MisskeyAPI.Entity.Favorite>>('/api/i/favorites', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(fav => MisskeyAPI.Converter.note(fav.note))
+        data: res.data.map(s => MisskeyAPI.Converter.note(s.note, this.baseUrlToHost(this.baseUrl)))
       })
     })
+  }
+
+  // ======================================
+  //  accounts/favourites
+  // ======================================
+  public async getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>> {
+    const userId = await this.client.post<MisskeyAPI.Entity.UserDetail>('/api/i').then(res => res.data.id);
+    return this.getAccountFavourites(userId, options);
   }
 
   // ======================================
@@ -707,7 +732,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<Array<MisskeyAPI.Entity.Mute>>('/api/mute/list', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(mute => MisskeyAPI.Converter.userDetail(mute.mutee))
+        data: res.data.map(mute => MisskeyAPI.Converter.userDetail(mute.mutee, this.baseUrlToHost(this.baseUrl)))
       })
     })
   }
@@ -739,7 +764,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client.post<Array<MisskeyAPI.Entity.Blocking>>('/api/blocking/list', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(blocking => MisskeyAPI.Converter.userDetail(blocking.blockee))
+        data: res.data.map(blocking => MisskeyAPI.Converter.userDetail(blocking.blockee, this.baseUrlToHost(this.baseUrl)))
       })
     })
   }
@@ -980,7 +1005,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/recommendation', params)
-      .then(res => ({ ...res, data: res.data.map(u => MisskeyAPI.Converter.userDetail(u)) }))
+      .then(res => ({ ...res, data: res.data.map(u => MisskeyAPI.Converter.userDetail(u, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   // ======================================
@@ -1076,7 +1101,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<MisskeyAPI.Entity.CreatedNote>('/api/notes/create', params)
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data.createdNote) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data.createdNote, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   /**
@@ -1087,7 +1112,7 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
         noteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   public async editStatus(
@@ -1145,7 +1170,7 @@ export default class Misskey implements MegalodonInterface {
     return this.client.post<Array<MisskeyAPI.Entity.Note>>('/api/notes/children', params).then(res => {
       const context: Entity.Context = {
         ancestors: [],
-        descendants: res.data.map(n => MisskeyAPI.Converter.note(n))
+        descendants: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl)))
       }
       return {
         ...res,
@@ -1182,32 +1207,22 @@ export default class Misskey implements MegalodonInterface {
     })
   }
 
-  /**
-   * POST /api/notes/favorites/create
-   */
   public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/favorites/create', {
-      noteId: id
-    })
-    return this.client
-      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
-        noteId: id
+    // NOTE: get-unsecure is calckey's extension.
+    //       Misskey doesn't have this endpoint and regular `/i/registry/get` won't work
+    //       unless you have a 'nativeToken', which is reserved for the frontend webapp.
+    const reaction = await this.client
+      .post<Array<string>>('/api/i/registry/get-unsecure', {
+        key: 'reactions',
+        scope: ['client', 'base'],
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => res.data[0] ?? '⭐');
+    return this.createEmojiReaction(id, reaction);
   }
 
-  /**
-   * POST /api/notes/favorites/delete
-   */
   public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/favorites/delete', {
-      noteId: id
-    })
-    return this.client
-      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
-        noteId: id
-      })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+    // NOTE: Misskey allows only one reaction per status, so we don't need to care what that emoji was.
+    return this.deleteEmojiReaction(id, '');
   }
 
   /**
@@ -1218,7 +1233,7 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.CreatedNote>('/api/notes/create', {
         renoteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data.createdNote) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data.createdNote, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   /**
@@ -1232,21 +1247,35 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
         noteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
-  public async bookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+  /**
+   * POST /api/notes/favorites/create
+   */
+  public async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/favorites/create', {
+      noteId: id
     })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
-  public async unbookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
-      reject(err)
+  /**
+   * POST /api/notes/favorites/delete
+   */
+  public async unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+    await this.client.post<{}>('/api/notes/favorites/delete', {
+      noteId: id
     })
+    return this.client
+      .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
+        noteId: id
+      })
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   public async muteStatus(_id: string): Promise<Response<Entity.Status>> {
@@ -1274,7 +1303,7 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
         noteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   /**
@@ -1288,7 +1317,7 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
         noteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   // ======================================
@@ -1299,7 +1328,10 @@ export default class Misskey implements MegalodonInterface {
    */
   public async uploadMedia(file: any, _options?: { description?: string; focus?: string }): Promise<Response<Entity.Attachment>> {
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('file', file.buffer, {
+      contentType: file.mimetype,
+      filename: file.originalname,
+    })
     let headers: { [key: string]: string } = {}
     if (typeof formData.getHeaders === 'function') {
       headers = formData.getHeaders()
@@ -1371,7 +1403,7 @@ export default class Misskey implements MegalodonInterface {
         noteId: status_id
       })
       .then(res => {
-        const note = MisskeyAPI.Converter.note(res.data)
+        const note = MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl))
         return { ...res, data: note.poll }
       })
     if (!res.data) {
@@ -1462,7 +1494,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/global-timeline', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   /**
@@ -1505,7 +1537,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/local-timeline', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   /**
@@ -1554,7 +1586,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/search-by-tag', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   /**
@@ -1594,7 +1626,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/timeline', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   /**
@@ -1637,7 +1669,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/user-list-timeline', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   // ======================================
@@ -1679,7 +1711,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Note>>('/api/notes/mentions', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.noteToConversation(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.noteToConversation(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   public async deleteConversation(_id: string): Promise<Response<{}>> {
@@ -1854,7 +1886,7 @@ export default class Misskey implements MegalodonInterface {
     }
     return this.client
       .post<Array<MisskeyAPI.Entity.Notification>>('/api/i/notifications', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.notification(n)) }))
+      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.notification(n, this.baseUrlToHost(this.baseUrl))) }))
   }
 
   public async getNotification(_id: string): Promise<Response<Entity.Notification>> {
@@ -1969,7 +2001,7 @@ export default class Misskey implements MegalodonInterface {
         return this.client.post<Array<MisskeyAPI.Entity.UserDetail>>('/api/users/search', params).then(res => ({
           ...res,
           data: {
-            accounts: res.data.map(u => MisskeyAPI.Converter.userDetail(u)),
+            accounts: res.data.map(u => MisskeyAPI.Converter.userDetail(u, this.baseUrlToHost(this.baseUrl))),
             statuses: [],
             hashtags: []
           }
@@ -2010,7 +2042,7 @@ export default class Misskey implements MegalodonInterface {
           ...res,
           data: {
             accounts: [],
-            statuses: res.data.map(n => MisskeyAPI.Converter.note(n)),
+            statuses: res.data.map(n => MisskeyAPI.Converter.note(n, this.baseUrlToHost(this.baseUrl))),
             hashtags: []
           }
         }))
@@ -2113,6 +2145,26 @@ export default class Misskey implements MegalodonInterface {
   }
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  public async getInstanceAnnouncements(with_dismissed?: boolean | null): Promise<Response<Array<Entity.Announcement>>> {
+    let params = {}
+    if (with_dismissed) {
+      params = Object.assign(params, {
+        withUnreads: with_dismissed
+      })
+    }
+    return this.client.post<Array<MisskeyAPI.Entity.Announcement>>('/api/announcements', params).then(res => ({
+      ...res,
+      data: res.data.map(t => MisskeyAPI.Converter.announcement(t))
+    }))
+  }
+
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>('/api/i/read-announcement', { announcementId: id })
+  }
+
+  // ======================================
   // Emoji reactions
   // ======================================
   /**
@@ -2130,7 +2182,7 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
         noteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   /**
@@ -2144,7 +2196,7 @@ export default class Misskey implements MegalodonInterface {
       .post<MisskeyAPI.Entity.Note>('/api/notes/show', {
         noteId: id
       })
-      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data) }))
+      .then(res => ({ ...res, data: MisskeyAPI.Converter.note(res.data, this.baseUrlToHost(this.baseUrl)) }))
   }
 
   public async getEmojiReactions(id: string): Promise<Response<Array<Entity.Reaction>>> {

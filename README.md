@@ -1,20 +1,21 @@
+## Warning
+This fork isnt yet feature complete with all calckey features and thus we recommend using other libraries over this for the time being. Thanks to everyone who helps make this a better library.
+
 # Megalodon
-[![Test](https://github.com/h3poteto/megalodon/workflows/Test/badge.svg)](https://github.com/h3poteto/megalodon/actions?query=branch%3Amaster+workflow%3ATest)
-[![NPM Version](https://img.shields.io/npm/v/megalodon.svg)](https://www.npmjs.com/package/megalodon)
-[![GitHub release](https://img.shields.io/github/release/h3poteto/megalodon.svg)](https://github.com/h3poteto/megalodon/releases)
-[![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
-[![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
+[![NPM Version](https://img.shields.io/npm/v/@calckey/megalodon)](https://www.npmjs.com/package/@calckey/megalodon)
+[![npm](https://img.shields.io/npm/dm/@calckey/megalodon)](https://www.npmjs.com/package/@calckey/megalodon)
 
 A Fediverse API Client library for node.js and browser. It provides REST API and streaming methods.
 By using this library, you can take Mastodon, Pleroma, Friendica, and Misskey with the same interface.
 
 The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
-## Supporting
+## Supports
 - [x] Mastodon
 - [x] Pleroma
 - [x] Friendica
 - [x] Misskey
+- [x] Calckey
 
 ## Features
 - [x] REST API
@@ -27,14 +28,15 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
 ## Install
 
-```
-$ npm install -S megalodon
-```
+```sh
+# npm
+npm i megalodon
 
-or
+# pnpm
+pnpm add megalodon
 
-```
-$ yarn add megalodon
+# yarn
+yarn add megalodon
 ```
 
 ### Build for browser

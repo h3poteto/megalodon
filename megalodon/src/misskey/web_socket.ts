@@ -14,7 +14,7 @@ import MisskeyAPI from './api_client'
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   public url: string
   public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list'
-  public parser: Parser
+  public parser: any
   public headers: { [key: string]: string }
   public proxyConfig: ProxyConfig | false = false
   public listId: string | null = null
@@ -72,6 +72,10 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     this._connectionClosed = false
     this._resetRetryParams()
     this._startWebSocketConnection()
+  }
+
+  private baseUrlToHost(baseUrl: string): string {
+    return baseUrl.replace('https://', '')
   }
 
   /**
@@ -282,13 +286,13 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    */
   private _setupParser() {
     this.parser.on('update', (note: MisskeyAPI.Entity.Note) => {
-      this.emit('update', MisskeyAPI.Converter.note(note))
+      this.emit('update', MisskeyAPI.Converter.note(note, this.baseUrlToHost(this.url)))
     })
     this.parser.on('notification', (notification: MisskeyAPI.Entity.Notification) => {
-      this.emit('notification', MisskeyAPI.Converter.notification(notification))
+      this.emit('notification', MisskeyAPI.Converter.notification(notification, this.baseUrlToHost(this.url)))
     })
     this.parser.on('conversation', (note: MisskeyAPI.Entity.Note) => {
-      this.emit('conversation', MisskeyAPI.Converter.noteToConversation(note))
+      this.emit('conversation', MisskeyAPI.Converter.noteToConversation(note, this.baseUrlToHost(this.url)))
     })
     this.parser.on('error', (err: Error) => {
       this.emit('parser-error', err)

@@ -14,5 +14,7 @@ namespace MisskeyEntity {
     }
     url: string
     thumbnailUrl: string
+    comment: string
+    blurhash: string
   }
 }

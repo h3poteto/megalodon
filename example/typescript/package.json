@@ -8,6 +8,7 @@
   "author": "h3poteto",
   "license": "MIT",
   "dependencies": {
+    "@cutls/megalodon": "5.1.6",
     "megalodon": "*",
     "typescript": "5.0.4"
   },

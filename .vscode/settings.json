@@ -1,0 +1,7 @@
+{
+    "eslint.workingDirectories": [
+        "./megalodon"
+    ],
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true
+}

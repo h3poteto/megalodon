@@ -3058,6 +3058,26 @@ export default class Pleroma implements MegalodonInterface {
   }
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  public async getInstanceAnnouncements(with_dismissed?: boolean | null): Promise<Response<Array<Entity.Announcement>>> {
+    let params = {}
+    if (with_dismissed) {
+      params = Object.assign(params, {
+        with_dismissed
+      })
+    }
+    return this.client.get<Array<PleromaAPI.Entity.Announcement>>('/api/v1/announcements', params).then(res => ({
+      ...res,
+      data: res.data.map(t => PleromaAPI.Converter.announcement(t))
+    }))
+  }
+
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>(`/api/v1/announcements/${id}/dismiss`)
+  }
+
+  // ======================================
   // Emoji reactions
   // ======================================
   /**
