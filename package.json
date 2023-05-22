@@ -1,3 +1,8 @@
 {
-  "private": false
+  "private": true,
+  "workspaces": [
+    "megalodon",
+    "example/typescript",
+    "example/browser"
+  ]
 }
