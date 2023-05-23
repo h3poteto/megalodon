@@ -9,6 +9,7 @@ namespace MastodonNotificationType {
   export const FollowRequest: MastodonEntity.NotificationType = 'follow_request'
   export const Status: MastodonEntity.NotificationType = 'status'
   export const Update: MastodonEntity.NotificationType = 'update'
+  export const EmojiReaction: MastodonEntity.NotificationType = 'emoji_reaction' // Fedibird Only Support
 }
 
 export default MastodonNotificationType

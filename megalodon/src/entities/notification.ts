@@ -8,6 +8,7 @@ namespace Entity {
     id: string
     status?: Status
     emoji?: string
+    emoji_reaction?: Reaction
     type: NotificationType
     target?: Account
   }

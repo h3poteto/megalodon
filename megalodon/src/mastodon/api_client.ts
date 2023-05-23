@@ -498,6 +498,8 @@ namespace MastodonAPI {
           return MastodonNotificationType.Poll
         case NotificationType.Update:
           return MastodonNotificationType.Update
+        case NotificationType.EmojiReaction:
+          return MastodonNotificationType.EmojiReaction
         default:
           return t
       }
@@ -521,6 +523,8 @@ namespace MastodonAPI {
           return NotificationType.PollExpired
         case MastodonNotificationType.Update:
           return NotificationType.Update
+        case MastodonNotificationType.EmojiReaction:
+          return NotificationType.EmojiReaction
         default:
           return t
       }
@@ -569,21 +573,14 @@ namespace MastodonAPI {
     export const marker = (m: Entity.Marker): MegalodonEntity.Marker => m
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
     export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
-      if (n.status) {
-        return {
-          account: account(n.account),
-          created_at: n.created_at,
-          id: n.id,
-          status: status(n.status),
-          type: decodeNotificationType(n.type)
-        }
-      } else {
-        return {
-          account: account(n.account),
-          created_at: n.created_at,
-          id: n.id,
-          type: decodeNotificationType(n.type)
-        }
+      const convertStatus = n.status ? status(n.status) : undefined;
+      return {
+        account: account(n.account),
+        created_at: n.created_at,
+        id: n.id,
+        emoji_reaction: n.emoji_reaction,
+        status: convertStatus,
+        type: decodeNotificationType(n.type)
       }
     }
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p

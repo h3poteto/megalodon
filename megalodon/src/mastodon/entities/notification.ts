@@ -6,6 +6,7 @@ namespace MastodonEntity {
     account: Account
     created_at: string
     id: string
+    emoji_reaction?: Reaction // Fedibird Only Support
     status?: Status
     type: NotificationType
   }
