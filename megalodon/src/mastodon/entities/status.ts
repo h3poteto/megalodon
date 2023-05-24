@@ -4,6 +4,7 @@
 /// <reference path="tag.ts" />
 /// <reference path="attachment.ts" />
 /// <reference path="emoji.ts" />
+/// <reference path="reaction.ts" />
 /// <reference path="card.ts" />
 /// <reference path="poll.ts" />
 

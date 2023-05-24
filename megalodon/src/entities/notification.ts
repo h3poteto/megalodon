@@ -1,5 +1,6 @@
 /// <reference path="account.ts" />
 /// <reference path="status.ts" />
+/// <reference path="reaction.ts" />
 
 namespace Entity {
   export type Notification = {
