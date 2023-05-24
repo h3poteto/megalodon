@@ -575,14 +575,23 @@ namespace MastodonAPI {
     export const marker = (m: Entity.Marker): MegalodonEntity.Marker => m
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
     export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
-      const convertStatus = n.status ? status(n.status) : undefined;
-      return {
-        account: account(n.account),
-        created_at: n.created_at,
-        id: n.id,
-        emoji_reaction: n.emoji_reaction,
-        status: convertStatus,
-        type: decodeNotificationType(n.type)
+      if (n.status) {
+        return {
+          account: account(n.account),
+          created_at: n.created_at,
+          id: n.id,
+          emoji_reaction: n.emoji_reaction,
+          status: status(n.status),
+          type: decodeNotificationType(n.type)
+        }
+      } else {
+        return {
+          account: account(n.account),
+          created_at: n.created_at,
+          id: n.id,
+          emoji_reaction: n.emoji_reaction,
+          type: decodeNotificationType(n.type)
+        }
       }
     }
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p

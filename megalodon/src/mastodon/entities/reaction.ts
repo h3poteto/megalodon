@@ -5,17 +5,17 @@ namespace MastodonEntity {
 }
 
 type ReactionEmoji = {
-    name: string,
-    count: number,
-    me: boolean,
-    account_ids?: Array<string>,
+    name: string
+    count: number
+    me: boolean
+    account_ids?: Array<string>
 }
 
 type ReactionCustomEmoji = {
-    domain: string,
-    static_url: string,
-    url: string,
-    width?: number,
-    height?: number,
+    domain: string
+    static_url: string
+    url: string
+    width?: number
+    height?: number
 } & ReactionEmoji
   
