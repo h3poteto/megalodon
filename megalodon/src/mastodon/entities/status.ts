@@ -40,5 +40,9 @@ namespace MastodonEntity {
     // These parameters are unique parameters in fedibird.com for quote.
     quote_id?: string
     quote?: Status | null
+    // These parameters are unique parameters in fedibird.com for emoji reaction.
+    emoji_reactions?: Array<Reaction>
+    emoji_reactioned?: boolean
+    emoji_reactions_count?: number
   }
 }

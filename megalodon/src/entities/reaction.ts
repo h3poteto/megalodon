@@ -5,7 +5,7 @@ namespace Entity {
     count: number
     me: boolean
     name: string
-    accounts?: Array<Account>,
+    account_ids?: Array<string>,
     domain?: string,
     static_url?: string,
     url?: string,

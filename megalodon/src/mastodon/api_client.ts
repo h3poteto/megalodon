@@ -451,6 +451,7 @@ namespace MastodonAPI {
     export type Context = MastodonEntity.Context
     export type Conversation = MastodonEntity.Conversation
     export type Emoji = MastodonEntity.Emoji
+    export type Reaction = MastodonEntity.Reaction
     export type FeaturedTag = MastodonEntity.FeaturedTag
     export type Field = MastodonEntity.Field
     export type Filter = MastodonEntity.Filter
@@ -563,6 +564,7 @@ namespace MastodonAPI {
       unread: c.unread
     })
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
+    export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => r
     export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
@@ -626,8 +628,9 @@ namespace MastodonAPI {
       application: s.application ? application(s.application) : null,
       language: s.language,
       pinned: s.pinned,
-      emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
+      // Now emoji_reactions is supported only fedibird.com.
+      emoji_reactions: s.emoji_reactions !== undefined && Array.isArray(s.emoji_reactions) ? s.emoji_reactions.map(r => reaction(r)) : [],
       // Now quote is supported only fedibird.com.
       quote: s.quote !== undefined && s.quote !== null
     })

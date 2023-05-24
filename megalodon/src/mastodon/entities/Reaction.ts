@@ -8,6 +8,7 @@ type ReactionEmoji = {
     name: string,
     count: number,
     me: boolean,
+    account_ids?: Array<string>,
 }
 
 type ReactionCustomEmoji = {
