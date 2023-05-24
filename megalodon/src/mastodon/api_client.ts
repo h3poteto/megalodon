@@ -451,7 +451,6 @@ namespace MastodonAPI {
     export type Context = MastodonEntity.Context
     export type Conversation = MastodonEntity.Conversation
     export type Emoji = MastodonEntity.Emoji
-    export type Reaction = MastodonEntity.Reaction
     export type FeaturedTag = MastodonEntity.FeaturedTag
     export type Field = MastodonEntity.Field
     export type Filter = MastodonEntity.Filter
@@ -466,6 +465,7 @@ namespace MastodonAPI {
     export type PollOption = MastodonEntity.PollOption
     export type Preferences = MastodonEntity.Preferences
     export type PushSubscription = MastodonEntity.PushSubscription
+    export type Reaction = MastodonEntity.Reaction
     export type Relationship = MastodonEntity.Relationship
     export type Report = MastodonEntity.Report
     export type Results = MastodonEntity.Results
