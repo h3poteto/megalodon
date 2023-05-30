@@ -120,7 +120,7 @@ namespace PleromaAPI {
         avatar_static: a.avatar_static,
         header: a.header,
         header_static: a.header_static,
-        emojis: a.emojis,
+        emojis: a.emojis.map(e => emoji(e)),
         moved: a.moved ? account(a.moved) : null,
         fields: a.fields,
         bot: a.bot,
@@ -158,7 +158,13 @@ namespace PleromaAPI {
       last_status: c.last_status ? status(c.last_status) : null,
       unread: c.unread
     })
-    export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
+    export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => ({
+      shortcode: e.shortcode,
+      static_url: e.static_url,
+      url: e.url,
+      visible_in_picker: e.visible_in_picker,
+      category: e.category
+    })
     export const featured_tag = (f: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => f
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
@@ -320,7 +326,7 @@ namespace PleromaAPI {
       visibility: s.visibility,
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
-      tags: Array.isArray(s.tags) ? s.tags.map(t => tag(t)) : [],
+      tags: s.tags,
       card: s.card ? card(s.card) : null,
       poll: s.poll ? poll(s.poll) : null,
       application: s.application ? application(s.application) : null,

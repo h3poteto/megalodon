@@ -1,7 +1,6 @@
 /// <reference path="account.ts" />
 /// <reference path="application.ts" />
 /// <reference path="mention.ts" />
-/// <reference path="tag.ts" />
 /// <reference path="attachment.ts" />
 /// <reference path="emoji.ts" />
 /// <reference path="card.ts" />
@@ -30,7 +29,7 @@ namespace FriendicaEntity {
     visibility: 'public' | 'unlisted' | 'private' | 'direct'
     media_attachments: Array<Attachment>
     mentions: Array<Mention>
-    tags: Array<Tag>
+    tags: Array<StatusTag>
     card: Card | null
     poll: Poll | null
     application: Application | null
@@ -40,5 +39,10 @@ namespace FriendicaEntity {
     // These parameters are unique parameters in fedibird.com for quote.
     quote_id?: string
     quote?: Status | null
+  }
+
+  export type StatusTag = {
+    name: string
+    url: string
   }
 }

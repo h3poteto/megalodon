@@ -527,7 +527,30 @@ namespace FriendicaAPI {
       }
     }
 
-    export const account = (a: Entity.Account): MegalodonEntity.Account => a
+    export const account = (a: Entity.Account): MegalodonEntity.Account => ({
+      id: a.id,
+      username: a.username,
+      acct: a.acct,
+      display_name: a.display_name,
+      locked: a.locked,
+      discoverable: a.discoverable,
+      group: a.group,
+      created_at: a.created_at,
+      followers_count: a.followers_count,
+      following_count: a.following_count,
+      statuses_count: a.statuses_count,
+      note: a.note,
+      url: a.url,
+      avatar: a.avatar,
+      avatar_static: a.avatar_static,
+      header: a.header,
+      header_static: a.header_static,
+      emojis: a.emojis.map(e => emoji(e)),
+      moved: a.moved ? account(a.moved) : null,
+      fields: a.fields.map(f => field(f)),
+      bot: a.bot,
+      source: a.source ? source(a.source) : undefined
+    })
     export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
@@ -559,11 +582,38 @@ namespace FriendicaAPI {
       last_status: c.last_status ? status(c.last_status) : null,
       unread: c.unread
     })
-    export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
+    export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => ({
+      shortcode: e.shortcode,
+      static_url: e.static_url,
+      url: e.url,
+      visible_in_picker: e.visible_in_picker,
+      category: ''
+    })
     export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
-    export const follow_request = (f: Entity.FollowRequest): MegalodonEntity.FollowRequest => f
+    export const follow_request = (f: Entity.FollowRequest): MegalodonEntity.FollowRequest => ({
+      id: f.id,
+      username: f.username,
+      acct: f.acct,
+      display_name: f.display_name,
+      locked: f.locked,
+      bot: f.bot,
+      discoverable: f.discoverable,
+      group: f.group,
+      created_at: f.created_at,
+      note: f.note,
+      url: f.url,
+      avatar: f.avatar,
+      avatar_static: f.avatar_static,
+      header: f.header,
+      header_static: f.header_static,
+      followers_count: f.followers_count,
+      following_count: f.following_count,
+      statuses_count: f.statuses_count,
+      emojis: f.emojis.map(e => emoji(e)),
+      fields: f.fields.map(f => field(f))
+    })
     export const history = (h: Entity.History): MegalodonEntity.History => h
     export const identity_proof = (i: Entity.IdentityProof): MegalodonEntity.IdentityProof => i
     export const instance = (i: Entity.Instance): MegalodonEntity.Instance => {
@@ -615,7 +665,16 @@ namespace FriendicaAPI {
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
     export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
     export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => r
-    export const report = (r: Entity.Report): MegalodonEntity.Report => r
+    export const report = (r: Entity.Report): MegalodonEntity.Report => ({
+      id: r.id,
+      action_taken: r.action_taken,
+      category: r.category,
+      comment: r.comment,
+      forwarded: r.forwarded,
+      status_ids: r.status_ids,
+      rule_ids: r.rule_ids,
+      target_account: account(r.target_account)
+    })
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
       accounts: Array.isArray(r.accounts) ? r.accounts.map(a => account(a)) : [],
       statuses: Array.isArray(r.statuses) ? r.statuses.map(s => status(s)) : [],
@@ -654,7 +713,7 @@ namespace FriendicaAPI {
       visibility: s.visibility,
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
-      tags: Array.isArray(s.tags) ? s.tags.map(t => tag(t)) : [],
+      tags: s.tags,
       card: s.card ? card(s.card) : null,
       poll: s.poll ? poll(s.poll) : null,
       application: s.application ? application(s.application) : null,
