@@ -4,7 +4,7 @@ namespace Entity {
   export type Tag = {
     name: string
     url: string
-    history: Array<History> | null
+    history: Array<History>
     following?: boolean
   }
 }

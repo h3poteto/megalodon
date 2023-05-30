@@ -45,7 +45,8 @@ namespace MisskeyAPI {
         shortcode: e.name,
         static_url: e.url,
         url: e.url,
-        visible_in_picker: true
+        visible_in_picker: true,
+        category: ''
       }
     }
 
@@ -410,7 +411,7 @@ namespace MisskeyAPI {
       return {
         name: h.tag,
         url: h.tag,
-        history: null,
+        history: [],
         following: false
       }
     }

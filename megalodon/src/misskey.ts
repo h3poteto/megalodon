@@ -2036,7 +2036,7 @@ export default class Misskey implements MegalodonInterface {
           data: {
             accounts: [],
             statuses: [],
-            hashtags: res.data.map(h => ({ name: h, url: h, history: null, following: false }))
+            hashtags: res.data.map(h => ({ name: h, url: h, history: [], following: false }))
           }
         }))
       }

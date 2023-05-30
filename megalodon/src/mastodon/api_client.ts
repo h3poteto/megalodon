@@ -623,7 +623,7 @@ namespace MastodonAPI {
       visibility: s.visibility,
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
-      tags: Array.isArray(s.tags) ? s.tags.map(t => tag(t)) : [],
+      tags: s.tags,
       card: s.card ? card(s.card) : null,
       poll: s.poll ? poll(s.poll) : null,
       application: s.application ? application(s.application) : null,

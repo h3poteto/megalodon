@@ -1,7 +1,6 @@
 /// <reference path="account.ts" />
 /// <reference path="application.ts" />
 /// <reference path="mention.ts" />
-/// <reference path="tag.ts" />
 /// <reference path="attachment.ts" />
 /// <reference path="emoji.ts" />
 /// <reference path="card.ts" />
@@ -31,7 +30,7 @@ namespace PleromaEntity {
     visibility: 'public' | 'unlisted' | 'private' | 'direct'
     media_attachments: Array<Attachment>
     mentions: Array<Mention>
-    tags: Array<Tag>
+    tags: Array<StatusTag>
     card: Card | null
     poll: Poll | null
     application: Application | null
@@ -56,5 +55,10 @@ namespace PleromaEntity {
       pinned_at?: string
       thread_muted?: boolean
     }
+  }
+
+  export type StatusTag = {
+    name: string
+    url: string
   }
 }
