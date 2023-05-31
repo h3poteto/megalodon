@@ -1305,7 +1305,7 @@ export interface MegalodonInterface {
    *
    * @param id The ID of the Announcement in the database.
    */
-  dismissInstanceAnnouncement(id: string): Promise<Response<{}>>
+  dismissInstanceAnnouncement(id: string): Promise<Response<Record<never, never>>>
 
   /**
    * Add a reaction to an announcement.
@@ -1313,7 +1313,7 @@ export interface MegalodonInterface {
    * @param id The ID of the Announcement in the database.
    * @param name Unicode emoji, or the shortcode of a custom emoji.
    */
-  addReactionToAnnouncement(id: string, name: string): Promise<Response<{}>>
+  addReactionToAnnouncement(id: string, name: string): Promise<Response<Record<never, never>>>
 
   /**
    * Remove a reaction from an announcement.
@@ -1321,7 +1321,7 @@ export interface MegalodonInterface {
    * @param id The ID of the Announcement in the database.
    * @param name Unicode emoji, or the shortcode of a custom emoji.
    */
-  removeReactionFromAnnouncement(id: string, name: string): Promise<Response<{}>>
+  removeReactionFromAnnouncement(id: string, name: string): Promise<Response<Record<never, never>>>
 
   // ======================================
   // Emoji reactions

@@ -3078,8 +3078,8 @@ export default class Pleroma implements MegalodonInterface {
    *
    * @param id The ID of the Announcement in the database.
    */
-  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
-    return this.client.post<{}>(`/api/v1/announcements/${id}/dismiss`)
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>(`/api/v1/announcements/${id}/dismiss`)
   }
 
   /**
@@ -3088,7 +3088,7 @@ export default class Pleroma implements MegalodonInterface {
    * @param id The ID of the Announcement in the database.
    * @param name Unicode emoji, or the shortcode of a custom emoji.
    */
-  public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<{}>> {
+  public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('pleroma does not support')
       reject(err)
@@ -3101,7 +3101,7 @@ export default class Pleroma implements MegalodonInterface {
    * @param id The ID of the Announcement in the database.
    * @param name Unicode emoji, or the shortcode of a custom emoji.
    */
-  public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<{}>> {
+  public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('pleroma does not support')
       reject(err)

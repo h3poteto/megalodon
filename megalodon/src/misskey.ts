@@ -2113,6 +2113,41 @@ export default class Misskey implements MegalodonInterface {
   }
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  /**
+   * GET /api/announcements
+   *
+   * @return Array of announcements.
+   */
+  public async getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>> {
+    return this.client
+      .post<Array<MisskeyAPI.Entity.Announcement>>('/api/announcements')
+      .then(res => ({ ...res, data: res.data.map(a => MisskeyAPI.Converter.announcement(a)) }))
+  }
+
+  public async dismissInstanceAnnouncement(_id: string): Promise<Response<Record<never, never>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('misskey does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
   // Emoji reactions
   // ======================================
   /**

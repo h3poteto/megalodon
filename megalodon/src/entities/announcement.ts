@@ -9,7 +9,7 @@ namespace Entity {
     published: boolean
     all_day: boolean
     published_at: string
-    updated_at: string
+    updated_at: string | null
     read: boolean | null
     mentions: Array<AnnouncementAccount>
     statuses: Array<AnnouncementStatus>

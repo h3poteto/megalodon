@@ -3053,8 +3053,8 @@ export default class Mastodon implements MegalodonInterface {
    *
    * @param id The ID of the Announcement in the database.
    */
-  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
-    return this.client.post<{}>(`/api/v1/announcements/${id}/dismiss`)
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>(`/api/v1/announcements/${id}/dismiss`)
   }
 
   /**
@@ -3063,8 +3063,8 @@ export default class Mastodon implements MegalodonInterface {
    * @param id The ID of the Announcement in the database.
    * @param name Unicode emoji, or the shortcode of a custom emoji.
    */
-  public async addReactionToAnnouncement(id: string, name: string): Promise<Response<{}>> {
-    return this.client.put<{}>(`/api/v1/announcements/${id}/reactions/${name}`)
+  public async addReactionToAnnouncement(id: string, name: string): Promise<Response<Record<never, never>>> {
+    return this.client.put<Record<never, never>>(`/api/v1/announcements/${id}/reactions/${name}`)
   }
 
   /**
@@ -3073,8 +3073,8 @@ export default class Mastodon implements MegalodonInterface {
    * @param id The ID of the Announcement in the database.
    * @param name Unicode emoji, or the shortcode of a custom emoji.
    */
-  public async removeReactionFromAnnouncement(id: string, name: string): Promise<Response<{}>> {
-    return this.client.del<{}>(`/api/v1/announcements/${id}/reactions/${name}`)
+  public async removeReactionFromAnnouncement(id: string, name: string): Promise<Response<Record<never, never>>> {
+    return this.client.del<Record<never, never>>(`/api/v1/announcements/${id}/reactions/${name}`)
   }
 
   // ======================================
