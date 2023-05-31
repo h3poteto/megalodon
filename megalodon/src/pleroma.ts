@@ -3,7 +3,7 @@ import FormData from 'form-data'
 
 import PleromaAPI from './pleroma/api_client'
 import WebSocket from './pleroma/web_socket'
-import { MegalodonInterface, ArgumentError } from './megalodon'
+import { MegalodonInterface, NoImplementedError, ArgumentError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
@@ -3054,6 +3054,57 @@ export default class Pleroma implements MegalodonInterface {
       return Object.assign(res, {
         data: res.data.map(e => PleromaAPI.Converter.emoji(e))
       })
+    })
+  }
+
+  // ======================================
+  // instance/announcements
+  // ======================================
+  /**
+   * GET /api/v1/announcements
+   *
+   * @return Array of announcements.
+   */
+  public async getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>> {
+    return this.client.get<Array<PleromaAPI.Entity.Announcement>>('/api/v1/announcements').then(res => {
+      return Object.assign(res, {
+        data: res.data.map(a => PleromaAPI.Converter.announcement(a))
+      })
+    })
+  }
+
+  /**
+   * POST /api/v1/announcements/:id/dismiss
+   *
+   * @param id The ID of the Announcement in the database.
+   */
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>(`/api/v1/announcements/${id}/dismiss`)
+  }
+
+  /**
+   * PUT /api/v1/announcements/:id/reactions/:name
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('pleroma does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * DELETE /api/v1/announcements/:id/reactions/:name
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('pleroma does not support')
+      reject(err)
     })
   }
 

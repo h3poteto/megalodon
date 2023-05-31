@@ -1291,6 +1291,39 @@ export interface MegalodonInterface {
   getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>>
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  /**
+   * View all announcements.
+   *
+   * @return Array of announcements.
+   */
+  getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>>
+
+  /**
+   * Dismiss an announcement.
+   *
+   * @param id The ID of the Announcement in the database.
+   */
+  dismissInstanceAnnouncement(id: string): Promise<Response<{}>>
+
+  /**
+   * Add a reaction to an announcement.
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  addReactionToAnnouncement(id: string, name: string): Promise<Response<{}>>
+
+  /**
+   * Remove a reaction from an announcement.
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  removeReactionFromAnnouncement(id: string, name: string): Promise<Response<{}>>
+
+  // ======================================
   // Emoji reactions
   // ======================================
   /**

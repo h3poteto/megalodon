@@ -3033,6 +3033,51 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  /**
+   * GET /api/v1/announcements
+   *
+   * @return Array of announcements.
+   */
+  public async getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>> {
+    return this.client.get<Array<MastodonAPI.Entity.Announcement>>('/api/v1/announcements').then(res => {
+      return Object.assign(res, {
+        data: res.data.map(a => MastodonAPI.Converter.announcement(a))
+      })
+    })
+  }
+
+  /**
+   * POST /api/v1/announcements/:id/dismiss
+   *
+   * @param id The ID of the Announcement in the database.
+   */
+  public async dismissInstanceAnnouncement(id: string): Promise<Response<{}>> {
+    return this.client.post<{}>(`/api/v1/announcements/${id}/dismiss`)
+  }
+
+  /**
+   * PUT /api/v1/announcements/:id/reactions/:name
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  public async addReactionToAnnouncement(id: string, name: string): Promise<Response<{}>> {
+    return this.client.put<{}>(`/api/v1/announcements/${id}/reactions/${name}`)
+  }
+
+  /**
+   * DELETE /api/v1/announcements/:id/reactions/:name
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  public async removeReactionFromAnnouncement(id: string, name: string): Promise<Response<{}>> {
+    return this.client.del<{}>(`/api/v1/announcements/${id}/reactions/${name}`)
+  }
+
+  // ======================================
   // Emoji reactions
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {

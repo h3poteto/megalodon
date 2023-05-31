@@ -2732,6 +2732,63 @@ export default class Friendica implements MegalodonInterface {
   }
 
   // ======================================
+  // instance/announcements
+  // ======================================
+  /**
+   * GET /api/v1/announcements
+   *
+   * @return Array of announcements.
+   */
+  public async getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>> {
+    return new Promise(resolve => {
+      resolve({
+        data: [],
+        status: 200,
+        statusText: '200',
+        headers: null
+      })
+    })
+  }
+
+  /**
+   * POST /api/v1/announcements/:id/dismiss
+   *
+   * @param id The ID of the Announcement in the database.
+   */
+  public async dismissInstanceAnnouncement(_id: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * PUT /api/v1/announcements/:id/reactions/:name
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
+  }
+
+  /**
+   * DELETE /api/v1/announcements/:id/reactions/:name
+   *
+   * @param id The ID of the Announcement in the database.
+   * @param name Unicode emoji, or the shortcode of a custom emoji.
+   */
+  public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<{}>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
   // Emoji reactions
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
