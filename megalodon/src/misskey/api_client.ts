@@ -13,6 +13,7 @@ import NotificationType from '../notification'
 
 namespace MisskeyAPI {
   export namespace Entity {
+    export type Announcement = MisskeyEntity.Announcement
     export type App = MisskeyEntity.App
     export type Blocking = MisskeyEntity.Blocking
     export type Choice = MisskeyEntity.Choice
@@ -40,6 +41,23 @@ namespace MisskeyAPI {
   }
 
   export namespace Converter {
+    export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => ({
+      id: a.id,
+      content: a.title + '\n' + a.text,
+      starts_at: null,
+      ends_at: null,
+      published: true,
+      all_day: true,
+      published_at: a.createdAt,
+      updated_at: a.updatedAt,
+      read: a.isRead !== undefined ? a.isRead : null,
+      mentions: [],
+      statuses: [],
+      tags: [],
+      emojis: [],
+      reactions: []
+    })
+
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => {
       return {
         shortcode: e.name,

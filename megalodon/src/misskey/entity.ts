@@ -1,3 +1,4 @@
+/// <reference path="entities/announcement.ts" />
 /// <reference path="entities/app.ts" />
 /// <reference path="entities/blocking.ts" />
 /// <reference path="entities/createdNote.ts" />
