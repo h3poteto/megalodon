@@ -1,4 +1,4 @@
-import generator, { MegalodonInterface, Entity, Response } from 'megalodon'
+import generator, { MegalodonInterface } from 'megalodon'
 
 declare var process: {
   env: {
@@ -13,8 +13,6 @@ const access_token: string = process.env.MISSKEY_ACCESS_TOKEN
 const client: MegalodonInterface = generator('misskey', BASE_URL, access_token)
 
 client
-  .getLocalTimeline()
-  .then((resp: Response<Array<Entity.Status>>) => {
-    console.log(resp.data)
-  })
+  .getInstanceCustomEmojis()
+  .then(res => console.log(res.data))
   .catch(err => console.error(err))

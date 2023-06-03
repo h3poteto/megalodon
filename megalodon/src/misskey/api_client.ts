@@ -64,7 +64,7 @@ namespace MisskeyAPI {
         static_url: e.url,
         url: e.url,
         visible_in_picker: true,
-        category: ''
+        category: e.category
       }
     }
 
@@ -253,7 +253,7 @@ namespace MisskeyAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : [],
+        emojis: (Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : []).concat(mapReactionEmojis(n.reactionEmojis)),
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -292,6 +292,16 @@ namespace MisskeyAPI {
           name: key
         }
       })
+    }
+
+    const mapReactionEmojis = (r: { [key: string]: string }): Array<MegalodonEntity.Emoji> => {
+      return Object.keys(r).map(key => ({
+        shortcode: key,
+        static_url: r[key],
+        url: r[key],
+        visible_in_picker: true,
+        category: ''
+      }))
     }
 
     export const reactions = (r: Array<Entity.Reaction>): Array<MegalodonEntity.Reaction> => {
@@ -460,6 +470,7 @@ namespace MisskeyAPI {
    * Interface
    */
   export interface Interface {
+    get<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
     socket(channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list', listId?: string): WebSocket
@@ -493,7 +504,34 @@ namespace MisskeyAPI {
     }
 
     /**
-     * POST request to mastodon REST API.
+     * GET request to misskey API.
+     **/
+    public async get<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
+      let options: AxiosRequestConfig = {
+        params: params,
+        headers: headers,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
+      }
+      if (this.proxyConfig) {
+        options = Object.assign(options, {
+          httpAgent: proxyAgent(this.proxyConfig),
+          httpsAgent: proxyAgent(this.proxyConfig)
+        })
+      }
+      return axios.get<T>(this.baseUrl + path, options).then((resp: AxiosResponse<T>) => {
+        const res: Response<T> = {
+          data: resp.data,
+          status: resp.status,
+          statusText: resp.statusText,
+          headers: resp.headers
+        }
+        return res
+      })
+    }
+
+    /**
+     * POST request to misskey REST API.
      * @param path relative path from baseUrl
      * @param params Form data
      * @param headers Request header object
