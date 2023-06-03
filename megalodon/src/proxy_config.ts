@@ -1,4 +1,4 @@
-import { HttpsProxyAgent, HttpsProxyAgentOptions } from 'https-proxy-agent'
+import { HttpsProxyAgent } from 'https-proxy-agent'
 import { SocksProxyAgent } from 'socks-proxy-agent'
 
 export type ProxyConfig = {
@@ -13,34 +13,22 @@ export type ProxyConfig = {
 
 class ProxyProtocolError extends Error {}
 
-const proxyAgent = (proxyConfig: ProxyConfig): HttpsProxyAgent | SocksProxyAgent => {
+const proxyAgent = (proxyConfig: ProxyConfig): HttpsProxyAgent<'http'> | HttpsProxyAgent<'https'> | SocksProxyAgent => {
   switch (proxyConfig.protocol) {
     case 'http': {
-      let options: HttpsProxyAgentOptions = {
-        host: proxyConfig.host,
-        port: proxyConfig.port,
-        secureProxy: false
-      }
+      let url = new URL(`http://${proxyConfig.host}:${proxyConfig.port}`)
       if (proxyConfig.auth) {
-        options = Object.assign(options, {
-          auth: `${proxyConfig.auth.username}:${proxyConfig.auth.password}`
-        })
+        url = new URL(`http://${proxyConfig.auth.username}:${proxyConfig.auth.password}@${proxyConfig.host}:${proxyConfig.port}`)
       }
-      const httpsAgent = new HttpsProxyAgent(options)
+      const httpsAgent = new HttpsProxyAgent<'http'>(url)
       return httpsAgent
     }
     case 'https': {
-      let options: HttpsProxyAgentOptions = {
-        host: proxyConfig.host,
-        port: proxyConfig.port,
-        secureProxy: true
-      }
+      let url = new URL(`https://${proxyConfig.host}:${proxyConfig.port}`)
       if (proxyConfig.auth) {
-        options = Object.assign(options, {
-          auth: `${proxyConfig.auth.username}:${proxyConfig.auth.password}`
-        })
+        url = new URL(`https://${proxyConfig.auth.username}:${proxyConfig.auth.password}@${proxyConfig.host}:${proxyConfig.port}`)
       }
-      const httpsAgent = new HttpsProxyAgent(options)
+      const httpsAgent = new HttpsProxyAgent<'https'>(url)
       return httpsAgent
     }
     case 'socks4':
