@@ -27,6 +27,7 @@ const note: MisskeyEntity.Note = {
   renoteCount: 0,
   repliesCount: 0,
   reactions: {},
+  reactionEmojis: {},
   emojis: [],
   fileIds: [],
   files: [],

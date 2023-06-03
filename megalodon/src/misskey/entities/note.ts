@@ -15,6 +15,8 @@ namespace MisskeyEntity {
     renoteCount: number
     repliesCount: number
     reactions: { [key: string]: number }
+    // This field includes only remote emojis
+    reactionEmojis: { [key: string]: string }
     emojis: Array<Emoji>
     fileIds: Array<string>
     files: Array<File>

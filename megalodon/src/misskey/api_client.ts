@@ -253,7 +253,7 @@ namespace MisskeyAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : [],
+        emojis: (Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : []).concat(mapReactionEmojis(n.reactionEmojis)),
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -292,6 +292,16 @@ namespace MisskeyAPI {
           name: key
         }
       })
+    }
+
+    const mapReactionEmojis = (r: { [key: string]: string }): Array<MegalodonEntity.Emoji> => {
+      return Object.keys(r).map(key => ({
+        shortcode: key,
+        static_url: r[key],
+        url: r[key],
+        visible_in_picker: true,
+        category: ''
+      }))
     }
 
     export const reactions = (r: Array<Entity.Reaction>): Array<MegalodonEntity.Reaction> => {

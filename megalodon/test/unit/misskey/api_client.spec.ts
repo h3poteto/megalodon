@@ -192,6 +192,7 @@ describe('api_client', () => {
           renoteCount: 0,
           repliesCount: 0,
           reactions: {},
+          reactionEmojis: {},
           emojis: [],
           fileIds: [],
           files: [],
@@ -216,6 +217,7 @@ describe('api_client', () => {
           renoteCount: 0,
           repliesCount: 0,
           reactions: {},
+          reactionEmojis: {},
           emojis: [],
           fileIds: [],
           files: [],
@@ -225,6 +227,56 @@ describe('api_client', () => {
         const megalodonStatus = MisskeyAPI.Converter.note(note)
         expect(megalodonStatus.plain_content).toEqual(plainContent)
         expect(megalodonStatus.content).toEqual(content)
+      })
+    })
+    describe('emoji reaction', () => {
+      it('reactionEmojis should be parsed', () => {
+        const plainContent = 'hoge\nfuga\nfuga'
+        const note: MisskeyEntity.Note = {
+          id: '1',
+          createdAt: '2021-02-01T01:49:29',
+          userId: '1',
+          user: user,
+          text: plainContent,
+          cw: null,
+          visibility: 'public',
+          renoteCount: 0,
+          repliesCount: 0,
+          reactions: {
+            ':example1@.:': 1,
+            ':example2@example.com:': 2
+          },
+          reactionEmojis: {
+            'example2@example.com': 'https://example.com/emoji.png'
+          },
+          emojis: [],
+          fileIds: [],
+          files: [],
+          replyId: null,
+          renoteId: null
+        }
+        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        expect(megalodonStatus.emojis).toEqual([
+          {
+            shortcode: 'example2@example.com',
+            static_url: 'https://example.com/emoji.png',
+            url: 'https://example.com/emoji.png',
+            visible_in_picker: true,
+            category: ''
+          }
+        ])
+        expect(megalodonStatus.emoji_reactions).toEqual([
+          {
+            count: 1,
+            me: false,
+            name: ':example1@.:'
+          },
+          {
+            count: 2,
+            me: false,
+            name: ':example2@example.com:'
+          }
+        ])
       })
     })
   })
