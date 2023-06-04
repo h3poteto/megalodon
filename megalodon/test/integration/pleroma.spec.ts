@@ -68,7 +68,8 @@ const status: PleromaEntity.Status = {
   bookmarked: false,
   pleroma: {
     local: false
-  }
+  },
+  quote: null
 }
 
 const follow: PleromaEntity.Notification = {

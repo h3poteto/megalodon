@@ -168,7 +168,8 @@ describe('api_client', () => {
               'text/plain': plainContent
             },
             local: false
-          }
+          },
+		  quote: null,
         }
         const megalodonStatus = PleromaAPI.Converter.status(pleromaStatus)
         expect(megalodonStatus.plain_content).toEqual(plainContent)
@@ -212,7 +213,8 @@ describe('api_client', () => {
           bookmarked: false,
           pleroma: {
             local: false
-          }
+          },
+		  quote: null,
         }
         const megalodonStatus = PleromaAPI.Converter.status(pleromaStatus)
         expect(megalodonStatus.plain_content).toBeNull()
