@@ -5,6 +5,7 @@ import { EventEmitter } from 'events'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
 import PleromaAPI from './api_client'
+import { UnknownNotificationTypeError } from '@/notification'
 
 /**
  * WebSocket
@@ -241,7 +242,12 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       this.emit('update', PleromaAPI.Converter.status(status))
     })
     this.parser.on('notification', (notification: PleromaAPI.Entity.Notification) => {
-      this.emit('notification', PleromaAPI.Converter.notification(notification))
+      const n = PleromaAPI.Converter.notification(notification)
+      if (n instanceof UnknownNotificationTypeError) {
+        console.warn(`Unknown notification event has received: ${notification}`)
+      } else {
+        this.emit('notification', n)
+      }
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)

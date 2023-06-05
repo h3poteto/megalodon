@@ -9,6 +9,7 @@ import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
+import { UnknownNotificationTypeError } from './notification'
 
 export default class Pleroma implements MegalodonInterface {
   public client: PleromaAPI.Interface
@@ -2700,7 +2701,11 @@ export default class Pleroma implements MegalodonInterface {
     }
     return this.client.get<Array<PleromaAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(n => PleromaAPI.Converter.notification(n))
+        data: res.data.flatMap(n => {
+          const notify = PleromaAPI.Converter.notification(n)
+          if (notify instanceof UnknownNotificationTypeError) return []
+          return notify
+        })
       })
     })
   }
@@ -2712,11 +2717,12 @@ export default class Pleroma implements MegalodonInterface {
    * @return Notification.
    */
   public async getNotification(id: string): Promise<Response<Entity.Notification>> {
-    return this.client.get<PleromaAPI.Entity.Notification>(`/api/v1/notifications/${id}`).then(res => {
-      return Object.assign(res, {
-        data: PleromaAPI.Converter.notification(res.data)
-      })
-    })
+    const res = await this.client.get<PleromaAPI.Entity.Notification>(`/api/v1/notifications/${id}`)
+    const notify = PleromaAPI.Converter.notification(res.data)
+    if (notify instanceof UnknownNotificationTypeError) {
+      throw new UnknownNotificationTypeError()
+    }
+    return { ...res, data: notify }
   }
 
   /**
@@ -2747,25 +2753,24 @@ export default class Pleroma implements MegalodonInterface {
     max_id?: string
   }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
     if (options.id) {
-      return this.client
-        .post<PleromaAPI.Entity.Notification>('/api/v1/pleroma/notifications/read', {
-          id: options.id
-        })
-        .then(res => {
-          return Object.assign(res, {
-            data: PleromaAPI.Converter.notification(res.data)
-          })
-        })
+      const res = await this.client.post<PleromaAPI.Entity.Notification>('/api/v1/pleroma/notifications/read', {
+        id: options.id
+      })
+      const notify = PleromaAPI.Converter.notification(res.data)
+      if (notify instanceof UnknownNotificationTypeError) return { ...res, data: [] }
+      return { ...res, data: notify }
     } else if (options.max_id) {
-      return this.client
-        .post<Array<PleromaAPI.Entity.Notification>>('/api/v1/pleroma/notifications/read', {
-          max_id: options.max_id
+      const res = await this.client.post<Array<PleromaAPI.Entity.Notification>>('/api/v1/pleroma/notifications/read', {
+        max_id: options.max_id
+      })
+      return {
+        ...res,
+        data: res.data.flatMap(n => {
+          const notify = PleromaAPI.Converter.notification(n)
+          if (notify instanceof UnknownNotificationTypeError) return []
+          return notify
         })
-        .then(res => {
-          return Object.assign(res, {
-            data: res.data.map(n => PleromaAPI.Converter.notification(n))
-          })
-        })
+      }
     } else {
       return new Promise((_, reject) => {
         const err = new ArgumentError('id or max_id is required')
