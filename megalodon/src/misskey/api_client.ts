@@ -9,7 +9,7 @@ import MisskeyEntity from './entity'
 import MegalodonEntity from '../entity'
 import WebSocket from './web_socket'
 import MisskeyNotificationType from './notification'
-import NotificationType from '../notification'
+import NotificationType, { UnknownNotificationTypeError } from '../notification'
 
 namespace MisskeyAPI {
   export namespace Entity {
@@ -339,7 +339,9 @@ namespace MisskeyAPI {
       title: l.name
     })
 
-    export const encodeNotificationType = (e: MegalodonEntity.NotificationType): MisskeyEntity.NotificationType => {
+    export const encodeNotificationType = (
+      e: MegalodonEntity.NotificationType
+    ): MisskeyEntity.NotificationType | UnknownNotificationTypeError => {
       switch (e) {
         case NotificationType.Follow:
           return MisskeyNotificationType.Follow
@@ -355,11 +357,13 @@ namespace MisskeyAPI {
         case NotificationType.FollowRequest:
           return MisskeyNotificationType.ReceiveFollowRequest
         default:
-          return e
+          return new UnknownNotificationTypeError()
       }
     }
 
-    export const decodeNotificationType = (e: MisskeyEntity.NotificationType): MegalodonEntity.NotificationType => {
+    export const decodeNotificationType = (
+      e: MisskeyEntity.NotificationType
+    ): MegalodonEntity.NotificationType | UnknownNotificationTypeError => {
       switch (e) {
         case MisskeyNotificationType.Follow:
           return NotificationType.Follow
@@ -378,16 +382,20 @@ namespace MisskeyAPI {
         case MisskeyNotificationType.FollowRequestAccepted:
           return NotificationType.Follow
         default:
-          return e
+          return new UnknownNotificationTypeError()
       }
     }
 
-    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification | UnknownNotificationTypeError => {
+      const notificationType = decodeNotificationType(n.type)
+      if (notificationType instanceof UnknownNotificationTypeError) {
+        return notificationType
+      }
       let notification = {
         id: n.id,
         account: user(n.user),
         created_at: n.createdAt,
-        type: decodeNotificationType(n.type)
+        type: notificationType
       }
       if (n.note) {
         notification = Object.assign(notification, {

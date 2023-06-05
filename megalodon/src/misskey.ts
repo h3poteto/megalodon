@@ -6,6 +6,7 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import Response from './response'
 import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
+import { UnknownNotificationTypeError } from './notification'
 
 export default class Misskey implements MegalodonInterface {
   public client: MisskeyAPI.Interface
@@ -1852,9 +1853,16 @@ export default class Misskey implements MegalodonInterface {
         })
       }
     }
-    return this.client
-      .post<Array<MisskeyAPI.Entity.Notification>>('/api/i/notifications', params)
-      .then(res => ({ ...res, data: res.data.map(n => MisskeyAPI.Converter.notification(n)) }))
+    const res = await this.client.post<Array<MisskeyAPI.Entity.Notification>>('/api/i/notifications', params)
+    const notifications: Array<Entity.Notification> = res.data.flatMap(n => {
+      const notify = MisskeyAPI.Converter.notification(n)
+      if (notify instanceof UnknownNotificationTypeError) {
+        return []
+      }
+      return notify
+    })
+
+    return { ...res, data: notifications }
   }
 
   public async getNotification(_id: string): Promise<Response<Entity.Notification>> {

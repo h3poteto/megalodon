@@ -14,4 +14,6 @@ namespace NotificationType {
   export const Move: Entity.NotificationType = 'move'
 }
 
+export class UnknownNotificationTypeError extends Error {}
+
 export default NotificationType
