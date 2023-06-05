@@ -4,6 +4,7 @@ import { EventEmitter } from 'events'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
 import MastodonAPI from './api_client'
+import { UnknownNotificationTypeError } from '@/notification'
 
 /**
  * WebSocket
@@ -240,7 +241,12 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       this.emit('update', MastodonAPI.Converter.status(status))
     })
     this.parser.on('notification', (notification: MastodonAPI.Entity.Notification) => {
-      this.emit('notification', MastodonAPI.Converter.notification(notification))
+      const n = MastodonAPI.Converter.notification(notification)
+      if (n instanceof UnknownNotificationTypeError) {
+        console.warn(`Unknown notification event has received: ${notification}`)
+      } else {
+        this.emit('notification', n)
+      }
     })
     this.parser.on('delete', (id: string) => {
       this.emit('delete', id)

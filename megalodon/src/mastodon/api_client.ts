@@ -8,7 +8,7 @@ import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
 import MastodonEntity from './entity'
 import MegalodonEntity from '../entity'
-import NotificationType from '../notification'
+import NotificationType, { UnknownNotificationTypeError } from '../notification'
 import MastodonNotificationType from './notification'
 
 namespace MastodonAPI {
@@ -481,7 +481,9 @@ namespace MastodonAPI {
   }
 
   export namespace Converter {
-    export const encodeNotificationType = (t: MegalodonEntity.NotificationType): MastodonEntity.NotificationType => {
+    export const encodeNotificationType = (
+      t: MegalodonEntity.NotificationType
+    ): MastodonEntity.NotificationType | UnknownNotificationTypeError => {
       switch (t) {
         case NotificationType.Follow:
           return MastodonNotificationType.Follow
@@ -500,11 +502,13 @@ namespace MastodonAPI {
         case NotificationType.Update:
           return MastodonNotificationType.Update
         default:
-          return t
+          return new UnknownNotificationTypeError()
       }
     }
 
-    export const decodeNotificationType = (t: MastodonEntity.NotificationType): MegalodonEntity.NotificationType => {
+    export const decodeNotificationType = (
+      t: MastodonEntity.NotificationType
+    ): MegalodonEntity.NotificationType | UnknownNotificationTypeError => {
       switch (t) {
         case MastodonNotificationType.Follow:
           return NotificationType.Follow
@@ -523,7 +527,7 @@ namespace MastodonAPI {
         case MastodonNotificationType.Update:
           return NotificationType.Update
         default:
-          return t
+          return new UnknownNotificationTypeError()
       }
     }
 
@@ -570,21 +574,23 @@ namespace MastodonAPI {
     export const list = (l: Entity.List): MegalodonEntity.List => l
     export const marker = (m: Entity.Marker): MegalodonEntity.Marker => m
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
-    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification | UnknownNotificationTypeError => {
+      const notificationType = decodeNotificationType(n.type)
+      if (notificationType instanceof UnknownNotificationTypeError) return notificationType
       if (n.status) {
         return {
           account: account(n.account),
           created_at: n.created_at,
           id: n.id,
           status: status(n.status),
-          type: decodeNotificationType(n.type)
+          type: notificationType
         }
       } else {
         return {
           account: account(n.account),
           created_at: n.created_at,
           id: n.id,
-          type: decodeNotificationType(n.type)
+          type: notificationType
         }
       }
     }
