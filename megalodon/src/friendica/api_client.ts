@@ -721,8 +721,7 @@ namespace FriendicaAPI {
       pinned: s.pinned,
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      // Now quote is supported only fedibird.com.
-      quote: s.quote !== undefined && s.quote !== null
+      quote: false
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => {
       return {
