@@ -10,6 +10,7 @@ import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
+import { UnknownNotificationTypeError } from './notification'
 
 export default class Friendica implements MegalodonInterface {
   public client: FriendicaAPI.Interface
@@ -2403,7 +2404,11 @@ export default class Friendica implements MegalodonInterface {
     }
     return this.client.get<Array<FriendicaAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
       return Object.assign(res, {
-        data: res.data.map(n => FriendicaAPI.Converter.notification(n))
+        data: res.data.flatMap(n => {
+          const notify = FriendicaAPI.Converter.notification(n)
+          if (notify instanceof UnknownNotificationTypeError) return []
+          return notify
+        })
       })
     })
   }
@@ -2415,11 +2420,12 @@ export default class Friendica implements MegalodonInterface {
    * @return Notification.
    */
   public async getNotification(id: string): Promise<Response<Entity.Notification>> {
-    return this.client.get<FriendicaAPI.Entity.Notification>(`/api/v1/notifications/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.notification(res.data)
-      })
-    })
+    const res = await this.client.get<FriendicaAPI.Entity.Notification>(`/api/v1/notifications/${id}`)
+    const notify = FriendicaAPI.Converter.notification(res.data)
+    if (notify instanceof UnknownNotificationTypeError) {
+      throw new UnknownNotificationTypeError()
+    }
+    return { ...res, data: notify }
   }
 
   /**

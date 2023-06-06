@@ -1,6 +1,6 @@
 import { WebSocketInterface } from '../megalodon'
 import { EventEmitter } from 'events'
-import { ProxyConfig } from '@/proxy_config'
+import { ProxyConfig } from '../proxy_config'
 
 export default class WebSocket extends EventEmitter implements WebSocketInterface {
   constructor(

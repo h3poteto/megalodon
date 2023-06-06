@@ -8,7 +8,7 @@ import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
 import WebSocket from './web_socket'
-import NotificationType from '../notification'
+import NotificationType, { UnknownNotificationTypeError } from '../notification'
 import PleromaNotificationType from './notification'
 
 namespace PleromaAPI {
@@ -53,7 +53,9 @@ namespace PleromaAPI {
   }
 
   export namespace Converter {
-    export const decodeNotificationType = (t: PleromaEntity.NotificationType): MegalodonEntity.NotificationType => {
+    export const decodeNotificationType = (
+      t: PleromaEntity.NotificationType
+    ): MegalodonEntity.NotificationType | UnknownNotificationTypeError => {
       switch (t) {
         case PleromaNotificationType.Mention:
           return NotificationType.Mention
@@ -74,10 +76,12 @@ namespace PleromaAPI {
         case PleromaNotificationType.Move:
           return NotificationType.Move
         default:
-          return t
+          return new UnknownNotificationTypeError()
       }
     }
-    export const encodeNotificationType = (t: MegalodonEntity.NotificationType): PleromaEntity.NotificationType => {
+    export const encodeNotificationType = (
+      t: MegalodonEntity.NotificationType
+    ): PleromaEntity.NotificationType | UnknownNotificationTypeError => {
       switch (t) {
         case NotificationType.Follow:
           return PleromaNotificationType.Follow
@@ -98,7 +102,7 @@ namespace PleromaAPI {
         case NotificationType.Move:
           return PleromaNotificationType.Move
         default:
-          return t
+          return new UnknownNotificationTypeError()
       }
     }
 
@@ -224,7 +228,9 @@ namespace PleromaAPI {
       }
     }
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
-    export const notification = (n: Entity.Notification): MegalodonEntity.Notification => {
+    export const notification = (n: Entity.Notification): MegalodonEntity.Notification | UnknownNotificationTypeError => {
+      const notificationType = decodeNotificationType(n.type)
+      if (notificationType instanceof UnknownNotificationTypeError) return notificationType
       if (n.status && n.emoji) {
         return {
           id: n.id,
@@ -232,7 +238,7 @@ namespace PleromaAPI {
           created_at: n.created_at,
           status: status(n.status),
           emoji: n.emoji,
-          type: decodeNotificationType(n.type)
+          type: notificationType
         }
       } else if (n.status) {
         return {
@@ -240,7 +246,7 @@ namespace PleromaAPI {
           account: account(n.account),
           created_at: n.created_at,
           status: status(n.status),
-          type: decodeNotificationType(n.type)
+          type: notificationType
         }
       } else if (n.target) {
         return {
@@ -248,14 +254,14 @@ namespace PleromaAPI {
           account: account(n.account),
           created_at: n.created_at,
           target: account(n.target),
-          type: decodeNotificationType(n.type)
+          type: notificationType
         }
       } else {
         return {
           id: n.id,
           account: account(n.account),
           created_at: n.created_at,
-          type: decodeNotificationType(n.type)
+          type: notificationType
         }
       }
     }

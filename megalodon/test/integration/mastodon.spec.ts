@@ -122,6 +122,13 @@ const toot: MastodonEntity.Notification = {
   type: MastodonNotificationType.Status
 }
 
+const unknownEvent: MastodonEntity.Notification = {
+  account: account,
+  created_at: '2021-01-31T23:33:26',
+  id: '8',
+  type: 'unknown'
+}
+
 ;(axios.CancelToken.source as any).mockImplementation(() => {
   return {
     token: {
@@ -189,5 +196,20 @@ describe('getNotifications', () => {
       const res = await client.getNotifications()
       expect(res.data[0].type).toEqual(c.expected)
     })
+  })
+  it('UnknownEvent should be ignored', async () => {
+    const config: InternalAxiosRequestConfig<any> = {
+      headers: new AxiosHeaders()
+    }
+    const mockResponse: AxiosResponse<Array<MastodonEntity.Notification>> = {
+      data: [unknownEvent],
+      status: 200,
+      statusText: '200OK',
+      headers: {},
+      config: config
+    }
+    ;(axios.get as any).mockResolvedValue(mockResponse)
+    const res = await client.getNotifications()
+    expect(res.data).toEqual([])
   })
 })

@@ -5,6 +5,7 @@ import { EventEmitter } from 'events'
 import { WebSocketInterface } from '../megalodon'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import MisskeyAPI from './api_client'
+import { UnknownNotificationTypeError } from '../notification'
 
 /**
  * WebSocket
@@ -285,7 +286,12 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       this.emit('update', MisskeyAPI.Converter.note(note))
     })
     this.parser.on('notification', (notification: MisskeyAPI.Entity.Notification) => {
-      this.emit('notification', MisskeyAPI.Converter.notification(notification))
+      const n = MisskeyAPI.Converter.notification(notification)
+      if (n instanceof UnknownNotificationTypeError) {
+        console.warn(`Unknown notification event has received: ${notification}`)
+      } else {
+        this.emit('notification', n)
+      }
     })
     this.parser.on('conversation', (note: MisskeyAPI.Entity.Note) => {
       this.emit('conversation', MisskeyAPI.Converter.noteToConversation(note))
