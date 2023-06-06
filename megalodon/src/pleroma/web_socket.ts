@@ -5,7 +5,7 @@ import { EventEmitter } from 'events'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
 import PleromaAPI from './api_client'
-import { UnknownNotificationTypeError } from '@/notification'
+import { UnknownNotificationTypeError } from '../notification'
 
 /**
  * WebSocket

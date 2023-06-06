@@ -119,6 +119,13 @@ const emojiReaction: PleromaEntity.Notification = {
   emoji: '♥'
 }
 
+const unknownEvent: PleromaEntity.Notification = {
+  account: account,
+  created_at: '2021-01-31T23:33:26',
+  id: '8',
+  type: 'unknown'
+}
+
 const followRequest: PleromaEntity.Notification = {
   account: account,
   created_at: '2021-01-31T23:33:26',
@@ -193,5 +200,20 @@ describe('getNotifications', () => {
       const res = await client.getNotifications()
       expect(res.data[0].type).toEqual(c.expected)
     })
+  })
+  it('UnknownEvent should be ignored', async () => {
+    const config: InternalAxiosRequestConfig<any> = {
+      headers: new AxiosHeaders()
+    }
+    const mockResponse: AxiosResponse<Array<PleromaEntity.Notification>> = {
+      data: [unknownEvent],
+      status: 200,
+      statusText: '200OK',
+      headers: {},
+      config: config
+    }
+    ;(axios.get as any).mockResolvedValue(mockResponse)
+    const res = await client.getNotifications()
+    expect(res.data).toEqual([])
   })
 })

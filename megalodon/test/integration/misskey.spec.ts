@@ -181,11 +181,6 @@ describe('getNotifications', () => {
       event: followRequestAccepted,
       expected: MegalodonNotificationType.Follow,
       title: 'followRequestAccepted'
-    },
-    {
-      event: groupInvited,
-      expected: MisskeyNotificationType.GroupInvited,
-      title: 'groupInvited'
     }
   ]
   cases.forEach(c => {
@@ -204,5 +199,20 @@ describe('getNotifications', () => {
       const res = await client.getNotifications()
       expect(res.data[0].type).toEqual(c.expected)
     })
+  })
+  it('groupInvited event should be ignored', async () => {
+    const config: InternalAxiosRequestConfig<any> = {
+      headers: new AxiosHeaders()
+    }
+    const mockResponse: AxiosResponse<Array<MisskeyEntity.Notification>> = {
+      data: [groupInvited],
+      status: 200,
+      statusText: '200OK',
+      headers: {},
+      config: config
+    }
+    ;(axios.post as any).mockResolvedValue(mockResponse)
+    const res = await client.getNotifications()
+    expect(res.data).toEqual([])
   })
 })

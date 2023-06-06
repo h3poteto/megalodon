@@ -5,7 +5,7 @@ import { EventEmitter } from 'events'
 import { WebSocketInterface } from '../megalodon'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import MisskeyAPI from './api_client'
-import { UnknownNotificationTypeError } from '@/notification'
+import { UnknownNotificationTypeError } from '../notification'
 
 /**
  * WebSocket
