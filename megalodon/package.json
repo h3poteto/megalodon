@@ -69,7 +69,7 @@
   "devDependencies": {
     "@types/core-js": "^2.5.0",
     "@types/form-data": "^2.5.0",
-    "@types/jest": "^29.5.1",
+    "@types/jest": "^29.5.2",
     "@types/object-assign-deep": "^0.4.0",
     "@types/parse-link-header": "^2.0.1",
     "@types/uuid": "^9.0.1",
