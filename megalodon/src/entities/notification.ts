@@ -1,5 +1,6 @@
 /// <reference path="account.ts" />
 /// <reference path="status.ts" />
+/// <reference path="reaction.ts" />
 
 namespace Entity {
   export type Notification = {
@@ -8,6 +9,7 @@ namespace Entity {
     id: string
     status?: Status
     emoji?: string
+    emoji_reaction?: Reaction
     type: NotificationType
     target?: Account
   }

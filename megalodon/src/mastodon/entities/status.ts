@@ -4,6 +4,7 @@
 /// <reference path="tag.ts" />
 /// <reference path="attachment.ts" />
 /// <reference path="emoji.ts" />
+/// <reference path="reaction.ts" />
 /// <reference path="card.ts" />
 /// <reference path="poll.ts" />
 
@@ -40,6 +41,10 @@ namespace MastodonEntity {
     // These parameters are unique parameters in fedibird.com for quote.
     quote_id?: string
     quote?: Status | null
+    // These parameters are unique parameters in fedibird.com for emoji reaction.
+    emoji_reactions?: Array<Reaction>
+    emoji_reactioned?: boolean
+    emoji_reactions_count?: number
   }
 
   export type StatusTag = {

@@ -466,6 +466,7 @@ namespace MastodonAPI {
     export type PollOption = MastodonEntity.PollOption
     export type Preferences = MastodonEntity.Preferences
     export type PushSubscription = MastodonEntity.PushSubscription
+    export type Reaction = MastodonEntity.Reaction
     export type Relationship = MastodonEntity.Relationship
     export type Report = MastodonEntity.Report
     export type Results = MastodonEntity.Results
@@ -499,6 +500,8 @@ namespace MastodonAPI {
           return MastodonNotificationType.Poll
         case NotificationType.Update:
           return MastodonNotificationType.Update
+        case NotificationType.EmojiReaction:
+          return MastodonNotificationType.EmojiReaction
         default:
           return t
       }
@@ -522,6 +525,8 @@ namespace MastodonAPI {
           return NotificationType.PollExpired
         case MastodonNotificationType.Update:
           return NotificationType.Update
+        case MastodonNotificationType.EmojiReaction:
+          return NotificationType.EmojiReaction
         default:
           return t
       }
@@ -561,6 +566,7 @@ namespace MastodonAPI {
       unread: c.unread
     })
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
+    export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => r
     export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
@@ -576,6 +582,7 @@ namespace MastodonAPI {
           account: account(n.account),
           created_at: n.created_at,
           id: n.id,
+          emoji_reaction: n.emoji_reaction,
           status: status(n.status),
           type: decodeNotificationType(n.type)
         }
@@ -584,6 +591,7 @@ namespace MastodonAPI {
           account: account(n.account),
           created_at: n.created_at,
           id: n.id,
+          emoji_reaction: n.emoji_reaction,
           type: decodeNotificationType(n.type)
         }
       }
@@ -631,8 +639,9 @@ namespace MastodonAPI {
       application: s.application ? application(s.application) : null,
       language: s.language,
       pinned: s.pinned,
-      emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
+      // Now emoji_reactions is supported only fedibird.com.
+      emoji_reactions: s.emoji_reactions !== undefined && Array.isArray(s.emoji_reactions) ? s.emoji_reactions.map(r => reaction(r)) : [],
       // Now quote is supported only fedibird.com.
       quote: s.quote !== undefined && s.quote !== null
     })
