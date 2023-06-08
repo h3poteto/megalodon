@@ -183,8 +183,7 @@ namespace PleromaAPI {
       shortcode: e.shortcode,
       static_url: e.static_url,
       url: e.url,
-      visible_in_picker: e.visible_in_picker,
-      category: e.category
+      visible_in_picker: e.visible_in_picker
     })
     export const featured_tag = (f: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => f
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
