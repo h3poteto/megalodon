@@ -41,6 +41,14 @@ describe('detector', () => {
     })
   })
 
+  describe('akkoma', () => {
+    const url = 'https://pleroma.noellabo.jp'
+    it('should be akkoma', async () => {
+      const akkoma = await detector(url)
+      expect(akkoma).toEqual('pleroma')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {

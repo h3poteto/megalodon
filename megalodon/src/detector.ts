@@ -68,6 +68,8 @@ export const detector = async (
       switch (res.data.software.name) {
         case 'pleroma':
           return 'pleroma'
+        case 'akkoma':
+          return 'pleroma'
         case 'mastodon':
           return 'mastodon'
         case 'misskey':
@@ -86,6 +88,8 @@ export const detector = async (
       switch (res.data.software.name) {
         case 'pleroma':
           return 'pleroma'
+        case 'akkoma':
+          return 'pleroma'
         case 'mastodon':
           return 'mastodon'
         case 'misskey':
@@ -103,6 +107,8 @@ export const detector = async (
       const res = await axios.get<Nodeinfo21>(link.href, options)
       switch (res.data.software.name) {
         case 'pleroma':
+          return 'pleroma'
+        case 'akkoma':
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
