@@ -52,7 +52,9 @@ export const detector = async (
   url: string,
   proxyConfig: ProxyConfig | false = false
 ): Promise<'mastodon' | 'pleroma' | 'misskey' | 'friendica'> => {
-  let options: AxiosRequestConfig = {}
+  let options: AxiosRequestConfig = {
+    timeout: 20000
+  }
   if (proxyConfig) {
     options = Object.assign(options, {
       httpsAgent: proxyAgent(proxyConfig)
@@ -67,6 +69,8 @@ export const detector = async (
       const res = await axios.get<Nodeinfo10>(link.href, options)
       switch (res.data.software.name) {
         case 'pleroma':
+          return 'pleroma'
+        case 'akkoma':
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
@@ -86,6 +90,8 @@ export const detector = async (
       switch (res.data.software.name) {
         case 'pleroma':
           return 'pleroma'
+        case 'akkoma':
+          return 'pleroma'
         case 'mastodon':
           return 'mastodon'
         case 'misskey':
@@ -103,6 +109,8 @@ export const detector = async (
       const res = await axios.get<Nodeinfo21>(link.href, options)
       switch (res.data.software.name) {
         case 'pleroma':
+          return 'pleroma'
+        case 'akkoma':
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'

@@ -30,7 +30,7 @@ describe('detector', () => {
     it('should be mastodon', async () => {
       const fedibird = await detector(url)
       expect(fedibird).toEqual('mastodon')
-    })
+    }, 20000)
   })
 
   describe('friendica', () => {
@@ -38,6 +38,14 @@ describe('detector', () => {
     it('should be friendica', async () => {
       const friendica = await detector(url)
       expect(friendica).toEqual('friendica')
+    })
+  })
+
+  describe('akkoma', () => {
+    const url = 'https://pleroma.noellabo.jp'
+    it('should be akkoma', async () => {
+      const akkoma = await detector(url)
+      expect(akkoma).toEqual('pleroma')
     })
   })
 
