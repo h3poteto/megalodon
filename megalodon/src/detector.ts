@@ -52,7 +52,9 @@ export const detector = async (
   url: string,
   proxyConfig: ProxyConfig | false = false
 ): Promise<'mastodon' | 'pleroma' | 'misskey' | 'friendica'> => {
-  let options: AxiosRequestConfig = {}
+  let options: AxiosRequestConfig = {
+    timeout: 20000
+  }
   if (proxyConfig) {
     options = Object.assign(options, {
       httpsAgent: proxyAgent(proxyConfig)
