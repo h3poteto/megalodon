@@ -74,6 +74,8 @@ export const detector = async (
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
+        case "wildebeest":
+          return "mastodon"
         case 'misskey':
           return 'misskey'
         case 'friendica':
@@ -94,6 +96,8 @@ export const detector = async (
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
+        case "wildebeest":
+          return "mastodon"
         case 'misskey':
           return 'misskey'
         case 'friendica':
@@ -114,6 +118,8 @@ export const detector = async (
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
+        case "wildebeest":
+          return "mastodon"
         case 'misskey':
           return 'misskey'
         case 'friendica':
