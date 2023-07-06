@@ -15,6 +15,8 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 - [x] Pleroma
 - [x] Friendica
 - [x] Misskey
+- [x] Akkoma (Unofficial)
+- [x] Widlebeest (Unofficial)
 
 ## Features
 - [x] REST API
