@@ -90,7 +90,7 @@ namespace MisskeyAPI {
         avatar_static: u.avatarColor,
         header: '',
         header_static: '',
-        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
+        emojis: mapEmojis(u.emojis),
         moved: null,
         fields: [],
         bot: null
@@ -119,7 +119,7 @@ namespace MisskeyAPI {
         avatar_static: u.avatarColor,
         header: u.bannerUrl,
         header_static: u.bannerColor,
-        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
+        emojis: mapEmojis(u.emojis),
         moved: null,
         fields: [],
         bot: u.isBot
@@ -253,7 +253,7 @@ namespace MisskeyAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: (Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : []).concat(mapReactionEmojis(n.reactionEmojis)),
+        emojis: mapEmojis(n.emojis).concat(mapReactionEmojis(n.reactionEmojis)),
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -274,6 +274,14 @@ namespace MisskeyAPI {
         emoji_reactions: typeof n.reactions === 'object' ? mapReactions(n.reactions, n.myReaction) : [],
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
+      }
+    }
+
+    const mapEmojis = (e: Array<Entity.Emoji> | { [key: string]: string }): Array<MegalodonEntity.Emoji> => {
+      if (Array.isArray(e)) {
+        return e.map(e => emoji(e))
+      } else {
+        return mapReactionEmojis(e)
       }
     }
 
