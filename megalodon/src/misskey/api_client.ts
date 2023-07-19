@@ -280,8 +280,10 @@ namespace MisskeyAPI {
     const mapEmojis = (e: Array<Entity.Emoji> | { [key: string]: string }): Array<MegalodonEntity.Emoji> => {
       if (Array.isArray(e)) {
         return e.map(e => emoji(e))
-      } else {
+      } else if (e) {
         return mapReactionEmojis(e)
+      } else {
+        return [];
       }
     }
 
