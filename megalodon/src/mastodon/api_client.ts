@@ -501,6 +501,10 @@ namespace MastodonAPI {
           return MastodonNotificationType.Poll
         case NotificationType.Update:
           return MastodonNotificationType.Update
+        case NotificationType.AdminSignup:
+          return MastodonNotificationType.AdminSignup
+        case NotificationType.AdminReport:
+          return MastodonNotificationType.AdminReport
         default:
           return new UnknownNotificationTypeError()
       }
@@ -526,6 +530,10 @@ namespace MastodonAPI {
           return NotificationType.PollExpired
         case MastodonNotificationType.Update:
           return NotificationType.Update
+        case MastodonNotificationType.AdminSignup:
+          return NotificationType.AdminSignup
+        case MastodonNotificationType.AdminReport:
+          return NotificationType.AdminReport
         default:
           return new UnknownNotificationTypeError()
       }
