@@ -1145,6 +1145,16 @@ export default class Friendica implements MegalodonInterface {
   }
 
   // ======================================
+  // accounts/followed_tags
+  // ======================================
+  public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('friendica does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
   // accounts/suggestions
   // ======================================
   /**

@@ -1399,6 +1399,16 @@ export default class Pleroma implements MegalodonInterface {
   }
 
   // ======================================
+  // accounts/followed_tags
+  // ======================================
+  public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('pleroma does not support')
+      reject(err)
+    })
+  }
+
+  // ======================================
   // accounts/suggestions
   // ======================================
   /**
