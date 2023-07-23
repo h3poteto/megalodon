@@ -602,6 +602,15 @@ export interface MegalodonInterface {
    */
   getPreferences(): Promise<Response<Entity.Preferences>>
   // ======================================
+  // accounts/followed_tags
+  // ======================================
+  /**
+   * View all followed tags.
+   *
+   * @return Array of tag.
+   */
+  getFollowedTags(): Promise<Response<Array<Entity.Tag>>>
+  // ======================================
   // accounts/suggestions
   // ======================================
   /**

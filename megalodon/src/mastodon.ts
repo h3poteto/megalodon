@@ -1403,6 +1403,22 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   // ======================================
+  // accounts/followed_tags
+  // ======================================
+  /**
+   * GET /api/v1/followed_tags
+   *
+   * @return Array of Tag.
+   */
+  public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
+    return this.client.get<Array<MastodonAPI.Entity.Tag>>('/api/v1/followed_tags').then(res => {
+      return Object.assign(res, {
+        data: res.data.map(tag => MastodonAPI.Converter.tag(tag))
+      })
+    })
+  }
+
+  // ======================================
   // accounts/suggestions
   // ======================================
   /**
