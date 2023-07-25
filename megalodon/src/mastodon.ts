@@ -2627,10 +2627,16 @@ export default class Mastodon implements MegalodonInterface {
    * @param timelines Array of timeline names, String enum anyOf home, notifications.
    * @return Marker or empty object.
    */
-  public async getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | {}>> {
-    return this.client.get<MastodonAPI.Entity.Marker | {}>('/api/v1/markers', {
-      timeline: timeline
-    })
+  public async getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | Record<never, never>>> {
+    return this.client
+      .get<MastodonAPI.Entity.Marker | Record<never, never>>('/api/v1/markers', {
+        timeline: timeline
+      })
+      .then(res => {
+        return Object.assign(res, {
+          data: MastodonAPI.Converter.marker(res.data)
+        })
+      })
   }
 
   /**

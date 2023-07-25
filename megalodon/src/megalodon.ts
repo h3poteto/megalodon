@@ -1111,7 +1111,7 @@ export interface MegalodonInterface {
    * @param timelines Array of timeline names, String enum anyOf home, notifications.
    * @return Marker or empty object.
    */
-  getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | {}>>
+  getMarkers(timeline: Array<string>): Promise<Response<Entity.Marker | Record<never, never>>>
   /**
    * Save your position in a timeline.
    *
