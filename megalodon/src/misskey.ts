@@ -1804,7 +1804,7 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   // timelines/markers
   // ======================================
-  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | {}>> {
+  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('misskey does not support')
       reject(err)

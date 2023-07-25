@@ -216,14 +216,19 @@ namespace PleromaAPI {
       }
     })
     export const list = (l: Entity.List): MegalodonEntity.List => l
-    export const marker = (m: Entity.Marker): MegalodonEntity.Marker => {
-      return {
-        notifications: {
-          last_read_id: m.notifications.last_read_id,
-          version: m.notifications.version,
-          updated_at: m.notifications.updated_at,
-          unread_count: m.notifications.pleroma.unread_count
+    export const marker = (m: Entity.Marker | Record<never, never>): MegalodonEntity.Marker | Record<never, never> => {
+      if ((m as any).notifications) {
+        const mm = m as Entity.Marker
+        return {
+          notifications: {
+            last_read_id: mm.notifications.last_read_id,
+            version: mm.notifications.version,
+            updated_at: mm.notifications.updated_at,
+            unread_count: mm.notifications.pleroma.unread_count
+          }
         }
+      } else {
+        return {}
       }
     }
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
