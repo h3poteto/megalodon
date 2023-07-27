@@ -279,5 +279,99 @@ describe('api_client', () => {
         ])
       })
     })
+    describe('emoji', () => {
+      it('emojis in array format should be parsed', () => {
+        const plainContent = 'hoge\nfuga\nfuga'
+        const note: MisskeyEntity.Note = {
+          id: '1',
+          createdAt: '2021-02-01T01:49:29',
+          userId: '1',
+          user: user,
+          text: plainContent,
+          cw: null,
+          visibility: 'public',
+          renoteCount: 0,
+          repliesCount: 0,
+          reactions: {},
+          reactionEmojis: {},
+          emojis: [
+            {
+              aliases: [],
+              name: ':example1:',
+              url: 'https://example.com/emoji1.png',
+              category: '',
+            },
+            {
+              aliases: [],
+              name: ':example2:',
+              url: 'https://example.com/emoji2.png',
+              category: '',
+            },
+          ],
+          fileIds: [],
+          files: [],
+          replyId: null,
+          renoteId: null
+        }
+        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        expect(megalodonStatus.emojis).toEqual([
+          {
+            shortcode: ':example1:',
+            static_url: 'https://example.com/emoji1.png',
+            url: 'https://example.com/emoji1.png',
+            visible_in_picker: true,
+            category: ''
+          },
+          {
+            shortcode: ':example2:',
+            static_url: 'https://example.com/emoji2.png',
+            url: 'https://example.com/emoji2.png',
+            visible_in_picker: true,
+            category: ''
+          }
+        ])
+      })
+      it('emojis in object format should be parsed', () => {
+        const plainContent = 'hoge\nfuga\nfuga'
+        const note: MisskeyEntity.Note = {
+          id: '1',
+          createdAt: '2021-02-01T01:49:29',
+          userId: '1',
+          user: user,
+          text: plainContent,
+          cw: null,
+          visibility: 'public',
+          renoteCount: 0,
+          repliesCount: 0,
+          reactions: {},
+          reactionEmojis: {},
+          emojis: {
+            ':example1:': 'https://example.com/emoji1.png',
+            ':example2:': 'https://example.com/emoji2.png',
+          },
+          fileIds: [],
+          files: [],
+          replyId: null,
+          renoteId: null
+        }
+        const megalodonStatus = MisskeyAPI.Converter.note(note)
+        expect(megalodonStatus.emojis).toEqual([
+          {
+            shortcode: ':example1:',
+            static_url: 'https://example.com/emoji1.png',
+            url: 'https://example.com/emoji1.png',
+            visible_in_picker: true,
+            category: ''
+          },
+          {
+            shortcode: ':example2:',
+            static_url: 'https://example.com/emoji2.png',
+            url: 'https://example.com/emoji2.png',
+            visible_in_picker: true,
+            category: ''
+          }
+        ])
+      })
+    })
   })
 })

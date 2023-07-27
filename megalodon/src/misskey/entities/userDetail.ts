@@ -13,7 +13,7 @@ namespace MisskeyEntity {
     isModerator: boolean
     isBot: boolean
     isCat: boolean
-    emojis: Array<Emoji>
+    emojis: Array<Emoji> | { [key: string]: string }
     createdAt: string
     bannerUrl: string
     bannerColor: string
