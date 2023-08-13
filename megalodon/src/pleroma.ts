@@ -1446,11 +1446,10 @@ export default class Pleroma implements MegalodonInterface {
    * @param id Target hashtag id.
    * @return Tag
    */
-  public async getTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.get<PleromaAPI.Entity.Tag>(`/api/v1/tags/${id}`).then(res => {
-      return Object.assign(res, {
-        data: PleromaAPI.Converter.tag(res.data)
-      })
+  public async getTag(_id: string): Promise<Response<Entity.Tag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('pleroma does not support')
+      reject(err)
     })
   }
 
@@ -1460,11 +1459,10 @@ export default class Pleroma implements MegalodonInterface {
    * @param id Target hashtag id.
    * @return Tag
    */
-  public async followTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.post<PleromaAPI.Entity.Tag>(`/api/v1/tags/${id}/follow`).then(res => {
-      return Object.assign(res, {
-        data: PleromaAPI.Converter.tag(res.data)
-      })
+  public async followTag(_id: string): Promise<Response<Entity.Tag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('pleroma does not support')
+      reject(err)
     })
   }
 
@@ -1474,11 +1472,10 @@ export default class Pleroma implements MegalodonInterface {
    * @param id Target hashtag id.
    * @return Tag
    */
-  public async unfollowTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.post<PleromaAPI.Entity.Tag>(`/api/v1/tags/${id}/unfollow`).then(res => {
-      return Object.assign(res, {
-        data: PleromaAPI.Converter.tag(res.data)
-      })
+  public async unfollowTag(_id: string): Promise<Response<Entity.Tag>> {
+    return new Promise((_, reject) => {
+      const err = new NoImplementedError('pleroma does not support')
+      reject(err)
     })
   }
 
