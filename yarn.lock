@@ -3289,10 +3289,10 @@ jest-snapshot@^29.6.1:
     pretty-format "^29.6.1"
     semver "^7.5.3"
 
-jest-util@^29.0.0, jest-util@^29.6.1:
-  version "29.6.1"
-  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-29.6.1.tgz#c9e29a87a6edbf1e39e6dee2b4689b8a146679cb"
-  integrity sha512-NRFCcjc+/uO3ijUVyNOQJluf8PtGCe/W6cix36+M3cTFgiYqFOOW5MgN4JOOcvbUhcKTYVd1CvHz/LWi8d16Mg==
+jest-util@^29.0.0, jest-util@^29.6.1, jest-util@^29.6.2:
+  version "29.6.2"
+  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-29.6.2.tgz#8a052df8fff2eebe446769fd88814521a517664d"
+  integrity sha512-3eX1qb6L88lJNCFlEADKOkjpXJQyZRiavX1INZ4tRnrBVr2COd3RgcTLyUiEXMNBlDU/cgYq6taUS0fExrWW4w==
   dependencies:
     "@jest/types" "^29.6.1"
     "@types/node" "*"
@@ -3336,13 +3336,13 @@ jest-worker@^27.4.5:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest-worker@^29.6.1:
-  version "29.6.1"
-  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-29.6.1.tgz#64b015f0e985ef3a8ad049b61fe92b3db74a5319"
-  integrity sha512-U+Wrbca7S8ZAxAe9L6nb6g8kPdia5hj32Puu5iOqBCMTMWFHXuK6dOV2IFrpedbTV8fjMFLdWNttQTBL6u2MRA==
+jest-worker@^29.6.1, jest-worker@^29.6.2:
+  version "29.6.2"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-29.6.2.tgz#682fbc4b6856ad0aa122a5403c6d048b83f3fb44"
+  integrity sha512-l3ccBOabTdkng8I/ORCkADz4eSMKejTYv1vB/Z83UiubqhC1oQ5Li6dWCyqOIvSifGjUBxuvxvlm6KGK2DtuAQ==
   dependencies:
     "@types/node" "*"
-    jest-util "^29.6.1"
+    jest-util "^29.6.2"
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
