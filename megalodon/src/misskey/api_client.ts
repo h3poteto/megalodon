@@ -353,7 +353,8 @@ namespace MisskeyAPI {
 
     export const list = (l: Entity.List): MegalodonEntity.List => ({
       id: l.id,
-      title: l.name
+      title: l.name,
+      replies_policy: null
     })
 
     export const encodeNotificationType = (

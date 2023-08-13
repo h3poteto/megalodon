@@ -218,7 +218,11 @@ namespace PleromaAPI {
         }
       }
     })
-    export const list = (l: Entity.List): MegalodonEntity.List => l
+    export const list = (l: Entity.List): MegalodonEntity.List => ({
+      id: l.id,
+      title: l.title,
+      replies_policy: null
+    })
     export const marker = (m: Entity.Marker | Record<never, never>): MegalodonEntity.Marker | Record<never, never> => {
       if ((m as any).notifications) {
         const mm = m as Entity.Marker
