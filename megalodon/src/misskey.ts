@@ -851,6 +851,7 @@ export default class Misskey implements MegalodonInterface {
           data: {
             id: '',
             action_taken: false,
+            action_taken_at: null,
             comment: options.comment,
             category: category,
             forwarded: false,

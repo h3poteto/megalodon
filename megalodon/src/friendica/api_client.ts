@@ -676,6 +676,7 @@ namespace FriendicaAPI {
     export const report = (r: Entity.Report): MegalodonEntity.Report => ({
       id: r.id,
       action_taken: r.action_taken,
+      action_taken_at: null,
       category: r.category,
       comment: r.comment,
       forwarded: r.forwarded,

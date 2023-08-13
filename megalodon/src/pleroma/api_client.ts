@@ -308,23 +308,16 @@ namespace PleromaAPI {
       notifying: r.notifying,
       note: r.note
     })
-    export const report = (r: Entity.Report): MegalodonEntity.Report => {
-      const p = {
-        id: r.id,
-        action_taken: r.action_taken,
-        category: r.category,
-        comment: r.comment,
-        forwarded: r.forwarded,
-        status_ids: r.status_ids,
-        rule_ids: r.rule_ids
-      }
-      if (r.target_account) {
-        return Object.assign({}, p, {
-          target_account: account(r.target_account)
-        })
-      }
-      return p
-    }
+    export const report = (r: Entity.Report): MegalodonEntity.Report => ({
+      id: r.id,
+      action_taken: r.action_taken,
+      action_taken_at: null,
+      category: null,
+      comment: null,
+      forwarded: null,
+      status_ids: null,
+      rule_ids: null
+    })
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
       accounts: Array.isArray(r.accounts) ? r.accounts.map(a => account(a)) : [],
       statuses: Array.isArray(r.statuses) ? r.statuses.map(s => status(s)) : [],
