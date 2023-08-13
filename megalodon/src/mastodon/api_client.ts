@@ -469,6 +469,7 @@ namespace MastodonAPI {
     export type Relationship = MastodonEntity.Relationship
     export type Report = MastodonEntity.Report
     export type Results = MastodonEntity.Results
+    export type Role = MastodonEntity.Role
     export type ScheduledStatus = MastodonEntity.ScheduledStatus
     export type Source = MastodonEntity.Source
     export type Stats = MastodonEntity.Stats

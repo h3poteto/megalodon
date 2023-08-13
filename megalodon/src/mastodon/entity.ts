@@ -25,6 +25,7 @@
 /// <reference path="./entities/relationship.ts" />
 /// <reference path="./entities/report.ts" />
 /// <reference path="./entities/results.ts" />
+/// <reference path="./entities/role.ts" />
 /// <reference path="./entities/scheduled_status.ts" />
 /// <reference path="./entities/source.ts" />
 /// <reference path="./entities/stats.ts" />

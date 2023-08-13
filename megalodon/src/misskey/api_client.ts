@@ -80,6 +80,9 @@ namespace MisskeyAPI {
         display_name: u.name,
         locked: false,
         group: null,
+        noindex: null,
+        suspended: null,
+        limited: null,
         created_at: '',
         followers_count: 0,
         following_count: 0,
@@ -109,6 +112,9 @@ namespace MisskeyAPI {
         display_name: u.name,
         locked: u.isLocked,
         group: null,
+        noindex: null,
+        suspended: null,
+        limited: null,
         created_at: u.createdAt,
         followers_count: u.followersCount,
         following_count: u.followingCount,
@@ -283,7 +289,7 @@ namespace MisskeyAPI {
       } else if (e) {
         return mapReactionEmojis(e)
       } else {
-        return [];
+        return []
       }
     }
 
