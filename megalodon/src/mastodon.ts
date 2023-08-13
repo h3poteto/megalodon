@@ -571,7 +571,7 @@ export default class Mastodon implements MegalodonInterface {
         }
       }
     }
-    return res
+    return converted
   }
 
   /**
