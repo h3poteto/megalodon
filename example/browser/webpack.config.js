@@ -40,6 +40,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.browser': true,
       'process.env.NODE_DEBUG': false
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser'
     })
   ]
   // https-proxy-agent and socks-proxy-agent is node library, so can't compile for browser.
