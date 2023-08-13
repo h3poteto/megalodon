@@ -212,7 +212,8 @@ namespace MisskeyAPI {
         domain_blocking: false,
         showing_reblogs: true,
         endorsed: false,
-        notifying: false
+        notifying: false,
+        note: null
       }
     }
 

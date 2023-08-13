@@ -3,7 +3,6 @@ namespace Entity {
     id: string
     following: boolean
     followed_by: boolean
-    delivery_following?: boolean
     blocking: boolean
     blocked_by: boolean
     muting: boolean
@@ -13,5 +12,6 @@ namespace Entity {
     showing_reblogs: boolean
     endorsed: boolean
     notifying: boolean
+    note: string | null
   }
 }
