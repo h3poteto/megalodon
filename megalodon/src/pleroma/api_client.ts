@@ -171,7 +171,22 @@ namespace PleromaAPI {
         return a as MegalodonEntity.AsyncAttachment
       }
     }
-    export const card = (c: Entity.Card): MegalodonEntity.Card => c
+    export const card = (c: Entity.Card): MegalodonEntity.Card => ({
+      url: c.url,
+      title: c.title,
+      description: c.description,
+      type: c.type,
+      image: c.image,
+      author_name: null,
+      author_url: null,
+      provider_name: c.provider_name,
+      provider_url: c.provider_url,
+      html: null,
+      width: null,
+      height: null,
+      embed_url: null,
+      blurhash: null
+    })
     export const context = (c: Entity.Context): MegalodonEntity.Context => ({
       ancestors: Array.isArray(c.ancestors) ? c.ancestors.map(a => status(a)) : [],
       descendants: Array.isArray(c.descendants) ? c.descendants.map(d => status(d)) : []

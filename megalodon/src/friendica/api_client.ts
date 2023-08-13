@@ -578,7 +578,22 @@ namespace FriendicaAPI {
         return a as MegalodonEntity.AsyncAttachment
       }
     }
-    export const card = (c: Entity.Card): MegalodonEntity.Card => c
+    export const card = (c: Entity.Card): MegalodonEntity.Card => ({
+      url: c.url,
+      title: c.title,
+      description: c.description,
+      type: c.type,
+      image: c.image,
+      author_name: c.author_name,
+      author_url: c.author_url,
+      provider_name: c.provider_name,
+      provider_url: c.provider_url,
+      html: c.html,
+      width: c.width,
+      height: c.height,
+      embed_url: null,
+      blurhash: c.blurhash
+    })
     export const context = (c: Entity.Context): MegalodonEntity.Context => ({
       ancestors: Array.isArray(c.ancestors) ? c.ancestors.map(a => status(a)) : [],
       descendants: Array.isArray(c.descendants) ? c.descendants.map(d => status(d)) : []
