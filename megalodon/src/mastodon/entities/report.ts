@@ -4,6 +4,7 @@ namespace MastodonEntity {
   export type Report = {
     id: string
     action_taken: boolean
+    action_taken_at: string | null
     category: Category
     comment: string
     forwarded: boolean
