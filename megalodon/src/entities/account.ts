@@ -1,6 +1,7 @@
 /// <reference path="emoji.ts" />
 /// <reference path="source.ts" />
 /// <reference path="field.ts" />
+/// <reference path="role.ts" />
 namespace Entity {
   export type Account = {
     id: string
@@ -10,6 +11,9 @@ namespace Entity {
     locked: boolean
     discoverable?: boolean
     group: boolean | null
+    noindex: boolean | null
+    suspended: boolean | null
+    limited: boolean | null
     created_at: string
     followers_count: number
     following_count: number
@@ -25,5 +29,7 @@ namespace Entity {
     fields: Array<Field>
     bot: boolean | null
     source?: Source
+    role?: Role
+    mute_expires_at?: string
   }
 }

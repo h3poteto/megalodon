@@ -9,6 +9,9 @@ namespace PleromaEntity {
     display_name: string
     locked: boolean
     discoverable?: boolean
+    noindex: boolean | null
+    suspended: boolean | null
+    limited: boolean | null
     created_at: string
     followers_count: number
     following_count: number
