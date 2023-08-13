@@ -301,7 +301,8 @@ namespace PleromaAPI {
       domain_blocking: r.domain_blocking,
       showing_reblogs: r.showing_reblogs,
       endorsed: r.endorsed,
-      notifying: r.subscribing
+      notifying: r.notifying,
+      note: r.note
     })
     export const report = (r: Entity.Report): MegalodonEntity.Report => {
       const p = {

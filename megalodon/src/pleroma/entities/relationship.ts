@@ -12,5 +12,7 @@ namespace PleromaEntity {
     showing_reblogs: boolean
     endorsed: boolean
     subscribing: boolean
+    notifying: boolean
+    note: string
   }
 }
