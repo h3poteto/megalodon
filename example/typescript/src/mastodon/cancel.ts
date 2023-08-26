@@ -13,7 +13,7 @@ const access_token: string = process.env.MASTODON_ACCESS_TOKEN
 const client = generator('mastodon', BASE_URL, access_token)
 
 client
-  .search('whalebird', 'hashtags', { resolve: true })
+  .search('whalebird', { type: 'hashtags', resolve: true })
   .then((resp: Response<Entity.Results>) => {
     console.log(resp.data.hashtags)
   })

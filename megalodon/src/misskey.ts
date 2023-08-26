@@ -1951,8 +1951,8 @@ export default class Misskey implements MegalodonInterface {
   // ======================================
   public async search(
     q: string,
-    type: 'accounts' | 'hashtags' | 'statuses',
-    options?: {
+    options: {
+      type: 'accounts' | 'hashtags' | 'statuses'
       limit?: number
       max_id?: string
       min_id?: string
@@ -1963,7 +1963,7 @@ export default class Misskey implements MegalodonInterface {
       exclude_unreviewed?: boolean
     }
   ): Promise<Response<Entity.Results>> {
-    switch (type) {
+    switch (options.type) {
       case 'accounts': {
         let params = {
           query: q
