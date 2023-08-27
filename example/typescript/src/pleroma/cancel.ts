@@ -7,7 +7,7 @@ const access_token: string = process.env.PLEROMA_ACCESS_TOKEN!
 const client = generator('pleroma', BASE_URL, access_token)
 
 client
-  .search('whalebird', 'hashtags', { resolve: true })
+  .search('whalebird', { resolve: true })
   .then((resp: Response<Entity.Results>) => {
     console.log(resp.data.hashtags)
   })

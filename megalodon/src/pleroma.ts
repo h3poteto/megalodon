@@ -2880,7 +2880,7 @@ export default class Pleroma implements MegalodonInterface {
    * GET /api/v2/search
    *
    * @param q The search query.
-   * @param type Enum of search target.
+   * @param options.type Enum of search target.
    * @param options.limit Maximum number of results to load, per type. Defaults to 20. Max 40.
    * @param options.max_id Return results older than this id.
    * @param options.min_id Return results immediately newer than this id.
@@ -2892,8 +2892,8 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async search(
     q: string,
-    type: 'accounts' | 'hashtags' | 'statuses',
     options?: {
+      type?: 'accounts' | 'hashtags' | 'statuses'
       limit?: number
       max_id?: string
       min_id?: string
@@ -2905,10 +2905,14 @@ export default class Pleroma implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Results>> {
     let params = {
-      q,
-      type
+      q
     }
     if (options) {
+      if (options.type) {
+        params = Object.assign(params, {
+          type: options.type
+        })
+      }
       if (options.limit) {
         params = Object.assign(params, {
           limit: options.limit

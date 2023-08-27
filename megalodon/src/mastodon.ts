@@ -2877,8 +2877,8 @@ export default class Mastodon implements MegalodonInterface {
    */
   public async search(
     q: string,
-    type: 'accounts' | 'hashtags' | 'statuses',
     options?: {
+      type?: 'accounts' | 'hashtags' | 'statuses'
       limit?: number
       max_id?: string
       min_id?: string
@@ -2890,10 +2890,14 @@ export default class Mastodon implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Results>> {
     let params = {
-      q,
-      type
+      q
     }
     if (options) {
+      if (options.type) {
+        params = Object.assign(params, {
+          type: options.type
+        })
+      }
       if (options.limit) {
         params = Object.assign(params, {
           limit: options.limit
