@@ -1575,7 +1575,7 @@ export default class Pleroma implements MegalodonInterface {
         })
       }
     }
-    if (options.scheduled_at) {
+    if (options && options.scheduled_at) {
       return this.client.post<PleromaAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
         return Object.assign(res, {
           data: PleromaAPI.Converter.scheduled_status(res.data)
