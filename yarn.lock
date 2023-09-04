@@ -1040,10 +1040,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/object-assign-deep@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.0.tgz#23c66300f2d04676b927ee700308d0d1b5f8df89"
-  integrity sha512-3D0F3rHRNDc8cQSXNzwF1jBrJi28Mdrhc10ZLlqbJWDPYRWTTWB9Tc8JoKrgBvLKioXoPoHT6Uzf3s2F7akCUg==
+"@types/object-assign-deep@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.1.tgz#6bb3c9f81ab6ee8af09276fded7b231b85ea406f"
+  integrity sha512-uWJatOM1JKDdF6Fwa16124b76BtxvTz5Lv+ORGuI7dwqU4iqExXpeHrHOi1c8BU4FgSJ6PdH0skR9Zmz8+MUqQ==
 
 "@types/parse-link-header@^2.0.1":
   version "2.0.1"
