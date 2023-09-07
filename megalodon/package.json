@@ -64,7 +64,7 @@
     "socks-proxy-agent": "^8.0.1",
     "typescript": "5.1.6",
     "uuid": "^9.0.0",
-    "ws": "8.13.0"
+    "ws": "8.14.0"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.0",
