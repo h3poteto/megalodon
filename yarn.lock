@@ -951,10 +951,10 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/core-js@^2.5.0":
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-2.5.5.tgz#dc5a013ee0b23bd5ac126403854fadabb4f24f75"
-  integrity sha512-C4vwOHrhsvxn7UFyk4NDQNUpgNKdWsT/bL39UWyD75KSEOObZSKa9mYDOCM5FGeJG2qtbG0XiEbUKND2+j0WOg==
+"@types/core-js@^2.5.6":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-2.5.6.tgz#b06885ab91decdc4045215dbc4edbf02f061900d"
+  integrity sha512-zLzoC7avO4EYUUYCSzDaahSP1QJEpZQcPxqs91mPeFdh2NS4hQBcnRoEc9RuXfJ8cdN/KXUWukMmZGcKaWeOvw==
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.3"
