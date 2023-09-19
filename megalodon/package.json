@@ -73,7 +73,7 @@
     "@types/object-assign-deep": "^0.4.1",
     "@types/parse-link-header": "^2.0.1",
     "@types/uuid": "^9.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
