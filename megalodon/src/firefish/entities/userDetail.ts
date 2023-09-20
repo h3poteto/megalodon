@@ -1,5 +1,6 @@
 /// <reference path="emoji.ts" />
 /// <reference path="note.ts" />
+/// <reference path="field.ts" />
 
 namespace FirefishEntity {
   export type UserDetail = {
@@ -30,6 +31,7 @@ namespace FirefishEntity {
     isSuspended: boolean
     description: string | null
     lang: string | null
+    fields: Array<Field>
     followersCount: number
     followingCount: number
     notesCount: number

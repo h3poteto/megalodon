@@ -129,7 +129,7 @@ namespace FirefishAPI {
         header_static: u.bannerColor ?? '',
         emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
         moved: null,
-        fields: [],
+        fields: u.fields.map(f => field(f)),
         bot: u.isBot !== undefined ? u.isBot : null
       }
     }
