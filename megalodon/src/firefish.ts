@@ -167,7 +167,7 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  public async revokeToken(_client_id: string, _client_secret: string, _token: string): Promise<Response<{}>> {
+  public async revokeToken(_client_id: string, _client_secret: string, _token: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -450,7 +450,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/following/create
    */
   public async followAccount(id: string, _options?: { reblog?: boolean }): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/following/create', {
+    await this.client.post<Record<never, never>>('/api/following/create', {
       userId: id
     })
     return this.client
@@ -468,7 +468,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/following/delete
    */
   public async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/following/delete', {
+    await this.client.post<Record<never, never>>('/api/following/delete', {
       userId: id
     })
     return this.client
@@ -486,7 +486,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/blocking/create
    */
   public async blockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/blocking/create', {
+    await this.client.post<Record<never, never>>('/api/blocking/create', {
       userId: id
     })
     return this.client
@@ -504,7 +504,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/blocking/delete
    */
   public async unblockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/blocking/delete', {
+    await this.client.post<Record<never, never>>('/api/blocking/delete', {
       userId: id
     })
     return this.client
@@ -522,7 +522,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/mute/create
    */
   public async muteAccount(id: string, _notifications: boolean): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/mute/create', {
+    await this.client.post<Record<never, never>>('/api/mute/create', {
       userId: id
     })
     return this.client
@@ -540,7 +540,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/mute/delete
    */
   public async unmuteAccount(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/mute/delete', {
+    await this.client.post<Record<never, never>>('/api/mute/delete', {
       userId: id
     })
     return this.client
@@ -754,14 +754,14 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  public async blockDomain(_domain: string): Promise<Response<{}>> {
+  public async blockDomain(_domain: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
     })
   }
 
-  public async unblockDomain(_domain: string): Promise<Response<{}>> {
+  public async unblockDomain(_domain: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -841,7 +841,7 @@ export default class Firefish implements MegalodonInterface {
   ): Promise<Response<Entity.Report>> {
     const category: Entity.Category = 'other'
     return this.client
-      .post<{}>('/api/users/report-abuse', {
+      .post<Record<never, never>>('/api/users/report-abuse', {
         userId: account_id,
         comment: options.comment
       })
@@ -879,7 +879,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/following/requests/accept
    */
   public async acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/following/requests/accept', {
+    await this.client.post<Record<never, never>>('/api/following/requests/accept', {
       userId: id
     })
     return this.client
@@ -897,7 +897,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/following/requests/reject
    */
   public async rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
-    await this.client.post<{}>('/api/following/requests/reject', {
+    await this.client.post<Record<never, never>>('/api/following/requests/reject', {
       userId: id
     })
     return this.client
@@ -942,7 +942,7 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  public async deleteFeaturedTag(_id: string): Promise<Response<{}>> {
+  public async deleteFeaturedTag(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -1120,8 +1120,8 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/notes/delete
    */
-  public async deleteStatus(id: string): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/notes/delete', {
+  public async deleteStatus(id: string): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>('/api/notes/delete', {
       noteId: id
     })
   }
@@ -1197,7 +1197,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/notes/favorites/create
    */
   public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/favorites/create', {
+    await this.client.post<Record<never, never>>('/api/notes/favorites/create', {
       noteId: id
     })
     return this.client
@@ -1211,7 +1211,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/notes/favorites/delete
    */
   public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/favorites/delete', {
+    await this.client.post<Record<never, never>>('/api/notes/favorites/delete', {
       noteId: id
     })
     return this.client
@@ -1236,7 +1236,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/notes/unrenote
    */
   public async unreblogStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/unrenote', {
+    await this.client.post<Record<never, never>>('/api/notes/unrenote', {
       noteId: id
     })
     return this.client
@@ -1278,7 +1278,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/i/pin
    */
   public async pinStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/i/pin', {
+    await this.client.post<Record<never, never>>('/api/i/pin', {
       noteId: id
     })
     return this.client
@@ -1292,7 +1292,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/i/unpin
    */
   public async unpinStatus(id: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/i/unpin', {
+    await this.client.post<Record<never, never>>('/api/i/unpin', {
       noteId: id
     })
     return this.client
@@ -1376,7 +1376,7 @@ export default class Firefish implements MegalodonInterface {
       noteId: status_id,
       choice: choices[0]
     }
-    await this.client.post<{}>('/api/notes/polls/vote', params)
+    await this.client.post<Record<never, never>>('/api/notes/polls/vote', params)
     const res = await this.client
       .post<FirefishAPI.Entity.Note>('/api/notes/show', {
         noteId: status_id
@@ -1423,7 +1423,7 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  public async cancelScheduledStatus(_id: string): Promise<Response<{}>> {
+  public async cancelScheduledStatus(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -1693,7 +1693,7 @@ export default class Firefish implements MegalodonInterface {
       .then(res => ({ ...res, data: res.data.map(n => FirefishAPI.Converter.noteToConversation(n)) }))
   }
 
-  public async deleteConversation(_id: string): Promise<Response<{}>> {
+  public async deleteConversation(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -1756,8 +1756,8 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/users/lists/delete
    */
-  public async deleteList(id: string): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/users/lists/delete', {
+  public async deleteList(id: string): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>('/api/users/lists/delete', {
       listId: id
     })
   }
@@ -1788,8 +1788,8 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/users/lists/push
    */
-  public async addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/users/lists/push', {
+  public async addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>('/api/users/lists/push', {
       listId: id,
       userId: account_ids[0]
     })
@@ -1798,8 +1798,8 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/users/lists/pull
    */
-  public async deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/users/lists/pull', {
+  public async deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>('/api/users/lists/pull', {
       listId: id,
       userId: account_ids[0]
     })
@@ -1889,11 +1889,11 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/notifications/mark-all-as-read
    */
-  public async dismissNotifications(): Promise<Response<{}>> {
-    return this.client.post<{}>('/api/notifications/mark-all-as-read')
+  public async dismissNotifications(): Promise<Response<Record<never, never>>> {
+    return this.client.post<Record<never, never>>('/api/notifications/mark-all-as-read')
   }
 
-  public async dismissNotification(_id: string): Promise<Response<{}>> {
+  public async dismissNotification(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -1942,7 +1942,7 @@ export default class Firefish implements MegalodonInterface {
   /**
    * DELETE /api/v1/push/subscription
    */
-  public async deletePushSubscription(): Promise<Response<{}>> {
+  public async deletePushSubscription(): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
       const err = new NoImplementedError('firefish does not support')
       reject(err)
@@ -2176,7 +2176,7 @@ export default class Firefish implements MegalodonInterface {
    * @param {string} emoji Reaction emoji string. This string is raw unicode emoji.
    */
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/reactions/create', {
+    await this.client.post<Record<never, never>>('/api/notes/reactions/create', {
       noteId: id,
       reaction: emoji
     })
@@ -2191,7 +2191,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/notes/reactions/delete
    */
   public async deleteEmojiReaction(id: string, _emoji: string): Promise<Response<Entity.Status>> {
-    await this.client.post<{}>('/api/notes/reactions/delete', {
+    await this.client.post<Record<never, never>>('/api/notes/reactions/delete', {
       noteId: id
     })
     return this.client
