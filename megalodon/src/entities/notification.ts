@@ -3,7 +3,7 @@
 
 namespace Entity {
   export type Notification = {
-    account: Account
+    account: Account | null
     created_at: string
     id: string
     status?: Status
