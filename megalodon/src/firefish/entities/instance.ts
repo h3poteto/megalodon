@@ -1,4 +1,3 @@
-/// <reference path="stats.ts" />
 /// <reference path="field.ts" />
 
 namespace FirefishEntity {
@@ -21,7 +20,11 @@ namespace FirefishEntity {
     email: string
     version: string
     urls: URLs
-    stats: Stats
+    stats: {
+      user_count: number
+      status_count: number
+      domain_count: number
+    }
     thumbnail: string | null
     languages: Array<string>
     registrations: boolean

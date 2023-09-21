@@ -472,7 +472,11 @@ namespace FirefishAPI {
         version: i.version,
         thumbnail: i.thumbnail,
         urls: i.urls,
-        stats: stats(i.stats),
+        stats: {
+          user_count: i.stats.user_count,
+          status_count: i.stats.status_count,
+          domain_count: i.stats.domain_count
+        },
         languages: i.languages,
         registrations: i.registrations,
         approval_required: i.approval_required,
