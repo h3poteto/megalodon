@@ -1064,11 +1064,12 @@ export default class Firefish implements MegalodonInterface {
           replyId: options.in_reply_to_id
         })
       }
-      if (options.sensitive) {
-        params = Object.assign(params, {
-          cw: ''
-        })
-      }
+      // TODO: This field should be applied to files#is_sensitive.
+      // if (options.sensitive) {
+      //   params = Object.assign(params, {
+      //     cw: ''
+      //   })
+      // }
       if (options.spoiler_text) {
         params = Object.assign(params, {
           cw: options.spoiler_text
