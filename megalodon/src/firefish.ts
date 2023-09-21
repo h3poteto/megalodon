@@ -2115,7 +2115,7 @@ export default class Firefish implements MegalodonInterface {
     local?: boolean
   }): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('misskey does not support')
+      const err = new NoImplementedError('firefish does not support')
       reject(err)
     })
   }
