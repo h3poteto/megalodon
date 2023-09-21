@@ -6,6 +6,7 @@ import Mastodon from './mastodon'
 import Entity from './entity'
 import Misskey from './misskey'
 import Friendica from './friendica'
+import Firefish from './firefish'
 
 export interface WebSocketInterface {
   start(): void
@@ -1425,7 +1426,7 @@ export class NodeinfoError extends Error {
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma' | 'misskey' | 'friendica',
+  sns: 'mastodon' | 'pleroma' | 'misskey' | 'friendica' | 'firefish',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null,
@@ -1447,6 +1448,10 @@ const generator = (
     case 'mastodon': {
       const mastodon = new Mastodon(baseUrl, accessToken, userAgent, proxyConfig)
       return mastodon
+    }
+    case 'firefish': {
+      const firefish = new Firefish(baseUrl, accessToken, userAgent, proxyConfig)
+      return firefish
     }
   }
 }

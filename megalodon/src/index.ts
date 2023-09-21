@@ -7,6 +7,7 @@ import { detector } from './detector'
 import Mastodon from './mastodon'
 import Pleroma from './pleroma'
 import Misskey from './misskey'
+import Firefish from './firefish'
 import Entity from './entity'
 import NotificationType from './notification'
 import FilterContext from './filter_context'
@@ -25,6 +26,7 @@ export {
   Mastodon,
   Pleroma,
   Misskey,
+  Firefish,
   Entity
 }
 

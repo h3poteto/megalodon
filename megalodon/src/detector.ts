@@ -51,7 +51,7 @@ type Metadata = {
 export const detector = async (
   url: string,
   proxyConfig: ProxyConfig | false = false
-): Promise<'mastodon' | 'pleroma' | 'misskey' | 'friendica'> => {
+): Promise<'mastodon' | 'pleroma' | 'misskey' | 'friendica' | 'firefish'> => {
   let options: AxiosRequestConfig = {
     timeout: 20000
   }
@@ -74,12 +74,14 @@ export const detector = async (
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
-        case "wildebeest":
-          return "mastodon"
+        case 'wildebeest':
+          return 'mastodon'
         case 'misskey':
           return 'misskey'
         case 'friendica':
           return 'friendica'
+        case 'firefish':
+          return 'firefish'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
             return 'mastodon'
@@ -96,12 +98,14 @@ export const detector = async (
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
-        case "wildebeest":
-          return "mastodon"
+        case 'wildebeest':
+          return 'mastodon'
         case 'misskey':
           return 'misskey'
         case 'friendica':
           return 'friendica'
+        case 'firefish':
+          return 'firefish'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
             return 'mastodon'
@@ -118,12 +122,14 @@ export const detector = async (
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
-        case "wildebeest":
-          return "mastodon"
+        case 'wildebeest':
+          return 'mastodon'
         case 'misskey':
           return 'misskey'
         case 'friendica':
           return 'friendica'
+        case 'firefish':
+          return 'firefish'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
             return 'mastodon'
