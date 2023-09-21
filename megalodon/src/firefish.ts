@@ -2124,11 +2124,11 @@ export default class Firefish implements MegalodonInterface {
   // instance/custom_emojis
   // ======================================
   /**
-   * GET /api/emojis
+   * GET /api/meta
    */
   public async getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>> {
     return this.client
-      .get<{ emojis: Array<FirefishAPI.Entity.Emoji> }>('/api/emojis')
+      .post<FirefishAPI.Entity.Meta>('/api/meta')
       .then(res => ({ ...res, data: res.data.emojis.map(e => FirefishAPI.Converter.emoji(e)) }))
   }
 
