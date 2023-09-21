@@ -4,7 +4,6 @@ import Pleroma from './pleroma'
 import { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
 import Entity from './entity'
-import Misskey from './misskey'
 import Friendica from './friendica'
 import Firefish from './firefish'
 
@@ -1426,7 +1425,7 @@ export class NodeinfoError extends Error {
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma' | 'misskey' | 'friendica' | 'firefish',
+  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null,
@@ -1436,10 +1435,6 @@ const generator = (
     case 'pleroma': {
       const pleroma = new Pleroma(baseUrl, accessToken, userAgent, proxyConfig)
       return pleroma
-    }
-    case 'misskey': {
-      const misskey = new Misskey(baseUrl, accessToken, userAgent, proxyConfig)
-      return misskey
     }
     case 'friendica': {
       const friendica = new Friendica(baseUrl, accessToken, userAgent, proxyConfig)
