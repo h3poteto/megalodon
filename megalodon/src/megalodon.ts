@@ -812,6 +812,21 @@ export interface MegalodonInterface {
    * @return Status
    */
   unpinStatus(id: string): Promise<Response<Entity.Status>>
+  	/**
+	 * POST /api/v1/statuses/:id/react/:name
+	 * @param id The target status id.
+	 * @param name The name of the emoji reaction to add.
+	 * @return Status
+	 */
+	reactStatus(id: string, name: string): Promise<Response<Entity.Status>>;
+	/**
+	 * POST /api/v1/statuses/:id/unreact/:name
+	 *
+	 * @param id The target status id.
+	 * @param name The name of the emoji reaction to remove.
+	 * @return Status
+	 */
+	unreactStatus(id: string, name: string): Promise<Response<Entity.Status>>;
   // ======================================
   // statuses/media
   // ======================================

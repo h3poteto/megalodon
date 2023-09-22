@@ -32,7 +32,7 @@ describe('api_client', () => {
             dist: MisskeyNotificationType.Reaction
           },
           {
-            src: MegalodonNotificationType.EmojiReaction,
+            src: MegalodonNotificationType.Reaction,
             dist: MisskeyNotificationType.Reaction
           },
           {
@@ -78,7 +78,7 @@ describe('api_client', () => {
           },
           {
             src: MisskeyNotificationType.Reaction,
-            dist: MegalodonNotificationType.EmojiReaction
+            dist: MegalodonNotificationType.Reaction
           },
           {
             src: MisskeyNotificationType.PollVote,
@@ -265,7 +265,7 @@ describe('api_client', () => {
             category: ''
           }
         ])
-        expect(megalodonStatus.emoji_reactions).toEqual([
+        expect(megalodonStatus.reactions).toEqual([
           {
             count: 1,
             me: false,

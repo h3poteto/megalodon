@@ -5,7 +5,7 @@ namespace NotificationType {
   export const Favourite: Entity.NotificationType = 'favourite'
   export const Reblog: Entity.NotificationType = 'reblog'
   export const Mention: Entity.NotificationType = 'mention'
-  export const EmojiReaction: Entity.NotificationType = 'emoji_reaction'
+  export const Reaction: Entity.NotificationType = 'reaction'
   export const FollowRequest: Entity.NotificationType = 'follow_request'
   export const Status: Entity.NotificationType = 'status'
   export const PollVote: Entity.NotificationType = 'poll_vote'

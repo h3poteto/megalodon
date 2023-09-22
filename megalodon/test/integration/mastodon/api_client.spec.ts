@@ -69,7 +69,7 @@ const status: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: [],
+  reactions: [],
   bookmarked: false,
   quote: false
 }

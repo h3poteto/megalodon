@@ -178,7 +178,7 @@ describe('getNotifications', () => {
     },
     {
       event: emojiReaction,
-      expected: MegalodonNotificationType.EmojiReaction,
+      expected: MegalodonNotificationType.Reaction,
       title: 'emojiReaction'
     },
     {
