@@ -6,6 +6,7 @@
   "typings": "./lib/src/index.d.ts",
   "scripts": {
     "build": "swc ./src -d ./lib",
+    "build:bun": "bun build ./src --outdir=lib --minify --target=node",
     "lint": "eslint --ext .js,.ts src",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
