@@ -53,7 +53,7 @@ jobs:
           bun-version: ${{ matrix.bun-version }}
       - name: Install dependencies
         run: |
-          yarn install
+          bun install
       - name: Build (Bun)
         run: cd megalodon && bun run build:bun
       - name: Testing (Bun)
