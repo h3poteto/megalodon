@@ -23,10 +23,10 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
 - [x] REST API
 - [ ] Admin API
-- [x] WebSocket for Streamings
+- [x] WebSocket for streaming
 - [x] Promisified methods
 - [x] Proxy support
-- [x] Support node.js and browser
+- [x] NodeJS, Bun, and browser support
 - [x] Written in typescript
 
 ## Install
@@ -47,9 +47,9 @@ yarn add megalodon
 
 ### Build for browsers
 
-**Important**: In browsers, you can not use proxy.
+**Important**: In browsers, you cannot use the proxy.
 
-If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in Node.js.
+If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in NodeJS.
 [Here](https://github.com/h3poteto/megalodon/tree/master/example/browser/webpack.config.js) is example Webpack configuration.
 
 ## Usage
@@ -101,7 +101,7 @@ import fs from 'fs'
 
 const BASE_URL: string = 'https://mastodon.social'
 const access_token: string = '...'
-const image = fs.readFileSync("test.image")
+const image = fs.readFileSync("test-image.png")
 
 const client = generator('mastodon', BASE_URL, access_token)
 client.uploadMedia(image)
