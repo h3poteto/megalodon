@@ -459,6 +459,7 @@ namespace FirefishAPI {
       return {
         name: f.name,
         value: f.value,
+        verified: f.verified,
         verified_at: null
       }
     }
