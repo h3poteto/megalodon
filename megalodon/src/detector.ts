@@ -51,7 +51,7 @@ type Metadata = {
 export const detector = async (
   url: string,
   proxyConfig: ProxyConfig | false = false
-): Promise<'mastodon' | 'pleroma' | 'misskey' | 'friendica' | 'firefish'> => {
+): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish'> => {
   let options: AxiosRequestConfig = {
     timeout: 20000
   }
@@ -76,8 +76,6 @@ export const detector = async (
           return 'mastodon'
         case 'wildebeest':
           return 'mastodon'
-        case 'misskey':
-          return 'misskey'
         case 'friendica':
           return 'friendica'
         case 'firefish':
@@ -100,8 +98,6 @@ export const detector = async (
           return 'mastodon'
         case 'wildebeest':
           return 'mastodon'
-        case 'misskey':
-          return 'misskey'
         case 'friendica':
           return 'friendica'
         case 'firefish':
@@ -124,8 +120,6 @@ export const detector = async (
           return 'mastodon'
         case 'wildebeest':
           return 'mastodon'
-        case 'misskey':
-          return 'misskey'
         case 'friendica':
           return 'friendica'
         case 'firefish':

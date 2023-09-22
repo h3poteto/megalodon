@@ -17,14 +17,6 @@ describe('detector', () => {
     })
   })
 
-  describe('misskey', () => {
-    const url = 'https://misskey.io'
-    it('should be misskey', async () => {
-      const misskey = await detector(url)
-      expect(misskey).toEqual('misskey')
-    })
-  })
-
   describe('fedibird', () => {
     const url = 'https://fedibird.com'
     it('should be mastodon', async () => {
