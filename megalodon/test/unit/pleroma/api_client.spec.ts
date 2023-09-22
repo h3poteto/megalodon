@@ -62,7 +62,7 @@ describe('api_client', () => {
             dist: PleromaNotificationType.Poll
           },
           {
-            src: MegalodonNotificationType.Reaction,
+            src: MegalodonNotificationType.EmojiReaction,
             dist: PleromaNotificationType.PleromaEmojiReaction
           },
           {
@@ -108,7 +108,7 @@ describe('api_client', () => {
           },
           {
             src: PleromaNotificationType.PleromaEmojiReaction,
-            dist: MegalodonNotificationType.Reaction
+            dist: MegalodonNotificationType.EmojiReaction
           },
           {
             src: PleromaNotificationType.FollowRequest,
