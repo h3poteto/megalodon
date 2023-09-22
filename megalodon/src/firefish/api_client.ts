@@ -288,7 +288,7 @@ namespace FirefishAPI {
         language: null,
         pinned: null,
         // Use emojis list to provide URLs for emoji reactions.
-				reactions: mapReactions(n.emojis, n.reactions, n.myReaction),
+				emoji_reactions: mapReactions(n.emojis!, n.reactions, n.myReaction),
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }

@@ -278,7 +278,7 @@ namespace MisskeyAPI {
         application: null,
         language: null,
         pinned: null,
-        reactions: typeof n.reactions === 'object' ? mapReactions(n.reactions, n.myReaction) : [],
+        emoji_reactions: typeof n.reactions === 'object' ? mapReactions(n.reactions, n.myReaction) : [],
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }

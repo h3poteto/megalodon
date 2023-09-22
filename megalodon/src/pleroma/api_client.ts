@@ -375,7 +375,7 @@ namespace PleromaAPI {
       application: s.application ? application(s.application) : null,
       language: s.language,
       pinned: s.pinned,
-      reactions: Array.isArray(s.pleroma.emoji_reactions) ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
+      emoji_reactions: Array.isArray(s.pleroma.emoji_reactions) ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: s.reblog !== null && s.reblog.content !== s.content
     })

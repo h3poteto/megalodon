@@ -743,7 +743,7 @@ namespace FriendicaAPI {
       application: s.application ? application(s.application) : null,
       language: s.language,
       pinned: s.pinned,
-      reactions: [],
+      emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: false
     })
