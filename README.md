@@ -30,13 +30,17 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 ## Install
 
 ```
-$ npm install -S megalodon
-```
+# npm
+npm install -S megalodon
 
-or
+# pnpm
+npm install -S megalodon
 
-```
-$ yarn add megalodon
+# bun
+bun add megalodon
+
+# yarn
+yarn add megalodon
 ```
 
 ### Build for browser
