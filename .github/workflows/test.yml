@@ -15,7 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 19.x]
+        node-version: [16.x, 18.x, 20.x]
+        bun-version: ['latest']
 
     steps:
       - uses: actions/checkout@v2
@@ -38,3 +39,14 @@ jobs:
       - name: Typescript example
         run: |
           yarn workspace example run build
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: ${{ matrix.bun-version }}
+      - name: Build (Bun)
+        run: cd megalodon && bun run build:bun
+      - name: Testing (Bun)
+        run: bun run test
+      - name: Browser example (Bun)
+        run: cd ../example/browser && bun run build:bun
+      - name: Typescript example (Bun)
+        run: cd ../typescript && bun run build
