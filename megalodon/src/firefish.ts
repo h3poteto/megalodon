@@ -1316,26 +1316,6 @@ export default class Firefish implements MegalodonInterface {
 		return `:${name}:`;
 	}
 
-	/**
-	 * POST /api/notes/reactions/delete
-	 */
-	public async unreactStatus(id: string, name: string): Promise<Response<Entity.Status>> {
-		await this.client.post<{}>("/api/notes/reactions/delete", {
-			noteId: id,
-			reaction: this.reactionName(name),
-		});
-		return this.client
-			.post<FirefishAPI.Entity.Note>("/api/notes/show", {
-				noteId: id,
-			})
-			.then(async (res) => ({
-				...res,
-				data: await FirefishAPI.Converter.note(
-					res.data,
-				),
-			}));
-	}
-
   // ======================================
   // statuses/media
   // ======================================
@@ -2224,9 +2204,10 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/notes/reactions/delete
    */
-  public async deleteEmojiReaction(id: string, _emoji: string): Promise<Response<Entity.Status>> {
+  public async deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     await this.client.post<Record<never, never>>('/api/notes/reactions/delete', {
-      noteId: id
+      noteId: id,
+      reaction: this.reactionName(emoji)
     })
     return this.client
       .post<FirefishAPI.Entity.Note>('/api/notes/show', {
