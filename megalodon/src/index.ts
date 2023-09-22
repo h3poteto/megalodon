@@ -6,7 +6,6 @@ import generator, { MegalodonInterface, WebSocketInterface } from './megalodon'
 import { detector } from './detector'
 import Mastodon from './mastodon'
 import Pleroma from './pleroma'
-import Misskey from './misskey'
 import Firefish from './firefish'
 import Entity from './entity'
 import NotificationType from './notification'
@@ -25,7 +24,6 @@ export {
   FilterContext,
   Mastodon,
   Pleroma,
-  Misskey,
   Firefish,
   Entity
 }

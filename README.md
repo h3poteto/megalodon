@@ -6,7 +6,7 @@
 [![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
 
 A Fediverse API Client library for node.js and browser. It provides REST API and streaming methods.
-By using this library, you can take Mastodon, Pleroma, Friendica, and Misskey with the same interface.
+By using this library, you can take Mastodon, Pleroma, Friendica, and Firefish with the same interface.
 
 The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
@@ -14,7 +14,7 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 - [x] Mastodon
 - [x] Pleroma
 - [x] Friendica
-- [x] Misskey
+- [x] Firefish
 - [x] Akkoma (Unofficial)
 - [x] Widlebeest (Unofficial)
 
@@ -103,7 +103,6 @@ client.uploadMedia(image)
 ```
 
 ### WebSocket streaming
-Mastodon, Pleroma and Misskey provide WebSocket for streaming.
 
 ```typescript
 import generator, { Entity, WebSocketInterface } from 'megalodon'
@@ -188,13 +187,13 @@ client.fetchAccessToken(clientId, clientSecret, code)
 ```
 
 ### Detect each SNS
-You have to provide SNS name `mastodon`, `pleroma` or `misskey` to `generator` function.
+You have to provide SNS name (e.g. `mastodon`, `pleroma`) to `generator` function.
 But when you only know the URL and not the SNS, `detector` function can detect the SNS.
 
 ```typescript
 import { detector } from 'megalodon'
 
-const URL = 'https://misskey.io'
+const URL = 'https://mastodon.social'
 
 const sns = await detector(URL)
 console.log(sns)
