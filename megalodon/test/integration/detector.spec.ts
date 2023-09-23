@@ -26,7 +26,7 @@ describe('detector', () => {
   })
 
   describe('friendica', () => {
-    const url = 'https://nerdica.net'
+    const url = 'https://xn--c9j1b.xn--r9j630glz6a.xn--q9jyb4c'
     it('should be friendica', async () => {
       const friendica = await detector(url)
       expect(friendica).toEqual('friendica')
