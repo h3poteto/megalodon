@@ -10,12 +10,12 @@ on:
   pull_request:
 
 jobs:
-  test:
+  test-node:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 19.x]
+        node-version: [16.x, 18.x, 20.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -38,3 +38,27 @@ jobs:
       - name: Typescript example
         run: |
           yarn workspace example run build
+
+  test-bun:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        bun-version: ['latest']
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: ${{ matrix.bun-version }}
+      - name: Install dependencies
+        run: |
+          bun install
+      - name: Build (Bun)
+        run: cd megalodon && bun run build:bun
+      - name: Testing (Bun)
+        run: cd megalodon && bun run test
+      - name: Browser example (Bun)
+        run: cd example/browser && bun run build:bun
+      - name: Typescript example (Bun)
+        run: cd example/typescript && bun run build
