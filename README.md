@@ -6,8 +6,8 @@
 [![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
 [![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
 
-Megalodon is a Fediverse API client library for NodeJS, Bun, and browsers.
-This library allows for interfacing with Mastodon, Pleroma, Friendica, and Firefish servers all with the same interface, providing REST API and streaming methods.
+Megalodon is a Fediverse API client library for [NodeJS](https://nodejs.org), [Bun](https://bun.sh), and browsers.
+This library allows for interfacing with [Mastodon](https://joinmastodon.org), [Pleroma](https://pleroma.social), [Friendica](https://friendi.ca), and [Firefish](https://joinfirefish.org) servers all with the same interface, providing REST API and streaming methods.
 
 The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
