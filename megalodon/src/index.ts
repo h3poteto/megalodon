@@ -28,4 +28,4 @@ export {
   Entity
 }
 
-export default generator
+export default generator;
