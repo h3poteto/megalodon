@@ -6,6 +6,7 @@
   "typings": "./lib/src/index.d.ts",
   "scripts": {
     "build": "swc ./src -d ./lib",
+    "build:bun": "bun build ./src --outdir=lib --minify --target=node",
     "lint": "eslint --ext .js,.ts src",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
@@ -80,6 +81,7 @@
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
+    "bun-types": "^1.0.3",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "jest": "^29.7.0",
@@ -88,5 +90,8 @@
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "typedoc": "^0.25.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }

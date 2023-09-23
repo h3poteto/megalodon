@@ -38,6 +38,9 @@ npm install -S megalodon
 # pnpm
 npm install -S megalodon
 
+# bun
+bun add megalodon
+
 # yarn
 yarn add megalodon
 ```
