@@ -266,7 +266,10 @@ namespace FirefishAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : [],
+        // Remove reaction emojis with names containing @ from the emojis list.
+        emojis: Array.isArray(n.emojis) ? n.emojis
+          .filter((e) => e.name.indexOf("@") === -1)
+          .map((e) => emoji(e)) : [],
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -284,25 +287,34 @@ namespace FirefishAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: typeof n.reactions === 'object' ? mapReactions(n.reactions, n.myReaction) : [],
+        // Use emojis list to provide URLs for emoji reactions.
+        emoji_reactions: mapReactions(n.emojis!, n.reactions, n.myReaction),
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }
     }
 
-    export const mapReactions = (r: { [key: string]: number }, myReaction?: string | null): Array<MegalodonEntity.Reaction> => {
+    export const mapReactions = (emojis: Array<FirefishEntity.Emoji>, r: { [key: string]: number }, myReaction?: string | null): Array<MegalodonEntity.Reaction> => {
+      // Map of emoji shortcodes to image URLs.
+      const emojiUrls = new Map<string, string>(
+        emojis.map((e) => [e.name, e.url]),
+      );
       return Object.keys(r).map(key => {
-        if (myReaction && key === myReaction) {
-          return {
-            count: r[key],
-            me: true,
-            name: key
-          }
-        }
+        // Strip colons from custom emoji reaction names to match emoji shortcodes.
+        const shortcode = key.replace(/:/g, "");
+        // If this is a custom emoji (vs. a Unicode emoji), find its image URL.
+        const url = emojiUrls.get(shortcode);
+        // Finally, remove trailing @. from local custom emoji reaction names.
+        const name = shortcode.replace("@.", "");
+
         return {
           count: r[key],
-          me: false,
-          name: key
+          me: key === myReaction,
+          name,
+          url,
+          // We don't actually have a static version of the asset, but clients expect one anyway.
+          static_url: url,
+
         }
       })
     }
@@ -352,7 +364,7 @@ namespace FirefishAPI {
         case NotificationType.Mention:
           return FirefishNotificationType.Reply
         case NotificationType.Favourite:
-        case NotificationType.EmojiReaction:
+        case NotificationType.Reaction:
           return FirefishNotificationType.Reaction
         case NotificationType.Reblog:
           return FirefishNotificationType.Renote
@@ -378,7 +390,7 @@ namespace FirefishAPI {
         case FirefishNotificationType.Quote:
           return NotificationType.Reblog
         case FirefishNotificationType.Reaction:
-          return NotificationType.EmojiReaction
+          return NotificationType.Reaction
         case FirefishNotificationType.PollVote:
           return NotificationType.PollVote
         case FirefishNotificationType.ReceiveFollowRequest:
@@ -408,8 +420,8 @@ namespace FirefishAPI {
       }
       if (n.reaction) {
         notification = Object.assign(notification, {
-          emoji: n.reaction
-        })
+          reaction: mapReactions(n.note!.emojis!, { [n.reaction]: 1 })[0],
+        });
       }
       return notification
     }
@@ -555,8 +567,8 @@ namespace FirefishAPI {
   ]
 
   /**
-   * Interface
-   */
+    * Interface
+    */
   export interface Interface {
     get<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
@@ -565,10 +577,10 @@ namespace FirefishAPI {
   }
 
   /**
-   * Firefish API client.
-   *
-   * Usign axios for request, you will handle promises.
-   */
+    * Firefish API client.
+    *
+    * Usign axios for request, you will handle promises.
+    */
   export class Client implements Interface {
     private accessToken: string | null
     private baseUrl: string
@@ -577,11 +589,11 @@ namespace FirefishAPI {
     private proxyConfig: ProxyConfig | false = false
 
     /**
-     * @param baseUrl hostname or base URL
-     * @param accessToken access token from OAuth2 authorization
-     * @param userAgent UserAgent is specified in header on request.
-     * @param proxyConfig Proxy setting, or set false if don't use proxy.
-     */
+      * @param baseUrl hostname or base URL
+      * @param accessToken access token from OAuth2 authorization
+      * @param userAgent UserAgent is specified in header on request.
+      * @param proxyConfig Proxy setting, or set false if don't use proxy.
+      */
     constructor(baseUrl: string, accessToken: string | null, userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
@@ -592,8 +604,8 @@ namespace FirefishAPI {
     }
 
     /**
-     * GET request to firefish API.
-     **/
+      * GET request to firefish API.
+      **/
     public async get<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         params: params,
@@ -619,11 +631,11 @@ namespace FirefishAPI {
     }
 
     /**
-     * POST request to firefish REST API.
-     * @param path relative path from baseUrl
-     * @param params Form data
-     * @param headers Request header object
-     */
+      * POST request to firefish REST API.
+      * @param path relative path from baseUrl
+      * @param params Form data
+      * @param headers Request header object
+      */
     public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       let options: AxiosRequestConfig = {
         headers: headers,
@@ -658,19 +670,19 @@ namespace FirefishAPI {
     }
 
     /**
-     * Cancel all requests in this instance.
-     * @returns void
-     */
+      * Cancel all requests in this instance.
+      * @returns void
+      */
     public cancel(): void {
       return this.abortController.abort()
     }
 
     /**
-     * Get connection and receive websocket connection for Firefish API.
-     *
-     * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
-     * @param listId This parameter is required only list channel.
-     */
+      * Get connection and receive websocket connection for Firefish API.
+      *
+      * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
+      * @param listId This parameter is required only list channel.
+      */
     public socket(
       channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
       listId?: string
