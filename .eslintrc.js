@@ -13,7 +13,7 @@ module.exports = {
   globals: {
     __static: true
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
@@ -34,6 +34,7 @@ module.exports = {
     'promise/param-names': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-namespace': 'off'
+    '@typescript-eslint/no-namespace': 'off',
+    'prettier/prettier': 'error'
   }
 }
