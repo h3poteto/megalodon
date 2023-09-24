@@ -267,7 +267,7 @@ namespace FirefishAPI {
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
         // Remove reaction emojis with names containing @ from the emojis list.
-        emojis: Array.isArray(n.emojis) ? n.emojis.filter(e => e.name.indexOf('@') === -1).map(e => emoji(e)) : [],
+        emojis: Array.isArray(n.emojis) ? n.emojis.filter(e => !e.name.includes('@')).map(e => emoji(e)) : [],
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
