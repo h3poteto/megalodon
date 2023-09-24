@@ -23,8 +23,18 @@ jobs:
       run: |
         yarn install
     - uses: reviewdog/action-setup@v1
-    - name: Run eslint
+    - name: megalodon eslint
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         yarn workspace megalodon lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
+    - name: example/typescript eslint
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        yarn workspace example lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
+    - name: example/browser eslint
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        yarn workspace browser lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
