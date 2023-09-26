@@ -1303,6 +1303,19 @@ export default class Firefish implements MegalodonInterface {
       .then(res => ({ ...res, data: FirefishAPI.Converter.note(res.data) }))
   }
 
+  	/**
+	 * Convert a Unicode emoji or custom emoji name to a Firefish reaction.
+	 * @see Firefish's reaction-lib.ts
+	 */
+	private reactionName(name: string): string {
+		// See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
+		const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name);
+		if (isUnicodeEmoji) {
+			return name;
+		}
+		return `:${name}:`;
+	}
+
   // ======================================
   // statuses/media
   // ======================================
@@ -2179,7 +2192,7 @@ export default class Firefish implements MegalodonInterface {
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     await this.client.post<Record<never, never>>('/api/notes/reactions/create', {
       noteId: id,
-      reaction: emoji
+      reaction: this.reactionName(emoji)
     })
     return this.client
       .post<FirefishAPI.Entity.Note>('/api/notes/show', {
@@ -2191,9 +2204,10 @@ export default class Firefish implements MegalodonInterface {
   /**
    * POST /api/notes/reactions/delete
    */
-  public async deleteEmojiReaction(id: string, _emoji: string): Promise<Response<Entity.Status>> {
+  public async deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     await this.client.post<Record<never, never>>('/api/notes/reactions/delete', {
-      noteId: id
+      noteId: id,
+      reaction: this.reactionName(emoji)
     })
     return this.client
       .post<FirefishAPI.Entity.Note>('/api/notes/show', {

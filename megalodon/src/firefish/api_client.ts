@@ -266,7 +266,8 @@ namespace FirefishAPI {
           : '',
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
-        emojis: Array.isArray(n.emojis) ? n.emojis.map(e => emoji(e)) : [],
+        // Remove reaction emojis with names containing @ from the emojis list.
+        emojis: Array.isArray(n.emojis) ? n.emojis.filter(e => !e.name.includes('@')).map(e => emoji(e)) : [],
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -284,25 +285,35 @@ namespace FirefishAPI {
         application: null,
         language: null,
         pinned: null,
-        emoji_reactions: typeof n.reactions === 'object' ? mapReactions(n.reactions, n.myReaction) : [],
+        // Use emojis list to provide URLs for emoji reactions.
+        emoji_reactions: mapReactions(n.emojis ? n.emojis : [], n.reactions, n.myReaction),
         bookmarked: false,
         quote: n.renote !== undefined && n.text !== null
       }
     }
 
-    export const mapReactions = (r: { [key: string]: number }, myReaction?: string | null): Array<MegalodonEntity.Reaction> => {
+    export const mapReactions = (
+      emojis: Array<FirefishEntity.Emoji>,
+      r: { [key: string]: number },
+      myReaction?: string | null
+    ): Array<MegalodonEntity.Reaction> => {
+      // Map of emoji shortcodes to image URLs.
+      const emojiUrls = new Map<string, string>(emojis.map(e => [e.name, e.url]))
       return Object.keys(r).map(key => {
-        if (myReaction && key === myReaction) {
-          return {
-            count: r[key],
-            me: true,
-            name: key
-          }
-        }
+        // Strip colons from custom emoji reaction names to match emoji shortcodes.
+        const shortcode = key.replace(/:/g, '')
+        // If this is a custom emoji (vs. a Unicode emoji), find its image URL.
+        const url = emojiUrls.get(shortcode)
+        // Finally, remove trailing @. from local custom emoji reaction names.
+        const name = shortcode.replace('@.', '')
+
         return {
           count: r[key],
-          me: false,
-          name: key
+          me: key === myReaction,
+          name,
+          url,
+          // We don't actually have a static version of the asset, but clients expect one anyway.
+          static_url: url
         }
       })
     }
@@ -352,7 +363,7 @@ namespace FirefishAPI {
         case NotificationType.Mention:
           return FirefishNotificationType.Reply
         case NotificationType.Favourite:
-        case NotificationType.EmojiReaction:
+        case NotificationType.Reaction:
           return FirefishNotificationType.Reaction
         case NotificationType.Reblog:
           return FirefishNotificationType.Renote
@@ -378,7 +389,7 @@ namespace FirefishAPI {
         case FirefishNotificationType.Quote:
           return NotificationType.Reblog
         case FirefishNotificationType.Reaction:
-          return NotificationType.EmojiReaction
+          return NotificationType.Reaction
         case FirefishNotificationType.PollVote:
           return NotificationType.PollVote
         case FirefishNotificationType.ReceiveFollowRequest:
@@ -407,9 +418,12 @@ namespace FirefishAPI {
         })
       }
       if (n.reaction) {
-        notification = Object.assign(notification, {
-          emoji: n.reaction
-        })
+        const reactions = mapReactions(n.note?.emojis ?? [], { [n.reaction]: 1 })
+        if (reactions.length > 0) {
+          notification = Object.assign(notification, {
+            reaction: reactions[0]
+          })
+        }
       }
       return notification
     }
