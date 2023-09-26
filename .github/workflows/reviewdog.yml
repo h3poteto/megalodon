@@ -21,7 +21,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - name: Install dependencies
       run: |
-        pnpm i
+        corepack enable && pnpm install
     - uses: reviewdog/action-setup@v1
     - name: megalodon eslint
       env:
