@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "private": true,
   "scripts": {
-    "build": "swc ./src -d dist --source-maps",
+    "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src"
   },
   "author": "h3poteto",
