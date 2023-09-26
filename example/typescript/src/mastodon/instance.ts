@@ -1,9 +1,9 @@
-import generator, { Entity, Response } from 'megalodon'
+import generator, { Entity, Response } from "megalodon";
 
-const BASE_URL: string = 'http://fedibird.com'
+const BASE_URL: string = "http://fedibird.com";
 
-const client = generator('mastodon', BASE_URL)
+const client = generator("mastodon", BASE_URL);
 
 client.getInstance().then((res: Response<Entity.Instance>) => {
-  console.log(res.data)
-})
+	console.log(res.data);
+});

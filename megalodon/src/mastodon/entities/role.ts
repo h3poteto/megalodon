@@ -1,5 +1,5 @@
 namespace MastodonEntity {
-  export type Role = {
-    name: string
-  }
+	export type Role = {
+		name: string;
+	};
 }

@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack",
     "start": "http-server -p 8000 -s index.html",
-    "lint": "eslint --ext .js,.ts src"
+    "lint": "biome lint --apply src",
+    "format": "biome format --write src"
   },
   "author": "Akira Fukushima <h3.poteto@gmail.com> (https://github.com/h3poteto)",
   "license": "MIT",

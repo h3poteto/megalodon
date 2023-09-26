@@ -1,6 +1,6 @@
 namespace FirefishEntity {
-  export type Session = {
-    token: string
-    url: string
-  }
+	export type Session = {
+		token: string;
+		url: string;
+	};
 }

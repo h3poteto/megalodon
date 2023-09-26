@@ -1,5 +1,5 @@
 namespace MastodonEntity {
-  export type URLs = {
-    streaming_api: string
-  }
+	export type URLs = {
+		streaming_api: string;
+	};
 }

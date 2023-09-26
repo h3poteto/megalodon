@@ -1,17 +1,17 @@
-import generator from 'megalodon'
+import generator from "megalodon";
 
-declare var process: {
-  env: {
-    MASTODON_ACCESS_TOKEN: string
-  }
-}
+declare let process: {
+	env: {
+		MASTODON_ACCESS_TOKEN: string;
+	};
+};
 
-const BASE_URL: string = 'https://fedibird.com'
+const BASE_URL: string = "https://fedibird.com";
 
-const access_token: string = process.env.MASTODON_ACCESS_TOKEN
+const access_token: string = process.env.MASTODON_ACCESS_TOKEN;
 
-const client = generator('mastodon', BASE_URL, access_token)
+const client = generator("mastodon", BASE_URL, access_token);
 
-client.getRelationship('1').then(res => {
-  console.log(res.data)
-})
+client.getRelationship("1").then((res) => {
+	console.log(res.data);
+});

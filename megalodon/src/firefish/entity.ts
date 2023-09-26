@@ -24,4 +24,4 @@
 /// <reference path="entities/instance.ts" />
 /// <reference path="entities/field.ts" />
 
-export default FirefishEntity
+export default FirefishEntity;

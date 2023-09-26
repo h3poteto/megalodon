@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "swc ./src -d dist --source-maps",
-    "lint": "eslint --ext .js,.ts src"
+    "lint": "biome lint --apply src",
+    "format": "biome format --write src"
   },
   "author": "h3poteto",
   "license": "MIT",

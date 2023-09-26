@@ -1,7 +1,7 @@
-import { detector } from 'megalodon'
+import { detector } from "megalodon";
 
-const URL = process.env.URL as string
+const URL = process.env.URL as string;
 
-detector(URL).then(sns => {
-  console.log(sns)
-})
+detector(URL).then((sns) => {
+	console.log(sns);
+});

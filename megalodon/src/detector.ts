@@ -1,44 +1,44 @@
-import axios, { AxiosRequestConfig } from 'axios'
-import proxyAgent, { ProxyConfig } from './proxy_config'
-import { NodeinfoError } from './megalodon'
+import axios, { AxiosRequestConfig } from "axios";
+import proxyAgent, { ProxyConfig } from "./proxy_config";
+import { NodeinfoError } from "./megalodon";
 
-const NODEINFO_10 = 'http://nodeinfo.diaspora.software/ns/schema/1.0'
-const NODEINFO_20 = 'http://nodeinfo.diaspora.software/ns/schema/2.0'
-const NODEINFO_21 = 'http://nodeinfo.diaspora.software/ns/schema/2.1'
+const NODEINFO_10 = "http://nodeinfo.diaspora.software/ns/schema/1.0";
+const NODEINFO_20 = "http://nodeinfo.diaspora.software/ns/schema/2.0";
+const NODEINFO_21 = "http://nodeinfo.diaspora.software/ns/schema/2.1";
 
 type Links = {
-  links: Array<Link>
-}
+	links: Array<Link>;
+};
 
 type Link = {
-  href: string
-  rel: string
-}
+	href: string;
+	rel: string;
+};
 
 type Nodeinfo10 = {
-  software: Software
-  metadata: Metadata
-}
+	software: Software;
+	metadata: Metadata;
+};
 
 type Nodeinfo20 = {
-  software: Software
-  metadata: Metadata
-}
+	software: Software;
+	metadata: Metadata;
+};
 
 type Nodeinfo21 = {
-  software: Software
-  metadata: Metadata
-}
+	software: Software;
+	metadata: Metadata;
+};
 
 type Software = {
-  name: string
-}
+	name: string;
+};
 
 type Metadata = {
-  upstream?: {
-    name: string
-  }
-}
+	upstream?: {
+		name: string;
+	};
+};
 
 /**
  * Detect SNS type.
@@ -49,89 +49,100 @@ type Metadata = {
  * @return SNS name.
  */
 export const detector = async (
-  url: string,
-  proxyConfig: ProxyConfig | false = false
-): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish'> => {
-  let options: AxiosRequestConfig = {
-    timeout: 20000
-  }
-  if (proxyConfig) {
-    options = Object.assign(options, {
-      httpsAgent: proxyAgent(proxyConfig)
-    })
-  }
+	url: string,
+	proxyConfig: ProxyConfig | false = false,
+): Promise<"mastodon" | "pleroma" | "friendica" | "firefish"> => {
+	let options: AxiosRequestConfig = {
+		timeout: 20000,
+	};
+	if (proxyConfig) {
+		options = Object.assign(options, {
+			httpsAgent: proxyAgent(proxyConfig),
+		});
+	}
 
-  const res = await axios.get<Links>(url + '/.well-known/nodeinfo', options)
-  const link = res.data.links.find(l => l.rel === NODEINFO_20 || l.rel === NODEINFO_21)
-  if (!link) throw new NodeinfoError('Could not find nodeinfo')
-  switch (link.rel) {
-    case NODEINFO_10: {
-      const res = await axios.get<Nodeinfo10>(link.href, options)
-      switch (res.data.software.name) {
-        case 'pleroma':
-          return 'pleroma'
-        case 'akkoma':
-          return 'pleroma'
-        case 'mastodon':
-          return 'mastodon'
-        case 'wildebeest':
-          return 'mastodon'
-        case 'friendica':
-          return 'friendica'
-        case 'firefish':
-          return 'firefish'
-        default:
-          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
-            return 'mastodon'
-          }
-          throw new NodeinfoError('Unknown SNS')
-      }
-    }
-    case NODEINFO_20: {
-      const res = await axios.get<Nodeinfo20>(link.href, options)
-      switch (res.data.software.name) {
-        case 'pleroma':
-          return 'pleroma'
-        case 'akkoma':
-          return 'pleroma'
-        case 'mastodon':
-          return 'mastodon'
-        case 'wildebeest':
-          return 'mastodon'
-        case 'friendica':
-          return 'friendica'
-        case 'firefish':
-          return 'firefish'
-        default:
-          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
-            return 'mastodon'
-          }
-          throw new NodeinfoError('Unknown SNS')
-      }
-    }
-    case NODEINFO_21: {
-      const res = await axios.get<Nodeinfo21>(link.href, options)
-      switch (res.data.software.name) {
-        case 'pleroma':
-          return 'pleroma'
-        case 'akkoma':
-          return 'pleroma'
-        case 'mastodon':
-          return 'mastodon'
-        case 'wildebeest':
-          return 'mastodon'
-        case 'friendica':
-          return 'friendica'
-        case 'firefish':
-          return 'firefish'
-        default:
-          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
-            return 'mastodon'
-          }
-          throw new NodeinfoError('Unknown SNS')
-      }
-    }
-    default:
-      throw new NodeinfoError('Could not find nodeinfo')
-  }
-}
+	const res = await axios.get<Links>(`${url}/.well-known/nodeinfo`, options);
+	const link = res.data.links.find(
+		(l) => l.rel === NODEINFO_20 || l.rel === NODEINFO_21,
+	);
+	if (!link) throw new NodeinfoError("Could not find nodeinfo");
+	switch (link.rel) {
+		case NODEINFO_10: {
+			const res = await axios.get<Nodeinfo10>(link.href, options);
+			switch (res.data.software.name) {
+				case "pleroma":
+					return "pleroma";
+				case "akkoma":
+					return "pleroma";
+				case "mastodon":
+					return "mastodon";
+				case "wildebeest":
+					return "mastodon";
+				case "friendica":
+					return "friendica";
+				case "firefish":
+					return "firefish";
+				default:
+					if (
+						res.data.metadata.upstream?.name &&
+						res.data.metadata.upstream.name === "mastodon"
+					) {
+						return "mastodon";
+					}
+					throw new NodeinfoError("Unknown SNS");
+			}
+		}
+		case NODEINFO_20: {
+			const res = await axios.get<Nodeinfo20>(link.href, options);
+			switch (res.data.software.name) {
+				case "pleroma":
+					return "pleroma";
+				case "akkoma":
+					return "pleroma";
+				case "mastodon":
+					return "mastodon";
+				case "wildebeest":
+					return "mastodon";
+				case "friendica":
+					return "friendica";
+				case "firefish":
+					return "firefish";
+				default:
+					if (
+						res.data.metadata.upstream?.name &&
+						res.data.metadata.upstream.name === "mastodon"
+					) {
+						return "mastodon";
+					}
+					throw new NodeinfoError("Unknown SNS");
+			}
+		}
+		case NODEINFO_21: {
+			const res = await axios.get<Nodeinfo21>(link.href, options);
+			switch (res.data.software.name) {
+				case "pleroma":
+					return "pleroma";
+				case "akkoma":
+					return "pleroma";
+				case "mastodon":
+					return "mastodon";
+				case "wildebeest":
+					return "mastodon";
+				case "friendica":
+					return "friendica";
+				case "firefish":
+					return "firefish";
+				default:
+					if (
+						res.data.metadata.upstream?.name &&
+						res.data.metadata.upstream.name === "mastodon"
+					) {
+						return "mastodon";
+					}
+					throw new NodeinfoError("Unknown SNS");
+			}
+		}
+		default:
+			throw new NodeinfoError("Could not find nodeinfo");
+	}
+};

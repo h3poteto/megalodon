@@ -1,275 +1,309 @@
-import { OAuth2 } from 'oauth'
-import FormData from 'form-data'
-import parseLinkHeader from 'parse-link-header'
+import { OAuth2 } from "oauth";
+import FormData from "form-data";
+import parseLinkHeader from "parse-link-header";
 
-import FriendicaAPI from './friendica/api_client'
-import WebSocket from './friendica/web_socket'
-import { MegalodonInterface, NoImplementedError } from './megalodon'
-import Response from './response'
-import Entity from './entity'
-import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
-import { ProxyConfig } from './proxy_config'
-import OAuth from './oauth'
-import { UnknownNotificationTypeError } from './notification'
+import FriendicaAPI from "./friendica/api_client";
+import WebSocket from "./friendica/web_socket";
+import { MegalodonInterface, NoImplementedError } from "./megalodon";
+import Response from "./response";
+import Entity from "./entity";
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from "./default";
+import { ProxyConfig } from "./proxy_config";
+import OAuth from "./oauth";
+import { UnknownNotificationTypeError } from "./notification";
 
 export default class Friendica implements MegalodonInterface {
-  public client: FriendicaAPI.Interface
-  public baseUrl: string
+	public client: FriendicaAPI.Interface;
+	public baseUrl: string;
 
-  /**
-   * @param baseUrl hostname or base URL
-   * @param accessToken access token from OAuth2 authorization
-   * @param userAgent UserAgent is specified in header on request.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
-   */
-  constructor(
-    baseUrl: string,
-    accessToken: string | null = null,
-    userAgent: string | null = DEFAULT_UA,
-    proxyConfig: ProxyConfig | false = false
-  ) {
-    let token = ''
-    if (accessToken) {
-      token = accessToken
-    }
-    let agent: string = DEFAULT_UA
-    if (userAgent) {
-      agent = userAgent
-    }
-    this.client = new FriendicaAPI.Client(baseUrl, token, agent, proxyConfig)
-    this.baseUrl = baseUrl
-  }
+	/**
+	 * @param baseUrl hostname or base URL
+	 * @param accessToken access token from OAuth2 authorization
+	 * @param userAgent UserAgent is specified in header on request.
+	 * @param proxyConfig Proxy setting, or set false if don't use proxy.
+	 */
+	constructor(
+		baseUrl: string,
+		accessToken: string | null = null,
+		userAgent: string | null = DEFAULT_UA,
+		proxyConfig: ProxyConfig | false = false,
+	) {
+		let token = "";
+		if (accessToken) {
+			token = accessToken;
+		}
+		let agent: string = DEFAULT_UA;
+		if (userAgent) {
+			agent = userAgent;
+		}
+		this.client = new FriendicaAPI.Client(baseUrl, token, agent, proxyConfig);
+		this.baseUrl = baseUrl;
+	}
 
-  public cancel(): void {
-    return this.client.cancel()
-  }
+	public cancel(): void {
+		return this.client.cancel();
+	}
 
-  /**
-   * First, call createApp to get client_id and client_secret.
-   * Next, call generateAuthUrl to get authorization url.
-   * @param client_name Form Data, which is sent to /api/v1/apps
-   * @param options Form Data, which is sent to /api/v1/apps. and properties should be **snake_case**
-   */
-  public async registerApp(
-    client_name: string,
-    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }>
-  ): Promise<OAuth.AppData> {
-    const scopes = options.scopes || DEFAULT_SCOPE
-    return this.createApp(client_name, options).then(async appData => {
-      return this.generateAuthUrl(appData.client_id, appData.client_secret, {
-        scope: scopes,
-        redirect_uri: appData.redirect_uri
-      }).then(url => {
-        appData.url = url
-        return appData
-      })
-    })
-  }
+	/**
+	 * First, call createApp to get client_id and client_secret.
+	 * Next, call generateAuthUrl to get authorization url.
+	 * @param client_name Form Data, which is sent to /api/v1/apps
+	 * @param options Form Data, which is sent to /api/v1/apps. and properties should be **snake_case**
+	 */
+	public async registerApp(
+		client_name: string,
+		options: Partial<{
+			scopes: Array<string>;
+			redirect_uris: string;
+			website: string;
+		}>,
+	): Promise<OAuth.AppData> {
+		const scopes = options.scopes || DEFAULT_SCOPE;
+		return this.createApp(client_name, options).then(async (appData) => {
+			return this.generateAuthUrl(appData.client_id, appData.client_secret, {
+				scope: scopes,
+				redirect_uri: appData.redirect_uri,
+			}).then((url) => {
+				appData.url = url;
+				return appData;
+			});
+		});
+	}
 
-  /**
-   * Call /api/v1/apps
-   *
-   * Create an application.
-   * @param client_name your application's name
-   * @param options Form Data
-   */
-  public async createApp(
-    client_name: string,
-    options: Partial<{ scopes: Array<string>; redirect_uris: string; website: string }>
-  ): Promise<OAuth.AppData> {
-    const scopes = options.scopes || DEFAULT_SCOPE
-    const redirect_uris = options.redirect_uris || NO_REDIRECT
+	/**
+	 * Call /api/v1/apps
+	 *
+	 * Create an application.
+	 * @param client_name your application's name
+	 * @param options Form Data
+	 */
+	public async createApp(
+		client_name: string,
+		options: Partial<{
+			scopes: Array<string>;
+			redirect_uris: string;
+			website: string;
+		}>,
+	): Promise<OAuth.AppData> {
+		const scopes = options.scopes || DEFAULT_SCOPE;
+		const redirect_uris = options.redirect_uris || NO_REDIRECT;
 
-    const params: {
-      client_name: string
-      redirect_uris: string
-      scopes: string
-      website?: string
-    } = {
-      client_name: client_name,
-      redirect_uris: redirect_uris,
-      scopes: scopes.join(' ')
-    }
-    if (options.website) params.website = options.website
+		const params: {
+			client_name: string;
+			redirect_uris: string;
+			scopes: string;
+			website?: string;
+		} = {
+			client_name: client_name,
+			redirect_uris: redirect_uris,
+			scopes: scopes.join(" "),
+		};
+		if (options.website) params.website = options.website;
 
-    return this.client
-      .post<OAuth.AppDataFromServer>('/api/v1/apps', params)
-      .then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
-  }
+		return this.client
+			.post<OAuth.AppDataFromServer>("/api/v1/apps", params)
+			.then((res: Response<OAuth.AppDataFromServer>) =>
+				OAuth.AppData.from(res.data),
+			);
+	}
 
-  /**
-   * Generate authorization url using OAuth2.
-   *
-   * @param clientId your OAuth app's client ID
-   * @param clientSecret your OAuth app's client Secret
-   * @param options as property, redirect_uri and scope are available, and must be the same as when you register your app
-   */
-  public generateAuthUrl(
-    clientId: string,
-    clientSecret: string,
-    options: Partial<{ scope: Array<string>; redirect_uri: string }>
-  ): Promise<string> {
-    const scope = options.scope || DEFAULT_SCOPE
-    const redirect_uri = options.redirect_uri || NO_REDIRECT
-    return new Promise(resolve => {
-      const oauth = new OAuth2(clientId, clientSecret, this.baseUrl, undefined, '/oauth/token')
-      const url = oauth.getAuthorizeUrl({
-        redirect_uri: redirect_uri,
-        response_type: 'code',
-        client_id: clientId,
-        scope: scope.join(' ')
-      })
-      resolve(url)
-    })
-  }
+	/**
+	 * Generate authorization url using OAuth2.
+	 *
+	 * @param clientId your OAuth app's client ID
+	 * @param clientSecret your OAuth app's client Secret
+	 * @param options as property, redirect_uri and scope are available, and must be the same as when you register your app
+	 */
+	public generateAuthUrl(
+		clientId: string,
+		clientSecret: string,
+		options: Partial<{ scope: Array<string>; redirect_uri: string }>,
+	): Promise<string> {
+		const scope = options.scope || DEFAULT_SCOPE;
+		const redirect_uri = options.redirect_uri || NO_REDIRECT;
+		return new Promise((resolve) => {
+			const oauth = new OAuth2(
+				clientId,
+				clientSecret,
+				this.baseUrl,
+				undefined,
+				"/oauth/token",
+			);
+			const url = oauth.getAuthorizeUrl({
+				redirect_uri: redirect_uri,
+				response_type: "code",
+				client_id: clientId,
+				scope: scope.join(" "),
+			});
+			resolve(url);
+		});
+	}
 
-  // ======================================
-  // apps
-  // ======================================
-  /**
-   * GET /api/v1/apps/verify_credentials
-   *
-   * @return An Application
-   */
-  public verifyAppCredentials(): Promise<Response<Entity.Application>> {
-    return this.client.get<Entity.Application>('/api/v1/apps/verify_credentials')
-  }
+	// ======================================
+	// apps
+	// ======================================
+	/**
+	 * GET /api/v1/apps/verify_credentials
+	 *
+	 * @return An Application
+	 */
+	public verifyAppCredentials(): Promise<Response<Entity.Application>> {
+		return this.client.get<Entity.Application>(
+			"/api/v1/apps/verify_credentials",
+		);
+	}
 
-  // ======================================
-  // apps/oauth
-  // ======================================
-  /**
-   * POST /oauth/token
-   *
-   * Fetch OAuth access token.
-   * Get an access token based client_id and client_secret and authorization code.
-   * @param client_id will be generated by #createApp or #registerApp
-   * @param client_secret will be generated by #createApp or #registerApp
-   * @param code will be generated by the link of #generateAuthUrl or #registerApp
-   * @param redirect_uri must be the same uri as the time when you register your OAuth application
-   */
-  public async fetchAccessToken(
-    client_id: string | null,
-    client_secret: string,
-    code: string,
-    redirect_uri: string = NO_REDIRECT
-  ): Promise<OAuth.TokenData> {
-    if (!client_id) {
-      throw new Error('client_id is required')
-    }
-    return this.client
-      .post<OAuth.TokenDataFromServer>('/oauth/token', {
-        client_id,
-        client_secret,
-        code,
-        redirect_uri,
-        grant_type: 'authorization_code'
-      })
-      .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
-  }
+	// ======================================
+	// apps/oauth
+	// ======================================
+	/**
+	 * POST /oauth/token
+	 *
+	 * Fetch OAuth access token.
+	 * Get an access token based client_id and client_secret and authorization code.
+	 * @param client_id will be generated by #createApp or #registerApp
+	 * @param client_secret will be generated by #createApp or #registerApp
+	 * @param code will be generated by the link of #generateAuthUrl or #registerApp
+	 * @param redirect_uri must be the same uri as the time when you register your OAuth application
+	 */
+	public async fetchAccessToken(
+		client_id: string | null,
+		client_secret: string,
+		code: string,
+		redirect_uri: string = NO_REDIRECT,
+	): Promise<OAuth.TokenData> {
+		if (!client_id) {
+			throw new Error("client_id is required");
+		}
+		return this.client
+			.post<OAuth.TokenDataFromServer>("/oauth/token", {
+				client_id,
+				client_secret,
+				code,
+				redirect_uri,
+				grant_type: "authorization_code",
+			})
+			.then((res: Response<OAuth.TokenDataFromServer>) =>
+				OAuth.TokenData.from(res.data),
+			);
+	}
 
-  /**
-   * POST /oauth/token
-   *
-   * Refresh OAuth access token.
-   * Send refresh token and get new access token.
-   * @param client_id will be generated by #createApp or #registerApp
-   * @param client_secret will be generated by #createApp or #registerApp
-   * @param refresh_token will be get #fetchAccessToken
-   */
-  public async refreshToken(client_id: string, client_secret: string, refresh_token: string): Promise<OAuth.TokenData> {
-    return this.client
-      .post<OAuth.TokenDataFromServer>('/oauth/token', {
-        client_id,
-        client_secret,
-        refresh_token,
-        grant_type: 'refresh_token'
-      })
-      .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
-  }
+	/**
+	 * POST /oauth/token
+	 *
+	 * Refresh OAuth access token.
+	 * Send refresh token and get new access token.
+	 * @param client_id will be generated by #createApp or #registerApp
+	 * @param client_secret will be generated by #createApp or #registerApp
+	 * @param refresh_token will be get #fetchAccessToken
+	 */
+	public async refreshToken(
+		client_id: string,
+		client_secret: string,
+		refresh_token: string,
+	): Promise<OAuth.TokenData> {
+		return this.client
+			.post<OAuth.TokenDataFromServer>("/oauth/token", {
+				client_id,
+				client_secret,
+				refresh_token,
+				grant_type: "refresh_token",
+			})
+			.then((res: Response<OAuth.TokenDataFromServer>) =>
+				OAuth.TokenData.from(res.data),
+			);
+	}
 
-  /**
-   * POST /oauth/revoke
-   *
-   * Revoke an OAuth token.
-   * @param client_id will be generated by #createApp or #registerApp
-   * @param client_secret will be generated by #createApp or #registerApp
-   * @param token will be get #fetchAccessToken
-   */
-  public async revokeToken(client_id: string, client_secret: string, token: string): Promise<Response<Record<string, unknown>>> {
-    return this.client.post<Record<string, unknown>>('/oauth/revoke', {
-      client_id,
-      client_secret,
-      token
-    })
-  }
+	/**
+	 * POST /oauth/revoke
+	 *
+	 * Revoke an OAuth token.
+	 * @param client_id will be generated by #createApp or #registerApp
+	 * @param client_secret will be generated by #createApp or #registerApp
+	 * @param token will be get #fetchAccessToken
+	 */
+	public async revokeToken(
+		client_id: string,
+		client_secret: string,
+		token: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return this.client.post<Record<string, unknown>>("/oauth/revoke", {
+			client_id,
+			client_secret,
+			token,
+		});
+	}
 
-  // ======================================
-  // accounts
-  // ======================================
-  public async registerAccount(
-    _username: string,
-    _email: string,
-    _password: string,
-    _agreement: boolean,
-    _locale: string,
-    _reason?: string | null
-  ): Promise<Response<Entity.Token>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	// ======================================
+	// accounts
+	// ======================================
+	public async registerAccount(
+		_username: string,
+		_email: string,
+		_password: string,
+		_agreement: boolean,
+		_locale: string,
+		_reason?: string | null,
+	): Promise<Response<Entity.Token>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  /**
-   * GET /api/v1/accounts/verify_credentials
-   *
-   * @return Account.
-   */
-  public async verifyAccountCredentials(): Promise<Response<Entity.Account>> {
-    return this.client.get<FriendicaAPI.Entity.Account>('/api/v1/accounts/verify_credentials').then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.account(res.data)
-      })
-    })
-  }
+	/**
+	 * GET /api/v1/accounts/verify_credentials
+	 *
+	 * @return Account.
+	 */
+	public async verifyAccountCredentials(): Promise<Response<Entity.Account>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Account>("/api/v1/accounts/verify_credentials")
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.account(res.data),
+				});
+			});
+	}
 
-  public async updateCredentials(_options?: {
-    discoverable?: boolean
-    bot?: boolean
-    display_name?: string
-    note?: string
-    avatar?: string
-    header?: string
-    locked?: boolean
-    source?: {
-      privacy?: string
-      sensitive?: boolean
-      language?: string
-    }
-    fields_attributes?: Array<{ name: string; value: string }>
-  }): Promise<Response<Entity.Account>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async updateCredentials(_options?: {
+		discoverable?: boolean;
+		bot?: boolean;
+		display_name?: string;
+		note?: string;
+		avatar?: string;
+		header?: string;
+		locked?: boolean;
+		source?: {
+			privacy?: string;
+			sensitive?: boolean;
+			language?: string;
+		};
+		fields_attributes?: Array<{ name: string; value: string }>;
+	}): Promise<Response<Entity.Account>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  /**
-   * GET /api/v1/accounts/:id
-   *
-   * @param id The account ID.
-   * @return An account.
-   */
-  public async getAccount(id: string): Promise<Response<Entity.Account>> {
-    return this.client.get<FriendicaAPI.Entity.Account>(`/api/v1/accounts/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.account(res.data)
-      })
-    })
-  }
+	/**
+	 * GET /api/v1/accounts/:id
+	 *
+	 * @param id The account ID.
+	 * @return An account.
+	 */
+	public async getAccount(id: string): Promise<Response<Entity.Account>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Account>(`/api/v1/accounts/${id}`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.account(res.data),
+				});
+			});
+	}
 
-  /**
+	/**
    * GET /api/v1/accounts/:id/statuses
    *
    * @param id The account ID.
@@ -284,2585 +318,3000 @@ export default class Friendica implements MegalodonInterface {
    * @param options.only_media Show only statuses with media attached? Defaults to false.
    * @return Account's statuses.
    */
-  public async getAccountStatuses(
-    id: string,
-    options?: {
-      limit?: number
-      max_id?: string
-      since_id?: string
-      min_id?: string
-      pinned?: boolean
-      exclude_replies?: boolean
-      exclude_reblogs?: boolean
-      only_media: boolean
-    }
-  ): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.pinned) {
-        params = Object.assign(params, {
-          pinned: options.pinned
-        })
-      }
-      if (options.exclude_replies) {
-        params = Object.assign(params, {
-          exclude_replies: options.exclude_replies
-        })
-      }
-      if (options.exclude_reblogs) {
-        params = Object.assign(params, {
-          exclude_reblogs: options.exclude_reblogs
-        })
-      }
-      if (options.only_media) {
-        params = Object.assign(params, {
-          only_media: options.only_media
-        })
-      }
-    }
+	public async getAccountStatuses(
+		id: string,
+		options?: {
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+			min_id?: string;
+			pinned?: boolean;
+			exclude_replies?: boolean;
+			exclude_reblogs?: boolean;
+			only_media: boolean;
+		},
+	): Promise<Response<Array<Entity.Status>>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.pinned) {
+				params = Object.assign(params, {
+					pinned: options.pinned,
+				});
+			}
+			if (options.exclude_replies) {
+				params = Object.assign(params, {
+					exclude_replies: options.exclude_replies,
+				});
+			}
+			if (options.exclude_reblogs) {
+				params = Object.assign(params, {
+					exclude_reblogs: options.exclude_reblogs,
+				});
+			}
+			if (options.only_media) {
+				params = Object.assign(params, {
+					only_media: options.only_media,
+				});
+			}
+		}
 
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>(`/api/v1/accounts/${id}/statuses`, params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>(
+				`/api/v1/accounts/${id}/statuses`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/follow
-   *
-   * @param id Target account ID.
-   * @return Relationship.
-   */
-  public async subscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
-    const params = {
-      notify: true
-    }
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/follow
+	 *
+	 * @param id Target account ID.
+	 * @return Relationship.
+	 */
+	public async subscribeAccount(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		const params = {
+			notify: true,
+		};
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(
+				`/api/v1/accounts/${id}/follow`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/follow
-   *
-   * @param id Target account ID.
-   * @return Relationship.
-   */
-  public async unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
-    const params = {
-      notify: false
-    }
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/follow
+	 *
+	 * @param id Target account ID.
+	 * @return Relationship.
+	 */
+	public async unsubscribeAccount(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		const params = {
+			notify: false,
+		};
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(
+				`/api/v1/accounts/${id}/follow`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  public getAccountFavourites(
-    _id: string,
-    _options?: {
-      limit?: number
-      max_id?: string
-      since_id?: string
-    }
-  ): Promise<Response<Array<Entity.Status>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public getAccountFavourites(
+		_id: string,
+		_options?: {
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+		},
+	): Promise<Response<Array<Entity.Status>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  /**
-   * GET /api/v1/accounts/:id/followers
-   *
-   * @param id The account ID.
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @return The array of accounts.
-   */
-  public async getAccountFollowers(
-    id: string,
-    options?: {
-      limit?: number
-      max_id?: string
-      since_id?: string
-      get_all?: boolean
-      sleep_ms?: number
-    }
-  ): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.urlToAccounts(`/api/v1/accounts/${id}/followers`, params, options?.get_all || false, options?.sleep_ms || 0)
-  }
+	/**
+	 * GET /api/v1/accounts/:id/followers
+	 *
+	 * @param id The account ID.
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @return The array of accounts.
+	 */
+	public async getAccountFollowers(
+		id: string,
+		options?: {
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+			get_all?: boolean;
+			sleep_ms?: number;
+		},
+	): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.urlToAccounts(
+			`/api/v1/accounts/${id}/followers`,
+			params,
+			options?.get_all || false,
+			options?.sleep_ms || 0,
+		);
+	}
 
-  /**
-   * GET /api/v1/accounts/:id/following
-   *
-   * @param id The account ID.
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @return The array of accounts.
-   */
-  public async getAccountFollowing(
-    id: string,
-    options?: {
-      limit?: number
-      max_id?: string
-      since_id?: string
-      get_all?: boolean
-      sleep_ms?: number
-    }
-  ): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.urlToAccounts(`/api/v1/accounts/${id}/following`, params, options?.get_all || false, options?.sleep_ms || 0)
-  }
+	/**
+	 * GET /api/v1/accounts/:id/following
+	 *
+	 * @param id The account ID.
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @return The array of accounts.
+	 */
+	public async getAccountFollowing(
+		id: string,
+		options?: {
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+			get_all?: boolean;
+			sleep_ms?: number;
+		},
+	): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.urlToAccounts(
+			`/api/v1/accounts/${id}/following`,
+			params,
+			options?.get_all || false,
+			options?.sleep_ms || 0,
+		);
+	}
 
-  /** Helper function to optionally follow Link headers as pagination */
-  private async urlToAccounts(url: string, params: Record<string, string>, get_all: boolean, sleep_ms: number) {
-    const res = await this.client.get<Array<FriendicaAPI.Entity.Account>>(url, params)
-    let converted = Object.assign({}, res, {
-      data: res.data.map(a => FriendicaAPI.Converter.account(a))
-    })
-    if (get_all && converted.headers.link) {
-      let parsed = parseLinkHeader(converted.headers.link)
-      while (parsed?.next) {
-        const nextRes = await this.client.get<Array<FriendicaEntity.Account>>(parsed?.next.url, undefined, undefined, true)
-        converted = Object.assign({}, converted, {
-          data: [...converted.data, ...nextRes.data.map(a => FriendicaAPI.Converter.account(a))]
-        })
-        parsed = parseLinkHeader(nextRes.headers.link)
-        if (sleep_ms) {
-          await new Promise<void>(converted => setTimeout(converted, sleep_ms))
-        }
-      }
-    }
-    return converted
-  }
+	/** Helper function to optionally follow Link headers as pagination */
+	private async urlToAccounts(
+		url: string,
+		params: Record<string, string>,
+		get_all: boolean,
+		sleep_ms: number,
+	) {
+		const res = await this.client.get<Array<FriendicaAPI.Entity.Account>>(
+			url,
+			params,
+		);
+		let converted = Object.assign({}, res, {
+			data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+		});
+		if (get_all && converted.headers.link) {
+			let parsed = parseLinkHeader(converted.headers.link);
+			while (parsed?.next) {
+				const nextRes = await this.client.get<Array<FriendicaEntity.Account>>(
+					parsed?.next.url,
+					undefined,
+					undefined,
+					true,
+				);
+				converted = Object.assign({}, converted, {
+					data: [
+						...converted.data,
+						...nextRes.data.map((a) => FriendicaAPI.Converter.account(a)),
+					],
+				});
+				parsed = parseLinkHeader(nextRes.headers.link);
+				if (sleep_ms) {
+					await new Promise<void>((converted) =>
+						setTimeout(converted, sleep_ms),
+					);
+				}
+			}
+		}
+		return converted;
+	}
 
-  /**
-   * GET /api/v1/accounts/:id/lists
-   *
-   * @param id The account ID.
-   * @return The array of lists.
-   */
-  public async getAccountLists(id: string): Promise<Response<Array<Entity.List>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.List>>(`/api/v1/accounts/${id}/lists`).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(l => FriendicaAPI.Converter.list(l))
-      })
-    })
-  }
+	/**
+	 * GET /api/v1/accounts/:id/lists
+	 *
+	 * @param id The account ID.
+	 * @return The array of lists.
+	 */
+	public async getAccountLists(
+		id: string,
+	): Promise<Response<Array<Entity.List>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.List>>(`/api/v1/accounts/${id}/lists`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((l) => FriendicaAPI.Converter.list(l)),
+				});
+			});
+	}
 
-  /**
-   * GET /api/v1/accounts/:id/identity_proofs
-   *
-   * @param id The account ID.
-   * @return Array of IdentityProof
-   */
-  public async getIdentityProof(id: string): Promise<Response<Array<Entity.IdentityProof>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.IdentityProof>>(`/api/v1/accounts/${id}/identity_proofs`).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(i => FriendicaAPI.Converter.identity_proof(i))
-      })
-    })
-  }
+	/**
+	 * GET /api/v1/accounts/:id/identity_proofs
+	 *
+	 * @param id The account ID.
+	 * @return Array of IdentityProof
+	 */
+	public async getIdentityProof(
+		id: string,
+	): Promise<Response<Array<Entity.IdentityProof>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.IdentityProof>>(
+				`/api/v1/accounts/${id}/identity_proofs`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((i) => FriendicaAPI.Converter.identity_proof(i)),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/follow
-   *
-   * @param id The account ID.
-   * @param reblog Receive this account's reblogs in home timeline.
-   * @return Relationship
-   */
-  public async followAccount(id: string, options?: { reblog?: boolean }): Promise<Response<Entity.Relationship>> {
-    let params = {}
-    if (options) {
-      if (options.reblog !== undefined) {
-        params = Object.assign(params, {
-          reblog: options.reblog
-        })
-      }
-    }
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/follow
+	 *
+	 * @param id The account ID.
+	 * @param reblog Receive this account's reblogs in home timeline.
+	 * @return Relationship
+	 */
+	public async followAccount(
+		id: string,
+		options?: { reblog?: boolean },
+	): Promise<Response<Entity.Relationship>> {
+		let params = {};
+		if (options) {
+			if (options.reblog !== undefined) {
+				params = Object.assign(params, {
+					reblog: options.reblog,
+				});
+			}
+		}
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(
+				`/api/v1/accounts/${id}/follow`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/unfollow
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
-  public async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unfollow`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/unfollow
+	 *
+	 * @param id The account ID.
+	 * @return Relationship
+	 */
+	public async unfollowAccount(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unfollow`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/block
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
-  public async blockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/block`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/block
+	 *
+	 * @param id The account ID.
+	 * @return Relationship
+	 */
+	public async blockAccount(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/block`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/unblock
-   *
-   * @param id The account ID.
-   * @return RElationship
-   */
-  public async unblockAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unblock`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/unblock
+	 *
+	 * @param id The account ID.
+	 * @return RElationship
+	 */
+	public async unblockAccount(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unblock`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/mute
-   *
-   * @param id The account ID.
-   * @param notifications Mute notifications in addition to statuses.
-   * @return Relationship
-   */
-  public async muteAccount(id: string, notifications = true): Promise<Response<Entity.Relationship>> {
-    return this.client
-      .post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/mute`, {
-        notifications: notifications
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: FriendicaAPI.Converter.relationship(res.data)
-        })
-      })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/mute
+	 *
+	 * @param id The account ID.
+	 * @param notifications Mute notifications in addition to statuses.
+	 * @return Relationship
+	 */
+	public async muteAccount(
+		id: string,
+		notifications = true,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/mute`, {
+				notifications: notifications,
+			})
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/unmute
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
-  public async unmuteAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unmute`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/unmute
+	 *
+	 * @param id The account ID.
+	 * @return Relationship
+	 */
+	public async unmuteAccount(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/unmute`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/pin
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
-  public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/pin
+	 *
+	 * @param id The account ID.
+	 * @return Relationship
+	 */
+	public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  /**
-   * POST /api/v1/accounts/:id/unpin
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
-  public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	/**
+	 * POST /api/v1/accounts/:id/unpin
+	 *
+	 * @param id The account ID.
+	 * @return Relationship
+	 */
+	public async unpinAccount(
+		_id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  /**
-   * GET /api/v1/accounts/relationships
-   *
-   * @param id The account ID.
-   * @return Relationship
-   */
-  public async getRelationship(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client
-      .get<Array<FriendicaAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
-        id: [id]
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: FriendicaAPI.Converter.relationship(res.data[0])
-        })
-      })
-  }
+	/**
+	 * GET /api/v1/accounts/relationships
+	 *
+	 * @param id The account ID.
+	 * @return Relationship
+	 */
+	public async getRelationship(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Relationship>>(
+				"/api/v1/accounts/relationships",
+				{
+					id: [id],
+				},
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data[0]),
+				});
+			});
+	}
 
-  /**
-   * Get multiple relationships in one method
-   *
-   * @param ids Array of account IDs.
-   * @return Array of Relationship.
-   */
-  public async getRelationships(ids: Array<string>): Promise<Response<Array<Entity.Relationship>>> {
-    return this.client
-      .get<Array<FriendicaAPI.Entity.Relationship>>('/api/v1/accounts/relationships', {
-        id: ids
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: res.data.map(r => FriendicaAPI.Converter.relationship(r))
-        })
-      })
-  }
+	/**
+	 * Get multiple relationships in one method
+	 *
+	 * @param ids Array of account IDs.
+	 * @return Array of Relationship.
+	 */
+	public async getRelationships(
+		ids: Array<string>,
+	): Promise<Response<Array<Entity.Relationship>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Relationship>>(
+				"/api/v1/accounts/relationships",
+				{
+					id: ids,
+				},
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((r) => FriendicaAPI.Converter.relationship(r)),
+				});
+			});
+	}
 
-  /**
-   * GET /api/v1/accounts/search
-   *
-   * @param q Search query.
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @return The array of accounts.
-   */
-  public async searchAccount(
-    q: string,
-    options?: {
-      following?: boolean
-      resolve?: boolean
-      limit?: number
-      max_id?: string
-      since_id?: string
-    }
-  ): Promise<Response<Array<Entity.Account>>> {
-    let params = { q: q }
-    if (options) {
-      if (options.following !== undefined && options.following !== null) {
-        params = Object.assign(params, {
-          following: options.following
-        })
-      }
-      if (options.resolve !== undefined && options.resolve !== null) {
-        params = Object.assign(params, {
-          resolve: options.resolve
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/accounts/search', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
+	/**
+	 * GET /api/v1/accounts/search
+	 *
+	 * @param q Search query.
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @return The array of accounts.
+	 */
+	public async searchAccount(
+		q: string,
+		options?: {
+			following?: boolean;
+			resolve?: boolean;
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+		},
+	): Promise<Response<Array<Entity.Account>>> {
+		let params = { q: q };
+		if (options) {
+			if (options.following !== undefined && options.following !== null) {
+				params = Object.assign(params, {
+					following: options.following,
+				});
+			}
+			if (options.resolve !== undefined && options.resolve !== null) {
+				params = Object.assign(params, {
+					resolve: options.resolve,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>(
+				"/api/v1/accounts/search",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/bookmarks
-  // ======================================
-  /**
-   * GET /api/v1/bookmarks
-   *
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getBookmarks(options?: {
-    limit?: number
-    max_id?: string
-    since_id?: string
-    min_id?: string
-  }): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/bookmarks', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
+	// ======================================
+	// accounts/bookmarks
+	// ======================================
+	/**
+	 * GET /api/v1/bookmarks
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getBookmarks(options?: {
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Status>>> {
+		let params = {};
+		if (options) {
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>("/api/v1/bookmarks", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
 
-  // ======================================
-  //  accounts/favourites
-  // ======================================
-  /**
-   * GET /api/v1/favourites
-   *
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getFavourites(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/favourites', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
+	// ======================================
+	//  accounts/favourites
+	// ======================================
+	/**
+	 * GET /api/v1/favourites
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getFavourites(options?: {
+		limit?: number;
+		max_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Status>>> {
+		let params = {};
+		if (options) {
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>("/api/v1/favourites", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/mutes
-  // ======================================
-  /**
-   * GET /api/v1/mutes
-   *
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of accounts.
-   */
-  public async getMutes(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/mutes', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
+	// ======================================
+	// accounts/mutes
+	// ======================================
+	/**
+	 * GET /api/v1/mutes
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of accounts.
+	 */
+	public async getMutes(options?: {
+		limit?: number;
+		max_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>("/api/v1/mutes", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/blocks
-  // ======================================
-  /**
-   * GET /api/v1/blocks
-   *
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of accounts.
-   */
-  public async getBlocks(options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/blocks', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
+	// ======================================
+	// accounts/blocks
+	// ======================================
+	/**
+	 * GET /api/v1/blocks
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of accounts.
+	 */
+	public async getBlocks(options?: {
+		limit?: number;
+		max_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>("/api/v1/blocks", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/domain_blocks
-  // ======================================
-  public async getDomainBlocks(_options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	// ======================================
+	// accounts/domain_blocks
+	// ======================================
+	public async getDomainBlocks(_options?: {
+		limit?: number;
+		max_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<string>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public blockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public blockDomain(
+		_domain: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public unblockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public unblockDomain(
+		_domain: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  // ======================================
-  // accounts/filters
-  // ======================================
-  /**
-   * GET /api/v1/filters
-   *
-   * @return Array of filters.
-   */
-  public async getFilters(): Promise<Response<Array<Entity.Filter>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.Filter>>('/api/v1/filters').then(res => {
-      return Object.assign(res, {
-        data: res.data.map(f => FriendicaAPI.Converter.filter(f))
-      })
-    })
-  }
+	// ======================================
+	// accounts/filters
+	// ======================================
+	/**
+	 * GET /api/v1/filters
+	 *
+	 * @return Array of filters.
+	 */
+	public async getFilters(): Promise<Response<Array<Entity.Filter>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Filter>>("/api/v1/filters")
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((f) => FriendicaAPI.Converter.filter(f)),
+				});
+			});
+	}
 
-  public async getFilter(_id: string): Promise<Response<Entity.Filter>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async getFilter(_id: string): Promise<Response<Entity.Filter>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public async createFilter(
-    _phrase: string,
-    _context: Array<Entity.FilterContext>,
-    _options?: {
-      irreversible?: boolean
-      whole_word?: boolean
-      expires_in?: string
-    }
-  ): Promise<Response<Entity.Filter>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async createFilter(
+		_phrase: string,
+		_context: Array<Entity.FilterContext>,
+		_options?: {
+			irreversible?: boolean;
+			whole_word?: boolean;
+			expires_in?: string;
+		},
+	): Promise<Response<Entity.Filter>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public async updateFilter(
-    _id: string,
-    _phrase: string,
-    _context: Array<Entity.FilterContext>,
-    _options?: {
-      irreversible?: boolean
-      whole_word?: boolean
-      expires_in?: string
-    }
-  ): Promise<Response<Entity.Filter>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async updateFilter(
+		_id: string,
+		_phrase: string,
+		_context: Array<Entity.FilterContext>,
+		_options?: {
+			irreversible?: boolean;
+			whole_word?: boolean;
+			expires_in?: string;
+		},
+	): Promise<Response<Entity.Filter>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public async deleteFilter(_id: string): Promise<Response<Entity.Filter>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async deleteFilter(_id: string): Promise<Response<Entity.Filter>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  // ======================================
-  // accounts/reports
-  // ======================================
-  public async report(
-    _account_id: string,
-    _options?: {
-      status_ids?: Array<string>
-      comment: string
-      forward?: boolean
-      category?: Entity.Category
-      rule_ids?: Array<number>
-    }
-  ): Promise<Response<Entity.Report>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	// ======================================
+	// accounts/reports
+	// ======================================
+	public async report(
+		_account_id: string,
+		_options?: {
+			status_ids?: Array<string>;
+			comment: string;
+			forward?: boolean;
+			category?: Entity.Category;
+			rule_ids?: Array<number>;
+		},
+	): Promise<Response<Entity.Report>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  // ======================================
-  // accounts/follow_requests
-  // ======================================
-  /**
-   * GET /api/v1/follow_requests
-   *
-   * @param limit Maximum number of results.
-   * @return Array of FollowRequest.
-   */
-  public async getFollowRequests(limit?: number): Promise<Response<Array<Entity.FollowRequest>>> {
-    if (limit) {
-      return this.client
-        .get<Array<FriendicaAPI.Entity.FollowRequest>>('/api/v1/follow_requests', {
-          limit: limit
-        })
-        .then(res => {
-          return Object.assign(res, {
-            data: res.data.map(a => FriendicaAPI.Converter.follow_request(a))
-          })
-        })
-    } else {
-      return this.client.get<Array<FriendicaAPI.Entity.FollowRequest>>('/api/v1/follow_requests').then(res => {
-        return Object.assign(res, {
-          data: res.data.map(a => FriendicaAPI.Converter.follow_request(a))
-        })
-      })
-    }
-  }
+	// ======================================
+	// accounts/follow_requests
+	// ======================================
+	/**
+	 * GET /api/v1/follow_requests
+	 *
+	 * @param limit Maximum number of results.
+	 * @return Array of FollowRequest.
+	 */
+	public async getFollowRequests(
+		limit?: number,
+	): Promise<Response<Array<Entity.FollowRequest>>> {
+		if (limit) {
+			return this.client
+				.get<Array<FriendicaAPI.Entity.FollowRequest>>(
+					"/api/v1/follow_requests",
+					{
+						limit: limit,
+					},
+				)
+				.then((res) => {
+					return Object.assign(res, {
+						data: res.data.map((a) => FriendicaAPI.Converter.follow_request(a)),
+					});
+				});
+		} else {
+			return this.client
+				.get<Array<FriendicaAPI.Entity.FollowRequest>>(
+					"/api/v1/follow_requests",
+				)
+				.then((res) => {
+					return Object.assign(res, {
+						data: res.data.map((a) => FriendicaAPI.Converter.follow_request(a)),
+					});
+				});
+		}
+	}
 
-  /**
-   * POST /api/v1/follow_requests/:id/authorize
-   *
-   * @param id The FollowRequest ID.
-   * @return Relationship.
-   */
-  public async acceptFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/follow_requests/${id}/authorize`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/follow_requests/:id/authorize
+	 *
+	 * @param id The FollowRequest ID.
+	 * @return Relationship.
+	 */
+	public async acceptFollowRequest(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(
+				`/api/v1/follow_requests/${id}/authorize`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/follow_requests/:id/reject
-   *
-   * @param id The FollowRequest ID.
-   * @return Relationship.
-   */
-  public async rejectFollowRequest(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<FriendicaAPI.Entity.Relationship>(`/api/v1/follow_requests/${id}/reject`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.relationship(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/follow_requests/:id/reject
+	 *
+	 * @param id The FollowRequest ID.
+	 * @return Relationship.
+	 */
+	public async rejectFollowRequest(
+		id: string,
+	): Promise<Response<Entity.Relationship>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Relationship>(
+				`/api/v1/follow_requests/${id}/reject`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.relationship(res.data),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/endorsements
-  // ======================================
-  /**
-   * GET /api/v1/endorsements
-   *
-   * @param options.limit Max number of results to return. Defaults to 40.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @return Array of accounts.
-   */
-  public async getEndorsements(options?: { limit?: number; max_id?: string; since_id?: string }): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/endorsements', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
+	// ======================================
+	// accounts/endorsements
+	// ======================================
+	/**
+	 * GET /api/v1/endorsements
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 40.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @return Array of accounts.
+	 */
+	public async getEndorsements(options?: {
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+	}): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>("/api/v1/endorsements", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/featured_tags
-  // ======================================
-  public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	// ======================================
+	// accounts/featured_tags
+	// ======================================
+	public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async createFeaturedTag(
+		_name: string,
+	): Promise<Response<Entity.FeaturedTag>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public deleteFeaturedTag(_id: string): Promise<Response<Record<string, unknown>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public deleteFeaturedTag(
+		_id: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  // ======================================
-  // accounts/preferences
-  // ======================================
-  /**
-   * GET /api/v1/preferences
-   *
-   * @return Preferences.
-   */
-  public async getPreferences(): Promise<Response<Entity.Preferences>> {
-    return this.client.get<FriendicaAPI.Entity.Preferences>('/api/v1/preferences').then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.preferences(res.data)
-      })
-    })
-  }
+	// ======================================
+	// accounts/preferences
+	// ======================================
+	/**
+	 * GET /api/v1/preferences
+	 *
+	 * @return Preferences.
+	 */
+	public async getPreferences(): Promise<Response<Entity.Preferences>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Preferences>("/api/v1/preferences")
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.preferences(res.data),
+				});
+			});
+	}
 
-  // ======================================
-  // accounts/followed_tags
-  // ======================================
-  public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
+	// ======================================
+	// accounts/followed_tags
+	// ======================================
+	public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
 
-  // ======================================
-  // accounts/suggestions
-  // ======================================
-  /**
-   * GET /api/v1/suggestions
-   *
-   * @param limit Maximum number of results.
-   * @return Array of accounts.
-   */
-  public async getSuggestions(limit?: number): Promise<Response<Array<Entity.Account>>> {
-    if (limit) {
-      return this.client
-        .get<Array<FriendicaAPI.Entity.Account>>('/api/v1/suggestions', {
-          limit: limit
-        })
-        .then(res => {
-          return Object.assign(res, {
-            data: res.data.map(a => FriendicaAPI.Converter.account(a))
-          })
-        })
-    } else {
-      return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/suggestions').then(res => {
-        return Object.assign(res, {
-          data: res.data.map(a => FriendicaAPI.Converter.account(a))
-        })
-      })
-    }
-  }
+	// ======================================
+	// accounts/suggestions
+	// ======================================
+	/**
+	 * GET /api/v1/suggestions
+	 *
+	 * @param limit Maximum number of results.
+	 * @return Array of accounts.
+	 */
+	public async getSuggestions(
+		limit?: number,
+	): Promise<Response<Array<Entity.Account>>> {
+		if (limit) {
+			return this.client
+				.get<Array<FriendicaAPI.Entity.Account>>("/api/v1/suggestions", {
+					limit: limit,
+				})
+				.then((res) => {
+					return Object.assign(res, {
+						data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+					});
+				});
+		} else {
+			return this.client
+				.get<Array<FriendicaAPI.Entity.Account>>("/api/v1/suggestions")
+				.then((res) => {
+					return Object.assign(res, {
+						data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+					});
+				});
+		}
+	}
 
-  // ======================================
-  // accounts/tags
-  // ======================================
-  /**
-   * GET /api/v1/tags/:id
-   *
-   * @param id Target hashtag id.
-   * @return Tag
-   */
-  public async getTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.get<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.tag(res.data)
-      })
-    })
-  }
+	// ======================================
+	// accounts/tags
+	// ======================================
+	/**
+	 * GET /api/v1/tags/:id
+	 *
+	 * @param id Target hashtag id.
+	 * @return Tag
+	 */
+	public async getTag(id: string): Promise<Response<Entity.Tag>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.tag(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/tags/:id/follow
-   *
-   * @param id Target hashtag id.
-   * @return Tag
-   */
-  public async followTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.post<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}/follow`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.tag(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/tags/:id/follow
+	 *
+	 * @param id Target hashtag id.
+	 * @return Tag
+	 */
+	public async followTag(id: string): Promise<Response<Entity.Tag>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}/follow`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.tag(res.data),
+				});
+			});
+	}
 
-  /**
-   * POST /api/v1/tags/:id/unfollow
-   *
-   * @param id Target hashtag id.
-   * @return Tag
-   */
-  public async unfollowTag(id: string): Promise<Response<Entity.Tag>> {
-    return this.client.post<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}/unfollow`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.tag(res.data)
-      })
-    })
-  }
+	/**
+	 * POST /api/v1/tags/:id/unfollow
+	 *
+	 * @param id Target hashtag id.
+	 * @return Tag
+	 */
+	public async unfollowTag(id: string): Promise<Response<Entity.Tag>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Tag>(`/api/v1/tags/${id}/unfollow`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.tag(res.data),
+				});
+			});
+	}
 
-  // ======================================
-  // statuses
-  // ======================================
-  /**
-   * POST /api/v1/statuses
-   *
-   * @param status Text content of status.
-   * @param options.media_ids Array of Attachment ids.
-   * @param options.poll Poll object.
-   * @param options.in_reply_to_id ID of the status being replied to, if status is a reply.
-   * @param options.sensitive Mark status and attached media as sensitive?
-   * @param options.spoiler_text Text to be shown as a warning or subject before the actual content.
-   * @param options.visibility Visibility of the posted status.
-   * @param options.scheduled_at ISO 8601 Datetime at which to schedule a status.
-   * @param options.language ISO 639 language code for this status.
-   * @param options.quote_id ID of the status being quoted to, if status is a quote.
-   * @return Status. When options.scheduled_at is present, ScheduledStatus is returned instead.
-   */
-  public async postStatus(
-    status: string,
-    options: {
-      media_ids?: Array<string>
-      poll?: { options: Array<string>; expires_in: number; multiple?: boolean; hide_totals?: boolean }
-      in_reply_to_id?: string
-      sensitive?: boolean
-      spoiler_text?: string
-      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
-      scheduled_at?: string
-      language?: string
-      quote_id?: string
-    }
-  ): Promise<Response<Entity.Status | Entity.ScheduledStatus>> {
-    let params = {
-      status: status
-    }
-    if (options) {
-      if (options.media_ids) {
-        params = Object.assign(params, {
-          media_ids: options.media_ids
-        })
-      }
-      if (options.poll) {
-        let pollParam = {
-          options: options.poll.options,
-          expires_in: options.poll.expires_in
-        }
-        if (options.poll.multiple !== undefined) {
-          pollParam = Object.assign(pollParam, {
-            multiple: options.poll.multiple
-          })
-        }
-        if (options.poll.hide_totals !== undefined) {
-          pollParam = Object.assign(pollParam, {
-            hide_totals: options.poll.hide_totals
-          })
-        }
-        params = Object.assign(params, {
-          poll: pollParam
-        })
-      }
-      if (options.in_reply_to_id) {
-        params = Object.assign(params, {
-          in_reply_to_id: options.in_reply_to_id
-        })
-      }
-      if (options.sensitive !== undefined) {
-        params = Object.assign(params, {
-          sensitive: options.sensitive
-        })
-      }
-      if (options.spoiler_text) {
-        params = Object.assign(params, {
-          spoiler_text: options.spoiler_text
-        })
-      }
-      if (options.visibility) {
-        params = Object.assign(params, {
-          visibility: options.visibility
-        })
-      }
-      if (options.scheduled_at) {
-        params = Object.assign(params, {
-          scheduled_at: options.scheduled_at
-        })
-      }
-      if (options.language) {
-        params = Object.assign(params, {
-          language: options.language
-        })
-      }
-      if (options.quote_id) {
-        params = Object.assign(params, {
-          quote_id: options.quote_id
-        })
-      }
-    }
-    if (options.scheduled_at) {
-      return this.client.post<FriendicaAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
-        return Object.assign(res, {
-          data: FriendicaAPI.Converter.scheduled_status(res.data)
-        })
-      })
-    }
-    return this.client.post<FriendicaAPI.Entity.Status>('/api/v1/statuses', params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-  /**
-   * GET /api/v1/statuses/:id
-   *
-   * @param id The target status id.
-   * @return Status
-   */
-  public async getStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.get<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
+	// ======================================
+	// statuses
+	// ======================================
+	/**
+	 * POST /api/v1/statuses
+	 *
+	 * @param status Text content of status.
+	 * @param options.media_ids Array of Attachment ids.
+	 * @param options.poll Poll object.
+	 * @param options.in_reply_to_id ID of the status being replied to, if status is a reply.
+	 * @param options.sensitive Mark status and attached media as sensitive?
+	 * @param options.spoiler_text Text to be shown as a warning or subject before the actual content.
+	 * @param options.visibility Visibility of the posted status.
+	 * @param options.scheduled_at ISO 8601 Datetime at which to schedule a status.
+	 * @param options.language ISO 639 language code for this status.
+	 * @param options.quote_id ID of the status being quoted to, if status is a quote.
+	 * @return Status. When options.scheduled_at is present, ScheduledStatus is returned instead.
+	 */
+	public async postStatus(
+		status: string,
+		options: {
+			media_ids?: Array<string>;
+			poll?: {
+				options: Array<string>;
+				expires_in: number;
+				multiple?: boolean;
+				hide_totals?: boolean;
+			};
+			in_reply_to_id?: string;
+			sensitive?: boolean;
+			spoiler_text?: string;
+			visibility?: "public" | "unlisted" | "private" | "direct";
+			scheduled_at?: string;
+			language?: string;
+			quote_id?: string;
+		},
+	): Promise<Response<Entity.Status | Entity.ScheduledStatus>> {
+		let params = {
+			status: status,
+		};
+		if (options) {
+			if (options.media_ids) {
+				params = Object.assign(params, {
+					media_ids: options.media_ids,
+				});
+			}
+			if (options.poll) {
+				let pollParam = {
+					options: options.poll.options,
+					expires_in: options.poll.expires_in,
+				};
+				if (options.poll.multiple !== undefined) {
+					pollParam = Object.assign(pollParam, {
+						multiple: options.poll.multiple,
+					});
+				}
+				if (options.poll.hide_totals !== undefined) {
+					pollParam = Object.assign(pollParam, {
+						hide_totals: options.poll.hide_totals,
+					});
+				}
+				params = Object.assign(params, {
+					poll: pollParam,
+				});
+			}
+			if (options.in_reply_to_id) {
+				params = Object.assign(params, {
+					in_reply_to_id: options.in_reply_to_id,
+				});
+			}
+			if (options.sensitive !== undefined) {
+				params = Object.assign(params, {
+					sensitive: options.sensitive,
+				});
+			}
+			if (options.spoiler_text) {
+				params = Object.assign(params, {
+					spoiler_text: options.spoiler_text,
+				});
+			}
+			if (options.visibility) {
+				params = Object.assign(params, {
+					visibility: options.visibility,
+				});
+			}
+			if (options.scheduled_at) {
+				params = Object.assign(params, {
+					scheduled_at: options.scheduled_at,
+				});
+			}
+			if (options.language) {
+				params = Object.assign(params, {
+					language: options.language,
+				});
+			}
+			if (options.quote_id) {
+				params = Object.assign(params, {
+					quote_id: options.quote_id,
+				});
+			}
+		}
+		if (options.scheduled_at) {
+			return this.client
+				.post<FriendicaAPI.Entity.ScheduledStatus>("/api/v1/statuses", params)
+				.then((res) => {
+					return Object.assign(res, {
+						data: FriendicaAPI.Converter.scheduled_status(res.data),
+					});
+				});
+		}
+		return this.client
+			.post<FriendicaAPI.Entity.Status>("/api/v1/statuses", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+	/**
+	 * GET /api/v1/statuses/:id
+	 *
+	 * @param id The target status id.
+	 * @return Status
+	 */
+	public async getStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
 
-  /**
+	/**
      PUT /api/v1/statuses/:id
    *
    * @param id The target status id.
    * @return Status
    */
-  public async editStatus(
-    id: string,
-    options: {
-      status?: string
-      spoiler_text?: string
-      sensitive?: boolean
-      media_ids?: Array<string>
-      poll?: { options?: Array<string>; expires_in?: number; multiple?: boolean; hide_totals?: boolean }
-    }
-  ): Promise<Response<Entity.Status>> {
-    let params = {}
-    if (options.status) {
-      params = Object.assign(params, {
-        status: options.status
-      })
-    }
-    if (options.spoiler_text) {
-      params = Object.assign(params, {
-        spoiler_text: options.spoiler_text
-      })
-    }
-    if (options.sensitive) {
-      params = Object.assign(params, {
-        sensitive: options.sensitive
-      })
-    }
-    if (options.media_ids) {
-      params = Object.assign(params, {
-        media_ids: options.media_ids
-      })
-    }
-    if (options.poll) {
-      let pollParam = {}
-      if (options.poll.options !== undefined) {
-        pollParam = Object.assign(pollParam, {
-          options: options.poll.options
-        })
-      }
-      if (options.poll.expires_in !== undefined) {
-        pollParam = Object.assign(pollParam, {
-          expires_in: options.poll.expires_in
-        })
-      }
-      if (options.poll.multiple !== undefined) {
-        pollParam = Object.assign(pollParam, {
-          multiple: options.poll.multiple
-        })
-      }
-      if (options.poll.hide_totals !== undefined) {
-        pollParam = Object.assign(pollParam, {
-          hide_totals: options.poll.hide_totals
-        })
-      }
-      params = Object.assign(params, {
-        poll: pollParam
-      })
-    }
-    return this.client.put<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`, params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * DELETE /api/v1/statuses/:id
-   *
-   * @param id The target status id.
-   * @return Status
-   */
-  public async deleteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.del<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/statuses/:id/context
-   *
-   * Get parent and child statuses.
-   * @param id The target status id.
-   * @return Context
-   */
-  public async getStatusContext(
-    id: string,
-    options?: { limit?: number; max_id?: string; since_id?: string }
-  ): Promise<Response<Entity.Context>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-    }
-    return this.client.get<FriendicaAPI.Entity.Context>(`/api/v1/statuses/${id}/context`, params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.context(res.data)
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/statuses/:id/source
-   *
-   * Obtain the source properties for a status so that it can be edited.
-   * @param id The target status id.
-   * @return StatusSource
-   */
-  public async getStatusSource(id: string): Promise<Response<Entity.StatusSource>> {
-    return this.client.get<FriendicaAPI.Entity.StatusSource>(`/api/v1/statuses/${id}/source`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status_source(res.data)
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/statuses/:id/reblogged_by
-   *
-   * @param id The target status id.
-   * @return Array of accounts.
-   */
-  public async getStatusRebloggedBy(id: string): Promise<Response<Array<Entity.Account>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>(`/api/v1/statuses/${id}/reblogged_by`).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/statuses/:id/favourited_by
-   *
-   * @param id The target status id.
-   * @return Array of accounts.
-   */
-  public async getStatusFavouritedBy(id: string): Promise<Response<Array<Entity.Account>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>(`/api/v1/statuses/${id}/favourited_by`).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/favourite
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
-  public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/favourite`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/unfavourite
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
-  public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unfavourite`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/reblog
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
-  public async reblogStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/reblog`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/unreblog
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
-  public async unreblogStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unreblog`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/bookmark
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
-  public async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/bookmark`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/unbookmark
-   *
-   * @param id The target status id.
-   * @return Status.
-   */
-  public async unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unbookmark`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/mute
-   *
-   * @param id The target status id.
-   * @return Status
-   */
-  public async muteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/mute`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/unmute
-   *
-   * @param id The target status id.
-   * @return Status
-   */
-  public async unmuteStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unmute`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/pin
-   * @param id The target status id.
-   * @return Status
-   */
-  public async pinStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/pin`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/statuses/:id/unpin
-   *
-   * @param id The target status id.
-   * @return Status
-   */
-  public async unpinStatus(id: string): Promise<Response<Entity.Status>> {
-    return this.client.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unpin`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.status(res.data)
-      })
-    })
-  }
-
-  // ======================================
-  // statuses/media
-  // ======================================
-  /**
-   * POST /api/v2/media
-   *
-   * @param file The file to be attached, using multipart form data.
-   * @param options.description A plain-text description of the media.
-   * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
-   * @return Attachment
-   */
-  public async uploadMedia(
-    file: any,
-    options?: { description?: string; focus?: string }
-  ): Promise<Response<Entity.Attachment | Entity.AsyncAttachment>> {
-    const formData = new FormData()
-    formData.append('file', file)
-    if (options) {
-      if (options.description) {
-        formData.append('description', options.description)
-      }
-      if (options.focus) {
-        formData.append('focus', options.focus)
-      }
-    }
-    return this.client.postForm<FriendicaAPI.Entity.AsyncAttachment>('/api/v2/media', formData).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.async_attachment(res.data)
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/media/:id
-   *
-   * @param id Target media ID.
-   * @return Attachment
-   */
-  public async getMedia(id: string): Promise<Response<Entity.Attachment>> {
-    const res = await this.client.get<FriendicaAPI.Entity.Attachment>(`/api/v1/media/${id}`)
-
-    return Object.assign(res, {
-      data: FriendicaAPI.Converter.attachment(res.data)
-    })
-  }
-
-  /**
-   * PUT /api/v1/media/:id
-   *
-   * @param id Target media ID.
-   * @param options.file The file to be attached, using multipart form data.
-   * @param options.description A plain-text description of the media.
-   * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
-   * @param options.is_sensitive Whether the media is sensitive.
-   * @return Attachment
-   */
-  public async updateMedia(
-    id: string,
-    options?: {
-      file?: any
-      description?: string
-      focus?: string
-    }
-  ): Promise<Response<Entity.Attachment>> {
-    const formData = new FormData()
-    if (options) {
-      if (options.file) {
-        formData.append('file', options.file)
-      }
-      if (options.description) {
-        formData.append('description', options.description)
-      }
-      if (options.focus) {
-        formData.append('focus', options.focus)
-      }
-    }
-    return this.client.putForm<FriendicaAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.attachment(res.data)
-      })
-    })
-  }
-
-  // ======================================
-  // statuses/polls
-  // ======================================
-  /**
-   * GET /api/v1/polls/:id
-   *
-   * @param id Target poll ID.
-   * @return Poll
-   */
-  public async getPoll(id: string): Promise<Response<Entity.Poll>> {
-    return this.client.get<FriendicaAPI.Entity.Poll>(`/api/v1/polls/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.poll(res.data)
-      })
-    })
-  }
-
-  public async votePoll(_id: string, _choices: Array<number>): Promise<Response<Entity.Poll>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  // ======================================
-  // statuses/scheduled_statuses
-  // ======================================
-  /**
-   * GET /api/v1/scheduled_statuses
-   *
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of scheduled statuses.
-   */
-  public async getScheduledStatuses(options?: {
-    limit?: number | null
-    max_id?: string | null
-    since_id?: string | null
-    min_id?: string | null
-  }): Promise<Response<Array<Entity.ScheduledStatus>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.ScheduledStatus>>('/api/v1/scheduled_statuses', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.scheduled_status(s))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/scheduled_statuses/:id
-   *
-   * @param id Target status ID.
-   * @return ScheduledStatus.
-   */
-  public async getScheduledStatus(id: string): Promise<Response<Entity.ScheduledStatus>> {
-    return this.client.get<FriendicaAPI.Entity.ScheduledStatus>(`/api/v1/scheduled_statuses/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.scheduled_status(res.data)
-      })
-    })
-  }
-
-  public async scheduleStatus(_id: string, _scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  /**
-   * DELETE /api/v1/scheduled_statuses/:id
-   *
-   * @param id Target scheduled status ID.
-   */
-  public cancelScheduledStatus(id: string): Promise<Response<Record<string, unknown>>> {
-    return this.client.del<Record<string, unknown>>(`/api/v1/scheduled_statuses/${id}`)
-  }
-
-  // ======================================
-  // timelines
-  // ======================================
-  /**
-   * GET /api/v1/timelines/public
-   *
-   * @param options.only_media Show only statuses with media attached? Defaults to false.
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getPublicTimeline(options?: {
-    only_media?: boolean
-    limit?: number
-    max_id?: string
-    since_id?: string
-    min_id?: string
-  }): Promise<Response<Array<Entity.Status>>> {
-    let params = {
-      local: false
-    }
-    if (options) {
-      if (options.only_media !== undefined) {
-        params = Object.assign(params, {
-          only_media: options.only_media
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/timelines/public
-   *
-   * @param options.only_media Show only statuses with media attached? Defaults to false.
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getLocalTimeline(options?: {
-    only_media?: boolean
-    limit?: number
-    max_id?: string
-    since_id?: string
-    min_id?: string
-  }): Promise<Response<Array<Entity.Status>>> {
-    let params = {
-      local: true
-    }
-    if (options) {
-      if (options.only_media !== undefined) {
-        params = Object.assign(params, {
-          only_media: options.only_media
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/timelines/public', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/timelines/tag/:hashtag
-   *
-   * @param hashtag Content of a #hashtag, not including # symbol.
-   * @param options.local Show only local statuses? Defaults to false.
-   * @param options.only_media Show only statuses with media attached? Defaults to false.
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getTagTimeline(
-    hashtag: string,
-    options?: {
-      local?: boolean
-      only_media?: boolean
-      limit?: number
-      max_id?: string
-      since_id?: string
-      min_id?: string
-    }
-  ): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.local !== undefined) {
-        params = Object.assign(params, {
-          local: options.local
-        })
-      }
-      if (options.only_media !== undefined) {
-        params = Object.assign(params, {
-          only_media: options.only_media
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>(`/api/v1/timelines/tag/${hashtag}`, params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/timelines/home
-   *
-   * @param options.local Show only local statuses? Defaults to false.
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getHomeTimeline(options?: {
-    local?: boolean
-    limit?: number
-    max_id?: string
-    since_id?: string
-    min_id?: string
-  }): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.local !== undefined) {
-        params = Object.assign(params, {
-          local: options.local
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>('/api/v1/timelines/home', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/timelines/list/:list_id
-   *
-   * @param list_id Local ID of the list in the database.
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getListTimeline(
-    list_id: string,
-    options?: {
-      limit?: number
-      max_id?: string
-      since_id?: string
-      min_id?: string
-    }
-  ): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
-    if (options) {
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Status>>(`/api/v1/timelines/list/${list_id}`, params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(s => FriendicaAPI.Converter.status(s))
-      })
-    })
-  }
-
-  // ======================================
-  // timelines/conversations
-  // ======================================
-  /**
-   * GET /api/v1/conversations
-   *
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of statuses.
-   */
-  public async getConversationTimeline(options?: {
-    limit?: number
-    max_id?: string
-    since_id?: string
-    min_id?: string
-  }): Promise<Response<Array<Entity.Conversation>>> {
-    let params = {}
-    if (options) {
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Conversation>>('/api/v1/conversations', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(c => FriendicaAPI.Converter.conversation(c))
-      })
-    })
-  }
-
-  /**
-   * DELETE /api/v1/conversations/:id
-   *
-   * @param id Target conversation ID.
-   */
-  public deleteConversation(id: string): Promise<Response<Record<string, unknown>>> {
-    return this.client.del<Record<string, unknown>>(`/api/v1/conversations/${id}`)
-  }
-
-  /**
-   * POST /api/v1/conversations/:id/read
-   *
-   * @param id Target conversation ID.
-   * @return Conversation.
-   */
-  public async readConversation(id: string): Promise<Response<Entity.Conversation>> {
-    return this.client.post<FriendicaAPI.Entity.Conversation>(`/api/v1/conversations/${id}/read`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.conversation(res.data)
-      })
-    })
-  }
-
-  // ======================================
-  // timelines/lists
-  // ======================================
-  /**
-   * GET /api/v1/lists
-   *
-   * @return Array of lists.
-   */
-  public async getLists(): Promise<Response<Array<Entity.List>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.List>>('/api/v1/lists').then(res => {
-      return Object.assign(res, {
-        data: res.data.map(l => FriendicaAPI.Converter.list(l))
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/lists/:id
-   *
-   * @param id Target list ID.
-   * @return List.
-   */
-  public async getList(id: string): Promise<Response<Entity.List>> {
-    return this.client.get<FriendicaAPI.Entity.List>(`/api/v1/lists/${id}`).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.list(res.data)
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/lists
-   *
-   * @param title List name.
-   * @return List.
-   */
-  public async createList(title: string): Promise<Response<Entity.List>> {
-    return this.client
-      .post<FriendicaAPI.Entity.List>('/api/v1/lists', {
-        title: title
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: FriendicaAPI.Converter.list(res.data)
-        })
-      })
-  }
-
-  /**
-   * PUT /api/v1/lists/:id
-   *
-   * @param id Target list ID.
-   * @param title New list name.
-   * @return List.
-   */
-  public async updateList(id: string, title: string): Promise<Response<Entity.List>> {
-    return this.client
-      .put<FriendicaAPI.Entity.List>(`/api/v1/lists/${id}`, {
-        title: title
-      })
-      .then(res => {
-        return Object.assign(res, {
-          data: FriendicaAPI.Converter.list(res.data)
-        })
-      })
-  }
-
-  /**
-   * DELETE /api/v1/lists/:id
-   *
-   * @param id Target list ID.
-   */
-  public deleteList(id: string): Promise<Response<Record<string, unknown>>> {
-    return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}`)
-  }
-
-  /**
-   * GET /api/v1/lists/:id/accounts
-   *
-   * @param id Target list ID.
-   * @param options.limit Max number of results to return.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @return Array of accounts.
-   */
-  public async getAccountsInList(
-    id: string,
-    options?: {
-      limit?: number
-      max_id?: string
-      since_id?: string
-    }
-  ): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>(`/api/v1/lists/${id}/accounts`, params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/lists/:id/accounts
-   *
-   * @param id Target list ID.
-   * @param account_ids Array of account IDs to add to the list.
-   */
-  public addAccountsToList(id: string, account_ids: Array<string>): Promise<Response<Record<string, unknown>>> {
-    return this.client.post<Record<string, unknown>>(`/api/v1/lists/${id}/accounts`, {
-      account_ids: account_ids
-    })
-  }
-
-  /**
-   * DELETE /api/v1/lists/:id/accounts
-   *
-   * @param id Target list ID.
-   * @param account_ids Array of account IDs to add to the list.
-   */
-  public deleteAccountsFromList(id: string, account_ids: Array<string>): Promise<Response<Record<string, unknown>>> {
-    return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}/accounts`, {
-      account_ids: account_ids
-    })
-  }
-
-  // ======================================
-  // timelines/markers
-  // ======================================
-  public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | Record<string, unknown>>> {
-    return new Promise(resolve => {
-      const res: Response<Entity.Marker> = {
-        data: {},
-        status: 200,
-        statusText: '200',
-        headers: {}
-      }
-      resolve(res)
-    })
-  }
-
-  public async saveMarkers(_options?: {
-    home?: { last_read_id: string }
-    notifications?: { last_read_id: string }
-  }): Promise<Response<Entity.Marker>> {
-    return new Promise(resolve => {
-      const res: Response<Entity.Marker> = {
-        data: {},
-        status: 200,
-        statusText: '200',
-        headers: {}
-      }
-      resolve(res)
-    })
-  }
-
-  // ======================================
-  // notifications
-  // ======================================
-  /**
-   * GET /api/v1/notifications
-   *
-   * @param options.limit Max number of results to return. Defaults to 20.
-   * @param options.max_id Return results older than ID.
-   * @param options.since_id Return results newer than ID.
-   * @param options.min_id Return results immediately newer than ID.
-   * @param options.exclude_types Array of types to exclude.
-   * @param options.account_id Return only notifications received from this account.
-   * @return Array of notifications.
-   */
-  public async getNotifications(options?: {
-    limit?: number
-    max_id?: string
-    since_id?: string
-    min_id?: string
-    exclude_types?: Array<Entity.NotificationType>
-    account_id?: string
-  }): Promise<Response<Array<Entity.Notification>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.since_id) {
-        params = Object.assign(params, {
-          since_id: options.since_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.exclude_types) {
-        params = Object.assign(params, {
-          exclude_types: options.exclude_types.map(e => FriendicaAPI.Converter.encodeNotificationType(e))
-        })
-      }
-      if (options.account_id) {
-        params = Object.assign(params, {
-          account_id: options.account_id
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Notification>>('/api/v1/notifications', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.flatMap(n => {
-          const notify = FriendicaAPI.Converter.notification(n)
-          if (notify instanceof UnknownNotificationTypeError) return []
-          return notify
-        })
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/notifications/:id
-   *
-   * @param id Target notification ID.
-   * @return Notification.
-   */
-  public async getNotification(id: string): Promise<Response<Entity.Notification>> {
-    const res = await this.client.get<FriendicaAPI.Entity.Notification>(`/api/v1/notifications/${id}`)
-    const notify = FriendicaAPI.Converter.notification(res.data)
-    if (notify instanceof UnknownNotificationTypeError) {
-      throw new UnknownNotificationTypeError()
-    }
-    return { ...res, data: notify }
-  }
-
-  /**
-   * POST /api/v1/notifications/clear
-   */
-  public dismissNotifications(): Promise<Response<Record<string, unknown>>> {
-    return this.client.post<Record<string, unknown>>('/api/v1/notifications/clear')
-  }
-
-  /**
-   * POST /api/v1/notifications/:id/dismiss
-   *
-   * @param id Target notification ID.
-   */
-  public dismissNotification(id: string): Promise<Response<Record<string, unknown>>> {
-    return this.client.post<Record<string, unknown>>(`/api/v1/notifications/${id}/dismiss`)
-  }
-
-  public readNotifications(_options: {
-    id?: string
-    max_id?: string
-  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  // ======================================
-  // notifications/push
-  // ======================================
-  /**
-   * POST /api/v1/push/subscription
-   *
-   * @param subscription[endpoint] Endpoint URL that is called when a notification event occurs.
-   * @param subscription[keys][p256dh] User agent public key. Base64 encoded string of public key of ECDH key using prime256v1 curve.
-   * @param subscription[keys] Auth secret. Base64 encoded string of 16 bytes of random data.
-   * @param data[alerts][follow] Receive follow notifications?
-   * @param data[alerts][favourite] Receive favourite notifications?
-   * @param data[alerts][reblog] Receive reblog notifictaions?
-   * @param data[alerts][mention] Receive mention notifications?
-   * @param data[alerts][poll] Receive poll notifications?
-   * @return PushSubscription.
-   */
-  public async subscribePushNotification(
-    subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
-    data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
-  ): Promise<Response<Entity.PushSubscription>> {
-    let params = {
-      subscription
-    }
-    if (data) {
-      params = Object.assign(params, {
-        data
-      })
-    }
-    return this.client.post<FriendicaAPI.Entity.PushSubscription>('/api/v1/push/subscription', params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.push_subscription(res.data)
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/push/subscription
-   *
-   * @return PushSubscription.
-   */
-  public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
-    return this.client.get<FriendicaAPI.Entity.PushSubscription>('/api/v1/push/subscription').then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.push_subscription(res.data)
-      })
-    })
-  }
-
-  /**
-   * PUT /api/v1/push/subscription
-   *
-   * @param data[alerts][follow] Receive follow notifications?
-   * @param data[alerts][favourite] Receive favourite notifications?
-   * @param data[alerts][reblog] Receive reblog notifictaions?
-   * @param data[alerts][mention] Receive mention notifications?
-   * @param data[alerts][poll] Receive poll notifications?
-   * @return PushSubscription.
-   */
-  public async updatePushSubscription(
-    data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
-  ): Promise<Response<Entity.PushSubscription>> {
-    let params = {}
-    if (data) {
-      params = Object.assign(params, {
-        data
-      })
-    }
-    return this.client.put<FriendicaAPI.Entity.PushSubscription>('/api/v1/push/subscription', params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.push_subscription(res.data)
-      })
-    })
-  }
-
-  /**
-   * DELETE /api/v1/push/subscription
-   */
-  public deletePushSubscription(): Promise<Response<Record<string, unknown>>> {
-    return this.client.del<Record<string, unknown>>('/api/v1/push/subscription')
-  }
-
-  // ======================================
-  // search
-  // ======================================
-  /**
-   * GET /api/v2/search
-   *
-   * @param q The search query.
-   * @param options.type Enum of search target.
-   * @param options.limit Maximum number of results to load, per type. Defaults to 20. Max 40.
-   * @param options.max_id Return results older than this id.
-   * @param options.min_id Return results immediately newer than this id.
-   * @param options.resolve Attempt WebFinger lookup. Defaults to false.
-   * @param options.following Only include accounts that the user is following. Defaults to false.
-   * @param options.account_id If provided, statuses returned will be authored only by this account.
-   * @param options.exclude_unreviewed Filter out unreviewed tags? Defaults to false.
-   * @return Results.
-   */
-  public async search(
-    q: string,
-    options?: {
-      type?: 'accounts' | 'hashtags' | 'statuses'
-      limit?: number
-      max_id?: string
-      min_id?: string
-      resolve?: boolean
-      offset?: number
-      following?: boolean
-      account_id?: string
-      exclude_unreviewed?: boolean
-    }
-  ): Promise<Response<Entity.Results>> {
-    let params = {
-      q
-    }
-    if (options) {
-      if (options.type) {
-        params = Object.assign(params, {
-          type: options.type
-        })
-      }
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.max_id) {
-        params = Object.assign(params, {
-          max_id: options.max_id
-        })
-      }
-      if (options.min_id) {
-        params = Object.assign(params, {
-          min_id: options.min_id
-        })
-      }
-      if (options.resolve !== undefined) {
-        params = Object.assign(params, {
-          resolve: options.resolve
-        })
-      }
-      if (options.offset) {
-        params = Object.assign(params, {
-          offset: options.offset
-        })
-      }
-      if (options.following !== undefined) {
-        params = Object.assign(params, {
-          following: options.following
-        })
-      }
-      if (options.account_id) {
-        params = Object.assign(params, {
-          account_id: options.account_id
-        })
-      }
-      if (options.exclude_unreviewed) {
-        params = Object.assign(params, {
-          exclude_unreviewed: options.exclude_unreviewed
-        })
-      }
-    }
-    return this.client.get<FriendicaAPI.Entity.Results>('/api/v2/search', params).then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.results(res.data)
-      })
-    })
-  }
-
-  // ======================================
-  // instance
-  // ======================================
-  /**
-   * GET /api/v1/instance
-   */
-  public async getInstance(): Promise<Response<Entity.Instance>> {
-    return this.client.get<FriendicaAPI.Entity.Instance>('/api/v1/instance').then(res => {
-      return Object.assign(res, {
-        data: FriendicaAPI.Converter.instance(res.data)
-      })
-    })
-  }
-
-  /**
-   * GET /api/v1/instance/peers
-   */
-  public getInstancePeers(): Promise<Response<Array<string>>> {
-    return this.client.get<Array<string>>('/api/v1/instance/peers')
-  }
-
-  /**
-   * GET /api/v1/instance/activity
-   */
-  public async getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.Activity>>('/api/v1/instance/activity').then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.activity(a))
-      })
-    })
-  }
-
-  // ======================================
-  // instance/trends
-  // ======================================
-  /**
-   * GET /api/v1/trends
-   *
-   * @param limit Maximum number of results to return. Defaults to 10.
-   */
-  public async getInstanceTrends(limit?: number | null): Promise<Response<Array<Entity.Tag>>> {
-    let params = {}
-    if (limit) {
-      params = Object.assign(params, {
-        limit
-      })
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Tag>>('/api/v1/trends', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(t => FriendicaAPI.Converter.tag(t))
-      })
-    })
-  }
-
-  // ======================================
-  // instance/directory
-  // ======================================
-  /**
-   * GET /api/v1/directory
-   *
-   * @param options.limit How many accounts to load. Default 40.
-   * @param options.offset How many accounts to skip before returning results. Default 0.
-   * @param options.order Order of results.
-   * @param options.local Only return local accounts.
-   * @return Array of accounts.
-   */
-  public async getInstanceDirectory(options?: {
-    limit?: number
-    offset?: number
-    order?: 'active' | 'new'
-    local?: boolean
-  }): Promise<Response<Array<Entity.Account>>> {
-    let params = {}
-    if (options) {
-      if (options.limit) {
-        params = Object.assign(params, {
-          limit: options.limit
-        })
-      }
-      if (options.offset) {
-        params = Object.assign(params, {
-          offset: options.offset
-        })
-      }
-      if (options.order) {
-        params = Object.assign(params, {
-          order: options.order
-        })
-      }
-      if (options.local !== undefined) {
-        params = Object.assign(params, {
-          local: options.local
-        })
-      }
-    }
-    return this.client.get<Array<FriendicaAPI.Entity.Account>>('/api/v1/directory', params).then(res => {
-      return Object.assign(res, {
-        data: res.data.map(a => FriendicaAPI.Converter.account(a))
-      })
-    })
-  }
-
-  // ======================================
-  // instance/custom_emojis
-  // ======================================
-  /**
-   * GET /api/v1/custom_emojis
-   *
-   * @return Array of emojis.
-   */
-  public async getInstanceCustomEmojis(): Promise<Response<Array<Entity.Emoji>>> {
-    return this.client.get<Array<FriendicaAPI.Entity.Emoji>>('/api/v1/custom_emojis').then(res => {
-      return Object.assign(res, {
-        data: res.data.map(e => FriendicaAPI.Converter.emoji(e))
-      })
-    })
-  }
-
-  // ======================================
-  // instance/announcements
-  // ======================================
-  /**
-   * GET /api/v1/announcements
-   *
-   * @return Array of announcements.
-   */
-  public async getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>> {
-    return new Promise(resolve => {
-      resolve({
-        data: [],
-        status: 200,
-        statusText: '200',
-        headers: null
-      })
-    })
-  }
-
-  /**
-   * POST /api/v1/announcements/:id/dismiss
-   *
-   * @param id The ID of the Announcement in the database.
-   */
-  public async dismissInstanceAnnouncement(_id: string): Promise<Response<Record<never, never>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  /**
-   * PUT /api/v1/announcements/:id/reactions/:name
-   *
-   * @param id The ID of the Announcement in the database.
-   * @param name Unicode emoji, or the shortcode of a custom emoji.
-   */
-  public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  /**
-   * DELETE /api/v1/announcements/:id/reactions/:name
-   *
-   * @param id The ID of the Announcement in the database.
-   * @param name Unicode emoji, or the shortcode of a custom emoji.
-   */
-  public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  // ======================================
-  // Emoji reactions
-  // ======================================
-  public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('friendica does not support')
-      reject(err)
-    })
-  }
-
-  // ======================================
-  // WebSocket
-  // ======================================
-  public userSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'user')
-  }
-
-  public publicSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'public')
-  }
-
-  public localSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'public:local')
-  }
-
-  public tagSocket(tag: string): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'hashtag', `tag=${tag}`)
-  }
-
-  public listSocket(list_id: string): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'list', `list=${list_id}`)
-  }
-
-  public directSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'direct')
-  }
+	public async editStatus(
+		id: string,
+		options: {
+			status?: string;
+			spoiler_text?: string;
+			sensitive?: boolean;
+			media_ids?: Array<string>;
+			poll?: {
+				options?: Array<string>;
+				expires_in?: number;
+				multiple?: boolean;
+				hide_totals?: boolean;
+			};
+		},
+	): Promise<Response<Entity.Status>> {
+		let params = {};
+		if (options.status) {
+			params = Object.assign(params, {
+				status: options.status,
+			});
+		}
+		if (options.spoiler_text) {
+			params = Object.assign(params, {
+				spoiler_text: options.spoiler_text,
+			});
+		}
+		if (options.sensitive) {
+			params = Object.assign(params, {
+				sensitive: options.sensitive,
+			});
+		}
+		if (options.media_ids) {
+			params = Object.assign(params, {
+				media_ids: options.media_ids,
+			});
+		}
+		if (options.poll) {
+			let pollParam = {};
+			if (options.poll.options !== undefined) {
+				pollParam = Object.assign(pollParam, {
+					options: options.poll.options,
+				});
+			}
+			if (options.poll.expires_in !== undefined) {
+				pollParam = Object.assign(pollParam, {
+					expires_in: options.poll.expires_in,
+				});
+			}
+			if (options.poll.multiple !== undefined) {
+				pollParam = Object.assign(pollParam, {
+					multiple: options.poll.multiple,
+				});
+			}
+			if (options.poll.hide_totals !== undefined) {
+				pollParam = Object.assign(pollParam, {
+					hide_totals: options.poll.hide_totals,
+				});
+			}
+			params = Object.assign(params, {
+				poll: pollParam,
+			});
+		}
+		return this.client
+			.put<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`, params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * DELETE /api/v1/statuses/:id
+	 *
+	 * @param id The target status id.
+	 * @return Status
+	 */
+	public async deleteStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.del<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/statuses/:id/context
+	 *
+	 * Get parent and child statuses.
+	 * @param id The target status id.
+	 * @return Context
+	 */
+	public async getStatusContext(
+		id: string,
+		options?: { limit?: number; max_id?: string; since_id?: string },
+	): Promise<Response<Entity.Context>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+		}
+		return this.client
+			.get<FriendicaAPI.Entity.Context>(
+				`/api/v1/statuses/${id}/context`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.context(res.data),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/statuses/:id/source
+	 *
+	 * Obtain the source properties for a status so that it can be edited.
+	 * @param id The target status id.
+	 * @return StatusSource
+	 */
+	public async getStatusSource(
+		id: string,
+	): Promise<Response<Entity.StatusSource>> {
+		return this.client
+			.get<FriendicaAPI.Entity.StatusSource>(`/api/v1/statuses/${id}/source`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status_source(res.data),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/statuses/:id/reblogged_by
+	 *
+	 * @param id The target status id.
+	 * @return Array of accounts.
+	 */
+	public async getStatusRebloggedBy(
+		id: string,
+	): Promise<Response<Array<Entity.Account>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>(
+				`/api/v1/statuses/${id}/reblogged_by`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/statuses/:id/favourited_by
+	 *
+	 * @param id The target status id.
+	 * @return Array of accounts.
+	 */
+	public async getStatusFavouritedBy(
+		id: string,
+	): Promise<Response<Array<Entity.Account>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>(
+				`/api/v1/statuses/${id}/favourited_by`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/favourite
+	 *
+	 * @param id The target status id.
+	 * @return Status.
+	 */
+	public async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/favourite`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/unfavourite
+	 *
+	 * @param id The target status id.
+	 * @return Status.
+	 */
+	public async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unfavourite`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/reblog
+	 *
+	 * @param id The target status id.
+	 * @return Status.
+	 */
+	public async reblogStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/reblog`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/unreblog
+	 *
+	 * @param id The target status id.
+	 * @return Status.
+	 */
+	public async unreblogStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unreblog`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/bookmark
+	 *
+	 * @param id The target status id.
+	 * @return Status.
+	 */
+	public async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/bookmark`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/unbookmark
+	 *
+	 * @param id The target status id.
+	 * @return Status.
+	 */
+	public async unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unbookmark`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/mute
+	 *
+	 * @param id The target status id.
+	 * @return Status
+	 */
+	public async muteStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/mute`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/unmute
+	 *
+	 * @param id The target status id.
+	 * @return Status
+	 */
+	public async unmuteStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unmute`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/pin
+	 * @param id The target status id.
+	 * @return Status
+	 */
+	public async pinStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/pin`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/statuses/:id/unpin
+	 *
+	 * @param id The target status id.
+	 * @return Status
+	 */
+	public async unpinStatus(id: string): Promise<Response<Entity.Status>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Status>(`/api/v1/statuses/${id}/unpin`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.status(res.data),
+				});
+			});
+	}
+
+	// ======================================
+	// statuses/media
+	// ======================================
+	/**
+	 * POST /api/v2/media
+	 *
+	 * @param file The file to be attached, using multipart form data.
+	 * @param options.description A plain-text description of the media.
+	 * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+	 * @return Attachment
+	 */
+	public async uploadMedia(
+		file: any,
+		options?: { description?: string; focus?: string },
+	): Promise<Response<Entity.Attachment | Entity.AsyncAttachment>> {
+		const formData = new FormData();
+		formData.append("file", file);
+		if (options) {
+			if (options.description) {
+				formData.append("description", options.description);
+			}
+			if (options.focus) {
+				formData.append("focus", options.focus);
+			}
+		}
+		return this.client
+			.postForm<FriendicaAPI.Entity.AsyncAttachment>("/api/v2/media", formData)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.async_attachment(res.data),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/media/:id
+	 *
+	 * @param id Target media ID.
+	 * @return Attachment
+	 */
+	public async getMedia(id: string): Promise<Response<Entity.Attachment>> {
+		const res = await this.client.get<FriendicaAPI.Entity.Attachment>(
+			`/api/v1/media/${id}`,
+		);
+
+		return Object.assign(res, {
+			data: FriendicaAPI.Converter.attachment(res.data),
+		});
+	}
+
+	/**
+	 * PUT /api/v1/media/:id
+	 *
+	 * @param id Target media ID.
+	 * @param options.file The file to be attached, using multipart form data.
+	 * @param options.description A plain-text description of the media.
+	 * @param options.focus Two floating points (x,y), comma-delimited, ranging from -1.0 to 1.0.
+	 * @param options.is_sensitive Whether the media is sensitive.
+	 * @return Attachment
+	 */
+	public async updateMedia(
+		id: string,
+		options?: {
+			file?: any;
+			description?: string;
+			focus?: string;
+		},
+	): Promise<Response<Entity.Attachment>> {
+		const formData = new FormData();
+		if (options) {
+			if (options.file) {
+				formData.append("file", options.file);
+			}
+			if (options.description) {
+				formData.append("description", options.description);
+			}
+			if (options.focus) {
+				formData.append("focus", options.focus);
+			}
+		}
+		return this.client
+			.putForm<FriendicaAPI.Entity.Attachment>(`/api/v1/media/${id}`, formData)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.attachment(res.data),
+				});
+			});
+	}
+
+	// ======================================
+	// statuses/polls
+	// ======================================
+	/**
+	 * GET /api/v1/polls/:id
+	 *
+	 * @param id Target poll ID.
+	 * @return Poll
+	 */
+	public async getPoll(id: string): Promise<Response<Entity.Poll>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Poll>(`/api/v1/polls/${id}`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.poll(res.data),
+				});
+			});
+	}
+
+	public async votePoll(
+		_id: string,
+		_choices: Array<number>,
+	): Promise<Response<Entity.Poll>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	// ======================================
+	// statuses/scheduled_statuses
+	// ======================================
+	/**
+	 * GET /api/v1/scheduled_statuses
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of scheduled statuses.
+	 */
+	public async getScheduledStatuses(options?: {
+		limit?: number | null;
+		max_id?: string | null;
+		since_id?: string | null;
+		min_id?: string | null;
+	}): Promise<Response<Array<Entity.ScheduledStatus>>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.ScheduledStatus>>(
+				"/api/v1/scheduled_statuses",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.scheduled_status(s)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/scheduled_statuses/:id
+	 *
+	 * @param id Target status ID.
+	 * @return ScheduledStatus.
+	 */
+	public async getScheduledStatus(
+		id: string,
+	): Promise<Response<Entity.ScheduledStatus>> {
+		return this.client
+			.get<FriendicaAPI.Entity.ScheduledStatus>(
+				`/api/v1/scheduled_statuses/${id}`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.scheduled_status(res.data),
+				});
+			});
+	}
+
+	public async scheduleStatus(
+		_id: string,
+		_scheduled_at?: string | null,
+	): Promise<Response<Entity.ScheduledStatus>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	/**
+	 * DELETE /api/v1/scheduled_statuses/:id
+	 *
+	 * @param id Target scheduled status ID.
+	 */
+	public cancelScheduledStatus(
+		id: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return this.client.del<Record<string, unknown>>(
+			`/api/v1/scheduled_statuses/${id}`,
+		);
+	}
+
+	// ======================================
+	// timelines
+	// ======================================
+	/**
+	 * GET /api/v1/timelines/public
+	 *
+	 * @param options.only_media Show only statuses with media attached? Defaults to false.
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getPublicTimeline(options?: {
+		only_media?: boolean;
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Status>>> {
+		let params = {
+			local: false,
+		};
+		if (options) {
+			if (options.only_media !== undefined) {
+				params = Object.assign(params, {
+					only_media: options.only_media,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>(
+				"/api/v1/timelines/public",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/timelines/public
+	 *
+	 * @param options.only_media Show only statuses with media attached? Defaults to false.
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getLocalTimeline(options?: {
+		only_media?: boolean;
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Status>>> {
+		let params = {
+			local: true,
+		};
+		if (options) {
+			if (options.only_media !== undefined) {
+				params = Object.assign(params, {
+					only_media: options.only_media,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>(
+				"/api/v1/timelines/public",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/timelines/tag/:hashtag
+	 *
+	 * @param hashtag Content of a #hashtag, not including # symbol.
+	 * @param options.local Show only local statuses? Defaults to false.
+	 * @param options.only_media Show only statuses with media attached? Defaults to false.
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getTagTimeline(
+		hashtag: string,
+		options?: {
+			local?: boolean;
+			only_media?: boolean;
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+			min_id?: string;
+		},
+	): Promise<Response<Array<Entity.Status>>> {
+		let params = {};
+		if (options) {
+			if (options.local !== undefined) {
+				params = Object.assign(params, {
+					local: options.local,
+				});
+			}
+			if (options.only_media !== undefined) {
+				params = Object.assign(params, {
+					only_media: options.only_media,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>(
+				`/api/v1/timelines/tag/${hashtag}`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/timelines/home
+	 *
+	 * @param options.local Show only local statuses? Defaults to false.
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getHomeTimeline(options?: {
+		local?: boolean;
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Status>>> {
+		let params = {};
+		if (options) {
+			if (options.local !== undefined) {
+				params = Object.assign(params, {
+					local: options.local,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>("/api/v1/timelines/home", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/timelines/list/:list_id
+	 *
+	 * @param list_id Local ID of the list in the database.
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getListTimeline(
+		list_id: string,
+		options?: {
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+			min_id?: string;
+		},
+	): Promise<Response<Array<Entity.Status>>> {
+		let params = {};
+		if (options) {
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Status>>(
+				`/api/v1/timelines/list/${list_id}`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((s) => FriendicaAPI.Converter.status(s)),
+				});
+			});
+	}
+
+	// ======================================
+	// timelines/conversations
+	// ======================================
+	/**
+	 * GET /api/v1/conversations
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of statuses.
+	 */
+	public async getConversationTimeline(options?: {
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+		min_id?: string;
+	}): Promise<Response<Array<Entity.Conversation>>> {
+		let params = {};
+		if (options) {
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Conversation>>(
+				"/api/v1/conversations",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((c) => FriendicaAPI.Converter.conversation(c)),
+				});
+			});
+	}
+
+	/**
+	 * DELETE /api/v1/conversations/:id
+	 *
+	 * @param id Target conversation ID.
+	 */
+	public deleteConversation(
+		id: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return this.client.del<Record<string, unknown>>(
+			`/api/v1/conversations/${id}`,
+		);
+	}
+
+	/**
+	 * POST /api/v1/conversations/:id/read
+	 *
+	 * @param id Target conversation ID.
+	 * @return Conversation.
+	 */
+	public async readConversation(
+		id: string,
+	): Promise<Response<Entity.Conversation>> {
+		return this.client
+			.post<FriendicaAPI.Entity.Conversation>(
+				`/api/v1/conversations/${id}/read`,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.conversation(res.data),
+				});
+			});
+	}
+
+	// ======================================
+	// timelines/lists
+	// ======================================
+	/**
+	 * GET /api/v1/lists
+	 *
+	 * @return Array of lists.
+	 */
+	public async getLists(): Promise<Response<Array<Entity.List>>> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.List>>("/api/v1/lists")
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((l) => FriendicaAPI.Converter.list(l)),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/lists/:id
+	 *
+	 * @param id Target list ID.
+	 * @return List.
+	 */
+	public async getList(id: string): Promise<Response<Entity.List>> {
+		return this.client
+			.get<FriendicaAPI.Entity.List>(`/api/v1/lists/${id}`)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.list(res.data),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/lists
+	 *
+	 * @param title List name.
+	 * @return List.
+	 */
+	public async createList(title: string): Promise<Response<Entity.List>> {
+		return this.client
+			.post<FriendicaAPI.Entity.List>("/api/v1/lists", {
+				title: title,
+			})
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.list(res.data),
+				});
+			});
+	}
+
+	/**
+	 * PUT /api/v1/lists/:id
+	 *
+	 * @param id Target list ID.
+	 * @param title New list name.
+	 * @return List.
+	 */
+	public async updateList(
+		id: string,
+		title: string,
+	): Promise<Response<Entity.List>> {
+		return this.client
+			.put<FriendicaAPI.Entity.List>(`/api/v1/lists/${id}`, {
+				title: title,
+			})
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.list(res.data),
+				});
+			});
+	}
+
+	/**
+	 * DELETE /api/v1/lists/:id
+	 *
+	 * @param id Target list ID.
+	 */
+	public deleteList(id: string): Promise<Response<Record<string, unknown>>> {
+		return this.client.del<Record<string, unknown>>(`/api/v1/lists/${id}`);
+	}
+
+	/**
+	 * GET /api/v1/lists/:id/accounts
+	 *
+	 * @param id Target list ID.
+	 * @param options.limit Max number of results to return.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @return Array of accounts.
+	 */
+	public async getAccountsInList(
+		id: string,
+		options?: {
+			limit?: number;
+			max_id?: string;
+			since_id?: string;
+		},
+	): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>(
+				`/api/v1/lists/${id}/accounts`,
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
+
+	/**
+	 * POST /api/v1/lists/:id/accounts
+	 *
+	 * @param id Target list ID.
+	 * @param account_ids Array of account IDs to add to the list.
+	 */
+	public addAccountsToList(
+		id: string,
+		account_ids: Array<string>,
+	): Promise<Response<Record<string, unknown>>> {
+		return this.client.post<Record<string, unknown>>(
+			`/api/v1/lists/${id}/accounts`,
+			{
+				account_ids: account_ids,
+			},
+		);
+	}
+
+	/**
+	 * DELETE /api/v1/lists/:id/accounts
+	 *
+	 * @param id Target list ID.
+	 * @param account_ids Array of account IDs to add to the list.
+	 */
+	public deleteAccountsFromList(
+		id: string,
+		account_ids: Array<string>,
+	): Promise<Response<Record<string, unknown>>> {
+		return this.client.del<Record<string, unknown>>(
+			`/api/v1/lists/${id}/accounts`,
+			{
+				account_ids: account_ids,
+			},
+		);
+	}
+
+	// ======================================
+	// timelines/markers
+	// ======================================
+	public async getMarkers(
+		_timeline: Array<string>,
+	): Promise<Response<Entity.Marker | Record<string, unknown>>> {
+		return new Promise((resolve) => {
+			const res: Response<Entity.Marker> = {
+				data: {},
+				status: 200,
+				statusText: "200",
+				headers: {},
+			};
+			resolve(res);
+		});
+	}
+
+	public async saveMarkers(_options?: {
+		home?: { last_read_id: string };
+		notifications?: { last_read_id: string };
+	}): Promise<Response<Entity.Marker>> {
+		return new Promise((resolve) => {
+			const res: Response<Entity.Marker> = {
+				data: {},
+				status: 200,
+				statusText: "200",
+				headers: {},
+			};
+			resolve(res);
+		});
+	}
+
+	// ======================================
+	// notifications
+	// ======================================
+	/**
+	 * GET /api/v1/notifications
+	 *
+	 * @param options.limit Max number of results to return. Defaults to 20.
+	 * @param options.max_id Return results older than ID.
+	 * @param options.since_id Return results newer than ID.
+	 * @param options.min_id Return results immediately newer than ID.
+	 * @param options.exclude_types Array of types to exclude.
+	 * @param options.account_id Return only notifications received from this account.
+	 * @return Array of notifications.
+	 */
+	public async getNotifications(options?: {
+		limit?: number;
+		max_id?: string;
+		since_id?: string;
+		min_id?: string;
+		exclude_types?: Array<Entity.NotificationType>;
+		account_id?: string;
+	}): Promise<Response<Array<Entity.Notification>>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.since_id) {
+				params = Object.assign(params, {
+					since_id: options.since_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.exclude_types) {
+				params = Object.assign(params, {
+					exclude_types: options.exclude_types.map((e) =>
+						FriendicaAPI.Converter.encodeNotificationType(e),
+					),
+				});
+			}
+			if (options.account_id) {
+				params = Object.assign(params, {
+					account_id: options.account_id,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Notification>>(
+				"/api/v1/notifications",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.flatMap((n) => {
+						const notify = FriendicaAPI.Converter.notification(n);
+						if (notify instanceof UnknownNotificationTypeError) return [];
+						return notify;
+					}),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/notifications/:id
+	 *
+	 * @param id Target notification ID.
+	 * @return Notification.
+	 */
+	public async getNotification(
+		id: string,
+	): Promise<Response<Entity.Notification>> {
+		const res = await this.client.get<FriendicaAPI.Entity.Notification>(
+			`/api/v1/notifications/${id}`,
+		);
+		const notify = FriendicaAPI.Converter.notification(res.data);
+		if (notify instanceof UnknownNotificationTypeError) {
+			throw new UnknownNotificationTypeError();
+		}
+		return { ...res, data: notify };
+	}
+
+	/**
+	 * POST /api/v1/notifications/clear
+	 */
+	public dismissNotifications(): Promise<Response<Record<string, unknown>>> {
+		return this.client.post<Record<string, unknown>>(
+			"/api/v1/notifications/clear",
+		);
+	}
+
+	/**
+	 * POST /api/v1/notifications/:id/dismiss
+	 *
+	 * @param id Target notification ID.
+	 */
+	public dismissNotification(
+		id: string,
+	): Promise<Response<Record<string, unknown>>> {
+		return this.client.post<Record<string, unknown>>(
+			`/api/v1/notifications/${id}/dismiss`,
+		);
+	}
+
+	public readNotifications(_options: {
+		id?: string;
+		max_id?: string;
+	}): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	// ======================================
+	// notifications/push
+	// ======================================
+	/**
+	 * POST /api/v1/push/subscription
+	 *
+	 * @param subscription[endpoint] Endpoint URL that is called when a notification event occurs.
+	 * @param subscription[keys][p256dh] User agent public key. Base64 encoded string of public key of ECDH key using prime256v1 curve.
+	 * @param subscription[keys] Auth secret. Base64 encoded string of 16 bytes of random data.
+	 * @param data[alerts][follow] Receive follow notifications?
+	 * @param data[alerts][favourite] Receive favourite notifications?
+	 * @param data[alerts][reblog] Receive reblog notifictaions?
+	 * @param data[alerts][mention] Receive mention notifications?
+	 * @param data[alerts][poll] Receive poll notifications?
+	 * @return PushSubscription.
+	 */
+	public async subscribePushNotification(
+		subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
+		data?: {
+			alerts: {
+				follow?: boolean;
+				favourite?: boolean;
+				reblog?: boolean;
+				mention?: boolean;
+				poll?: boolean;
+			};
+		} | null,
+	): Promise<Response<Entity.PushSubscription>> {
+		let params = {
+			subscription,
+		};
+		if (data) {
+			params = Object.assign(params, {
+				data,
+			});
+		}
+		return this.client
+			.post<FriendicaAPI.Entity.PushSubscription>(
+				"/api/v1/push/subscription",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.push_subscription(res.data),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/push/subscription
+	 *
+	 * @return PushSubscription.
+	 */
+	public async getPushSubscription(): Promise<
+		Response<Entity.PushSubscription>
+	> {
+		return this.client
+			.get<FriendicaAPI.Entity.PushSubscription>("/api/v1/push/subscription")
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.push_subscription(res.data),
+				});
+			});
+	}
+
+	/**
+	 * PUT /api/v1/push/subscription
+	 *
+	 * @param data[alerts][follow] Receive follow notifications?
+	 * @param data[alerts][favourite] Receive favourite notifications?
+	 * @param data[alerts][reblog] Receive reblog notifictaions?
+	 * @param data[alerts][mention] Receive mention notifications?
+	 * @param data[alerts][poll] Receive poll notifications?
+	 * @return PushSubscription.
+	 */
+	public async updatePushSubscription(
+		data?: {
+			alerts: {
+				follow?: boolean;
+				favourite?: boolean;
+				reblog?: boolean;
+				mention?: boolean;
+				poll?: boolean;
+			};
+		} | null,
+	): Promise<Response<Entity.PushSubscription>> {
+		let params = {};
+		if (data) {
+			params = Object.assign(params, {
+				data,
+			});
+		}
+		return this.client
+			.put<FriendicaAPI.Entity.PushSubscription>(
+				"/api/v1/push/subscription",
+				params,
+			)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.push_subscription(res.data),
+				});
+			});
+	}
+
+	/**
+	 * DELETE /api/v1/push/subscription
+	 */
+	public deletePushSubscription(): Promise<Response<Record<string, unknown>>> {
+		return this.client.del<Record<string, unknown>>(
+			"/api/v1/push/subscription",
+		);
+	}
+
+	// ======================================
+	// search
+	// ======================================
+	/**
+	 * GET /api/v2/search
+	 *
+	 * @param q The search query.
+	 * @param options.type Enum of search target.
+	 * @param options.limit Maximum number of results to load, per type. Defaults to 20. Max 40.
+	 * @param options.max_id Return results older than this id.
+	 * @param options.min_id Return results immediately newer than this id.
+	 * @param options.resolve Attempt WebFinger lookup. Defaults to false.
+	 * @param options.following Only include accounts that the user is following. Defaults to false.
+	 * @param options.account_id If provided, statuses returned will be authored only by this account.
+	 * @param options.exclude_unreviewed Filter out unreviewed tags? Defaults to false.
+	 * @return Results.
+	 */
+	public async search(
+		q: string,
+		options?: {
+			type?: "accounts" | "hashtags" | "statuses";
+			limit?: number;
+			max_id?: string;
+			min_id?: string;
+			resolve?: boolean;
+			offset?: number;
+			following?: boolean;
+			account_id?: string;
+			exclude_unreviewed?: boolean;
+		},
+	): Promise<Response<Entity.Results>> {
+		let params = {
+			q,
+		};
+		if (options) {
+			if (options.type) {
+				params = Object.assign(params, {
+					type: options.type,
+				});
+			}
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.max_id) {
+				params = Object.assign(params, {
+					max_id: options.max_id,
+				});
+			}
+			if (options.min_id) {
+				params = Object.assign(params, {
+					min_id: options.min_id,
+				});
+			}
+			if (options.resolve !== undefined) {
+				params = Object.assign(params, {
+					resolve: options.resolve,
+				});
+			}
+			if (options.offset) {
+				params = Object.assign(params, {
+					offset: options.offset,
+				});
+			}
+			if (options.following !== undefined) {
+				params = Object.assign(params, {
+					following: options.following,
+				});
+			}
+			if (options.account_id) {
+				params = Object.assign(params, {
+					account_id: options.account_id,
+				});
+			}
+			if (options.exclude_unreviewed) {
+				params = Object.assign(params, {
+					exclude_unreviewed: options.exclude_unreviewed,
+				});
+			}
+		}
+		return this.client
+			.get<FriendicaAPI.Entity.Results>("/api/v2/search", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.results(res.data),
+				});
+			});
+	}
+
+	// ======================================
+	// instance
+	// ======================================
+	/**
+	 * GET /api/v1/instance
+	 */
+	public async getInstance(): Promise<Response<Entity.Instance>> {
+		return this.client
+			.get<FriendicaAPI.Entity.Instance>("/api/v1/instance")
+			.then((res) => {
+				return Object.assign(res, {
+					data: FriendicaAPI.Converter.instance(res.data),
+				});
+			});
+	}
+
+	/**
+	 * GET /api/v1/instance/peers
+	 */
+	public getInstancePeers(): Promise<Response<Array<string>>> {
+		return this.client.get<Array<string>>("/api/v1/instance/peers");
+	}
+
+	/**
+	 * GET /api/v1/instance/activity
+	 */
+	public async getInstanceActivity(): Promise<
+		Response<Array<Entity.Activity>>
+	> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Activity>>("/api/v1/instance/activity")
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.activity(a)),
+				});
+			});
+	}
+
+	// ======================================
+	// instance/trends
+	// ======================================
+	/**
+	 * GET /api/v1/trends
+	 *
+	 * @param limit Maximum number of results to return. Defaults to 10.
+	 */
+	public async getInstanceTrends(
+		limit?: number | null,
+	): Promise<Response<Array<Entity.Tag>>> {
+		let params = {};
+		if (limit) {
+			params = Object.assign(params, {
+				limit,
+			});
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Tag>>("/api/v1/trends", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((t) => FriendicaAPI.Converter.tag(t)),
+				});
+			});
+	}
+
+	// ======================================
+	// instance/directory
+	// ======================================
+	/**
+	 * GET /api/v1/directory
+	 *
+	 * @param options.limit How many accounts to load. Default 40.
+	 * @param options.offset How many accounts to skip before returning results. Default 0.
+	 * @param options.order Order of results.
+	 * @param options.local Only return local accounts.
+	 * @return Array of accounts.
+	 */
+	public async getInstanceDirectory(options?: {
+		limit?: number;
+		offset?: number;
+		order?: "active" | "new";
+		local?: boolean;
+	}): Promise<Response<Array<Entity.Account>>> {
+		let params = {};
+		if (options) {
+			if (options.limit) {
+				params = Object.assign(params, {
+					limit: options.limit,
+				});
+			}
+			if (options.offset) {
+				params = Object.assign(params, {
+					offset: options.offset,
+				});
+			}
+			if (options.order) {
+				params = Object.assign(params, {
+					order: options.order,
+				});
+			}
+			if (options.local !== undefined) {
+				params = Object.assign(params, {
+					local: options.local,
+				});
+			}
+		}
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Account>>("/api/v1/directory", params)
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((a) => FriendicaAPI.Converter.account(a)),
+				});
+			});
+	}
+
+	// ======================================
+	// instance/custom_emojis
+	// ======================================
+	/**
+	 * GET /api/v1/custom_emojis
+	 *
+	 * @return Array of emojis.
+	 */
+	public async getInstanceCustomEmojis(): Promise<
+		Response<Array<Entity.Emoji>>
+	> {
+		return this.client
+			.get<Array<FriendicaAPI.Entity.Emoji>>("/api/v1/custom_emojis")
+			.then((res) => {
+				return Object.assign(res, {
+					data: res.data.map((e) => FriendicaAPI.Converter.emoji(e)),
+				});
+			});
+	}
+
+	// ======================================
+	// instance/announcements
+	// ======================================
+	/**
+	 * GET /api/v1/announcements
+	 *
+	 * @return Array of announcements.
+	 */
+	public async getInstanceAnnouncements(): Promise<
+		Response<Array<Entity.Announcement>>
+	> {
+		return new Promise((resolve) => {
+			resolve({
+				data: [],
+				status: 200,
+				statusText: "200",
+				headers: null,
+			});
+		});
+	}
+
+	/**
+	 * POST /api/v1/announcements/:id/dismiss
+	 *
+	 * @param id The ID of the Announcement in the database.
+	 */
+	public async dismissInstanceAnnouncement(
+		_id: string,
+	): Promise<Response<Record<never, never>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	/**
+	 * PUT /api/v1/announcements/:id/reactions/:name
+	 *
+	 * @param id The ID of the Announcement in the database.
+	 * @param name Unicode emoji, or the shortcode of a custom emoji.
+	 */
+	public async addReactionToAnnouncement(
+		_id: string,
+		_name: string,
+	): Promise<Response<Record<never, never>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	/**
+	 * DELETE /api/v1/announcements/:id/reactions/:name
+	 *
+	 * @param id The ID of the Announcement in the database.
+	 * @param name Unicode emoji, or the shortcode of a custom emoji.
+	 */
+	public async removeReactionFromAnnouncement(
+		_id: string,
+		_name: string,
+	): Promise<Response<Record<never, never>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	// ======================================
+	// Emoji reactions
+	// ======================================
+	public async createEmojiReaction(
+		_id: string,
+		_emoji: string,
+	): Promise<Response<Entity.Status>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	public async deleteEmojiReaction(
+		_id: string,
+		_emoji: string,
+	): Promise<Response<Entity.Status>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	public async getEmojiReactions(
+		_id: string,
+	): Promise<Response<Array<Entity.Reaction>>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	public async getEmojiReaction(
+		_id: string,
+		_emoji: string,
+	): Promise<Response<Entity.Reaction>> {
+		return new Promise((_, reject) => {
+			const err = new NoImplementedError("friendica does not support");
+			reject(err);
+		});
+	}
+
+	// ======================================
+	// WebSocket
+	// ======================================
+	public userSocket(): WebSocket {
+		return this.client.socket("/api/v1/streaming", "user");
+	}
+
+	public publicSocket(): WebSocket {
+		return this.client.socket("/api/v1/streaming", "public");
+	}
+
+	public localSocket(): WebSocket {
+		return this.client.socket("/api/v1/streaming", "public:local");
+	}
+
+	public tagSocket(tag: string): WebSocket {
+		return this.client.socket("/api/v1/streaming", "hashtag", `tag=${tag}`);
+	}
+
+	public listSocket(list_id: string): WebSocket {
+		return this.client.socket("/api/v1/streaming", "list", `list=${list_id}`);
+	}
+
+	public directSocket(): WebSocket {
+		return this.client.socket("/api/v1/streaming", "direct");
+	}
 }

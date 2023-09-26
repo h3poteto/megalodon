@@ -3,9 +3,9 @@
 /// <reference path="tag.ts" />
 
 namespace FriendicaEntity {
-  export type Results = {
-    accounts: Array<Account>
-    statuses: Array<Status>
-    hashtags: Array<Tag>
-  }
+	export type Results = {
+		accounts: Array<Account>;
+		statuses: Array<Status>;
+		hashtags: Array<Tag>;
+	};
 }

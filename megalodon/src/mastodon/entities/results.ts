@@ -3,9 +3,9 @@
 /// <reference path="tag.ts" />
 
 namespace MastodonEntity {
-  export type Results = {
-    accounts: Array<Account>
-    statuses: Array<Status>
-    hashtags: Array<Tag>
-  }
+	export type Results = {
+		accounts: Array<Account>;
+		statuses: Array<Status>;
+		hashtags: Array<Tag>;
+	};
 }
