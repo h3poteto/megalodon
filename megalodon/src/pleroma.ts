@@ -9,6 +9,7 @@ import Entity from './entity'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
+import * as PleromaOAuth from './pleroma/oauth'
 import { UnknownNotificationTypeError } from './notification'
 
 export default class Pleroma implements MegalodonInterface {
@@ -92,8 +93,8 @@ export default class Pleroma implements MegalodonInterface {
     if (options.website) params.website = options.website
 
     return this.client
-      .post<OAuth.AppDataFromServer>('/api/v1/apps', params)
-      .then((res: Response<OAuth.AppDataFromServer>) => OAuth.AppData.from(res.data))
+      .post<PleromaOAuth.AppDataFromServer>('/api/v1/apps', params)
+      .then((res: Response<PleromaOAuth.AppDataFromServer>) => PleromaOAuth.toAppData(res.data))
   }
 
   /**
@@ -106,7 +107,7 @@ export default class Pleroma implements MegalodonInterface {
   public generateAuthUrl(
     clientId: string,
     clientSecret: string,
-    options: Partial<{ scope: Array<string>; redirect_uri: string }>
+    options: Partial<{ scope: Array<string>; redirect_uri: string | null }>
   ): Promise<string> {
     const scope = options.scope || DEFAULT_SCOPE
     const redirect_uri = options.redirect_uri || NO_REDIRECT
@@ -157,14 +158,14 @@ export default class Pleroma implements MegalodonInterface {
       throw new Error('client_id is required')
     }
     return this.client
-      .post<OAuth.TokenDataFromServer>('/oauth/token', {
+      .post<PleromaOAuth.TokenDataFromServer>('/oauth/token', {
         client_id,
         client_secret,
         code,
         redirect_uri,
         grant_type: 'authorization_code'
       })
-      .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+      .then((res: Response<PleromaOAuth.TokenDataFromServer>) => PleromaOAuth.toTokenData(res.data))
   }
 
   /**
@@ -178,13 +179,13 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async refreshToken(client_id: string, client_secret: string, refresh_token: string): Promise<OAuth.TokenData> {
     return this.client
-      .post<OAuth.TokenDataFromServer>('/oauth/token', {
+      .post<PleromaOAuth.TokenDataFromServer>('/oauth/token', {
         client_id,
         client_secret,
         refresh_token,
         grant_type: 'refresh_token'
       })
-      .then((res: Response<OAuth.TokenDataFromServer>) => OAuth.TokenData.from(res.data))
+      .then((res: Response<PleromaOAuth.TokenDataFromServer>) => PleromaOAuth.toTokenData(res.data))
   }
 
   /**

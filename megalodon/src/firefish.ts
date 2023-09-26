@@ -3,6 +3,7 @@ import FirefishAPI from './firefish/api_client'
 import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
+import * as FirefishOAuth from './firefish/oauth'
 import Response from './response'
 import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 import { UnknownNotificationTypeError } from './notification'
@@ -98,16 +99,8 @@ export default class Firefish implements MegalodonInterface {
        "secret": "string"
      }
     */
-    return this.client.post<FirefishAPI.Entity.App>('/api/app/create', params).then((res: Response<FirefishAPI.Entity.App>) => {
-      const appData: OAuth.AppDataFromServer = {
-        id: res.data.id,
-        name: res.data.name,
-        website: null,
-        redirect_uri: res.data.callbackUrl ?? '',
-        client_id: '',
-        client_secret: res.data.secret ?? ''
-      }
-      return OAuth.AppData.from(appData)
+    return this.client.post<FirefishOAuth.AppDataFromServer>('/api/app/create', params).then((res: Response<FirefishAPI.Entity.App>) => {
+      return FirefishOAuth.toAppData(res.data)
     })
   }
 
@@ -150,13 +143,12 @@ export default class Firefish implements MegalodonInterface {
     _redirect_uri?: string
   ): Promise<OAuth.TokenData> {
     return this.client
-      .post<FirefishAPI.Entity.UserKey>('/api/auth/session/userkey', {
+      .post<FirefishOAuth.TokenDataFromServer>('/api/auth/session/userkey', {
         appSecret: client_secret,
         token: session_token
       })
       .then(res => {
-        const token = new OAuth.TokenData(res.data.accessToken, 'firefish', '', 0, null, null)
-        return token
+        return FirefishOAuth.toTokenData(res.data)
       })
   }
 
@@ -1303,18 +1295,18 @@ export default class Firefish implements MegalodonInterface {
       .then(res => ({ ...res, data: FirefishAPI.Converter.note(res.data) }))
   }
 
-  	/**
-	 * Convert a Unicode emoji or custom emoji name to a Firefish reaction.
-	 * @see Firefish's reaction-lib.ts
-	 */
-	private reactionName(name: string): string {
-		// See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
-		const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name);
-		if (isUnicodeEmoji) {
-			return name;
-		}
-		return `:${name}:`;
-	}
+  /**
+   * Convert a Unicode emoji or custom emoji name to a Firefish reaction.
+   * @see Firefish's reaction-lib.ts
+   */
+  private reactionName(name: string): string {
+    // See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
+    const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name)
+    if (isUnicodeEmoji) {
+      return name
+    }
+    return `:${name}:`
+  }
 
   // ======================================
   // statuses/media
