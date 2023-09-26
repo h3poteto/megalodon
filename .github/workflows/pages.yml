@@ -33,7 +33,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Build
         run: |
-          pnpm install
+          corepack enable && pnpm install
           pnpm --filter megalodon doc
       - name: Setup Pages
         uses: actions/configure-pages@v3
