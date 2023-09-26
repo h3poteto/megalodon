@@ -21,12 +21,12 @@ jobs:
         cp LICENSE.txt ./megalodon/
     - name: Install dependencies
       run: |
-        yarn install
+        pnpm install
     - name: Build
       run: |
-        yarn workspace megalodon run build
+        pnpm --filter megalodon run build
     - name: Publish
       run: |
-        yarn workspace megalodon publish
+        pnpm --filter megalodon publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

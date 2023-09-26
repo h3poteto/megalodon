@@ -33,8 +33,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Build
         run: |
-          yarn install
-          yarn workspace megalodon doc
+          pnpm install
+          pnpm --filter megalodon doc
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

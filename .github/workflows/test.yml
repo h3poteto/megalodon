@@ -25,13 +25,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: |
-          yarn install
+          pnpm i
       - name: Build
         run: |
-          yarn workspace megalodon run build
+          pnpm --filter megalodon run build
       - name: Testing
         run: |
-          yarn workspace megalodon run test
+          pnpm --filter megalodon run test
 
   example:
     runs-on: ubuntu-latest
@@ -48,13 +48,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: |
-          yarn install
+          pnpm install
       - name: Build
         run: |
-          yarn workspace megalodon run build
+          pnpm --filter megalodon run build
       - name: Browser example
         run: |
-          yarn workspace browser run build
+          pnpm --filter browser run build
       - name: Typescript example
         env:
           MASTODON_URL: https://fedibird.com
@@ -62,7 +62,7 @@ jobs:
           FIREFISH_URL: https://cybre.club
           FRIENDICA_URL: https://squeet.me
         run: |
-          yarn workspace example run build
+          pnpm --filter example run build
           node example/typescript/dist/mastodon/instance.js
           node example/typescript/dist/pleroma/instance.js
           node example/typescript/dist/firefish/instance.js
