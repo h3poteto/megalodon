@@ -1,5 +1,5 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.ts',
@@ -11,6 +11,9 @@ module.exports = {
   devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      megalodon: path.resolve(__dirname, '../../megalodon/lib/index.js'),  // adjust the path if necessary
+    },
     fallback: {
       net: false,
       tls: false,
@@ -32,7 +35,20 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loader: 'ts-loader'
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'swc-loader',
+            options: {
+              jsc: {
+                parser: {
+                  syntax: 'typescript',
+                  tsx: false,
+                }
+              }
+            }
+          }
+        ]
       }
     ]
   },

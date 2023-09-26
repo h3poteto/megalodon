@@ -26,7 +26,7 @@ describe('detector', () => {
   })
 
   describe('friendica', () => {
-    const url = 'https://squeet.me'
+    const url = 'https://detracker.nu'
     it('should be friendica', async () => {
       const friendica = await detector(url)
       expect(friendica).toEqual('friendica')
@@ -50,7 +50,7 @@ describe('detector', () => {
   })
 
   describe('firefish', () => {
-    const url = 'https://cybre.club'
+    const url = 'https://fedi.software'
     it('should be firefish', async () => {
       const firefish = await detector(url)
       expect(firefish).toEqual('firefish')
