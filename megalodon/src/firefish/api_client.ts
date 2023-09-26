@@ -34,7 +34,6 @@ namespace FirefishAPI {
     export type Relation = FirefishEntity.Relation
     export type User = FirefishEntity.User
     export type UserDetail = FirefishEntity.UserDetail
-    export type UserKey = FirefishEntity.UserKey
     export type Session = FirefishEntity.Session
     export type Stats = FirefishEntity.Stats
     export type Instance = FirefishEntity.Instance
