@@ -25,16 +25,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: |
-          yarn install
+          pnpm i
       - name: Build
         run: |
-          yarn workspace megalodon run build
+          pnpm --filter megalodon run build
       - name: Testing
         run: |
-          yarn workspace megalodon run test
+          pnpm --filter megalodon run test
       - name: Browser example
         run: |
-          yarn workspace browser run build
+          pnpm --filter browser run build
       - name: Typescript example
         run: |
-          yarn workspace example run build
+          pnpm --filter example run build

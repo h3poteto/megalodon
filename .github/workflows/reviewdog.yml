@@ -21,20 +21,20 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - name: Install dependencies
       run: |
-        yarn install
+        pnpm i
     - uses: reviewdog/action-setup@v1
     - name: megalodon eslint
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        yarn workspace megalodon lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
+        pnpm --filter megalodon lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
     - name: example/typescript eslint
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        yarn workspace example lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
+        pnpm --filter example lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
     - name: example/browser eslint
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        yarn workspace browser lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
+        pnpm --filter browser lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
