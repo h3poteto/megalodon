@@ -48,7 +48,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: |
-          pnpm install
+          corepack enable && pnpm install
       - name: Build
         run: |
           pnpm --filter megalodon run build
