@@ -3,6 +3,7 @@ import FirefishAPI from './firefish/api_client'
 import { DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
+import * as FirefishOAuth from './firefish/oauth'
 import Response from './response'
 import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 import { UnknownNotificationTypeError } from './notification'
@@ -98,16 +99,8 @@ export default class Firefish implements MegalodonInterface {
        "secret": "string"
      }
     */
-    return this.client.post<FirefishAPI.Entity.App>('/api/app/create', params).then((res: Response<FirefishAPI.Entity.App>) => {
-      const appData: OAuth.AppDataFromServer = {
-        id: res.data.id,
-        name: res.data.name,
-        website: null,
-        redirect_uri: res.data.callbackUrl ?? '',
-        client_id: '',
-        client_secret: res.data.secret ?? ''
-      }
-      return OAuth.AppData.from(appData)
+    return this.client.post<FirefishOAuth.AppDataFromServer>('/api/app/create', params).then((res: Response<FirefishAPI.Entity.App>) => {
+      return FirefishOAuth.toAppData(res.data)
     })
   }
 
@@ -150,13 +143,12 @@ export default class Firefish implements MegalodonInterface {
     _redirect_uri?: string
   ): Promise<OAuth.TokenData> {
     return this.client
-      .post<FirefishAPI.Entity.UserKey>('/api/auth/session/userkey', {
+      .post<FirefishOAuth.TokenDataFromServer>('/api/auth/session/userkey', {
         appSecret: client_secret,
         token: session_token
       })
       .then(res => {
-        const token = new OAuth.TokenData(res.data.accessToken, 'firefish', '', 0, null, null)
-        return token
+        return FirefishOAuth.toTokenData(res.data)
       })
   }
 
@@ -1303,18 +1295,18 @@ export default class Firefish implements MegalodonInterface {
       .then(res => ({ ...res, data: FirefishAPI.Converter.note(res.data) }))
   }
 
-  	/**
-	 * Convert a Unicode emoji or custom emoji name to a Firefish reaction.
-	 * @see Firefish's reaction-lib.ts
-	 */
-	private reactionName(name: string): string {
-		// See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
-		const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name);
-		if (isUnicodeEmoji) {
-			return name;
-		}
-		return `:${name}:`;
-	}
+  /**
+   * Convert a Unicode emoji or custom emoji name to a Firefish reaction.
+   * @see Firefish's reaction-lib.ts
+   */
+  private reactionName(name: string): string {
+    // See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
+    const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name)
+    if (isUnicodeEmoji) {
+      return name
+    }
+    return `:${name}:`
+  }
 
   // ======================================
   // statuses/media
@@ -1966,9 +1958,128 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   // search
   // ======================================
-  public async search(
+  private async searchAccounts(
     q: string,
-    options: {
+    options?: {
+      type: 'accounts' | 'hashtags' | 'statuses'
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
+  ): Promise<Array<FirefishEntity.UserDetail>> {
+    let params = {
+      query: q
+    }
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.offset) {
+        params = Object.assign(params, {
+          offset: options.offset
+        })
+      }
+      if (options.resolve) {
+        params = Object.assign(params, {
+          localOnly: options.resolve
+        })
+      }
+    }
+    const res = await this.client.post<Array<FirefishAPI.Entity.UserDetail>>('/api/users/search', params)
+    return res.data
+  }
+
+  private async searchStatuses(
+    q: string,
+    options?: {
+      type: 'accounts' | 'hashtags' | 'statuses'
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
+  ): Promise<Array<FirefishEntity.Note>> {
+    let params = {
+      query: q
+    }
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.offset) {
+        params = Object.assign(params, {
+          offset: options.offset
+        })
+      }
+      if (options.max_id) {
+        params = Object.assign(params, {
+          untilId: options.max_id
+        })
+      }
+      if (options.min_id) {
+        params = Object.assign(params, {
+          sinceId: options.min_id
+        })
+      }
+      if (options.account_id) {
+        params = Object.assign(params, {
+          userId: options.account_id
+        })
+      }
+    }
+    const res = await this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/search', params)
+    return res.data
+  }
+
+  private async searchHashtags(
+    q: string,
+    options?: {
+      type: 'accounts' | 'hashtags' | 'statuses'
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
+  ): Promise<Array<string>> {
+    let params = {
+      query: q
+    }
+    if (options) {
+      if (options.limit) {
+        params = Object.assign(params, {
+          limit: options.limit
+        })
+      }
+      if (options.offset) {
+        params = Object.assign(params, {
+          offset: options.offset
+        })
+      }
+    }
+    const res = await this.client.post<Array<string>>('/api/hashtags/search', params)
+    return res.data
+  }
+
+  private async searchAll(
+    q: string,
+    options?: {
       type: 'accounts' | 'hashtags' | 'statuses'
       limit?: number
       max_id?: string
@@ -1980,102 +2091,98 @@ export default class Firefish implements MegalodonInterface {
       exclude_unreviewed?: boolean
     }
   ): Promise<Response<Entity.Results>> {
-    switch (options.type) {
-      case 'accounts': {
-        let params = {
-          query: q
+    let accounts: Array<FirefishEntity.UserDetail> = []
+    try {
+      accounts = await this.searchAccounts(q, options)
+    } catch (e) {
+      console.warn(e)
+    }
+    let statuses: Array<FirefishEntity.Note> = []
+    try {
+      statuses = await this.searchStatuses(q, options)
+    } catch (e) {
+      console.warn(e)
+    }
+    let hashtags: Array<string> = []
+    try {
+      hashtags = await this.searchHashtags(q, options)
+    } catch (e) {
+      console.warn(e)
+    }
+
+    return {
+      data: {
+        accounts: accounts.map(a => FirefishAPI.Converter.userDetail(a)),
+        statuses: statuses.map(n => FirefishAPI.Converter.note(n)),
+        hashtags: hashtags.map(h => ({ name: h, url: h, history: [], following: false }))
+      },
+      status: 200,
+      statusText: '200',
+      headers: null
+    }
+  }
+
+  public async search(
+    q: string,
+    options?: {
+      type: 'accounts' | 'hashtags' | 'statuses'
+      limit?: number
+      max_id?: string
+      min_id?: string
+      resolve?: boolean
+      offset?: number
+      following?: boolean
+      account_id?: string
+      exclude_unreviewed?: boolean
+    }
+  ): Promise<Response<Entity.Results>> {
+    if (options) {
+      switch (options.type) {
+        case 'accounts': {
+          const accounts = await this.searchAccounts(q, options)
+          return {
+            data: {
+              accounts: accounts.map(a => FirefishAPI.Converter.userDetail(a)),
+              statuses: [],
+              hashtags: []
+            },
+            status: 200,
+            statusText: '200',
+            headers: null
+          }
         }
-        if (options) {
-          if (options.limit) {
-            params = Object.assign(params, {
-              limit: options.limit
-            })
-          }
-          if (options.offset) {
-            params = Object.assign(params, {
-              offset: options.offset
-            })
-          }
-          if (options.resolve) {
-            params = Object.assign(params, {
-              localOnly: options.resolve
-            })
+        case 'statuses': {
+          const statuses = await this.searchStatuses(q, options)
+          return {
+            data: {
+              accounts: [],
+              statuses: statuses.map(n => FirefishAPI.Converter.note(n)),
+              hashtags: []
+            },
+            status: 200,
+            statusText: '200',
+            headers: null
           }
         }
-        return this.client.post<Array<FirefishAPI.Entity.UserDetail>>('/api/users/search', params).then(res => ({
-          ...res,
-          data: {
-            accounts: res.data.map(u => FirefishAPI.Converter.userDetail(u)),
-            statuses: [],
-            hashtags: []
+        case 'hashtags': {
+          const hashtags = await this.searchHashtags(q, options)
+          return {
+            data: {
+              accounts: [],
+              statuses: [],
+              hashtags: hashtags.map(h => ({ name: h, url: h, history: [], following: false }))
+            },
+            status: 200,
+            statusText: '200',
+            headers: null
           }
-        }))
+        }
+        default: {
+          return this.searchAll(q, options)
+        }
       }
-      case 'statuses': {
-        let params = {
-          query: q
-        }
-        if (options) {
-          if (options.limit) {
-            params = Object.assign(params, {
-              limit: options.limit
-            })
-          }
-          if (options.offset) {
-            params = Object.assign(params, {
-              offset: options.offset
-            })
-          }
-          if (options.max_id) {
-            params = Object.assign(params, {
-              untilId: options.max_id
-            })
-          }
-          if (options.min_id) {
-            params = Object.assign(params, {
-              sinceId: options.min_id
-            })
-          }
-          if (options.account_id) {
-            params = Object.assign(params, {
-              userId: options.account_id
-            })
-          }
-        }
-        return this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/search', params).then(res => ({
-          ...res,
-          data: {
-            accounts: [],
-            statuses: res.data.map(n => FirefishAPI.Converter.note(n)),
-            hashtags: []
-          }
-        }))
-      }
-      case 'hashtags': {
-        let params = {
-          query: q
-        }
-        if (options) {
-          if (options.limit) {
-            params = Object.assign(params, {
-              limit: options.limit
-            })
-          }
-          if (options.offset) {
-            params = Object.assign(params, {
-              offset: options.offset
-            })
-          }
-        }
-        return this.client.post<Array<string>>('/api/hashtags/search', params).then(res => ({
-          ...res,
-          data: {
-            accounts: [],
-            statuses: [],
-            hashtags: res.data.map(h => ({ name: h, url: h, history: [], following: false }))
-          }
-        }))
-      }
+    } else {
+      return this.searchAll(q)
     }
   }
 

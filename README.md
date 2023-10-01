@@ -167,8 +167,8 @@ const client = generator('mastodon', BASE_URL)
 
 client.registerApp('Test App')
   .then(appData => {
-    clientId = appData.clientId
-    clientSecret = appData.clientSecret
+    clientId = appData.client_id
+    clientSecret = appData.client_secret
     console.log('Authorization URL is generated.')
     console.log(appData.url)
   })
@@ -184,8 +184,8 @@ const code = '...' // Authorization code
 
 client.fetchAccessToken(clientId, clientSecret, code)
   .then((tokenData: OAuth.TokenData) => {
-    console.log(tokenData.accessToken)
-    console.log(tokenData.refreshToken)
+    console.log(tokenData.access_token)
+    console.log(tokenData.refresh_token)
   })
   .catch((err: Error) => console.error(err))
 ```

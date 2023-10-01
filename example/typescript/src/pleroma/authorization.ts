@@ -19,8 +19,8 @@ client
     scopes: SCOPES
   })
   .then(appData => {
-    clientId = appData.clientId
-    clientSecret = appData.clientSecret
+    clientId = appData.client_id
+    clientSecret = appData.client_secret
     console.log('Authorization URL is generated.')
     console.log(appData.url)
     console.log()
@@ -36,9 +36,9 @@ client
   })
   .then((tokenData: OAuth.TokenData) => {
     console.log('\naccess_token:')
-    console.log(tokenData.accessToken)
+    console.log(tokenData.access_token)
     console.log('\nrefresh_token:')
-    console.log(tokenData.refreshToken)
+    console.log(tokenData.refresh_token)
     console.log()
   })
   .catch((err: Error) => console.error(err))
