@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "build:bun": "bun build ./src --outdir=dist --minify --target=node",
+    "build:bun-node": "bun build ./src --outdir=lib --minify --target=node",
+    "build:bun": "bun build ./src --outdir=lib --minify --target=bun",
     "start": "http-server -p 8000 -s index.html",
     "lint": "eslint --ext .js,.ts src"
   },

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "tsc -p ./",
-    "build:bun": "bun build ./src --outdir=lib --minify --target=node",
+    "build:bun-node": "bun build ./src --outdir=lib --minify --target=node",
+    "build:bun": "bun build ./src --outdir=lib --minify --target=bun",
     "lint": "eslint --ext .js,.ts src"
   },
   "author": "h3poteto",

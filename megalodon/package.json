@@ -5,7 +5,8 @@
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
   "scripts": {
-    "build:bun": "bun build ./src --outdir=lib --minify --target=node",
+    "build:bun-node": "bun build ./src --outdir=lib --minify --target=node",
+    "build:bun": "bun build ./src --outdir=lib --minify --target=bun",
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src",
     "doc": "typedoc --out ../docs ./src",
