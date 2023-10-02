@@ -1,61 +1,65 @@
 # Megalodon
+
 [![Test](https://github.com/h3poteto/megalodon/workflows/Test/badge.svg)](https://github.com/h3poteto/megalodon/actions?query=branch%3Amaster+workflow%3ATest)
 [![NPM Version](https://img.shields.io/npm/v/megalodon.svg)](https://www.npmjs.com/package/megalodon)
 [![GitHub release](https://img.shields.io/github/release/h3poteto/megalodon.svg)](https://github.com/h3poteto/megalodon/releases)
 [![npm](https://img.shields.io/npm/dm/megalodon)](https://www.npmjs.com/package/megalodon)
 [![NPM](https://img.shields.io/npm/l/megalodon)](/LICENSE.txt)
 
-A Fediverse API Client library for node.js and browser. It provides REST API and streaming methods.
-By using this library, you can take Mastodon, Pleroma, Friendica, and Firefish with the same interface.
+Megalodon is a Fediverse API client library for [NodeJS](https://nodejs.org) and browsers.
+This library allows for interfacing with [Mastodon](https://joinmastodon.org), [Pleroma](https://pleroma.social), [Friendica](https://friendi.ca), and [Firefish](https://joinfirefish.org) servers all with the same interface, providing REST API and streaming methods.
 
 The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
-## Supporting
-- [x] Mastodon
-- [x] Pleroma
+## Supports
+
+- [x] Mastodon <img src="https://cdn.simpleicons.org/mastodon" alt="Mastodon" width=16 height=16>
+- [x] Pleroma <img src="https://cdn.simpleicons.org/pleroma" alt="Pleroma" width=16 height=16>
 - [x] Friendica
-- [x] Firefish
+- [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
 - [x] Akkoma (Unofficial)
-- [x] Widlebeest (Unofficial)
 
 ## Features
+
 - [x] REST API
 - [ ] Admin API
-- [x] WebSocket for Streamings
+- [x] WebSocket for streaming
 - [x] Promisified methods
 - [x] Proxy support
-- [x] Support node.js and browser
-- [x] Written in typescript
+- [x] NodeJS and browser support
+- [x] Written in TypeScript
 
 ## Install
 
-```
-$ npm install -S megalodon
+```sh
+# npm
+npm install -S megalodon
+
+# pnpm
+pnpm add megalodon
+
+# yarn
+yarn add megalodon
 ```
 
-or
+### Build for browsers
 
-```
-$ yarn add megalodon
-```
+**Important**: In browsers, you cannot use the proxy.
 
-### Build for browser
-**Important**: In browser, you can not use proxy.
-
-If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in Node.js.
-[Here](example/browser/webpack.config.js) is example Webpack configuration.
+If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in NodeJS.
+[Here](https://github.com/h3poteto/megalodon/tree/master/example/browser/webpack.config.js) is example Webpack configuration.
 
 ## Usage
-I prepared [examples](example), and please refer [documents](https://h3poteto.github.io/megalodon/) about each methods.
+
+There are code [examples](https://github.com/h3poteto/megalodon/tree/master/example), abd  please refer to the [documentation](https://h3poteto.github.io/megalodon/) about each method.
 
 I explain some typical methods.
 At first, please get your access token for a fediverse server.
 If you don't have access token, or you want to register applications and get access token programmably, please refer [Authorization section](#authorization).
 
-
 ### Home timeline
 
-```typescript
+```ts
 import generator, { Entity, Response } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
@@ -68,32 +72,33 @@ client.getHomeTimeline()
   })
 ```
 
-### Post toot
+### Make a post
 
-```typescript
+```ts
 import generator, { Entity, Response } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
 const access_token: string = '...'
-const toot: string = 'test toot'
+const post: string = 'test post'
 
 const client = generator('mastodon', BASE_URL, access_token)
-client.postStatus(toot)
+client.postStatus(post)
   .then((res: Response<Entity.Status>) => {
     console.log(res.data)
   })
 ```
 
-### Post medias
+### Post media
+
 Please provide a file to the argument.
 
-```typescript
+```ts
 import generator, { Entity, Response } from 'megalodon'
 import fs from 'fs'
 
 const BASE_URL: string = 'https://mastodon.social'
 const access_token: string = '...'
-const image = fs.readFileSync("test.image")
+const image = fs.readFileSync("test-image.png")
 
 const client = generator('mastodon', BASE_URL, access_token)
 client.uploadMedia(image)
@@ -104,7 +109,7 @@ client.uploadMedia(image)
 
 ### WebSocket streaming
 
-```typescript
+```ts
 import generator, { Entity, WebSocketInterface } from 'megalodon'
 
 const BASE_URL: string = 'wss://pleroma.io'
@@ -146,11 +151,11 @@ stream.on('parser-error', (err: Error) => {
 })
 ```
 
-
 ### Authorization
-You can register applications, and get access tokens to use this method.
 
-```typescript
+You can register applications and/or get access tokens to use this method.
+
+```ts
 import generator, { OAuth } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
@@ -169,16 +174,15 @@ client.registerApp('Test App')
   })
 ```
 
-Please open `Autorhization URL` in your browser, and authorize this app.
+Please open `Authorization URL` in your browser, and authorize this app.
 In this time, you can get authorization code.
 
 After that, get an access token.
 
-```typescript
+```ts
 const code = '...' // Authorization code
 
-client.fetchAccessToken(client_id, client_secret, code)
-})
+client.fetchAccessToken(clientId, clientSecret, code)
   .then((tokenData: OAuth.TokenData) => {
     console.log(tokenData.access_token)
     console.log(tokenData.refresh_token)
@@ -186,17 +190,22 @@ client.fetchAccessToken(client_id, client_secret, code)
   .catch((err: Error) => console.error(err))
 ```
 
-### Detect each SNS
-You have to provide SNS name (e.g. `mastodon`, `pleroma`) to `generator` function.
-But when you only know the URL and not the SNS, `detector` function can detect the SNS.
+### Detect each server's software
 
-```typescript
+You have to provide the server's software name (e.g. `mastodon`, `pleroma`, `firefish`) to the `generator` function.
+But when you only know the URL and not the software the server runs on, the `detector` function can detect the server's software.
+
+```ts
 import { detector } from 'megalodon'
 
-const URL = 'https://mastodon.social'
+const FIRST_URL = 'https://mastodon.social'
+const SECOND_URL = 'https://firefish.social'
 
-const sns = await detector(URL)
-console.log(sns)
+const first_server = await detector(MASTODON_URL)
+const second_server = await detector(FIREFISH_URL)
+
+console.log(first_server) // mastodon
+console.log(second_server) // firefish
 ```
 
 ## License
