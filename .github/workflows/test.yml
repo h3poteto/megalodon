@@ -116,7 +116,7 @@ jobs:
       - name: Browser example (Bun)
         run: cd example/browser && bun run build:bun
       - name: Typescript example (Bun)
-        run: cd example/typescript && bun run build
+        run: cd example/typescript && bun run build:bun
           bun run example/typescript/dist/mastodon/instance.js
           bun run example/typescript/dist/pleroma/instance.js
           bun run example/typescript/dist/firefish/instance.js
