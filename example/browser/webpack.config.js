@@ -39,7 +39,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.browser': true,
-      'process.env.NODE_DEBUG': false
+      'process.env.NODE_DEBUG': false,
+      'process.env.MASTODON_URL': `"${process.env.MASTODON_URL}"`,
+      'process.env.MASTODON_ACCESS_TOKEN': `"${process.env.MASTODON_ACCESS_TOKEN}"`
     }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
