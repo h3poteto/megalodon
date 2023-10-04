@@ -12,6 +12,7 @@ import NotificationType from './notification'
 import FilterContext from './filter_context'
 
 export {
+  generator,
   Response,
   OAuth,
   RequestCanceledError,

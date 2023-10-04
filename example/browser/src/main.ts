@@ -1,4 +1,4 @@
-import generator, { Entity, Response } from 'megalodon'
+import generator, { type Entity, type Response } from 'megalodon'
 
 const BASE_URL: string = 'https://mastodon.social'
 console.log('start')

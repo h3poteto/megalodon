@@ -1,33 +1,18 @@
 {
   "name": "browser",
-  "version": "4.0.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "webpack",
-    "start": "http-server -p 8000 -s index.html",
-    "lint": "eslint --ext .js,.ts src"
-  },
-  "author": "Akira Fukushima <h3.poteto@gmail.com> (https://github.com/h3poteto)",
-  "license": "MIT",
-  "dependencies": {
-    "megalodon": "*"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "assert": "^2.1.0",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
-    "events": "^3.3.0",
-    "http-server": "^14.1.1",
-    "https-browserify": "^1.0.0",
-    "os-browserify": "^0.3.0",
-    "process": "^0.11.10",
-    "querystring-es3": "^0.2.1",
-    "stream-browserify": "^3.0.0",
-    "stream-http": "^3.2.0",
-    "ts-loader": "^9.4.4",
-    "typescript": "5.2.2",
-    "url": "^0.11.3",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "megalodon": "*",
+    "node-stdlib-browser": "^1.2.0",
+    "vite-plugin-node-stdlib-browser": "^0.2.1"
   }
 }
