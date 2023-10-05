@@ -101,7 +101,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   private _resetConnection() {
     if (this._client) {
       this._client.close(1000)
-      this._client.removeAllListeners()
+      this._clearBinding()
       this._client = null
     }
 
@@ -134,7 +134,11 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
         if (this._client) {
           // In reconnect, we want to close the connection immediately,
           // because recoonect is necessary when some problems occur.
-          this._client.terminate()
+          if (isBrowser()) {
+            this._client.close()
+          } else {
+            this._client.terminate()
+          }
         }
         // Call connect methods
         console.log('Reconnecting')
@@ -194,7 +198,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * Clear binding event for web socket client.
    */
   private _clearBinding() {
-    if (this._client) {
+    if (this._client && !isBrowser()) {
       this._client.removeAllListeners('close')
       this._client.removeAllListeners('pong')
       this._client.removeAllListeners('open')
