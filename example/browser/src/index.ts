@@ -47,3 +47,9 @@ stream.on('close', () => {
 stream.on('parser-error', (err: Error) => {
   console.error(err)
 })
+
+setTimeout(() => {
+  stream.removeAllListeners()
+  stream.stop()
+  console.log('closed')
+}, 10000)
