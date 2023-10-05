@@ -1,17 +1,17 @@
-import WS from 'ws'
+import WS from 'isomorphic-ws'
 import dayjs, { Dayjs } from 'dayjs'
 import { EventEmitter } from 'events'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
 import MastodonAPI from './api_client'
 import { UnknownNotificationTypeError } from '../notification'
+import { isBrowser } from '../default'
 
 /**
- * WebSocket
- * Pleroma is not support streaming. It is support websocket instead of streaming.
- * So this class connect to Phoenix websocket for Pleroma.
+ * Streaming
+ * Connect WebSocket streaming endpoint.
  */
-export default class WebSocket extends EventEmitter implements WebSocketInterface {
+export default class Streaming extends EventEmitter implements WebSocketInterface {
   public url: string
   public stream: string
   public params: string | null
@@ -168,17 +168,24 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       parameter.push(`access_token=${accessToken}`)
     }
     const requestURL: string = `${url}/?${parameter.join('&')}`
-    let options: WS.ClientOptions = {
-      headers: headers
-    }
-    if (proxyConfig) {
-      options = Object.assign(options, {
-        agent: proxyAgent(proxyConfig)
-      })
-    }
+    if (isBrowser()) {
+      // This is browser.
+      // We can't pass options when browser: https://github.com/heineiuo/isomorphic-ws#limitations
+      const cli = new WS(requestURL)
+      return cli
+    } else {
+      let options: WS.ClientOptions = {
+        headers: headers
+      }
+      if (proxyConfig) {
+        options = Object.assign(options, {
+          agent: proxyAgent(proxyConfig)
+        })
+      }
 
-    const cli: WS = new WS(requestURL, options)
-    return cli
+      const cli: WS = new WS(requestURL, options)
+      return cli
+    }
   }
 
   /**
@@ -199,38 +206,43 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
    * @param client A WebSocket instance.
    */
   private _bindSocket(client: WS) {
-    client.on('close', (code: number, _reason: Buffer) => {
+    client.onclose = event => {
       // Refer the code: https://tools.ietf.org/html/rfc6455#section-7.4
-      if (code === 1000) {
+      if (event.code === 1000) {
         this.emit('close', {})
       } else {
-        console.log(`Closed connection with ${code}`)
+        console.log(`Closed connection with ${event.code}`)
         // If already called close method, it does not retry.
         if (!this._connectionClosed) {
           this._reconnect()
         }
       }
-    })
-    client.on('pong', () => {
-      this._pongWaiting = false
-      this.emit('pong', {})
-      this._pongReceivedTimestamp = dayjs()
-      // It is required to anonymous function since get this scope in checkAlive.
-      setTimeout(() => this._checkAlive(this._pongReceivedTimestamp), this._heartbeatInterval)
-    })
-    client.on('open', () => {
+    }
+    client.onopen = _event => {
       this.emit('connect', {})
-      // Call first ping event.
-      setTimeout(() => {
-        client.ping('')
-      }, 10000)
-    })
-    client.on('message', (data: WS.Data, isBinary: boolean) => {
-      this.parser.parse(data, isBinary)
-    })
-    client.on('error', (err: Error) => {
-      this.emit('error', err)
-    })
+      if (!isBrowser()) {
+        // Call first ping event.
+        setTimeout(() => {
+          client.ping('')
+        }, 10000)
+      }
+    }
+    client.onmessage = event => {
+      this.parser.parse(event)
+    }
+    client.onerror = event => {
+      this.emit('error', event.target)
+    }
+
+    if (!isBrowser()) {
+      client.on('pong', () => {
+        this._pongWaiting = false
+        this.emit('pong', {})
+        this._pongReceivedTimestamp = dayjs()
+        // It is required to anonymous function since get this scope in checkAlive.
+        setTimeout(() => this._checkAlive(this._pongReceivedTimestamp), this._heartbeatInterval)
+      })
+    }
   }
 
   /**
@@ -295,10 +307,11 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
  */
 export class Parser extends EventEmitter {
   /**
-   * @param message Message body of websocket.
+   * @param message Message event of websocket.
    */
-  public parse(data: WS.Data, isBinary: boolean) {
-    const message = isBinary ? data : data.toString()
+  public parse(ev: WS.MessageEvent) {
+    const data = ev.data
+    const message = data.toString()
     if (typeof message !== 'string') {
       this.emit('heartbeat', {})
       return

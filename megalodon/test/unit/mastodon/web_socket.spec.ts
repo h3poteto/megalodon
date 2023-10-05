@@ -1,4 +1,5 @@
 import { Parser } from '@/mastodon/web_socket'
+import WS from 'isomorphic-ws'
 import Entity from '@/entity'
 
 const account: Entity.Account = {
@@ -87,22 +88,30 @@ describe('Parser', () => {
   describe('parse', () => {
     describe('message is heartbeat', () => {
       describe('message is an object', () => {
-        const message = Buffer.alloc(0)
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: Buffer.alloc(0)
+        }
 
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('heartbeat', spy)
-          parser.parse(message, true)
+          parser.parse(message)
           expect(spy).toHaveBeenCalledWith({})
         })
       })
       describe('message is empty string', () => {
-        const message: string = ''
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: ''
+        }
 
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('heartbeat', spy)
-          parser.parse(Buffer.from(message), false)
+          parser.parse(message)
           expect(spy).toHaveBeenCalledWith({})
         })
       })
@@ -110,30 +119,38 @@ describe('Parser', () => {
 
     describe('message is not json', () => {
       describe('event is delete', () => {
-        const message = JSON.stringify({
-          event: 'delete',
-          payload: '12asdf34'
-        })
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: JSON.stringify({
+            event: 'delete',
+            payload: '12asdf34'
+          })
+        }
 
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('delete', spy)
-          parser.parse(Buffer.from(message), false)
+          parser.parse(message)
           expect(spy).toHaveBeenCalledWith('12asdf34')
         })
       })
       describe('event is not delete', () => {
-        const message = JSON.stringify({
-          event: 'event',
-          payload: '12asdf34'
-        })
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: JSON.stringify({
+            event: 'event',
+            payload: '12asdf34'
+          })
+        }
 
         it('should be called', () => {
           const error = jest.fn()
           const deleted = jest.fn()
           parser.once('error', error)
           parser.once('delete', deleted)
-          parser.parse(Buffer.from(message), false)
+          parser.parse(message)
           expect(error).toHaveBeenCalled()
           expect(deleted).not.toHaveBeenCalled()
         })
@@ -142,40 +159,52 @@ describe('Parser', () => {
 
     describe('message is json', () => {
       describe('event is update', () => {
-        const message = JSON.stringify({
-          event: 'update',
-          payload: JSON.stringify(status)
-        })
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: JSON.stringify({
+            event: 'update',
+            payload: JSON.stringify(status)
+          })
+        }
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('update', spy)
-          parser.parse(Buffer.from(message), false)
+          parser.parse(message)
           expect(spy).toHaveBeenCalledWith(status)
         })
       })
 
       describe('event is notification', () => {
-        const message = JSON.stringify({
-          event: 'notification',
-          payload: JSON.stringify(notification)
-        })
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: JSON.stringify({
+            event: 'notification',
+            payload: JSON.stringify(notification)
+          })
+        }
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('notification', spy)
-          parser.parse(Buffer.from(message), false)
+          parser.parse(message)
           expect(spy).toHaveBeenCalledWith(notification)
         })
       })
 
       describe('event is conversation', () => {
-        const message = JSON.stringify({
-          event: 'conversation',
-          payload: JSON.stringify(conversation)
-        })
+        const message: WS.MessageEvent = {
+          type: 'message',
+          target: '' as any,
+          data: JSON.stringify({
+            event: 'conversation',
+            payload: JSON.stringify(conversation)
+          })
+        }
         it('should be called', () => {
           const spy = jest.fn()
           parser.once('conversation', spy)
-          parser.parse(Buffer.from(message), false)
+          parser.parse(message)
           expect(spy).toHaveBeenCalledWith(conversation)
         })
       })

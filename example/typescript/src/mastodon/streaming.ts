@@ -1,18 +1,12 @@
 import generator, { Entity, WebSocketInterface } from 'megalodon'
 
-declare var process: {
-  env: {
-    MASTODON_ACCESS_TOKEN: string
-  }
-}
+const BASE_URL: string = process.env.MASTODON_STREAMING_URL!
 
-const BASE_URL: string = 'wss://streaming.fedibird.com'
-
-const access_token: string = process.env.MASTODON_ACCESS_TOKEN
+const access_token: string = process.env.MASTODON_ACCESS_TOKEN!
 
 const client = generator('mastodon', BASE_URL, access_token)
 
-const stream: WebSocketInterface = client.userSocket()
+const stream: WebSocketInterface = client.localSocket()
 stream.on('connect', () => {
   console.log('connect')
 })
