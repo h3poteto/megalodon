@@ -952,10 +952,24 @@ export default class Firefish implements MegalodonInterface {
   // accounts/preferences
   // ======================================
   public async getPreferences(): Promise<Response<Entity.Preferences>> {
-    return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
-      reject(err)
+    return this.client.post<FirefishAPI.Entity.UserDetailMe>('/api/i').then(async res => {
+      return Object.assign(res, {
+        data: FirefishAPI.Converter.userPreferences(res.data, await this.getDefaultPostPrivacy())
+      })
     })
+  }
+
+  public async getDefaultPostPrivacy(): Promise<'public' | 'unlisted' | 'private' | 'direct'> {
+    return this.client
+      .post<string>('/api/i/registry/get-unsecure', {
+        key: 'defaultNoteVisibility',
+        scope: ['client', 'base']
+      })
+      .then(res => {
+        if (!res.data || (res.data != 'public' && res.data != 'home' && res.data != 'followers' && res.data != 'specified')) return 'public'
+        return FirefishAPI.Converter.visibility(res.data)
+      })
+      .catch(_ => 'public')
   }
 
   // ======================================

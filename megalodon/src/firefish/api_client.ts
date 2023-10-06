@@ -34,6 +34,7 @@ namespace FirefishAPI {
     export type Relation = FirefishEntity.Relation
     export type User = FirefishEntity.User
     export type UserDetail = FirefishEntity.UserDetail
+    export type UserDetailMe = FirefishEntity.UserDetailMe
     export type Session = FirefishEntity.Session
     export type Stats = FirefishEntity.Stats
     export type Instance = FirefishEntity.Instance
@@ -130,6 +131,52 @@ namespace FirefishAPI {
         moved: null,
         fields: u.fields.map(f => field(f)),
         bot: u.isBot !== undefined ? u.isBot : null
+      }
+    }
+
+    export const userDetailMe = (u: Entity.UserDetailMe): MegalodonEntity.Account => {
+      let acct = u.username
+      if (u.host) {
+        acct = `${u.username}@${u.host}`
+      }
+      return {
+        id: u.id,
+        username: u.username,
+        acct: acct,
+        display_name: u.name ?? '',
+        locked: u.isLocked,
+        group: null,
+        noindex: u.isIndexable !== undefined ? u.isIndexable : null,
+        suspended: u.isSuspended,
+        limited: u.isSilenced,
+        created_at: u.createdAt,
+        followers_count: u.followersCount,
+        following_count: u.followingCount,
+        statuses_count: u.notesCount,
+        note: u.description ?? '',
+        url: acct,
+        avatar: u.avatarUrl ?? '',
+        avatar_static: u.avatarColor ?? '',
+        header: u.bannerUrl ?? '',
+        header_static: u.bannerColor ?? '',
+        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
+        moved: null,
+        fields: u.fields.map(f => field(f)),
+        bot: u.isBot !== undefined ? u.isBot : null,
+        always_mark_nsfw: u.alwaysMarkNsfw !== undefined ? u.alwaysMarkNsfw : false
+      }
+    }
+
+    export const userPreferences = (
+      u: FirefishAPI.Entity.UserDetailMe,
+      v: 'public' | 'unlisted' | 'private' | 'direct'
+    ): MegalodonEntity.Preferences => {
+      return {
+        'reading:expand:media': 'default',
+        'reading:expand:spoilers': false,
+        'posting:default:language': u.lang,
+        'posting:default:sensitive': u.alwaysMarkNsfw,
+        'posting:default:visibility': v
       }
     }
 

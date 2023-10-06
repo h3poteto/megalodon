@@ -1,4 +1,5 @@
 /// <reference path="userDetail.ts" />
+/// <reference path="userDetailMe.ts" />
 
 namespace FirefishEntity {
   export type Mute = {
