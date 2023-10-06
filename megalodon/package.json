@@ -4,6 +4,11 @@
   "description": "Mastodon API client for node.js and browser",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
+  "type": "commonjs",
+  "exports": {
+    "import": "./lib/src/index.mjs",
+    "default": "./lib/src/index.js"
+  },
   "scripts": {
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src",
