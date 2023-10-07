@@ -1,10 +1,8 @@
-/// <reference path="user.ts" />
+import { User } from './user'
 
-namespace FirefishEntity {
-  export type Reaction = {
-    id: string
-    createdAt: string
-    user: User
-    type: string
-  }
+export type Reaction = {
+  id: string
+  createdAt: string
+  user: User
+  type: string
 }

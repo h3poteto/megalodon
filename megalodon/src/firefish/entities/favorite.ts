@@ -1,10 +1,8 @@
-/// <reference path="note.ts" />
+import { Note } from './note'
 
-namespace FirefishEntity {
-  export type Favorite = {
-    id: string
-    createdAt: string
-    noteId: string
-    note: Note
-  }
+export type Favorite = {
+  id: string
+  createdAt: string
+  noteId: string
+  note: Note
 }

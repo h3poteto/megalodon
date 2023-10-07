@@ -3,7 +3,7 @@ import FormData from 'form-data'
 import parseLinkHeader from 'parse-link-header'
 
 import MastodonAPI from './mastodon/api_client'
-import WebSocket from './mastodon/web_socket'
+import Streaming from './mastodon/web_socket'
 import { MegalodonInterface, NoImplementedError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
@@ -562,7 +562,7 @@ export default class Mastodon implements MegalodonInterface {
     if (get_all && converted.headers.link) {
       let parsed = parseLinkHeader(converted.headers.link)
       while (parsed?.next) {
-        const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
+        const nextRes = await this.client.get<Array<MastodonAPI.Entity.Account>>(parsed?.next.url, undefined, undefined, true)
         converted = Object.assign({}, converted, {
           data: [...converted.data, ...nextRes.data.map(a => MastodonAPI.Converter.account(a))]
         })
@@ -3144,27 +3144,27 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // WebSocket
   // ======================================
-  public userSocket(): WebSocket {
+  public userSocket(): Streaming {
     return this.client.socket('/api/v1/streaming', 'user')
   }
 
-  public publicSocket(): WebSocket {
+  public publicSocket(): Streaming {
     return this.client.socket('/api/v1/streaming', 'public')
   }
 
-  public localSocket(): WebSocket {
+  public localSocket(): Streaming {
     return this.client.socket('/api/v1/streaming', 'public:local')
   }
 
-  public tagSocket(tag: string): WebSocket {
+  public tagSocket(tag: string): Streaming {
     return this.client.socket('/api/v1/streaming', 'hashtag', `tag=${tag}`)
   }
 
-  public listSocket(list_id: string): WebSocket {
+  public listSocket(list_id: string): Streaming {
     return this.client.socket('/api/v1/streaming', 'list', `list=${list_id}`)
   }
 
-  public directSocket(): WebSocket {
+  public directSocket(): Streaming {
     return this.client.socket('/api/v1/streaming', 'direct')
   }
 }
