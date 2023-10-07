@@ -31,7 +31,7 @@ jobs:
           pnpm --filter megalodon run build
       - name: Testing
         run: |
-          pnpm --filer megalodon run test
+          pnpm --filter megalodon run test
 
   test-bun:
     runs-on: ubuntu-latest
