@@ -1,4 +1,4 @@
-import generator, { Entity } from 'megalodon'
+import { generator, Entity } from 'megalodon'
 
 const BASE_URL: string = process.env.MASTODON_URL!
 const ACCESS_TOKEN: string = process.env.MASTODON_ACCESS_TOKEN!

@@ -1424,7 +1424,7 @@ export class NodeinfoError extends Error {
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return Client instance for each SNS you specified.
  */
-const generator = (
+export const generator = (
   sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish',
   baseUrl: string,
   accessToken: string | null = null,
@@ -1450,5 +1450,3 @@ const generator = (
     }
   }
 }
-
-export default generator
