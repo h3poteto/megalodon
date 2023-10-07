@@ -162,7 +162,7 @@ describe('api_client', () => {
           poll: null,
           application: {
             name: 'Web'
-          } as MastodonEntity.Application,
+          } as PleromaEntity.Application,
           language: null,
           pinned: null,
           bookmarked: false,
@@ -209,7 +209,7 @@ describe('api_client', () => {
           poll: null,
           application: {
             name: 'Web'
-          } as MastodonEntity.Application,
+          } as PleromaEntity.Application,
           language: null,
           pinned: null,
           bookmarked: false,
