@@ -486,7 +486,7 @@ export default class Friendica implements MegalodonInterface {
     if (get_all && converted.headers.link) {
       let parsed = parseLinkHeader(converted.headers.link)
       while (parsed?.next) {
-        const nextRes = await this.client.get<Array<FriendicaEntity.Account>>(parsed?.next.url, undefined, undefined, true)
+        const nextRes = await this.client.get<Array<FriendicaAPI.Entity.Account>>(parsed?.next.url, undefined, undefined, true)
         converted = Object.assign({}, converted, {
           data: [...converted.data, ...nextRes.data.map(a => FriendicaAPI.Converter.account(a))]
         })

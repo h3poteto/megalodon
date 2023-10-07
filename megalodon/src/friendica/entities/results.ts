@@ -1,11 +1,9 @@
-/// <reference path="account.ts" />
-/// <reference path="status.ts" />
-/// <reference path="tag.ts" />
+import { Account } from './account'
+import { Status } from './status'
+import { Tag } from './tag'
 
-namespace FriendicaEntity {
-  export type Results = {
-    accounts: Array<Account>
-    statuses: Array<Status>
-    hashtags: Array<Tag>
-  }
+export type Results = {
+  accounts: Array<Account>
+  statuses: Array<Status>
+  hashtags: Array<Tag>
 }
