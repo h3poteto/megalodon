@@ -6,6 +6,7 @@ import WebSocket from './pleroma/web_socket'
 import { MegalodonInterface, NotImplementedError, ArgumentError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
+
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
 import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
@@ -566,7 +567,7 @@ export default class Pleroma implements MegalodonInterface {
         })
       }
     }
-    return this.client.get<Array<MastodonEntity.Account>>(`/api/v1/accounts/${id}/following`, params).then(res => {
+    return this.client.get<Array<PleromaAPI.Entity.Account>>(`/api/v1/accounts/${id}/following`, params).then(res => {
       return Object.assign(res, {
         data: res.data.map(a => PleromaAPI.Converter.account(a))
       })

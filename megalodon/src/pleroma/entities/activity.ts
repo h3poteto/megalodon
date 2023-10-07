@@ -1,8 +1,6 @@
-namespace PleromaEntity {
-  export type Activity = {
-    week: string
-    statuses: string
-    logins: string
-    registrations: string
-  }
+export type Activity = {
+  week: string
+  statuses: string
+  logins: string
+  registrations: string
 }

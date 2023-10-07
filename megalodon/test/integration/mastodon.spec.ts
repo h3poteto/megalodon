@@ -2,6 +2,7 @@ import MastodonEntity from '@/mastodon/entity'
 import MastodonNotificationType from '@/mastodon/notification'
 import Mastodon from '@/mastodon'
 import MegalodonNotificationType from '@/notification'
+import Entity from '@/entity'
 import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosHeaders } from 'axios'
 
 jest.mock('axios')

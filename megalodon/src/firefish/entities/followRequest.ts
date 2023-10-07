@@ -1,9 +1,7 @@
-/// <reference path="user.ts" />
+import { User } from './user'
 
-namespace FirefishEntity {
-  export type FollowRequest = {
-    id: string
-    follower: User
-    followee: User
-  }
+export type FollowRequest = {
+  id: string
+  follower: User
+  followee: User
 }

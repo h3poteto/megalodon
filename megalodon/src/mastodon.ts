@@ -562,7 +562,7 @@ export default class Mastodon implements MegalodonInterface {
     if (get_all && converted.headers.link) {
       let parsed = parseLinkHeader(converted.headers.link)
       while (parsed?.next) {
-        const nextRes = await this.client.get<Array<MastodonEntity.Account>>(parsed?.next.url, undefined, undefined, true)
+        const nextRes = await this.client.get<Array<MastodonAPI.Entity.Account>>(parsed?.next.url, undefined, undefined, true)
         converted = Object.assign({}, converted, {
           data: [...converted.data, ...nextRes.data.map(a => MastodonAPI.Converter.account(a))]
         })

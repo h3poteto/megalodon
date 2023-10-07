@@ -1,17 +1,16 @@
-/// <reference path="account.ts" />
-/// <reference path="status.ts" />
+import { Account } from './account'
+import { Status } from './status'
+import { Reaction } from './reaction'
 
-namespace Entity {
-  export type Notification = {
-    account: Account | null
-    created_at: string
-    id: string
-    status?: Status
-    emoji?: string
-    reaction?: Reaction
-    type: NotificationType
-    target?: Account
-  }
-
-  export type NotificationType = string
+export type Notification = {
+  account: Account | null
+  created_at: string
+  id: string
+  status?: Status
+  emoji?: string
+  reaction?: Reaction
+  type: NotificationType
+  target?: Account
 }
+
+export type NotificationType = string
