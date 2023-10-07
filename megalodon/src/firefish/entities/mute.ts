@@ -1,11 +1,8 @@
-/// <reference path="userDetail.ts" />
-/// <reference path="userDetailMe.ts" />
+import { UserDetail } from './userDetail'
 
-namespace FirefishEntity {
-  export type Mute = {
-    id: string
-    createdAt: string
-    muteeId: string
-    mutee: UserDetail
-  }
+export type Mute = {
+  id: string
+  createdAt: string
+  muteeId: string
+  mutee: UserDetail
 }

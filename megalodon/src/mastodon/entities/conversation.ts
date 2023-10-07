@@ -1,11 +1,9 @@
-/// <reference path="account.ts" />
-/// <reference path="status.ts" />
+import { Account } from './account'
+import { Status } from './status'
 
-namespace MastodonEntity {
-  export type Conversation = {
-    id: string
-    accounts: Array<Account>
-    last_status: Status | null
-    unread: boolean
-  }
+export type Conversation = {
+  id: string
+  accounts: Array<Account>
+  last_status: Status | null
+  unread: boolean
 }

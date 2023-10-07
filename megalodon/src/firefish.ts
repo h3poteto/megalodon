@@ -7,6 +7,7 @@ import * as FirefishOAuth from './firefish/oauth'
 import Response from './response'
 import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 import { UnknownNotificationTypeError } from './notification'
+import Entity from './entity'
 
 export default class Firefish implements MegalodonInterface {
   public client: FirefishAPI.Interface
@@ -1985,7 +1986,7 @@ export default class Firefish implements MegalodonInterface {
       account_id?: string
       exclude_unreviewed?: boolean
     }
-  ): Promise<Array<FirefishEntity.UserDetail>> {
+  ): Promise<Array<FirefishAPI.Entity.UserDetail>> {
     let params = {
       query: q
     }
@@ -2023,7 +2024,7 @@ export default class Firefish implements MegalodonInterface {
       account_id?: string
       exclude_unreviewed?: boolean
     }
-  ): Promise<Array<FirefishEntity.Note>> {
+  ): Promise<Array<FirefishAPI.Entity.Note>> {
     let params = {
       query: q
     }
@@ -2105,13 +2106,13 @@ export default class Firefish implements MegalodonInterface {
       exclude_unreviewed?: boolean
     }
   ): Promise<Response<Entity.Results>> {
-    let accounts: Array<FirefishEntity.UserDetail> = []
+    let accounts: Array<FirefishAPI.Entity.UserDetail> = []
     try {
       accounts = await this.searchAccounts(q, options)
     } catch (e) {
       console.warn(e)
     }
-    let statuses: Array<FirefishEntity.Note> = []
+    let statuses: Array<FirefishAPI.Entity.Note> = []
     try {
       statuses = await this.searchStatuses(q, options)
     } catch (e) {

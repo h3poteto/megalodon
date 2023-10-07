@@ -1,16 +1,14 @@
-/// <reference path="user.ts" />
-/// <reference path="note.ts" />
+import { User } from './user'
+import { Note } from './note'
 
-namespace FirefishEntity {
-  export type Notification = {
-    id: string
-    createdAt: string
-    type: NotificationType
-    userId?: string | null
-    user?: User
-    note?: Note
-    reaction?: string | null
-  }
-
-  export type NotificationType = string
+export type Notification = {
+  id: string
+  createdAt: string
+  type: NotificationType
+  userId?: string | null
+  user?: User
+  note?: Note
+  reaction?: string | null
 }
+
+export type NotificationType = string

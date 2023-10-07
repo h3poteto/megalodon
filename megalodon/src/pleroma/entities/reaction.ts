@@ -1,10 +1,8 @@
-/// <reference path="./account.ts" />
+import { Account } from './account'
 
-namespace PleromaEntity {
-  export type Reaction = {
-    count: number
-    me: boolean
-    name: string
-    accounts?: Array<Account>
-  }
+export type Reaction = {
+  count: number
+  me: boolean
+  name: string
+  accounts?: Array<Account>
 }
