@@ -154,6 +154,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.7.2
         version: 6.7.2(eslint@8.50.0)(typescript@5.2.2)
+      bun-types:
+        specifier: ^1.0.3
+        version: 1.0.4
       eslint:
         specifier: ^8.49.0
         version: 8.50.0
@@ -1681,6 +1684,10 @@ packages:
 
   /builtin-status-codes@3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
+    dev: true
+
+  /bun-types@1.0.4:
+    resolution: {integrity: sha512-MIXp8MXPqzjjDrBs2fNzODFgFB+Mkl/OdTsPjYaefRoBt+Bk8VEJc3S1bbs6pvBi/wCpPf/ZSmzfIyZ5w4gAMg==}
     dev: true
 
   /bundle-name@3.0.0:
