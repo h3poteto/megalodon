@@ -3,11 +3,11 @@
   "version": "4.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack",
-    "build:bun-node": "bun build ./src --outdir=lib --minify --target=node",
-    "build:bun": "bun build ./src --outdir=lib --minify --target=bun",
+    "build": "vite build",
     "start": "http-server -p 8000 -s index.html",
-    "lint": "eslint --ext .js,.ts src"
+    "lint": "eslint --ext .js,.ts src",
+    "serve": "vite",
+    "preview": "vite preview"
   },
   "author": "Akira Fukushima <h3.poteto@gmail.com> (https://github.com/h3poteto)",
   "license": "MIT",
@@ -29,7 +29,9 @@
     "ts-loader": "^9.4.4",
     "typescript": "5.2.2",
     "url": "^0.11.3",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "vite-plugin-env-compatible": "^1.1.1",
+    "vite-plugin-html": "3.2.0",
+    "vite": "^2.7.2",
+    "@originjs/vite-plugin-commonjs": "^1.0.1"
   }
 }

@@ -57,6 +57,7 @@ jobs:
       - name: Typescript example (Bun)
         run: |
           cd megalodon && bun run test
+          pnpm -r run build
 
   example:
     runs-on: ubuntu-latest
@@ -73,19 +74,18 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: |
-          yarn install
-      - name: Build
+          corepack enable && pnpm install
+      - name: Build library
         run: |
-          yarn workspace megalodon run build
-          pnpm --filter megalodon run test
-      - name: Browser example
+          pnpm --filter megalodon run build
+      - name: Build examples
         run: |
-          pnpm --filter browser run build
+          pnpm --filter !megalodon run build
       - name: Typescript example
         env:
           MASTODON_URL: https://fedibird.com
           PLEROMA_URL: https://pleroma.io
-          FIREFISH_URL: https://cybre.club
+          FIREFISH_URL: https://fedi.software
           FRIENDICA_URL: https://squeet.me
         run: |
           pnpm --filter example run build
@@ -114,10 +114,8 @@ jobs:
         run: cd megalodon && bun run build:bun-node && bun run build:bun
       - name: Testing (Bun)
         run: cd megalodon && bun run test
-      - name: Browser example (Bun)
-        run: cd example/browser && bun run build:bun-node && bun run build:bun
       - name: Typescript example (Bun)
-        run: cd example/typescript && bun run build:bun-node && bun run build:bun
+        run: cd example/typescript && bun run build:bun
           bun run example/typescript/dist/mastodon/instance.js
           bun run example/typescript/dist/pleroma/instance.js
           bun run example/typescript/dist/firefish/instance.js
