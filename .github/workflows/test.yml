@@ -49,14 +49,17 @@ jobs:
       - name: Install dependencies
         run: |
           corepack enable && pnpm install
-      - name: Build library and examples
+      - name: Build library
         run: |
-          pnpm -r run build
+          pnpm --filter megalodon run build
+      - name: Build examples
+        run: |
+          pnpm --filter !megalodon run build
       - name: Typescript example
         env:
           MASTODON_URL: https://fedibird.com
           PLEROMA_URL: https://pleroma.io
-          FIREFISH_URL: https://cybre.club
+          FIREFISH_URL: https://fedi.software
           FRIENDICA_URL: https://squeet.me
         run: |
           node example/typescript/dist/mastodon/instance.js

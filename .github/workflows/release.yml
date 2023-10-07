@@ -24,7 +24,7 @@ jobs:
         corepack enable && pnpm install
     - name: Build
       run: |
-        pnpm -r run build
+        pnpm --filter megalodon run build
     - name: Publish
       run: |
         pnpm --filter megalodon publish
