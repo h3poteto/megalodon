@@ -45,3 +45,7 @@ export type UserDetail = {
   isMuted?: boolean
   isRenoteMuted?: boolean
 }
+
+export type UserDetailMe = UserDetail & {
+  alwaysMarkNsfw: boolean
+}
