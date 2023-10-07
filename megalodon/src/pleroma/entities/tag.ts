@@ -1,10 +1,8 @@
-/// <reference path="history.ts" />
+import { History } from './history'
 
-namespace PleromaEntity {
-  export type Tag = {
-    name: string
-    url: string
-    history: Array<History>
-    following?: boolean
-  }
+export type Tag = {
+  name: string
+  url: string
+  history: Array<History>
+  following?: boolean
 }
