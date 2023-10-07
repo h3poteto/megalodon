@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
-import WebSocket from './web_socket'
+import Streaming from './web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import proxyAgent, { ProxyConfig } from '../proxy_config'
@@ -25,7 +25,7 @@ namespace MastodonAPI {
     postForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
-    socket(path: string, stream: string, params?: string): WebSocket
+    socket(path: string, stream: string, params?: string): Streaming
   }
 
   /**
@@ -428,12 +428,12 @@ namespace MastodonAPI {
      * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
      * @returns WebSocket, which inherits from EventEmitter
      */
-    public socket(path: string, stream: string, params?: string): WebSocket {
+    public socket(path: string, stream: string, params?: string): Streaming {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
       const url = this.baseUrl + path
-      const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
+      const streaming = new Streaming(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
       process.nextTick(() => {
         streaming.start()
       })
