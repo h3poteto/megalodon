@@ -1,7 +1,5 @@
-/// <reference path="note.ts" />
+import { Note } from './note'
 
-namespace FirefishEntity {
-  export type CreatedNote = {
-    createdNote: Note
-  }
+export type CreatedNote = {
+  createdNote: Note
 }

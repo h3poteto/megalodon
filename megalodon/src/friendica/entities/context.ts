@@ -1,8 +1,6 @@
-/// <reference path="status.ts" />
+import { Status } from './status'
 
-namespace FriendicaEntity {
-  export type Context = {
-    ancestors: Array<Status>
-    descendants: Array<Status>
-  }
+export type Context = {
+  ancestors: Array<Status>
+  descendants: Array<Status>
 }

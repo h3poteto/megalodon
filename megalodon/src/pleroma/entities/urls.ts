@@ -1,5 +1,3 @@
-namespace PleromaEntity {
-  export type URLs = {
-    streaming_api: string
-  }
+export type URLs = {
+  streaming_api: string
 }
