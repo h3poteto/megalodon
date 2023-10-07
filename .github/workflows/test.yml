@@ -28,7 +28,7 @@ jobs:
           corepack enable && pnpm install
       - name: Build
         run: |
-          pnpm --filter megalodon run build
+          pnpm -r run build
       - name: Testing
         run: |
           pnpm --filter megalodon run test
@@ -49,12 +49,9 @@ jobs:
       - name: Install dependencies
         run: |
           corepack enable && pnpm install
-      - name: Build
+      - name: Build library and examples
         run: |
-          pnpm --filter megalodon run build
-      - name: Browser example
-        run: |
-          pnpm --filter browser run build
+          pnpm -r run build
       - name: Typescript example
         env:
           MASTODON_URL: https://fedibird.com
@@ -62,7 +59,6 @@ jobs:
           FIREFISH_URL: https://cybre.club
           FRIENDICA_URL: https://squeet.me
         run: |
-          pnpm --filter example run build
           node example/typescript/dist/mastodon/instance.js
           node example/typescript/dist/pleroma/instance.js
           node example/typescript/dist/firefish/instance.js
