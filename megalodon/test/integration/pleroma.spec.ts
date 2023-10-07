@@ -2,6 +2,7 @@ import PleromaEntity from '@/pleroma/entity'
 import Pleroma from '@/pleroma'
 import MegalodonNotificationType from '@/notification'
 import PleromaNotificationType from '@/pleroma/notification'
+import Entity from '@/entity'
 import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosHeaders } from 'axios'
 
 jest.mock('axios')

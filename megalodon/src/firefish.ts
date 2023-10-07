@@ -7,6 +7,7 @@ import * as FirefishOAuth from './firefish/oauth'
 import Response from './response'
 import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 import { UnknownNotificationTypeError } from './notification'
+import Entity from './entity'
 
 export default class Firefish implements MegalodonInterface {
   public client: FirefishAPI.Interface
