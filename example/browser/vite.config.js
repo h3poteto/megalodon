@@ -39,4 +39,13 @@ export default defineConfig({
     })
   ],
   build: {}
+  // THE FOLLOWING IS NOT SUPPORTED BY VITE AND COPIED FROM THE OLD WEBPACK CONFIG
+  // May no longer be relevant: https://vitejs.dev/guide/philosophy.html#pushing-the-modern-web
+  // https-proxy-agent and socks-proxy-agent is node library, so can't compile for browser.
+  // So replace net, tls and dns which are node libraries.
+  // node: {
+  //   net: 'empty',
+  //   tls: 'empty',
+  //   dns: 'empty'
+  // }
 })
