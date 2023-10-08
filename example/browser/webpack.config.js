@@ -10,6 +10,9 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
   resolve: {
+    extensionAlias: {
+      '.js': ['.ts', '.js']
+    },
     extensions: ['.ts', '.js'],
     fallback: {
       net: false,
@@ -33,6 +36,16 @@ module.exports = {
       {
         test: /\.ts$/,
         loader: 'ts-loader'
+      },
+      {
+        test: /\.m?js$/,
+        type: 'javascript/auto'
+      },
+      {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false
+        }
       }
     ]
   },

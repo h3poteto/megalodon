@@ -7,7 +7,7 @@ console.log('start')
 
 const client = generator('mastodon', BASE_URL, ACCESS_TOKEN)
 
-const stream = client.localSocket()
+const stream = client.publicSocket()
 stream.on('connect', () => {
   console.log('connect')
 })
@@ -52,4 +52,4 @@ setTimeout(() => {
   stream.removeAllListeners()
   stream.stop()
   console.log('closed')
-}, 10000)
+}, 100000)
