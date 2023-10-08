@@ -4,8 +4,22 @@
   "description": "Mastodon API client for node.js and browser",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
+  "module": "./lib/mjs/src/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/mjs/src/index.d.ts",
+        "default": "./lib/mjs/src/index.js"
+      },
+      "require": {
+        "types": "./lib/src/index.d.ts",
+        "default": "./lib/src/index.js"
+      },
+      "default": "./lib/src/index.js"
+    }
+  },
   "scripts": {
-    "build": "tsc -p ./",
+    "build": "tsc -p ./ && tsc -p tsconfig.mjs.json && tsconfig-to-dual-package",
     "lint": "eslint --ext .js,.ts src",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
@@ -65,7 +79,8 @@
     "typescript": "5.2.2",
     "uuid": "^9.0.1",
     "ws": "8.14.2",
-    "isomorphic-ws": "^5.0.0"
+    "isomorphic-ws": "^5.0.0",
+    "tsconfig-to-dual-package": "^1.2.0"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.6",
