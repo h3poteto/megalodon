@@ -116,7 +116,7 @@ jobs:
         run: cd megalodon && bun run test
       - name: Typescript example (Bun)
         run: cd example/typescript && bun run build:bun
-          bun run example/typescript/dist/mastodon/instance.js
-          bun run example/typescript/dist/pleroma/instance.js
-          bun run example/typescript/dist/firefish/instance.js
-          bun run example/typescript/dist/friendica/instance.js
+          (env URL=https://fedibird.com bun run dist/detector.js | grep -q 'mastodon' && exit 0 || exit 1)
+          (env URL=https://pleroma.io bun run dist/detector.js | grep -q 'pleroma' && exit 0 || exit 1)
+          (env URL=https://fedi.software bun run dist/detector.js | grep -q 'firefish' && exit 0 || exit 1)
+          (env URL=https://squeet.me bun run dist/detector.js | grep -q 'friendica' && exit 0 || exit 1)
