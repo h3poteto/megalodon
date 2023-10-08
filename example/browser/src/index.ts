@@ -1,4 +1,5 @@
-import generator, { Entity } from 'megalodon'
+import { Entity } from 'megalodon'
+const generator = require('megalodon').default
 
 const BASE_URL: string = process.env.MASTODON_URL!
 const ACCESS_TOKEN: string = process.env.MASTODON_ACCESS_TOKEN!
