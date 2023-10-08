@@ -49,11 +49,11 @@ jobs:
         run: |
           bun install
       - name: Build (Bun)
-        run: cd megalodon && bun run build:bun-node && bun run build:bun
+        run: cd megalodon && bun run build:bun
       - name: Testing (Bun)
         run: cd megalodon && bun run test
-      - name: Browser example (Bun)
-        run: cd example/browser && bun run build:bun-node && bun run build:bun
+      # - name: Browser example (Bun)
+      #   run: cd example/browser && bun run build
       - name: Typescript example (Bun)
         run: |
           cd megalodon && bun run test
@@ -111,7 +111,7 @@ jobs:
         run: |
           bun install
       - name: Build (Bun)
-        run: cd megalodon && bun run build:bun-node && bun run build:bun
+        run: cd megalodon && bun run build:bun
       - name: Testing (Bun)
         run: cd megalodon && bun run test
       - name: Typescript example (Bun)
