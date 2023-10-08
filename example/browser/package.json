@@ -3,9 +3,11 @@
   "version": "4.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "vite build",
     "start": "http-server -p 8000 -s index.html",
-    "lint": "eslint --ext .js,.ts src"
+    "lint": "eslint --ext .js,.ts src",
+    "serve": "vite",
+    "preview": "vite preview"
   },
   "author": "Akira Fukushima <h3.poteto@gmail.com> (https://github.com/h3poteto)",
   "license": "MIT",
@@ -13,6 +15,7 @@
     "megalodon": "*"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.1",
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
@@ -27,7 +30,8 @@
     "ts-loader": "^9.4.4",
     "typescript": "5.2.2",
     "url": "^0.11.3",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "vite": "^2.7.2",
+    "vite-plugin-env-compatible": "^1.1.1",
+    "vite-plugin-html": "3.2.0"
   }
 }

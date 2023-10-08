@@ -5,6 +5,8 @@
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
   "scripts": {
+    "build:bun-node": "bun build ./src --outdir=lib --minify --target=node",
+    "build:bun": "bun build ./src --outdir=lib --minify --target=bun",
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src",
     "doc": "typedoc --out ../docs ./src",
@@ -76,6 +78,7 @@
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
+    "bun-types": "^1.0.3",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -85,5 +88,8 @@
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "typedoc": "^0.25.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }

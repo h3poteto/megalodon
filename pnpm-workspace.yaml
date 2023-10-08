@@ -1,0 +1,4 @@
+"workspaces":
+  - "megalodon"
+  - "example/typescript"
+  - "example/browser"
