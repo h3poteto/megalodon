@@ -3,7 +3,7 @@ import FormData from 'form-data'
 
 import PleromaAPI from './pleroma/api_client'
 import WebSocket from './pleroma/web_socket'
-import { MegalodonInterface, NoImplementedError, ArgumentError } from './megalodon'
+import { MegalodonInterface, NotImplementedError, ArgumentError } from './megalodon'
 import Response from './response'
 import Entity from './entity'
 
@@ -1405,7 +1405,7 @@ export default class Pleroma implements MegalodonInterface {
   // ======================================
   public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('pleroma does not support')
+      const err = new NotImplementedError('Pleroma does not support this method')
       reject(err)
     })
   }
@@ -1450,7 +1450,7 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async getTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('pleroma does not support')
+      const err = new NotImplementedError('Pleroma does not support this method')
       reject(err)
     })
   }
@@ -1463,7 +1463,7 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async followTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('pleroma does not support')
+      const err = new NotImplementedError('Pleroma does not support this method')
       reject(err)
     })
   }
@@ -1476,7 +1476,7 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async unfollowTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('pleroma does not support')
+      const err = new NotImplementedError('Pleroma does not support this method')
       reject(err)
     })
   }
@@ -3114,7 +3114,7 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('pleroma does not support')
+      const err = new NotImplementedError('Pleroma does not support this method')
       reject(err)
     })
   }
@@ -3127,7 +3127,7 @@ export default class Pleroma implements MegalodonInterface {
    */
   public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('pleroma does not support')
+      const err = new NotImplementedError('Pleroma does not support this method')
       reject(err)
     })
   }

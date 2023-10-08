@@ -1378,7 +1378,7 @@ export interface MegalodonInterface {
   directSocket(): WebSocketInterface
 }
 
-export class NoImplementedError extends Error {
+export class NotImplementedError extends Error {
   constructor(err?: string) {
     super(err)
 
