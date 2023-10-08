@@ -51,6 +51,7 @@ export namespace Entity {
   export type Stats = stats.Stats
   export type User = user.User
   export type UserDetail = user_detail.UserDetail
+  export type UserDetailMe = user_detail.UserDetailMe
 }
 
 export default Entity

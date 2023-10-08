@@ -34,6 +34,7 @@ namespace FirefishAPI {
     export type Relation = FirefishEntity.Relation
     export type User = FirefishEntity.User
     export type UserDetail = FirefishEntity.UserDetail
+    export type UserDetailMe = FirefishEntity.UserDetailMe
     export type Session = FirefishEntity.Session
     export type Stats = FirefishEntity.Stats
     export type Instance = FirefishEntity.Instance
@@ -130,6 +131,25 @@ namespace FirefishAPI {
         moved: null,
         fields: u.fields.map(f => field(f)),
         bot: u.isBot !== undefined ? u.isBot : null
+      }
+    }
+
+    export const userDetailMe = (u: Entity.UserDetailMe): MegalodonEntity.Account => {
+      const account = userDetail(u)
+      account.always_mark_nsfw = u.alwaysMarkNsfw
+      return account
+    }
+
+    export const userPreferences = (
+      u: FirefishAPI.Entity.UserDetailMe,
+      v: 'public' | 'unlisted' | 'private' | 'direct'
+    ): MegalodonEntity.Preferences => {
+      return {
+        'reading:expand:media': 'default',
+        'reading:expand:spoilers': false,
+        'posting:default:language': u.lang,
+        'posting:default:sensitive': u.alwaysMarkNsfw,
+        'posting:default:visibility': v
       }
     }
 

@@ -601,6 +601,13 @@ export interface MegalodonInterface {
    * @return Preferences.
    */
   getPreferences(): Promise<Response<Entity.Preferences>>
+
+  /**
+   * Get the default post privacy defined by the user in their account settings. Firefish only.
+   *
+   * @return Preferences.
+   */
+  getDefaultPostPrivacy(): Promise<Entity.Preferences['posting:default:visibility']>
   // ======================================
   // accounts/followed_tags
   // ======================================

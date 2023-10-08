@@ -31,4 +31,5 @@ export type Account = {
   source?: Source
   role?: Role
   mute_expires_at?: string
+  always_mark_nsfw?: boolean
 }
