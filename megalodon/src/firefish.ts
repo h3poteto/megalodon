@@ -5,7 +5,7 @@ import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import * as FirefishOAuth from './firefish/oauth'
 import Response from './response'
-import { MegalodonInterface, WebSocketInterface, NoImplementedError, ArgumentError, UnexpectedError } from './megalodon'
+import { MegalodonInterface, WebSocketInterface, NotImplementedError, ArgumentError, UnexpectedError } from './megalodon'
 import { UnknownNotificationTypeError } from './notification'
 import Entity from './entity'
 
@@ -121,7 +121,7 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async verifyAppCredentials(): Promise<Response<Entity.Application>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -155,14 +155,14 @@ export default class Firefish implements MegalodonInterface {
 
   public async refreshToken(_client_id: string, _client_secret: string, _refresh_token: string): Promise<OAuth.TokenData> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async revokeToken(_client_id: string, _client_secret: string, _token: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -179,7 +179,7 @@ export default class Firefish implements MegalodonInterface {
     _reason?: string | null
   ): Promise<Response<Entity.Token>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -350,21 +350,21 @@ export default class Firefish implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async subscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async unsubscribeAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -427,14 +427,14 @@ export default class Firefish implements MegalodonInterface {
 
   public async getAccountLists(_id: string): Promise<Response<Array<Entity.List>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async getIdentityProof(_id: string): Promise<Response<Array<Entity.IdentityProof>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -549,14 +549,14 @@ export default class Firefish implements MegalodonInterface {
 
   public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -636,7 +636,7 @@ export default class Firefish implements MegalodonInterface {
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -742,21 +742,21 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getDomainBlocks(_options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async blockDomain(_domain: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async unblockDomain(_domain: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -766,14 +766,14 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getFilters(): Promise<Response<Array<Entity.Filter>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async getFilter(_id: string): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -788,7 +788,7 @@ export default class Firefish implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -804,14 +804,14 @@ export default class Firefish implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async deleteFilter(_id: string): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -913,7 +913,7 @@ export default class Firefish implements MegalodonInterface {
     since_id?: string
   }): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -923,28 +923,28 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async deleteFeaturedTag(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -954,7 +954,7 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getPreferences(): Promise<Response<Entity.Preferences>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -964,7 +964,7 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -992,21 +992,21 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async followTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async unfollowTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1106,7 +1106,7 @@ export default class Firefish implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1161,7 +1161,7 @@ export default class Firefish implements MegalodonInterface {
 
   public async getStatusSource(_id: string): Promise<Response<Entity.StatusSource>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1182,7 +1182,7 @@ export default class Firefish implements MegalodonInterface {
 
   public async getStatusFavouritedBy(_id: string): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1242,28 +1242,28 @@ export default class Firefish implements MegalodonInterface {
 
   public async bookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async unbookmarkStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async muteStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async unmuteStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1364,7 +1364,7 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getPoll(_id: string): Promise<Response<Entity.Poll>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1411,28 +1411,28 @@ export default class Firefish implements MegalodonInterface {
     min_id?: string
   }): Promise<Response<Array<Entity.ScheduledStatus>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async getScheduledStatus(_id: string): Promise<Response<Entity.ScheduledStatus>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async scheduleStatus(_id: string, _scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async cancelScheduledStatus(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1702,14 +1702,14 @@ export default class Firefish implements MegalodonInterface {
 
   public async deleteConversation(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async readConversation(_id: string): Promise<Response<Entity.Conversation>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1817,7 +1817,7 @@ export default class Firefish implements MegalodonInterface {
   // ======================================
   public async getMarkers(_timeline: Array<string>): Promise<Response<Entity.Marker | Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1827,7 +1827,7 @@ export default class Firefish implements MegalodonInterface {
     notifications?: { last_read_id: string }
   }): Promise<Response<Entity.Marker>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1888,7 +1888,7 @@ export default class Firefish implements MegalodonInterface {
 
   public async getNotification(_id: string): Promise<Response<Entity.Notification>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1902,7 +1902,7 @@ export default class Firefish implements MegalodonInterface {
 
   public async dismissNotification(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1912,7 +1912,7 @@ export default class Firefish implements MegalodonInterface {
     max_id?: string
   }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('mastodon does not support')
+      const err = new NotImplementedError('mastodon does not support')
       reject(err)
     })
   }
@@ -1925,14 +1925,14 @@ export default class Firefish implements MegalodonInterface {
     _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
   ): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1941,7 +1941,7 @@ export default class Firefish implements MegalodonInterface {
     _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
   ): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -1951,7 +1951,7 @@ export default class Firefish implements MegalodonInterface {
    */
   public async deletePushSubscription(): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -2202,14 +2202,14 @@ export default class Firefish implements MegalodonInterface {
 
   public async getInstancePeers(): Promise<Response<Array<string>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -2236,7 +2236,7 @@ export default class Firefish implements MegalodonInterface {
     local?: boolean
   }): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -2269,21 +2269,21 @@ export default class Firefish implements MegalodonInterface {
 
   public async dismissInstanceAnnouncement(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
 
   public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -2337,7 +2337,7 @@ export default class Firefish implements MegalodonInterface {
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
     return new Promise((_, reject) => {
-      const err = new NoImplementedError('firefish does not support')
+      const err = new NotImplementedError('Firefish does not support this method')
       reject(err)
     })
   }
@@ -2355,7 +2355,7 @@ export default class Firefish implements MegalodonInterface {
   }
 
   public tagSocket(_tag: string): WebSocketInterface {
-    throw new NoImplementedError('TODO: implement')
+    throw new NotImplementedError('TODO: implement')
   }
 
   public listSocket(list_id: string): WebSocketInterface {
