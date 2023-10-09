@@ -57,6 +57,14 @@ describe('detector', () => {
     })
   })
 
+  describe('iceshrimp', () => {
+    const url = 'https://iceshrimp.social'
+    it('should be firefish', async () => {
+      const firefish = await detector(url)
+      expect(firefish).toEqual('firefish')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {

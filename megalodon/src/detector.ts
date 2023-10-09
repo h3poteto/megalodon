@@ -80,6 +80,8 @@ export const detector = async (
           return 'friendica'
         case 'firefish':
           return 'firefish'
+        case 'iceshrimp':
+          return 'firefish'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
             return 'mastodon'
@@ -102,6 +104,8 @@ export const detector = async (
           return 'friendica'
         case 'firefish':
           return 'firefish'
+        case 'iceshrimp':
+          return 'firefish'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
             return 'mastodon'
@@ -123,6 +127,8 @@ export const detector = async (
         case 'friendica':
           return 'friendica'
         case 'firefish':
+          return 'firefish'
+        case 'iceshrimp':
           return 'firefish'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
