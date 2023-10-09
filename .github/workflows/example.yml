@@ -41,7 +41,7 @@ jobs:
           node example/typescript/dist/pleroma/instance.js
           node example/typescript/dist/firefish/instance.js
           node example/typescript/dist/friendica/instance.js
-  browser:
+  webpack:
     runs-on: ubuntu-latest
 
     strategy:
@@ -60,9 +60,9 @@ jobs:
       - name: Build
         run: |
           yarn workspace megalodon run build
-      - name: Browser example
+      - name: Webpack example
         run: |
-          yarn workspace browser run build
+          yarn workspace webpack run build
 
   vite:
     runs-on: ubuntu-latest

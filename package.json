@@ -3,7 +3,7 @@
   "workspaces": [
     "megalodon",
     "example/typescript",
-    "example/browser",
+    "example/webpack",
     "example/vite"
   ]
 }

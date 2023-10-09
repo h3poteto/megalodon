@@ -1,5 +1,5 @@
 {
-  "name": "browser",
+  "name": "webpack",
   "version": "4.0.0",
   "private": true,
   "scripts": {
