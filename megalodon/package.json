@@ -14,7 +14,7 @@
     "node": ">=15.0.0"
   },
   "files": [
-      "/lib/src/**"
+    "/lib/src/**"
   ],
   "repository": {
     "type": "git",
