@@ -130,14 +130,29 @@ namespace FirefishAPI {
         emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
         moved: null,
         fields: u.fields.map(f => field(f)),
-        bot: u.isBot !== undefined ? u.isBot : null
+        bot: u.isBot !== undefined ? u.isBot : null,
+        source: {
+          privacy: null,
+          sensitive: null,
+          language: u.lang,
+          note: u.description ?? '',
+          fields: []
+        }
       }
     }
 
     export const userDetailMe = (u: Entity.UserDetailMe): MegalodonEntity.Account => {
       const account = userDetail(u)
-      account.always_mark_nsfw = u.alwaysMarkNsfw
-      return account
+
+      return Object.assign({}, account, {
+        source: {
+          privacy: null,
+          sensitive: u.alwaysMarkNsfw,
+          language: u.lang,
+          note: u.description ?? '',
+          fields: []
+        }
+      })
     }
 
     export const userPreferences = (
