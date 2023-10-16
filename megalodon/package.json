@@ -13,6 +13,9 @@
   "engines": {
     "node": ">=15.0.0"
   },
+  "files": [
+    "/lib/src/**"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/h3poteto/megalodon.git"
