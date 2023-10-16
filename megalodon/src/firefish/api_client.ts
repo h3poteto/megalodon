@@ -28,6 +28,7 @@ namespace FirefishAPI {
     export type Meta = FirefishEntity.Meta
     export type Mute = FirefishEntity.Mute
     export type Note = FirefishEntity.Note
+    export type NoteVisibility = FirefishEntity.NoteVisibility
     export type Notification = FirefishEntity.Notification
     export type Poll = FirefishEntity.Poll
     export type Reaction = FirefishEntity.Reaction
@@ -157,7 +158,7 @@ namespace FirefishAPI {
 
     export const userPreferences = (
       u: FirefishAPI.Entity.UserDetailMe,
-      v: 'public' | 'unlisted' | 'private' | 'direct'
+      v: MegalodonEntity.StatusVisibility
     ): MegalodonEntity.Preferences => {
       return {
         'reading:expand:media': 'default',
@@ -168,9 +169,7 @@ namespace FirefishAPI {
       }
     }
 
-    export const visibility = (
-      v: 'public' | 'home' | 'followers' | 'specified' | 'hidden'
-    ): 'public' | 'unlisted' | 'private' | 'direct' => {
+    export const visibility = (v: FirefishAPI.Entity.NoteVisibility): MegalodonEntity.StatusVisibility => {
       switch (v) {
         case 'public':
           return v
@@ -182,10 +181,12 @@ namespace FirefishAPI {
           return 'direct'
         case 'hidden':
           return 'direct'
+        default:
+          return 'public'
       }
     }
 
-    export const encodeVisibility = (v: 'public' | 'unlisted' | 'private' | 'direct'): 'public' | 'home' | 'followers' | 'specified' => {
+    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): FirefishAPI.Entity.NoteVisibility => {
       switch (v) {
         case 'public':
           return v

@@ -473,6 +473,7 @@ namespace FriendicaAPI {
     export type Source = FriendicaEntity.Source
     export type Stats = FriendicaEntity.Stats
     export type Status = FriendicaEntity.Status
+    export type StatusVisibility = FriendicaEntity.StatusVisibility
     export type StatusParams = FriendicaEntity.StatusParams
     export type StatusSource = FriendicaEntity.StatusSource
     export type Tag = FriendicaEntity.Tag
@@ -528,6 +529,18 @@ namespace FriendicaAPI {
           return NotificationType.Update
         default:
           return new UnknownNotificationTypeError()
+      }
+    }
+
+    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): FriendicaAPI.Entity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'direct':
+        case 'private':
+          return 'private'
       }
     }
 

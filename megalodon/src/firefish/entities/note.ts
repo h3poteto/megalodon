@@ -10,7 +10,7 @@ export type Note = {
   user: User
   text: string | null
   cw?: string | null
-  visibility: 'public' | 'home' | 'followers' | 'specified' | 'hidden'
+  visibility: NoteVisibility
   renoteCount: number
   repliesCount: number
   reactions: { [key: string]: number }
@@ -27,3 +27,5 @@ export type Note = {
   mentions?: Array<string>
   myReaction?: string | null
 }
+
+export type NoteVisibility = 'public' | 'home' | 'followers' | 'specified' | 'hidden'

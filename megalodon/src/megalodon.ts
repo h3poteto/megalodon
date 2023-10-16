@@ -671,7 +671,7 @@ export interface MegalodonInterface {
       in_reply_to_id?: string
       sensitive?: boolean
       spoiler_text?: string
-      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
+      visibility?: Entity.StatusVisibility
       scheduled_at?: string
       language?: string
       quote_id?: string

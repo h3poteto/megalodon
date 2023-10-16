@@ -25,7 +25,7 @@ export type Status = {
   muted: boolean | null
   sensitive: boolean
   spoiler_text: string
-  visibility: 'public' | 'unlisted' | 'private' | 'direct'
+  visibility: StatusVisibility
   media_attachments: Array<Attachment>
   mentions: Array<Mention>
   tags: Array<StatusTag>
@@ -44,3 +44,5 @@ export type StatusTag = {
   name: string
   url: string
 }
+
+export type StatusVisibility = 'public' | 'unlisted' | 'private' | 'direct'

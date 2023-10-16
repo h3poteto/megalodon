@@ -960,7 +960,7 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  private async getDefaultPostPrivacy(): Promise<Entity.Preferences['posting:default:visibility']> {
+  private async getDefaultPostPrivacy(): Promise<Entity.StatusVisibility> {
     return this.client
       .post<string>('/api/i/registry/get-unsecure', {
         key: 'defaultNoteVisibility',
@@ -1036,7 +1036,7 @@ export default class Firefish implements MegalodonInterface {
       in_reply_to_id?: string
       sensitive?: boolean
       spoiler_text?: string
-      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
+      visibility?: Entity.StatusVisibility
       scheduled_at?: string
       language?: string
       quote_id?: string

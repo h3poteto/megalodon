@@ -84,6 +84,7 @@ export namespace Entity {
   export type Source = source.Source
   export type Stats = stats.Stats
   export type Status = status.Status
+  export type StatusVisibility = status.StatusVisibility
   export type StatusTag = status.StatusTag
   export type StatusParams = status_params.StatusParams
   export type StatusSource = status_source.StatusSource
