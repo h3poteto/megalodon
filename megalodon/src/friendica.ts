@@ -1255,7 +1255,7 @@ export default class Friendica implements MegalodonInterface {
       in_reply_to_id?: string
       sensitive?: boolean
       spoiler_text?: string
-      visibility?: 'public' | 'unlisted' | 'private' | 'direct'
+      visibility?: Entity.StatusVisibility
       scheduled_at?: string
       language?: string
       quote_id?: string
@@ -1306,7 +1306,7 @@ export default class Friendica implements MegalodonInterface {
       }
       if (options.visibility) {
         params = Object.assign(params, {
-          visibility: options.visibility
+          visibility: FriendicaAPI.Converter.encodeVisibility(options.visibility)
         })
       }
       if (options.scheduled_at) {

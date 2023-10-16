@@ -41,6 +41,7 @@ export namespace Entity {
   export type Meta = meta.Meta
   export type Mute = mute.Mute
   export type Note = note.Note
+  export type NoteVisibility = note.NoteVisibility
   export type Notification = notification.Notification
   export type NotificationType = notification.NotificationType
   export type Poll = poll.Poll
