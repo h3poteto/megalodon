@@ -1403,13 +1403,6 @@ export default class Mastodon implements MegalodonInterface {
     })
   }
 
-  public async getDefaultPostPrivacy(): Promise<Entity.Preferences['posting:default:visibility']> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
-      reject(err)
-    })
-  }
-
   // ======================================
   // accounts/followed_tags
   // ======================================

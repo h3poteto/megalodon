@@ -1145,13 +1145,6 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
-  public async getDefaultPostPrivacy(): Promise<Entity.Preferences['posting:default:visibility']> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
-      reject(err)
-    })
-  }
-
   // ======================================
   // accounts/followed_tags
   // ======================================

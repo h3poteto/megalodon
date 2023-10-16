@@ -1400,13 +1400,6 @@ export default class Pleroma implements MegalodonInterface {
     })
   }
 
-  public async getDefaultPostPrivacy(): Promise<Entity.Preferences['posting:default:visibility']> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pleroma does not support this method')
-      reject(err)
-    })
-  }
-
   // ======================================
   // accounts/followed_tags
   // ======================================
