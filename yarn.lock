@@ -1057,10 +1057,10 @@
   resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.1.tgz#6bb3c9f81ab6ee8af09276fded7b231b85ea406f"
   integrity sha512-uWJatOM1JKDdF6Fwa16124b76BtxvTz5Lv+ORGuI7dwqU4iqExXpeHrHOi1c8BU4FgSJ6PdH0skR9Zmz8+MUqQ==
 
-"@types/parse-link-header@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@types/parse-link-header/-/parse-link-header-2.0.1.tgz#be4b412eb36e5d6bffc481e3f6e38b7706a4c9ee"
-  integrity sha512-BrKNSrRTqn3UkMXvdVtr/znJch0PMBpEvEP8oBkxDx7eEGntuFLI+WpA5HGsNHK4SlqyhaMa+Ks0ViwyixQB5w==
+"@types/parse-link-header@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/parse-link-header/-/parse-link-header-2.0.2.tgz#a2e8490b13339b6bc4342ae0413c3894cea50858"
+  integrity sha512-RKU5SIF0oyM2ZI0ubw66FkM/0RJUv/r84I7vJcXkcICcfeOpd1WXfpcqkFJPaWli5z3YdxMsfWojyU5uofT6sA==
 
 "@types/semver@^7.5.0":
   version "7.5.0"

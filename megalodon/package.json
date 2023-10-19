@@ -75,7 +75,7 @@
     "@types/form-data": "^2.5.0",
     "@types/jest": "^29.5.5",
     "@types/object-assign-deep": "^0.4.1",
-    "@types/parse-link-header": "^2.0.1",
+    "@types/parse-link-header": "^2.0.2",
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
