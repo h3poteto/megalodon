@@ -1,13 +1,13 @@
 import generator, { Entity } from 'megalodon'
 
-const BASE_URL: string = process.env.MASTODON_URL!
-const ACCESS_TOKEN: string = process.env.MASTODON_ACCESS_TOKEN!
+const BASE_URL: string = import.meta.env.VITE_MASTODON_URL
+const ACCESS_TOKEN: string = import.meta.env.VITE_MASTODON_ACCESS_TOKEN
 console.log(BASE_URL)
 console.log('start')
 
 const client = generator('mastodon', BASE_URL, ACCESS_TOKEN)
 
-const stream = client.localSocket()
+const stream = client.publicSocket()
 stream.on('connect', () => {
   console.log('connect')
 })
@@ -47,9 +47,9 @@ stream.on('close', () => {
 stream.on('parser-error', (err: Error) => {
   console.error(err)
 })
-
-setTimeout(() => {
-  stream.removeAllListeners()
-  stream.stop()
-  console.log('closed')
-}, 10000)
+//
+// setTimeout(() => {
+//   stream.removeAllListeners()
+//   stream.stop()
+//   console.log('closed')
+// }, 10000)

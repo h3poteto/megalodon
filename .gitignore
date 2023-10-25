@@ -1,6 +1,7 @@
 node_modules
 lib
 example/typescript/dist
-example/javascript/dist
-example/browser/dist
+example/webpack/dist
+example/vite/dist
 docs/
+.env

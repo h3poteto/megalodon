@@ -434,9 +434,9 @@ namespace FriendicaAPI {
       }
       const url = this.baseUrl + path
       const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
-      process.nextTick(() => {
-        streaming.start()
-      })
+
+      streaming.start()
+
       return streaming
     }
   }

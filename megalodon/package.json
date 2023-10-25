@@ -4,8 +4,9 @@
   "description": "Mastodon API client for node.js and browser",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
+  "module": "./lib/esm/src/index.js",
   "scripts": {
-    "build": "tsc -p ./",
+    "build": "tsc -p ./ && tsc -p tsconfig.mjs.json",
     "lint": "eslint --ext .js,.ts src",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"

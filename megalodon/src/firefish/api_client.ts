@@ -729,9 +729,8 @@ namespace FirefishAPI {
       }
       const url = this.baseUrl + '/streaming'
       const streaming = new WebSocket(url, channel, this.accessToken, listId, this.userAgent, this.proxyConfig)
-      process.nextTick(() => {
-        streaming.start()
-      })
+
+      streaming.start()
       return streaming
     }
   }
