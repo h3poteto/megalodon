@@ -27,7 +27,10 @@
     "api",
     "streaming",
     "rest",
-    "proxy"
+    "proxy",
+    "activitypub",
+    "federated",
+    "fediverse"
   ],
   "author": "h3poteto",
   "license": "MIT",
