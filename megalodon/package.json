@@ -1,7 +1,7 @@
 {
   "name": "megalodon",
-  "version": "8.1.6",
-  "description": "Mastodon API client for node.js and browser",
+  "version": "9.0.0",
+  "description": "Fediverse API client for node.js and browser",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
   "module": "./lib/esm/src/index.js",
