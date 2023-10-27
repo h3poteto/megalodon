@@ -15,7 +15,8 @@
     "node": ">=15.0.0"
   },
   "files": [
-    "/lib/src/**"
+    "/lib/src/**",
+    "/lib/esm/**"
   ],
   "repository": {
     "type": "git",
