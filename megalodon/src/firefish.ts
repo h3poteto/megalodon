@@ -1,7 +1,6 @@
 import FormData from 'form-data'
 import FirefishAPI from './firefish/api_client'
 import { DEFAULT_UA } from './default'
-import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import * as FirefishOAuth from './firefish/oauth'
 import Response from './response'
@@ -12,20 +11,13 @@ import Entity from './entity'
 export default class Firefish implements MegalodonInterface {
   public client: FirefishAPI.Interface
   public baseUrl: string
-  public proxyConfig: ProxyConfig | false
 
   /**
    * @param baseUrl hostname or base URL
    * @param accessToken access token from OAuth2 authorization
    * @param userAgent UserAgent is specified in header on request.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(
-    baseUrl: string,
-    accessToken: string | null = null,
-    userAgent: string | null = DEFAULT_UA,
-    proxyConfig: ProxyConfig | false = false
-  ) {
+  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA) {
     let token: string = ''
     if (accessToken) {
       token = accessToken
@@ -34,9 +26,8 @@ export default class Firefish implements MegalodonInterface {
     if (userAgent) {
       agent = userAgent
     }
-    this.client = new FirefishAPI.Client(baseUrl, token, agent, proxyConfig)
+    this.client = new FirefishAPI.Client(baseUrl, token, agent)
     this.baseUrl = baseUrl
-    this.proxyConfig = proxyConfig
   }
 
   public cancel(): void {

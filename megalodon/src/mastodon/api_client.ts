@@ -4,7 +4,6 @@ import objectAssignDeep from 'object-assign-deep'
 import Streaming from './web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
 import MastodonEntity from './entity'
 import MegalodonEntity from '../entity'
@@ -42,24 +41,16 @@ namespace MastodonAPI {
     private baseUrl: string
     private userAgent: string
     private abortController: AbortController
-    private proxyConfig: ProxyConfig | false = false
 
     /**
      * @param baseUrl hostname or base URL
      * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
-     * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-    constructor(
-      baseUrl: string,
-      accessToken: string | null = null,
-      userAgent: string = DEFAULT_UA,
-      proxyConfig: ProxyConfig | false = false
-    ) {
+    constructor(baseUrl: string, accessToken: string | null = null, userAgent: string = DEFAULT_UA) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
-      this.proxyConfig = proxyConfig
       this.abortController = new AbortController()
       axios.defaults.signal = this.abortController.signal
     }
@@ -87,12 +78,6 @@ namespace MastodonAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -134,12 +119,6 @@ namespace MastodonAPI {
           }
         })
       }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
-      }
       return axios
         .put<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
@@ -177,12 +156,6 @@ namespace MastodonAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -224,12 +197,6 @@ namespace MastodonAPI {
           }
         })
       }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
-      }
       return axios
         .patch<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
@@ -267,12 +234,6 @@ namespace MastodonAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -314,12 +275,6 @@ namespace MastodonAPI {
           }
         })
       }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
-      }
       return axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
@@ -348,12 +303,6 @@ namespace MastodonAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios.postForm<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
@@ -385,12 +334,6 @@ namespace MastodonAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -433,7 +376,7 @@ namespace MastodonAPI {
         throw new Error('accessToken is required')
       }
       const url = this.baseUrl + path
-      const streaming = new Streaming(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
+      const streaming = new Streaming(url, stream, params, this.accessToken, this.userAgent)
 
       streaming.start()
       return streaming

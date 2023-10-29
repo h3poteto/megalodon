@@ -8,7 +8,6 @@ import Response from './response'
 import Entity from './entity'
 
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
-import { ProxyConfig } from './proxy_config'
 import OAuth from './oauth'
 import * as PleromaOAuth from './pleroma/oauth'
 import { UnknownNotificationTypeError } from './notification'
@@ -21,14 +20,8 @@ export default class Pleroma implements MegalodonInterface {
    * @param baseUrl hostname or base URL
    * @param accessToken access token from OAuth2 authorization
    * @param userAgent UserAgent is specified in header on request.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(
-    baseUrl: string,
-    accessToken: string | null = null,
-    userAgent: string | null = DEFAULT_UA,
-    proxyConfig: ProxyConfig | false = false
-  ) {
+  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA) {
     let token: string = ''
     if (accessToken) {
       token = accessToken
@@ -37,7 +30,7 @@ export default class Pleroma implements MegalodonInterface {
     if (userAgent) {
       agent = userAgent
     }
-    this.client = new PleromaAPI.Client(baseUrl, token, agent, proxyConfig)
+    this.client = new PleromaAPI.Client(baseUrl, token, agent)
     this.baseUrl = baseUrl
   }
 

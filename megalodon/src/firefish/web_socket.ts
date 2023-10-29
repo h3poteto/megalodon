@@ -3,7 +3,6 @@ import dayjs, { Dayjs } from 'dayjs'
 import { v4 as uuid } from 'uuid'
 import { EventEmitter } from 'events'
 import { WebSocketInterface } from '../megalodon'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
 import FirefishAPI from './api_client'
 import { UnknownNotificationTypeError } from '../notification'
 import { isBrowser } from '../default'
@@ -18,7 +17,6 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
   public channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list'
   public parser: Parser
   public headers: { [key: string]: string }
-  public proxyConfig: ProxyConfig | false = false
   public listId: string | null = null
   private _accessToken: string
   private _reconnectInterval: number
@@ -42,8 +40,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
     accessToken: string,
     listId: string | undefined,
-    userAgent: string,
-    proxyConfig: ProxyConfig | false = false
+    userAgent: string
   ) {
     super()
     this.url = url
@@ -57,7 +54,6 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
     } else {
       this.listId = listId
     }
-    this.proxyConfig = proxyConfig
     this._accessToken = accessToken
     this._reconnectInterval = 10000
     this._reconnectMaxAttempts = Infinity
@@ -128,13 +124,8 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       const cli = new WS(requestURL)
       return cli
     } else {
-      let options: WS.ClientOptions = {
+      const options: WS.ClientOptions = {
         headers: this.headers
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          agent: proxyAgent(this.proxyConfig)
-        })
       }
       const cli: WS = new WS(requestURL, options)
       return cli
