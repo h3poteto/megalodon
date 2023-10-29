@@ -1,4 +1,4 @@
-import { OAuth2 } from 'oauth'
+import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
 import parseLinkHeader from 'parse-link-header'
 
@@ -114,12 +114,16 @@ export default class Mastodon implements MegalodonInterface {
     const scope = options.scope || DEFAULT_SCOPE
     const redirect_uri = options.redirect_uri || NO_REDIRECT
     return new Promise(resolve => {
-      const oauth = new OAuth2(clientId, clientSecret, this.baseUrl, undefined, '/oauth/token')
-      const url = oauth.getAuthorizeUrl({
-        redirect_uri: redirect_uri,
-        response_type: 'code',
-        client_id: clientId,
-        scope: scope.join(' ')
+      const oauthClient = new OAuth2Client({
+        server: this.baseUrl,
+        clientId: clientId,
+        clientSecret: clientSecret,
+        tokenEndpoint: '/oauth/token',
+        authorizationEndpoint: '/oauth/authorize'
+      })
+      const url = oauthClient.authorizationCode.getAuthorizeUri({
+        redirectUri: redirect_uri,
+        scope: scope
       })
       resolve(url)
     })
