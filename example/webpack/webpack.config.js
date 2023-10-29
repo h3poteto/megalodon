@@ -15,17 +15,11 @@ module.exports = {
       net: false,
       tls: false,
       dns: false,
-      zlib: false,
       stream: require.resolve('stream-browserify'),
-      events: require.resolve('events/'),
-      buffer: require.resolve('buffer/'),
-      url: require.resolve('url/'),
       http: require.resolve('stream-http'),
       https: require.resolve('https-browserify'),
-      crypto: require.resolve('crypto-browserify'),
       querystring: require.resolve('querystring-es3'),
-      os: require.resolve('os-browserify/browser'),
-      assert: require.resolve('assert/')
+      os: require.resolve('os-browserify/browser')
     }
   },
   module: {
