@@ -41,10 +41,6 @@ pnpm add megalodon
 yarn add megalodon
 ```
 
-### Build for browsers
-If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in NodeJS.
-[Here](https://github.com/h3poteto/megalodon/tree/master/example/browser/webpack.config.js) is example Webpack configuration.
-
 ## Usage
 
 There are code [examples](https://github.com/h3poteto/megalodon/tree/master/example), abd  please refer to the [documentation](https://h3poteto.github.io/megalodon/) about each method.
