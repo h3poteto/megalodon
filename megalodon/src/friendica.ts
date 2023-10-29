@@ -1,6 +1,6 @@
 import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
-import parseLinkHeader from 'parse-link-header'
+import { parseLinkHeader } from './parse_link_header'
 
 import FriendicaAPI from './friendica/api_client'
 import WebSocket from './friendica/web_socket'
@@ -489,8 +489,8 @@ export default class Friendica implements MegalodonInterface {
     })
     if (get_all && converted.headers.link) {
       let parsed = parseLinkHeader(converted.headers.link)
-      while (parsed?.next) {
-        const nextRes = await this.client.get<Array<FriendicaAPI.Entity.Account>>(parsed?.next.url, undefined, undefined, true)
+      while (parsed['next']) {
+        const nextRes = await this.client.get<Array<FriendicaAPI.Entity.Account>>(parsed['next'], undefined, undefined, true)
         converted = Object.assign({}, converted, {
           data: [...converted.data, ...nextRes.data.map(a => FriendicaAPI.Converter.account(a))]
         })

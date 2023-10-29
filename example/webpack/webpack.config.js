@@ -18,7 +18,6 @@ module.exports = {
       stream: require.resolve('stream-browserify'),
       http: require.resolve('stream-http'),
       https: require.resolve('https-browserify'),
-      querystring: require.resolve('querystring-es3'),
       os: require.resolve('os-browserify/browser')
     }
   },
