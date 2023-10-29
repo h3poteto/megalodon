@@ -25,7 +25,6 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 - [ ] Admin API
 - [x] WebSocket for streaming
 - [x] Promisified methods
-- [x] Proxy support
 - [x] NodeJS and browser support
 - [x] Written in TypeScript
 
@@ -43,9 +42,6 @@ yarn add megalodon
 ```
 
 ### Build for browsers
-
-**Important**: In browsers, you cannot use the proxy.
-
 If you want to build for browser, please use Webpack and set empty value for some libraries which are not supported in NodeJS.
 [Here](https://github.com/h3poteto/megalodon/tree/master/example/browser/webpack.config.js) is example Webpack configuration.
 
