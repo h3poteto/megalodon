@@ -1183,10 +1183,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.2.tgz#d76fb80d87d0d8abfe334fc6d292e83e5524efc4"
   integrity sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==
 
-"@types/object-assign-deep@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.1.tgz#6bb3c9f81ab6ee8af09276fded7b231b85ea406f"
-  integrity sha512-uWJatOM1JKDdF6Fwa16124b76BtxvTz5Lv+ORGuI7dwqU4iqExXpeHrHOi1c8BU4FgSJ6PdH0skR9Zmz8+MUqQ==
+"@types/object-assign-deep@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.2.tgz#20d16e9987bf7789039a73f93fabb1136157d94a"
+  integrity sha512-iF6qYKjYdg/kFg3AEM/msyh1+U4zZW043d2TnCS9fwib00nc8Asj+38LgIpkO/UpfUMRgJ0m/tHATwU2F8Bfow==
 
 "@types/semver@^7.5.0":
   version "7.5.0"
