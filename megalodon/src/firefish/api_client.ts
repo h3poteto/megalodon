@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import FormData from 'form-data'
 
 import { DEFAULT_UA } from '../default'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
 import Response from '../response'
 import FirefishEntity from './entity'
 import MegalodonEntity from '../entity'
@@ -623,19 +622,16 @@ namespace FirefishAPI {
     private baseUrl: string
     private userAgent: string
     private abortController: AbortController
-    private proxyConfig: ProxyConfig | false = false
 
     /**
      * @param baseUrl hostname or base URL
      * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
-     * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-    constructor(baseUrl: string, accessToken: string | null, userAgent: string = DEFAULT_UA, proxyConfig: ProxyConfig | false = false) {
+    constructor(baseUrl: string, accessToken: string | null, userAgent: string = DEFAULT_UA) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
-      this.proxyConfig = proxyConfig
       this.abortController = new AbortController()
       axios.defaults.signal = this.abortController.signal
     }
@@ -644,17 +640,11 @@ namespace FirefishAPI {
      * GET request to firefish API.
      **/
     public async get<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
-      let options: AxiosRequestConfig = {
+      const options: AxiosRequestConfig = {
         params: params,
         headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
       }
       return axios.get<T>(this.baseUrl + path, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
@@ -674,16 +664,10 @@ namespace FirefishAPI {
      * @param headers Request header object
      */
     public async post<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
-      let options: AxiosRequestConfig = {
+      const options: AxiosRequestConfig = {
         headers: headers,
         maxContentLength: Infinity,
         maxBodyLength: Infinity
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
       }
       let bodyParams = params
       if (this.accessToken) {
@@ -728,7 +712,7 @@ namespace FirefishAPI {
         throw new Error('accessToken is required')
       }
       const url = this.baseUrl + '/streaming'
-      const streaming = new WebSocket(url, channel, this.accessToken, listId, this.userAgent, this.proxyConfig)
+      const streaming = new WebSocket(url, channel, this.accessToken, listId, this.userAgent)
 
       streaming.start()
       return streaming

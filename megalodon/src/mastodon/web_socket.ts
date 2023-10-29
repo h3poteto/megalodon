@@ -1,7 +1,6 @@
 import WS from 'isomorphic-ws'
 import dayjs, { Dayjs } from 'dayjs'
 import { EventEmitter } from 'events'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { WebSocketInterface } from '../megalodon'
 import MastodonAPI from './api_client'
 import { UnknownNotificationTypeError } from '../notification'
@@ -17,7 +16,6 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
   public params: string | null
   public parser: Parser
   public headers: { [key: string]: string }
-  public proxyConfig: ProxyConfig | false = false
   private _accessToken: string
   private _reconnectInterval: number
   private _reconnectMaxAttempts: number
@@ -33,16 +31,8 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
    * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
    * @param accessToken The access token.
    * @param userAgent The specified User Agent.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    */
-  constructor(
-    url: string,
-    stream: string,
-    params: string | undefined,
-    accessToken: string,
-    userAgent: string,
-    proxyConfig: ProxyConfig | false = false
-  ) {
+  constructor(url: string, stream: string, params: string | undefined, accessToken: string, userAgent: string) {
     super()
     this.url = url
     this.stream = stream
@@ -55,7 +45,6 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
     this.headers = {
       'User-Agent': userAgent
     }
-    this.proxyConfig = proxyConfig
     this._accessToken = accessToken
     this._reconnectInterval = 10000
     this._reconnectMaxAttempts = Infinity
@@ -80,7 +69,7 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
   private _startWebSocketConnection() {
     this._resetConnection()
     this._setupParser()
-    this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers, this.proxyConfig)
+    this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers)
     this._bindSocket(this._client)
   }
 
@@ -140,7 +129,7 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
         }
         // Call connect methods
         console.log('Reconnecting')
-        this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers, this.proxyConfig)
+        this._client = this._connect(this.url, this.stream, this.params, this._accessToken, this.headers)
         this._bindSocket(this._client)
       }
     }, this._reconnectInterval)
@@ -151,17 +140,9 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
    * @param stream The specified stream name.
    * @param accessToken Access token.
    * @param headers The specified headers.
-   * @param proxyConfig Proxy setting, or set false if don't use proxy.
    * @return A WebSocket instance.
    */
-  private _connect(
-    url: string,
-    stream: string,
-    params: string | null,
-    accessToken: string,
-    headers: { [key: string]: string },
-    proxyConfig: ProxyConfig | false
-  ): WS {
+  private _connect(url: string, stream: string, params: string | null, accessToken: string, headers: { [key: string]: string }): WS {
     const parameter: Array<string> = [`stream=${stream}`]
 
     if (params) {
@@ -178,13 +159,8 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
       const cli = new WS(requestURL)
       return cli
     } else {
-      let options: WS.ClientOptions = {
+      const options: WS.ClientOptions = {
         headers: headers
-      }
-      if (proxyConfig) {
-        options = Object.assign(options, {
-          agent: proxyAgent(proxyConfig)
-        })
       }
 
       const cli: WS = new WS(requestURL, options)

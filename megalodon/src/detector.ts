@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import proxyAgent, { ProxyConfig } from './proxy_config'
 import { NodeinfoError } from './megalodon'
 
 const NODEINFO_10 = 'http://nodeinfo.diaspora.software/ns/schema/1.0'
@@ -48,17 +47,9 @@ type Metadata = {
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return SNS name.
  */
-export const detector = async (
-  url: string,
-  proxyConfig: ProxyConfig | false = false
-): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish'> => {
-  let options: AxiosRequestConfig = {
+export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish'> => {
+  const options: AxiosRequestConfig = {
     timeout: 20000
-  }
-  if (proxyConfig) {
-    options = Object.assign(options, {
-      httpsAgent: proxyAgent(proxyConfig)
-    })
   }
 
   const res = await axios.get<Links>(url + '/.well-known/nodeinfo', options)

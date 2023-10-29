@@ -5,7 +5,6 @@ import MegalodonEntity from '../entity'
 import PleromaEntity from './entity'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
-import proxyAgent, { ProxyConfig } from '../proxy_config'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
 import WebSocket from './web_socket'
 import NotificationType, { UnknownNotificationTypeError } from '../notification'
@@ -427,24 +426,16 @@ namespace PleromaAPI {
     private baseUrl: string
     private userAgent: string
     private abortController: AbortController
-    private proxyConfig: ProxyConfig | false = false
 
     /**
      * @param baseUrl hostname or base URL
      * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
-     * @param proxyConfig Proxy setting, or set false if don't use proxy.
      */
-    constructor(
-      baseUrl: string,
-      accessToken: string | null = null,
-      userAgent: string = DEFAULT_UA,
-      proxyConfig: ProxyConfig | false = false
-    ) {
+    constructor(baseUrl: string, accessToken: string | null = null, userAgent: string = DEFAULT_UA) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
-      this.proxyConfig = proxyConfig
       this.abortController = new AbortController()
       axios.defaults.signal = this.abortController.signal
     }
@@ -465,12 +456,6 @@ namespace PleromaAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -512,12 +497,6 @@ namespace PleromaAPI {
           }
         })
       }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
-      }
       return axios
         .put<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
@@ -555,12 +534,6 @@ namespace PleromaAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -602,12 +575,6 @@ namespace PleromaAPI {
           }
         })
       }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
-      }
       return axios
         .patch<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
@@ -645,12 +612,6 @@ namespace PleromaAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -692,12 +653,6 @@ namespace PleromaAPI {
           }
         })
       }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
-        })
-      }
       return axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
@@ -726,12 +681,6 @@ namespace PleromaAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios.postForm<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
@@ -763,12 +712,6 @@ namespace PleromaAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`
           }
-        })
-      }
-      if (this.proxyConfig) {
-        options = Object.assign(options, {
-          httpAgent: proxyAgent(this.proxyConfig),
-          httpsAgent: proxyAgent(this.proxyConfig)
         })
       }
       return axios
@@ -811,7 +754,7 @@ namespace PleromaAPI {
         throw new Error('accessToken is required')
       }
       const url = this.baseUrl + path
-      const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent, this.proxyConfig)
+      const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent)
 
       streaming.start()
 

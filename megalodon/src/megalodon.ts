@@ -1,7 +1,6 @@
 import Response from './response'
 import OAuth from './oauth'
 import Pleroma from './pleroma'
-import { ProxyConfig } from './proxy_config'
 import Mastodon from './mastodon'
 import Entity from './entity'
 import Friendica from './friendica'
@@ -1422,31 +1421,29 @@ export class NodeinfoError extends Error {
  * @param baseUrl hostname or base URL.
  * @param accessToken access token from OAuth2 authorization
  * @param userAgent UserAgent is specified in header on request.
- * @param proxyConfig Proxy setting, or set false if don't use proxy.
  * @return Client instance for each SNS you specified.
  */
 const generator = (
   sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish',
   baseUrl: string,
   accessToken: string | null = null,
-  userAgent: string | null = null,
-  proxyConfig: ProxyConfig | false = false
+  userAgent: string | null = null
 ): MegalodonInterface => {
   switch (sns) {
     case 'pleroma': {
-      const pleroma = new Pleroma(baseUrl, accessToken, userAgent, proxyConfig)
+      const pleroma = new Pleroma(baseUrl, accessToken, userAgent)
       return pleroma
     }
     case 'friendica': {
-      const friendica = new Friendica(baseUrl, accessToken, userAgent, proxyConfig)
+      const friendica = new Friendica(baseUrl, accessToken, userAgent)
       return friendica
     }
     case 'mastodon': {
-      const mastodon = new Mastodon(baseUrl, accessToken, userAgent, proxyConfig)
+      const mastodon = new Mastodon(baseUrl, accessToken, userAgent)
       return mastodon
     }
     case 'firefish': {
-      const firefish = new Firefish(baseUrl, accessToken, userAgent, proxyConfig)
+      const firefish = new Firefish(baseUrl, accessToken, userAgent)
       return firefish
     }
   }
