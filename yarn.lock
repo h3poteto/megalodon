@@ -4109,10 +4109,10 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-typedoc@^0.25.1:
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.25.1.tgz#50de2d8fb93623fbfb59e2fa6407ff40e3d3f438"
-  integrity sha512-c2ye3YUtGIadxN2O6YwPEXgrZcvhlZ6HlhWZ8jQRNzwLPn2ylhdGqdR8HbyDRyALP8J6lmSANILCkkIdNPFxqA==
+typedoc@^0.25.3:
+  version "0.25.3"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.25.3.tgz#53c6d668e1001b3d488e9a750fcdfb05433554c0"
+  integrity sha512-Ow8Bo7uY1Lwy7GTmphRIMEo6IOZ+yYUyrc8n5KXIZg1svpqhZSWgni2ZrDhe+wLosFS8yswowUzljTAV/3jmWw==
   dependencies:
     lunr "^2.3.9"
     marked "^4.3.0"

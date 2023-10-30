@@ -85,7 +85,7 @@
     "lodash": "^4.17.14",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
-    "typedoc": "^0.25.1",
+    "typedoc": "^0.25.3",
     "typescript": "5.2.2"
   }
 }
