@@ -60,7 +60,7 @@
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
     "@badgateway/oauth2-client": "^2.2.4",
-    "@types/ws": "^8.5.5",
+    "@types/ws": "^8.5.9",
     "axios": "1.5.1",
     "dayjs": "^1.11.10",
     "form-data": "^4.0.0",
