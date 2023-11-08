@@ -1160,10 +1160,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.2.tgz#d76fb80d87d0d8abfe334fc6d292e83e5524efc4"
   integrity sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==
 
-"@types/object-assign-deep@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.1.tgz#6bb3c9f81ab6ee8af09276fded7b231b85ea406f"
-  integrity sha512-uWJatOM1JKDdF6Fwa16124b76BtxvTz5Lv+ORGuI7dwqU4iqExXpeHrHOi1c8BU4FgSJ6PdH0skR9Zmz8+MUqQ==
+"@types/object-assign-deep@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@types/object-assign-deep/-/object-assign-deep-0.4.3.tgz#bcea4f7b23283ba7f9867780aa9a7822122fe295"
+  integrity sha512-d9Gxaj5j1hzrxJ61EFEg13B4g4FgrT/DYtcDWFXPehR8DF2SUZbVMFtZIs8exkVRiqrqBpdTc/lUUZjncsPpMw==
 
 "@types/semver@^7.5.0":
   version "7.5.0"
@@ -2178,7 +2178,7 @@ eventemitter3@^4.0.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-events@^3.2.0:
+events@^3.2.0, events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
