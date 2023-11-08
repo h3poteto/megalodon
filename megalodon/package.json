@@ -73,7 +73,7 @@
   "devDependencies": {
     "@types/core-js": "^2.5.6",
     "@types/form-data": "^2.5.0",
-    "@types/jest": "^29.5.5",
+    "@types/jest": "^29.5.8",
     "@types/object-assign-deep": "^0.4.1",
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
