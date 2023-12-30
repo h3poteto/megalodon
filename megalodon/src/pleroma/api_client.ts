@@ -356,6 +356,7 @@ namespace PleromaAPI {
       content: s.content,
       plain_content: s.pleroma.content?.['text/plain'] ? s.pleroma.content['text/plain'] : null,
       created_at: s.created_at,
+      edited_at: s.edited_at,
       emojis: Array.isArray(s.emojis) ? s.emojis.map(e => emoji(e)) : [],
       replies_count: s.replies_count,
       reblogs_count: s.reblogs_count,
