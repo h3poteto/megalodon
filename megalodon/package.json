@@ -51,9 +51,12 @@
     ],
     "preset": "ts-jest/presets/default",
     "transform": {
-      "^.+\\.(ts|tsx)$": ["ts-jest", {
-        "tsconfig": "tsconfig.json"
-      }]
+      "^.+\\.(ts|tsx)$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.json"
+        }
+      ]
     },
     "testEnvironment": "node"
   },
@@ -63,12 +66,12 @@
     "@types/ws": "^8.5.10",
     "axios": "1.6.3",
     "dayjs": "^1.11.10",
+    "events": "^3.3.0",
     "form-data": "^4.0.0",
+    "isomorphic-ws": "^5.0.0",
     "object-assign-deep": "^0.4.0",
     "uuid": "^9.0.1",
-    "ws": "8.14.2",
-    "isomorphic-ws": "^5.0.0",
-    "events": "^3.3.0"
+    "ws": "8.14.2"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.8",

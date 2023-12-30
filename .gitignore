@@ -5,3 +5,5 @@ example/webpack/dist
 example/vite/dist
 docs/
 .env
+.yarn/*
+!.yarn/releases
