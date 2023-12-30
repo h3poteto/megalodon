@@ -1122,10 +1122,10 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/core-js@^2.5.6":
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-2.5.6.tgz#b06885ab91decdc4045215dbc4edbf02f061900d"
-  integrity sha512-zLzoC7avO4EYUUYCSzDaahSP1QJEpZQcPxqs91mPeFdh2NS4hQBcnRoEc9RuXfJ8cdN/KXUWukMmZGcKaWeOvw==
+"@types/core-js@^2.5.8":
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-2.5.8.tgz#d5c6ec44f2f3328653dce385ae586bd8261f8e85"
+  integrity sha512-VgnAj6tIAhJhZdJ8/IpxdatM8G4OD3VWGlp6xIxUGENZlpbob9Ty4VVdC1FIEp0aK6DBscDDjyzy5FB60TuNqg==
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.3"
@@ -2222,7 +2222,7 @@ eventemitter3@^4.0.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-events@^3.2.0:
+events@^3.2.0, events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
