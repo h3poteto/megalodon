@@ -49,6 +49,7 @@ const status: Entity.Status = {
   content: 'hoge',
   plain_content: null,
   created_at: '2019-03-26T21:40:32',
+  edited_at: null,
   emojis: [],
   replies_count: 0,
   reblogs_count: 0,

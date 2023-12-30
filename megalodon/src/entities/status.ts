@@ -18,6 +18,7 @@ export type Status = {
   content: string
   plain_content: string | null
   created_at: string
+  edited_at: string | null
   emojis: Emoji[]
   replies_count: number
   reblogs_count: number

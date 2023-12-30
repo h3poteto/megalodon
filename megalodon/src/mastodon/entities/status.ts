@@ -16,6 +16,7 @@ export type Status = {
   reblog: Status | null
   content: string
   created_at: string
+  edited_at: string | null
   emojis: Emoji[]
   replies_count: number
   reblogs_count: number
