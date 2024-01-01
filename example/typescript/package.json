@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "megalodon": "*",
-    "typescript": "5.2.2"
+    "typescript": "5.3.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
