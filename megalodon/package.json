@@ -12,7 +12,7 @@
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
   },
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=15.14.0"
   },
   "files": [
     "/lib/src/**",
