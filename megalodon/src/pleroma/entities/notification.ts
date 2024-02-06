@@ -7,6 +7,7 @@ export type Notification = {
   id: string
   status?: Status
   emoji?: string
+  emoji_url?: string
   type: NotificationType
   target?: Account
 }

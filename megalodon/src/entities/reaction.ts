@@ -7,4 +7,5 @@ export type Reaction = {
   url?: string
   static_url?: string
   accounts?: Array<Account>
+  account_ids?: Array<string>
 }

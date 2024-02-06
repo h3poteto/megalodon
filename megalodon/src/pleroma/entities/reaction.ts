@@ -5,4 +5,6 @@ export type Reaction = {
   me: boolean
   name: string
   accounts?: Array<Account>
+  account_ids?: Array<string>
+  url?: string
 }
