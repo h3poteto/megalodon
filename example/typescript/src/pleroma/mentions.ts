@@ -18,7 +18,7 @@ const excludes: Array<string> = [
   NotificationType.Reblog,
   NotificationType.PollVote,
   NotificationType.PollExpired,
-  NotificationType.EmojiReaction
+  NotificationType.Reaction
 ]
 
 client.getNotifications({ min_id: '9318', limit: 30, exclude_types: excludes }).then(res => console.log(res.data))

@@ -67,7 +67,7 @@ namespace PleromaAPI {
         case PleromaNotificationType.Poll:
           return NotificationType.PollExpired
         case PleromaNotificationType.PleromaEmojiReaction:
-          return NotificationType.EmojiReaction
+          return NotificationType.Reaction
         case PleromaNotificationType.FollowRequest:
           return NotificationType.FollowRequest
         case PleromaNotificationType.Update:
@@ -92,7 +92,7 @@ namespace PleromaAPI {
           return PleromaNotificationType.Mention
         case NotificationType.PollExpired:
           return PleromaNotificationType.Poll
-        case NotificationType.EmojiReaction:
+        case NotificationType.Reaction:
           return PleromaNotificationType.PleromaEmojiReaction
         case NotificationType.FollowRequest:
           return PleromaNotificationType.FollowRequest
@@ -257,12 +257,13 @@ namespace PleromaAPI {
       const notificationType = decodeNotificationType(n.type)
       if (notificationType instanceof UnknownNotificationTypeError) return notificationType
       if (n.status && n.emoji) {
+        const r = mapReaction(n)
         return {
           id: n.id,
           account: account(n.account),
           created_at: n.created_at,
           status: status(n.status),
-          emoji: n.emoji,
+          reaction: r ? reaction(r) : undefined,
           type: notificationType
         }
       } else if (n.status) {
@@ -290,19 +291,47 @@ namespace PleromaAPI {
         }
       }
     }
+
+    export const mapReaction = (n: Entity.Notification): Entity.Reaction | undefined => {
+      if (!n.emoji) return undefined
+      const name = n.emoji.replace(/:/g, '')
+      let r = {
+        count: 1,
+        me: false,
+        name: name
+      }
+      if (n.emoji_url) {
+        r = Object.assign({}, r, {
+          url: n.emoji_url
+        })
+      }
+      return r
+    }
+
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p
     export const pollOption = (p: Entity.PollOption): MegalodonEntity.PollOption => p
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
     export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
     export const reaction = (r: Entity.Reaction): MegalodonEntity.Reaction => {
-      const p = {
+      let p = {
         count: r.count,
         me: r.me,
         name: r.name
       }
+      if (r.url) {
+        p = Object.assign({}, p, {
+          url: r.url,
+          static_url: r.url
+        })
+      }
       if (r.accounts) {
-        return Object.assign({}, p, {
+        p = Object.assign({}, p, {
           accounts: r.accounts.map(a => account(a))
+        })
+      }
+      if (r.account_ids) {
+        p = Object.assign({}, p, {
+          accounts: r.account_ids
         })
       }
       return p
