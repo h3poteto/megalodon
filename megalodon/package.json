@@ -64,7 +64,7 @@
   "dependencies": {
     "@badgateway/oauth2-client": "^2.2.4",
     "@types/ws": "^8.5.10",
-    "axios": "1.6.3",
+    "axios": "1.6.7",
     "dayjs": "^1.11.10",
     "events": "^3.3.0",
     "form-data": "^4.0.0",
