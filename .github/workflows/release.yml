@@ -1,6 +1,9 @@
 name: Release
 
 on:
+  push:
+    branches:
+      - fix/release
   release:
     types: [published]
 
@@ -34,5 +37,4 @@ jobs:
     - name: Publish
       run: |
         yarn workspace megalodon npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
