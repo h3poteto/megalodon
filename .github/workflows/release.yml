@@ -1,9 +1,6 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - fix/release
   release:
     types: [published]
 
