@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js 20.x
-      uses: actions/setup-node@v3 # Refs: https://github.com/actions/setup-node/issues/942
+      uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         registry-url: 'https://registry.npmjs.org'
@@ -25,6 +25,12 @@ jobs:
     - name: Build
       run: |
         yarn workspace megalodon run build
+    # refs: https://github.com/actions/setup-node/issues/942#issuecomment-1920476219
+    - name: Authentication
+      run: |
+        echo npmAuthToken: "$NODE_AUTH_TOKEN" >> ./.yarnrc.yml
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish
       run: |
         yarn workspace megalodon npm publish
