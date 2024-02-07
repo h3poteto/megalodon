@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3 # Refs: https://github.com/actions/setup-node/issues/942
       with:
         node-version: '20.x'
         registry-url: 'https://registry.npmjs.org'
