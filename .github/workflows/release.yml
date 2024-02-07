@@ -27,6 +27,6 @@ jobs:
         yarn workspace megalodon run build
     - name: Publish
       run: |
-        yarn workspace megalodon publish
+        yarn workspace megalodon npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
