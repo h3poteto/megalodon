@@ -1338,8 +1338,8 @@ export interface MegalodonInterface {
   /**
    * React to a post with a unicode emoji.
    *
-   * @param id Target status ID.
-   * @param emoji A unicode emoj.
+   * @param {string} id Target status ID.
+   * @param {string} emoji Reaction emoji string. This string is raw unicode emoji or custom emoji name (not shortcode).
    * @return Status.
    **/
   createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>>

@@ -2300,7 +2300,7 @@ export default class Firefish implements MegalodonInterface {
    * POST /api/notes/reactions/create
    *
    * @param {string} id Target note ID.
-   * @param {string} emoji Reaction emoji string. This string is raw unicode emoji.
+   * @param {string} emoji Reaction emoji string. This string is raw unicode emoji or custom emoji name (not shortcode).
    */
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     await this.client.post<Record<never, never>>('/api/notes/reactions/create', {
@@ -2316,6 +2316,9 @@ export default class Firefish implements MegalodonInterface {
 
   /**
    * POST /api/notes/reactions/delete
+   *
+   * @param {string} id Target note ID.
+   * @param {string} emoji Reaction emoji string. This string is raw unicode emoji or custom emoji name (not shortcode).
    */
   public async deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
     await this.client.post<Record<never, never>>('/api/notes/reactions/delete', {
