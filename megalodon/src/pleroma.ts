@@ -3139,7 +3139,9 @@ export default class Pleroma implements MegalodonInterface {
    * @param {string} emoji Reaction emoji string. This string is raw unicode emoji or custom emoji name (not shortcode).
    */
   public async createEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
-    return this.client.put<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/:${encodeURI(emoji)}:`).then(res => {
+    // We can pass both name and shortcode to Pleroma.
+    // Furthermore, it accepts external server's emoji reactions, like `0010@lain.com`.
+    return this.client.put<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/${encodeURI(emoji)}`).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.status(res.data)
       })
@@ -3153,7 +3155,7 @@ export default class Pleroma implements MegalodonInterface {
    * @param {string} emoji Reaction emoji string. This string is raw unicode emoji or custom emoji name (not shortcode).
    */
   public async deleteEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Status>> {
-    return this.client.del<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/:${encodeURI(emoji)}:`).then(res => {
+    return this.client.del<PleromaAPI.Entity.Status>(`/api/v1/pleroma/statuses/${id}/reactions/${encodeURI(emoji)}`).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.status(res.data)
       })
@@ -3180,7 +3182,7 @@ export default class Pleroma implements MegalodonInterface {
    * @param {string} emoji Reaction emoji string. This string is raw unicode emoji or custom emoji name (not shortcode).
    */
   public async getEmojiReaction(id: string, emoji: string): Promise<Response<Entity.Reaction>> {
-    return this.client.get<PleromaAPI.Entity.Reaction>(`/api/v1/pleroma/statuses/${id}/reactions/:${encodeURI(emoji)}:`).then(res => {
+    return this.client.get<PleromaAPI.Entity.Reaction>(`/api/v1/pleroma/statuses/${id}/reactions/${encodeURI(emoji)}`).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.reaction(res.data)
       })
