@@ -34,18 +34,10 @@ describe('detector', () => {
   })
 
   describe('akkoma', () => {
-    const url = 'https://pleroma.noellabo.jp'
+    const url = 'https://blob.cat'
     it('should be akkoma', async () => {
       const akkoma = await detector(url)
       expect(akkoma).toEqual('pleroma')
-    })
-  })
-
-  describe('wildebeest', () => {
-    const url = 'https://wildebeest.mirror-kt.dev'
-    it('should be mastodon', async () => {
-      const wildebeest = await detector(url)
-      expect(wildebeest).toEqual('mastodon')
     })
   })
 

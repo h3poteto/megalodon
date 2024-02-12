@@ -65,8 +65,6 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
-        case 'wildebeest':
-          return 'mastodon'
         case 'friendica':
           return 'friendica'
         case 'firefish':
@@ -89,8 +87,6 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
           return 'pleroma'
         case 'mastodon':
           return 'mastodon'
-        case 'wildebeest':
-          return 'mastodon'
         case 'friendica':
           return 'friendica'
         case 'firefish':
@@ -112,8 +108,6 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
         case 'akkoma':
           return 'pleroma'
         case 'mastodon':
-          return 'mastodon'
-        case 'wildebeest':
           return 'mastodon'
         case 'friendica':
           return 'friendica'
