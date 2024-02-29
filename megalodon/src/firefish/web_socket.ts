@@ -282,7 +282,7 @@ export default class WebSocket extends EventEmitter implements WebSocketInterfac
       this.parser.parse(event, this._channelID)
     }
     client.onerror = event => {
-      this.emit('error', event.target)
+      this.emit('error', event.error)
     }
     if (!isBrowser()) {
       client.on('pong', () => {
