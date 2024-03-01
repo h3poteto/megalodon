@@ -152,7 +152,7 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
     if (accessToken !== null) {
       parameter.push(`access_token=${accessToken}`)
     }
-    const requestURL: string = `${url}/?${parameter.join('&')}`
+    const requestURL: string = `${url}?${parameter.join('&')}`
     if (isBrowser()) {
       // This is browser.
       // We can't pass options when browser: https://github.com/heineiuo/isomorphic-ws#limitations
