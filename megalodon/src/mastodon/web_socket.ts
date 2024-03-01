@@ -211,7 +211,7 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
       this.parser.parse(event)
     }
     client.onerror = event => {
-      this.emit('error', event.target)
+      this.emit('error', event.error)
     }
 
     if (!isBrowser()) {
