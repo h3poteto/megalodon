@@ -1,7 +1,8 @@
 import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
-import { parseLinkHeader } from './parse_link_header'
+import dayjs from 'dayjs'
 
+import { parseLinkHeader } from './parse_link_header'
 import MastodonAPI from './mastodon/api_client'
 import Streaming from './mastodon/web_socket'
 import { MegalodonInterface, NotImplementedError } from './megalodon'
@@ -1525,6 +1526,7 @@ export default class Mastodon implements MegalodonInterface {
     let params = {
       status: status
     }
+    let scheduled = false
     if (options) {
       if (options.media_ids) {
         params = Object.assign(params, {
@@ -1570,7 +1572,8 @@ export default class Mastodon implements MegalodonInterface {
           visibility: options.visibility
         })
       }
-      if (options.scheduled_at) {
+      if (options.scheduled_at && dayjs(options.scheduled_at).diff(dayjs(), 'seconds') > 300) {
+        scheduled = true
         params = Object.assign(params, {
           scheduled_at: options.scheduled_at
         })
@@ -1586,7 +1589,7 @@ export default class Mastodon implements MegalodonInterface {
         })
       }
     }
-    if (options && options.scheduled_at) {
+    if (scheduled) {
       return this.client.post<MastodonAPI.Entity.ScheduledStatus>('/api/v1/statuses', params).then(res => {
         return Object.assign(res, {
           data: MastodonAPI.Converter.scheduled_status(res.data)
