@@ -2350,27 +2350,40 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  public userSocket(): WebSocketInterface {
-    return this.client.socket('user')
+  public async streamingURL(): Promise<string> {
+    const instance = await this.getInstance()
+    if (instance.data.urls) {
+      return instance.data.urls.streaming_api
+    }
+    return this.baseUrl
   }
 
-  public publicSocket(): WebSocketInterface {
-    return this.client.socket('globalTimeline')
+  public async userStreaming(): Promise<WebSocketInterface> {
+    const url = await this.streamingURL()
+    return this.client.socket(url, 'user')
   }
 
-  public localSocket(): WebSocketInterface {
-    return this.client.socket('localTimeline')
+  public async publicStreaming(): Promise<WebSocketInterface> {
+    const url = await this.streamingURL()
+    return this.client.socket(url, 'globalTimeline')
   }
 
-  public tagSocket(_tag: string): WebSocketInterface {
+  public async localStreaming(): Promise<WebSocketInterface> {
+    const url = await this.streamingURL()
+    return this.client.socket(url, 'localTimeline')
+  }
+
+  public async tagStreaming(_tag: string): Promise<WebSocketInterface> {
     throw new NotImplementedError('TODO: implement')
   }
 
-  public listSocket(list_id: string): WebSocketInterface {
-    return this.client.socket('list', list_id)
+  public async listStreaming(list_id: string): Promise<WebSocketInterface> {
+    const url = await this.streamingURL()
+    return this.client.socket(url, 'list', list_id)
   }
 
-  public directSocket(): WebSocketInterface {
-    return this.client.socket('conversation')
+  public async directStreaming(): Promise<WebSocketInterface> {
+    const url = await this.streamingURL()
+    return this.client.socket(url, 'conversation')
   }
 }

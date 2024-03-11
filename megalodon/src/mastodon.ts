@@ -3144,27 +3144,41 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   // WebSocket
   // ======================================
-  public userSocket(): Streaming {
-    return this.client.socket('/api/v1/streaming', 'user')
+  public async streamingURL(): Promise<string> {
+    const instance = await this.getInstance()
+    if (instance.data.urls) {
+      return instance.data.urls.streaming_api
+    }
+    return this.baseUrl
   }
 
-  public publicSocket(): Streaming {
-    return this.client.socket('/api/v1/streaming', 'public')
+  public async userStreaming(): Promise<Streaming> {
+    const url = await this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'user')
   }
 
-  public localSocket(): Streaming {
-    return this.client.socket('/api/v1/streaming', 'public:local')
+  public async publicStreaming(): Promise<Streaming> {
+    const url = await this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'public')
   }
 
-  public tagSocket(tag: string): Streaming {
-    return this.client.socket('/api/v1/streaming', 'hashtag', `tag=${tag}`)
+  public async localStreaming(): Promise<Streaming> {
+    const url = await this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'public:local')
   }
 
-  public listSocket(list_id: string): Streaming {
-    return this.client.socket('/api/v1/streaming', 'list', `list=${list_id}`)
+  public async tagStreaming(tag: string): Promise<Streaming> {
+    const url = await this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'hashtag', `tag=${tag}`)
   }
 
-  public directSocket(): Streaming {
-    return this.client.socket('/api/v1/streaming', 'direct')
+  public async listStreaming(list_id: string): Promise<Streaming> {
+    const url = await this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'list', `list=${list_id}`)
+  }
+
+  public async directStreaming(): Promise<Streaming> {
+    const url = await this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'direct')
   }
 }
