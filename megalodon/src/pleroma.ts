@@ -3201,32 +3201,32 @@ export default class Pleroma implements MegalodonInterface {
   }
 
   public async userStreaming(): Promise<WebSocket> {
-    const url = this.streamingURL()
+    const url = await this.streamingURL()
     return this.client.socket(`${url}/api/v1/streaming`, 'user')
   }
 
   public async publicStreaming(): Promise<WebSocket> {
-    const url = this.streamingURL()
+    const url = await this.streamingURL()
     return this.client.socket(`${url}/api/v1/streaming`, 'public')
   }
 
   public async localStreaming(): Promise<WebSocket> {
-    const url = this.streamingURL()
+    const url = await this.streamingURL()
     return this.client.socket(`${url}/api/v1/streaming`, 'public:local')
   }
 
   public async tagStreaming(tag: string): Promise<WebSocket> {
-    const url = this.streamingURL()
+    const url = await this.streamingURL()
     return this.client.socket(`${url}/api/v1/streaming`, 'hashtag', `tag=${tag}`)
   }
 
   public async listStreaming(list_id: string): Promise<WebSocket> {
-    const url = this.streamingURL()
+    const url = await this.streamingURL()
     return this.client.socket(`${url}/api/v1/streaming`, 'list', `list=${list_id}`)
   }
 
   public async directStreaming(): Promise<WebSocket> {
-    const url = this.streamingURL()
+    const url = await this.streamingURL()
     return this.client.socket(`${url}/api/v1/streaming`, 'direct')
   }
 }

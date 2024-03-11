@@ -7,49 +7,50 @@ console.log('start')
 
 const client = generator('mastodon', BASE_URL, ACCESS_TOKEN)
 
-const stream = client.publicSocket()
-stream.on('connect', () => {
-  console.log('connect')
-})
+client.publicStreaming().then(stream => {
+  stream.on('connect', () => {
+    console.log('connect')
+  })
 
-stream.on('pong', () => {
-  console.log('pong')
-})
+  stream.on('pong', () => {
+    console.log('pong')
+  })
 
-stream.on('update', (status: Entity.Status) => {
-  console.log(status)
-})
+  stream.on('update', (status: Entity.Status) => {
+    console.log(status)
+  })
 
-stream.on('notification', (notification: Entity.Notification) => {
-  console.log(notification)
-})
+  stream.on('notification', (notification: Entity.Notification) => {
+    console.log(notification)
+  })
 
-stream.on('delete', (id: number) => {
-  console.log(id)
-})
+  stream.on('delete', (id: number) => {
+    console.log(id)
+  })
 
-stream.on('error', (err: Error) => {
-  console.error(err)
-})
+  stream.on('error', (err: Error) => {
+    console.error(err)
+  })
 
-stream.on('status_update', (status: Entity.Status) => {
-  console.log('updated: ', status.url)
-})
+  stream.on('status_update', (status: Entity.Status) => {
+    console.log('updated: ', status.url)
+  })
 
-stream.on('heartbeat', () => {
-  console.log('thump.')
-})
+  stream.on('heartbeat', () => {
+    console.log('thump.')
+  })
 
-stream.on('close', () => {
-  console.log('close')
-})
+  stream.on('close', () => {
+    console.log('close')
+  })
 
-stream.on('parser-error', (err: Error) => {
-  console.error(err)
+  stream.on('parser-error', (err: Error) => {
+    console.error(err)
+  })
+  //
+  // setTimeout(() => {
+  //   stream.removeAllListeners()
+  //   stream.stop()
+  //   console.log('closed')
+  // }, 10000)
 })
-//
-// setTimeout(() => {
-//   stream.removeAllListeners()
-//   stream.stop()
-//   console.log('closed')
-// }, 10000)
