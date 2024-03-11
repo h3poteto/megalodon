@@ -610,7 +610,11 @@ namespace FirefishAPI {
     get<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     post<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
-    socket(channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list', listId?: string): WebSocket
+    socket(
+      url: string,
+      channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
+      listId?: string
+    ): WebSocket
   }
 
   /**
@@ -702,17 +706,18 @@ namespace FirefishAPI {
     /**
      * Get connection and receive websocket connection for Firefish API.
      *
+     * @param url Streaming url.
      * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
      * @param listId This parameter is required only list channel.
      */
     public socket(
+      url: string,
       channel: 'user' | 'localTimeline' | 'hybridTimeline' | 'globalTimeline' | 'conversation' | 'list',
       listId?: string
     ): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
-      const url = this.baseUrl + '/streaming'
       const streaming = new WebSocket(url, channel, this.accessToken, listId, this.userAgent)
 
       streaming.start()

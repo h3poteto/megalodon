@@ -439,7 +439,7 @@ namespace PleromaAPI {
     postForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
-    socket(path: string, stream: string, params?: string): WebSocket
+    socket(url: string, stream: string, params?: string): WebSocket
   }
 
   /**
@@ -775,15 +775,14 @@ namespace PleromaAPI {
     /**
      * Get connection and receive websocket connection for Pleroma API.
      *
-     * @param path relative path from baseUrl: normally it is `/streaming`.
+     * @param url Streaming url.
      * @param stream Stream name, please refer: https://git.pleroma.social/pleroma/pleroma/blob/develop/lib/pleroma/web/mastodon_api/mastodon_socket.ex#L19-28
      * @returns WebSocket, which inherits from EventEmitter
      */
-    public socket(path: string, stream: string, params?: string): WebSocket {
+    public socket(url: string, stream: string, params?: string): WebSocket {
       if (!this.accessToken) {
         throw new Error('accessToken is required')
       }
-      const url = this.baseUrl + path
       const streaming = new WebSocket(url, stream, params, this.accessToken, this.userAgent)
 
       streaming.start()

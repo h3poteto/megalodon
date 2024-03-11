@@ -1370,12 +1370,13 @@ export interface MegalodonInterface {
   // ======================================
   // WebSocket
   // ======================================
-  userSocket(): WebSocketInterface
-  publicSocket(): WebSocketInterface
-  localSocket(): WebSocketInterface
-  tagSocket(tag: string): WebSocketInterface
-  listSocket(list_id: string): WebSocketInterface
-  directSocket(): WebSocketInterface
+  streamingURL(): Promise<string>
+  userStreaming(): Promise<WebSocketInterface>
+  publicStreaming(): Promise<WebSocketInterface>
+  localStreaming(): Promise<WebSocketInterface>
+  tagStreaming(tag: string): Promise<WebSocketInterface>
+  listStreaming(list_id: string): Promise<WebSocketInterface>
+  directStreaming(): Promise<WebSocketInterface>
 }
 
 export class NotImplementedError extends Error {

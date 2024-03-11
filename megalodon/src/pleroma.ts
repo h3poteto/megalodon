@@ -3192,27 +3192,41 @@ export default class Pleroma implements MegalodonInterface {
   // ======================================
   // WebSocket
   // ======================================
-  public userSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'user')
+  public async streamingURL(): Promise<string> {
+    const instance = await this.getInstance()
+    if (instance.data.urls) {
+      return instance.data.urls.streaming_api
+    }
+    return this.baseUrl
   }
 
-  public publicSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'public')
+  public async userStreaming(): Promise<WebSocket> {
+    const url = this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'user')
   }
 
-  public localSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'public:local')
+  public async publicStreaming(): Promise<WebSocket> {
+    const url = this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'public')
   }
 
-  public tagSocket(tag: string): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'hashtag', `tag=${tag}`)
+  public async localStreaming(): Promise<WebSocket> {
+    const url = this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'public:local')
   }
 
-  public listSocket(list_id: string): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'list', `list=${list_id}`)
+  public async tagStreaming(tag: string): Promise<WebSocket> {
+    const url = this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'hashtag', `tag=${tag}`)
   }
 
-  public directSocket(): WebSocket {
-    return this.client.socket('/api/v1/streaming', 'direct')
+  public async listStreaming(list_id: string): Promise<WebSocket> {
+    const url = this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'list', `list=${list_id}`)
+  }
+
+  public async directStreaming(): Promise<WebSocket> {
+    const url = this.streamingURL()
+    return this.client.socket(`${url}/api/v1/streaming`, 'direct')
   }
 }
