@@ -102,44 +102,44 @@ client.uploadMedia(image)
 ### WebSocket streaming
 
 ```ts
-import generator, { Entity, WebSocketInterface } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 
-const BASE_URL: string = 'wss://pleroma.io'
+const BASE_URL: string = 'https://pleroma.io'
 const access_token: string = '...'
 
 const client = generator('pleroma', BASE_URL, access_token)
-const stream: WebSocketInterface = client.userSocket()
+client.userStreaming().then(stream => {
+  stream.on('connect', () => {
+    console.log('connect')
+  })
 
-stream.on('connect', () => {
-  console.log('connect')
-})
+  stream.on('update', (status: Entity.Status) => {
+    console.log(status)
+  })
 
-stream.on('update', (status: Entity.Status) => {
-  console.log(status)
-})
+  stream.on('notification', (notification: Entity.Notification) => {
+    console.log(notification)
+  })
 
-stream.on('notification', (notification: Entity.Notification) => {
-  console.log(notification)
-})
+  stream.on('delete', (id: number) => {
+    console.log(id)
+  })
 
-stream.on('delete', (id: number) => {
-  console.log(id)
-})
+  stream.on('error', (err: Error) => {
+    console.error(err)
+  })
 
-stream.on('error', (err: Error) => {
-  console.error(err)
-})
+  stream.on('heartbeat', () => {
+    console.log('thump.')
+  })
 
-stream.on('heartbeat', () => {
-  console.log('thump.')
-})
+  stream.on('close', () => {
+    console.log('close')
+  })
 
-stream.on('close', () => {
-  console.log('close')
-})
-
-stream.on('parser-error', (err: Error) => {
-  console.error(err)
+  stream.on('parser-error', (err: Error) => {
+    console.error(err)
+  })
 })
 ```
 
