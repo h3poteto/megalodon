@@ -71,7 +71,7 @@
     "isomorphic-ws": "^5.0.0",
     "object-assign-deep": "^0.4.0",
     "uuid": "^9.0.1",
-    "ws": "8.16.0"
+    "ws": "8.17.0"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.8",
