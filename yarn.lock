@@ -2702,7 +2702,7 @@ __metadata:
     "@types/node": ^20.12.7
     log4js: ^6.9.1
     megalodon: "*"
-    typescript: 5.3.3
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4312,7 +4312,7 @@ __metadata:
     prettier: ^3.2.5
     ts-jest: ^29.1.2
     typedoc: ^0.25.7
-    typescript: 5.3.3
+    typescript: 5.4.5
     uuid: ^9.0.1
     ws: 8.17.0
   languageName: unknown
@@ -5676,23 +5676,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.3.3, typescript@npm:^5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
+"typescript@npm:5.4.5, typescript@npm:^5.4.5":
+  version: 5.4.5
+  resolution: "typescript@npm:5.4.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 2007ccb6e51bbbf6fde0a78099efe04dc1c3dfbdff04ca3b6a8bc717991862b39fd6126c0c3ebf2d2d98ac5e960bcaa873826bb2bb241f14277034148f41f6a2
+  checksum: 53c879c6fa1e3bcb194b274d4501ba1985894b2c2692fa079db03c5a5a7140587a1e04e1ba03184605d35f439b40192d9e138eb3279ca8eee313c081c8bcd9b0
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.3.3#~builtin<compat/typescript>, typescript@patch:typescript@^5.3.3#~builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#~builtin<compat/typescript>::version=5.3.3&hash=e012d7"
+"typescript@patch:typescript@5.4.5#~builtin<compat/typescript>, typescript@patch:typescript@^5.4.5#~builtin<compat/typescript>":
+  version: 5.4.5
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=d69c25"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 4e604a9e107ce0c23b16a2f8d79d0531d4d8fe9ebbb7a8c395c66998c39892f0e0a071ef0b0d4e66420a8ec2b8d6cfd9cdb29ba24f25b37cba072e9282376df9
+  checksum: 2373c693f3b328f3b2387c3efafe6d257b057a142f9a79291854b14ff4d5367d3d730810aee981726b677ae0fd8329b23309da3b6aaab8263dbdccf1da07a3ba
   languageName: node
   linkType: hard
 
@@ -5832,7 +5832,7 @@ __metadata:
   resolution: "vite@workspace:example/vite"
   dependencies:
     megalodon: "*"
-    typescript: ^5.3.3
+    typescript: ^5.4.5
     vite: ^4.4.5
   languageName: unknown
   linkType: soft
@@ -5964,7 +5964,7 @@ __metadata:
     http-server: ^14.1.1
     megalodon: "*"
     ts-loader: ^9.5.1
-    typescript: 5.3.3
+    typescript: 5.4.5
     webpack: ^5.88.2
     webpack-cli: ^5.1.4
   languageName: unknown
