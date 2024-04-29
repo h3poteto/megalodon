@@ -4179,7 +4179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.14":
+"lodash@npm:^4.17.14, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -4307,7 +4307,7 @@ __metadata:
     isomorphic-ws: ^5.0.0
     jest: ^29.7.0
     jest-worker: ^29.7.0
-    lodash: ^4.17.14
+    lodash: ^4.17.21
     object-assign-deep: ^0.4.0
     prettier: ^3.2.5
     ts-jest: ^29.1.1
