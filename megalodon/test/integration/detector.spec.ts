@@ -57,6 +57,14 @@ describe('detector', () => {
     })
   })
 
+  describe('gotosocial', () => {
+    const url = 'https://scg.owu.one'
+    it('should be gotosocial', async () => {
+      const gotosocial = await detector(url)
+      expect(gotosocial).toEqual('gotosocial')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {

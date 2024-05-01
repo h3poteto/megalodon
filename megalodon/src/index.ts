@@ -6,6 +6,7 @@ import { detector } from './detector'
 import Mastodon from './mastodon'
 import Pleroma from './pleroma'
 import Firefish from './firefish'
+import Gotosocial from './gotosocial'
 import Entity from './entity'
 import NotificationType from './notification'
 import FilterContext from './filter_context'
@@ -23,6 +24,7 @@ export {
   Mastodon,
   Pleroma,
   Firefish,
+  Gotosocial,
   Entity
 }
 
