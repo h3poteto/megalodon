@@ -1,9 +1,8 @@
 import { Account } from './account'
 import { Application } from './application'
-import { Emoji } from './emoji'
 import { Attachment } from './attachment'
 import { Mention } from './mention'
-import { Reaction } from './reaction'
+import { Emoji } from './emoji'
 import { Card } from './card'
 import { Poll } from './poll'
 
@@ -16,10 +15,8 @@ export type Status = {
   in_reply_to_account_id: string | null
   reblog: Status | null
   content: string
-  plain_content: string | null
   created_at: string
-  edited_at: string | null
-  emojis: Emoji[]
+  emojis: Array<Emoji>
   replies_count: number
   reblogs_count: number
   favourites_count: number
@@ -37,9 +34,7 @@ export type Status = {
   application: Application | null
   language: string | null
   pinned: boolean | null
-  emoji_reactions: Array<Reaction>
-  quote: boolean
-  bookmarked: boolean
+  bookmarked?: boolean
 }
 
 export type StatusTag = {

@@ -50,10 +50,18 @@ describe('detector', () => {
   })
 
   describe('iceshrimp', () => {
-    const url = 'https://iceshrimp.social'
+    const url = 'https://snug.moe'
     it('should be firefish', async () => {
       const firefish = await detector(url)
       expect(firefish).toEqual('firefish')
+    })
+  })
+
+  describe('gotosocial', () => {
+    const url = 'https://scg.owu.one'
+    it('should be gotosocial', async () => {
+      const gotosocial = await detector(url)
+      expect(gotosocial).toEqual('gotosocial')
     })
   })
 
