@@ -391,6 +391,7 @@ namespace GotosocialAPI {
     export type Context = GotosocialEntity.Context
     export type Emoji = GotosocialEntity.Emoji
     export type Field = GotosocialEntity.Field
+    export type Filter = GotosocialEntity.Filter
     export type Instance = GotosocialEntity.Instance
     export type List = GotosocialEntity.List
     export type Marker = GotosocialEntity.Marker
@@ -408,6 +409,7 @@ namespace GotosocialAPI {
     export type Stats = GotosocialEntity.Stats
     export type Status = GotosocialEntity.Status
     export type StatusParams = GotosocialEntity.StatusParams
+    export type StatusSource = GotosocialEntity.StatusSource
     export type Tag = GotosocialEntity.Tag
     export type Token = GotosocialEntity.Token
     export type URLs = GotosocialEntity.URLs
@@ -660,6 +662,8 @@ namespace GotosocialAPI {
     })
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
     export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
+    export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
+    export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
   }
 }
 export default GotosocialAPI
