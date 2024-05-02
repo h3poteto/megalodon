@@ -617,6 +617,13 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
+  public async lookupAccount(_acct: string): Promise<Response<Entity.Account>> {
+    return new Promise((_, reject) => {
+      const err = new NotImplementedError('Firefish does not support this method')
+      reject(err)
+    })
+  }
+
   // ======================================
   // accounts/bookmarks
   // ======================================
