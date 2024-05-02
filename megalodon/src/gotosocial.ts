@@ -728,6 +728,20 @@ export default class Gotosocial implements MegalodonInterface {
     })
   }
 
+  /**
+   * GET /api/v1/accounts/lookup
+   *
+   * @param acct The username or Webfinger address to lookup.
+   * @return Account.
+   */
+  public async lookupAccount(acct: string): Promise<Response<Entity.Account>> {
+    return this.client.get<GotosocialAPI.Entity.Account>(`/api/v1/accounts/lookup?acct=${acct}`).then(res => {
+      return Object.assign(res, {
+        data: GotosocialAPI.Converter.account(res.data)
+      })
+    })
+  }
+
   // ======================================
   // accounts/bookmarks
   // ======================================

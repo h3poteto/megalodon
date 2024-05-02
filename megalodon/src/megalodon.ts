@@ -367,6 +367,14 @@ export interface MegalodonInterface {
       since_id?: string
     }
   ): Promise<Response<Array<Entity.Account>>>
+  /**
+   * Lookup account ID from Webfinger address.
+   *
+   * @param acct Webfinger address.
+   * @return Account
+   */
+  lookupAccount(acct: string): Promise<Response<Entity.Account>>
+
   // ======================================
   // accounts/bookmarks
   // ======================================

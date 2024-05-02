@@ -738,6 +738,13 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
+  public async lookupAccount(_acct: string): Promise<Response<Entity.Account>> {
+    return new Promise((_, reject) => {
+      const err = new NotImplementedError('Friendica does not support this method')
+      reject(err)
+    })
+  }
+
   // ======================================
   // accounts/bookmarks
   // ======================================

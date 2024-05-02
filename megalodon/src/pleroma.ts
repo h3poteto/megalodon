@@ -815,6 +815,20 @@ export default class Pleroma implements MegalodonInterface {
     })
   }
 
+  /**
+   * GET /api/v1/accounts/lookup
+   *
+   * @param acct The username or Webfinger address to lookup.
+   * @return Account.
+   */
+  public async lookupAccount(acct: string): Promise<Response<Entity.Account>> {
+    return this.client.get<PleromaAPI.Entity.Account>(`/api/v1/accounts/lookup?acct=${acct}`).then(res => {
+      return Object.assign(res, {
+        data: PleromaAPI.Converter.account(res.data)
+      })
+    })
+  }
+
   // ======================================
   // accounts/bookmarks
   // ======================================
