@@ -74,7 +74,7 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
         case 'gotosocial':
           return 'gotosocial'
         default:
-          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
+          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
           }
           throw new NodeinfoError('Unknown SNS')
@@ -98,7 +98,7 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
         case 'gotosocial':
           return 'gotosocial'
         default:
-          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
+          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
           }
           throw new NodeinfoError('Unknown SNS')
@@ -122,7 +122,7 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
         case 'gotosocial':
           return 'gotosocial'
         default:
-          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name === 'mastodon') {
+          if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
           }
           throw new NodeinfoError('Unknown SNS')

@@ -65,6 +65,14 @@ describe('detector', () => {
     })
   })
 
+  describe('kmy.blue', () => {
+    const url = 'https://kmy.blue'
+    it('should be mastodon', async () => {
+      const kmyblue = await detector(url)
+      expect(kmyblue).toEqual('mastodon')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {
