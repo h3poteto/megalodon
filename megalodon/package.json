@@ -78,7 +78,7 @@
     "@types/form-data": "^2.5.0",
     "@types/jest": "^29.5.12",
     "@types/object-assign-deep": "^0.4.3",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "eslint": "^9.5.0",
