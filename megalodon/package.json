@@ -65,7 +65,7 @@
     "@badgateway/oauth2-client": "^2.4.1",
     "@types/ws": "^8.5.10",
     "axios": "1.7.7",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.13",
     "events": "^3.3.0",
     "form-data": "^4.0.0",
     "isomorphic-ws": "^5.0.0",
