@@ -335,6 +335,14 @@ export interface MegalodonInterface {
    */
   unpinAccount(id: string): Promise<Response<Entity.Relationship>>
   /**
+   * Sets a private note on a user.
+   *
+   * @param id The account ID.
+   * @param note The comment to be set on that user.
+   * @return Relationship
+   */
+  setAccountNote(id: string, note?: string): Promise<Response<Entity.Relationship>>
+  /**
    * Find out whether a given account is followed, blocked, muted, etc.
    *
    * @param id The account ID.

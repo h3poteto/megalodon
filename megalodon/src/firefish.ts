@@ -552,6 +552,13 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
+  public async setAccountNote(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NotImplementedError('Firefish does not support this method')
+      reject(err)
+    })
+  }
+
   /**
    * POST /api/users/relation
    *

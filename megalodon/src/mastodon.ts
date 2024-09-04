@@ -728,6 +728,27 @@ export default class Mastodon implements MegalodonInterface {
   }
 
   /**
+   * POST /api/v1/accounts/:id/note
+   *
+   * @param id
+   * @param note
+   * @return Relationship
+   */
+  public async setAccountNote(id: string, note?: string): Promise<Response<Entity.Relationship>> {
+    let params = {}
+    if (note) {
+      params = Object.assign(params, {
+        comment: note
+      })
+    }
+    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`).then(res => {
+      return Object.assign(res, {
+        data: MastodonAPI.Converter.relationship(res.data)
+      })
+    })
+  }
+
+  /**
    * GET /api/v1/accounts/relationships
    *
    * @param id The account ID.
