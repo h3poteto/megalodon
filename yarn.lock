@@ -1231,12 +1231,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.12.7":
-  version: 20.12.7
-  resolution: "@types/node@npm:20.12.7"
+"@types/node@npm:^20.16.4":
+  version: 20.16.4
+  resolution: "@types/node@npm:20.16.4"
   dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10/b4a28a3b593a9bdca5650880b6a9acef46911d58cf7cfa57268f048e9a7157a7c3196421b96cea576850ddb732e3b54bc982c8eb5e1e5ef0635d4424c2fce801
+    undici-types: "npm:~6.19.2"
+  checksum: 10/3c6ecc81ee77b67938004a0ffc7459ad9df242218a3eea8249036950262ba32061cfac0d7b74781d50cd9399bfd9b903c3b250caa2f4e76f526c4b55b929b670
   languageName: node
   linkType: hard
 
@@ -2738,7 +2738,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example@workspace:example/typescript"
   dependencies:
-    "@types/node": "npm:^20.12.7"
+    "@types/node": "npm:^20.16.4"
     log4js: "npm:^6.9.1"
     megalodon: "npm:*"
     typescript: "npm:5.4.5"
@@ -5823,6 +5823,13 @@ __metadata:
   version: 5.26.5
   resolution: "undici-types@npm:5.26.5"
   checksum: 10/0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.19.2":
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: 10/cf0b48ed4fc99baf56584afa91aaffa5010c268b8842f62e02f752df209e3dea138b372a60a963b3b2576ed932f32329ce7ddb9cb5f27a6c83040d8cd74b7a70
   languageName: node
   linkType: hard
 
