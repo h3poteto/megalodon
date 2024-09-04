@@ -648,6 +648,13 @@ export default class Friendica implements MegalodonInterface {
     })
   }
 
+  public async setAccountNote(_id: string): Promise<Response<Entity.Relationship>> {
+    return new Promise((_, reject) => {
+      const err = new NotImplementedError('Friendica does not support this method')
+      reject(err)
+    })
+  }
+
   /**
    * GET /api/v1/accounts/relationships
    *
