@@ -9,6 +9,6 @@
   "packageManager": "yarn@4.4.1",
   "engines": {
     "npm": "use yarn instead",
-    "yarn": "3.8.5"
+    "yarn": "4.4.1"
   }
 }
