@@ -76,6 +76,10 @@ describe('api_client', () => {
           {
             src: MegalodonNotificationType.Move,
             dist: PleromaNotificationType.Move
+          },
+          {
+            src: MegalodonNotificationType.Status,
+            dist: PleromaNotificationType.Status
           }
         ]
         cases.forEach(c => {
@@ -121,6 +125,10 @@ describe('api_client', () => {
           {
             src: PleromaNotificationType.Move,
             dist: MegalodonNotificationType.Move
+          },
+          {
+            src: PleromaNotificationType.Status,
+            dist: MegalodonNotificationType.Status
           }
         ]
         cases.forEach(c => {
