@@ -169,6 +169,7 @@ export interface MegalodonInterface {
    * @param options.exclude_replies Return statuses which exclude replies.
    * @param options.exclude_reblogs Return statuses which exclude reblogs.
    * @param options.only_media Show only statuses with media attached? Defaults to false.
+   * @param options.only_public Return statuses with public visibility only.
    * @return Account's statuses.
    */
   getAccountStatuses(
@@ -182,6 +183,7 @@ export interface MegalodonInterface {
       exclude_replies?: boolean
       exclude_reblogs?: boolean
       only_media?: boolean
+      only_public?: boolean
     }
   ): Promise<Response<Array<Entity.Status>>>
   /**
