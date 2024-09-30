@@ -10,6 +10,7 @@ namespace PleromaNotificationType {
   export const FollowRequest: PleromaEntity.NotificationType = 'follow_request'
   export const Update: PleromaEntity.NotificationType = 'update'
   export const Move: PleromaEntity.NotificationType = 'move'
+  export const Status: PleromaEntity.NotificationType = 'status'
 }
 
 export default PleromaNotificationType

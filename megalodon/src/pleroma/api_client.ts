@@ -74,6 +74,8 @@ namespace PleromaAPI {
           return NotificationType.Update
         case PleromaNotificationType.Move:
           return NotificationType.Move
+        case PleromaNotificationType.Status:
+          return NotificationType.Status
         default:
           return new UnknownNotificationTypeError()
       }
@@ -100,6 +102,8 @@ namespace PleromaAPI {
           return PleromaNotificationType.Update
         case NotificationType.Move:
           return PleromaNotificationType.Move
+        case NotificationType.Status:
+          return PleromaNotificationType.Status
         default:
           return new UnknownNotificationTypeError()
       }
