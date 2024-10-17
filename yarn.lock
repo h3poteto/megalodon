@@ -1238,12 +1238,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.16.4":
-  version: 20.16.4
-  resolution: "@types/node@npm:20.16.4"
+"@types/node@npm:^20.16.12":
+  version: 20.16.12
+  resolution: "@types/node@npm:20.16.12"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10/3c6ecc81ee77b67938004a0ffc7459ad9df242218a3eea8249036950262ba32061cfac0d7b74781d50cd9399bfd9b903c3b250caa2f4e76f526c4b55b929b670
+  checksum: 10/689badb5af2a1a03553a6d21880fa4aabb8cf028b7db1a03be889c0026047a780ac37c83df5dca036f02f5dc3cc4000254fa40d2cadd5df0e9bd6f43dae6eac6
   languageName: node
   linkType: hard
 
@@ -2752,7 +2752,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example@workspace:example/typescript"
   dependencies:
-    "@types/node": "npm:^20.16.4"
+    "@types/node": "npm:^20.16.12"
     log4js: "npm:^6.9.1"
     megalodon: "npm:*"
     typescript: "npm:5.4.5"
