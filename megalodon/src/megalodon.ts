@@ -1183,9 +1183,8 @@ export interface MegalodonInterface {
    *
    * @param id A single notification ID to read
    * @param max_id Read all notifications up to this ID
-   * @return Array of notifications
    */
-  readNotifications(options: { id?: string; max_id?: string }): Promise<Response<Entity.Notification | Array<Entity.Notification>>>
+  readNotifications(options: { id?: string; max_id?: string }): Promise<Response<{}>>
   // ======================================
   // notifications/push
   // ======================================

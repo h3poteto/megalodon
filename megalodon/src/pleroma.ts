@@ -2781,29 +2781,17 @@ export default class Pleroma implements MegalodonInterface {
    * @param max_id Read all notifications up to this ID
    * @return Array of notifications
    */
-  public async readNotifications(options: {
-    id?: string
-    max_id?: string
-  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+  public async readNotifications(options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     if (options.id) {
-      const res = await this.client.post<PleromaAPI.Entity.Notification>('/api/v1/pleroma/notifications/read', {
+      const res = await this.client.post<{}>('/api/v1/pleroma/notifications/read', {
         id: options.id
       })
-      const notify = PleromaAPI.Converter.notification(res.data)
-      if (notify instanceof UnknownNotificationTypeError) return { ...res, data: [] }
-      return { ...res, data: notify }
+      return res
     } else if (options.max_id) {
-      const res = await this.client.post<Array<PleromaAPI.Entity.Notification>>('/api/v1/pleroma/notifications/read', {
+      const res = await this.client.post<{}>('/api/v1/pleroma/notifications/read', {
         max_id: options.max_id
       })
-      return {
-        ...res,
-        data: res.data.flatMap(n => {
-          const notify = PleromaAPI.Converter.notification(n)
-          if (notify instanceof UnknownNotificationTypeError) return []
-          return notify
-        })
-      }
+      return res
     } else {
       return new Promise((_, reject) => {
         const err = new ArgumentError('id or max_id is required')

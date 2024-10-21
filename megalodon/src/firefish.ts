@@ -1926,10 +1926,7 @@ export default class Firefish implements MegalodonInterface {
     })
   }
 
-  public async readNotifications(_options: {
-    id?: string
-    max_id?: string
-  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+  public async readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
       const err = new NotImplementedError('mastodon does not support')
       reject(err)
