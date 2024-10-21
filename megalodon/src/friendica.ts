@@ -2466,10 +2466,7 @@ export default class Friendica implements MegalodonInterface {
     return this.client.post<Record<string, unknown>>(`/api/v1/notifications/${id}/dismiss`)
   }
 
-  public readNotifications(_options: {
-    id?: string
-    max_id?: string
-  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+  public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
       const err = new NotImplementedError('Friendica does not support this method')
       reject(err)

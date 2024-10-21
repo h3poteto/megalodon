@@ -2431,10 +2431,7 @@ export default class Gotosocial implements MegalodonInterface {
     })
   }
 
-  public readNotifications(_options: {
-    id?: string
-    max_id?: string
-  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+  public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
       const err = new NotImplementedError('Gotosocial does not support this method')
       reject(err)

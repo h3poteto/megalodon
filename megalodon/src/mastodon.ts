@@ -2803,10 +2803,7 @@ export default class Mastodon implements MegalodonInterface {
     return this.client.post<{}>(`/api/v1/notifications/${id}/dismiss`)
   }
 
-  public readNotifications(_options: {
-    id?: string
-    max_id?: string
-  }): Promise<Response<Entity.Notification | Array<Entity.Notification>>> {
+  public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
       const err = new NotImplementedError('Mastodon does not support this method')
       reject(err)
