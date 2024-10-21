@@ -62,7 +62,7 @@
   },
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
-    "@badgateway/oauth2-client": "^2.4.1",
+    "@badgateway/oauth2-client": "^2.4.2",
     "@types/ws": "^8.5.12",
     "axios": "1.7.7",
     "dayjs": "^1.11.13",
