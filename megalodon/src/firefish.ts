@@ -1146,36 +1146,50 @@ export default class Firefish implements MegalodonInterface {
     id: string,
     options?: { limit?: number; max_id?: string; since_id?: string }
   ): Promise<Response<Entity.Context>> {
-    let params = {
+    let paramsDescendants = {
       noteId: id
     }
     if (options) {
       if (options.limit) {
-        params = Object.assign(params, {
+        paramsDescendants = Object.assign(paramsDescendants, {
           limit: options.limit
         })
       }
       if (options.max_id) {
-        params = Object.assign(params, {
+        paramsDescendants = Object.assign(paramsDescendants, {
           untilId: options.max_id
         })
       }
       if (options.since_id) {
-        params = Object.assign(params, {
+        paramsDescendants = Object.assign(paramsDescendants, {
           sinceId: options.since_id
         })
       }
     }
-    return this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/children', params).then(res => {
-      const context: Entity.Context = {
-        ancestors: [],
-        descendants: res.data.map(n => FirefishAPI.Converter.note(n))
+
+    let paramsAncestors = {
+      noteId: id
+    }
+    if (options) {
+      if (options.limit) {
+        paramsAncestors = Object.assign(paramsDescendants, {
+          limit: options.limit
+        })
       }
-      return {
-        ...res,
-        data: context
-      }
-    })
+    }
+    
+    let ancestorsPromise = this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/children', paramsAncestors);
+    let descendantsRes = await this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/conversation', paramsDescendants);
+      
+    const context: Entity.Context = {
+      ancestors: (await ancestorsPromise).data.map(n => FirefishAPI.Converter.note(n)).reverse(),
+      descendants: descendantsRes.data.map(n => FirefishAPI.Converter.note(n))
+    };
+
+    return {
+      ...descendantsRes,
+      data: context
+    }
   }
 
   public async getStatusSource(_id: string): Promise<Response<Entity.StatusSource>> {
