@@ -59,20 +59,24 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
     case NODEINFO_10: {
       const res = await axios.get<Nodeinfo10>(link.href, options)
       switch (res.data.software.name) {
-        case 'pleroma':
-          return 'pleroma'
         case 'akkoma':
           return 'pleroma'
-        case 'mastodon':
-          return 'mastodon'
-        case 'friendica':
-          return 'friendica'
         case 'firefish':
           return 'firefish'
-        case 'iceshrimp':
-          return 'firefish'
+        case 'friendica':
+          return 'friendica'
         case 'gotosocial':
           return 'gotosocial'
+        case 'hometown':
+          return 'mastodon'
+        case 'iceshrimp':
+          return 'firefish'
+        case 'mastodon':
+          return 'mastodon'
+        case 'pleroma':
+          return 'pleroma'
+        case 'sharkey':
+          return 'mastodon'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
@@ -83,20 +87,24 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
     case NODEINFO_20: {
       const res = await axios.get<Nodeinfo20>(link.href, options)
       switch (res.data.software.name) {
-        case 'pleroma':
-          return 'pleroma'
         case 'akkoma':
           return 'pleroma'
-        case 'mastodon':
-          return 'mastodon'
-        case 'friendica':
-          return 'friendica'
         case 'firefish':
           return 'firefish'
-        case 'iceshrimp':
-          return 'firefish'
+        case 'friendica':
+          return 'friendica'
         case 'gotosocial':
           return 'gotosocial'
+        case 'hometown':
+          return 'mastodon'
+        case 'iceshrimp':
+          return 'firefish'
+        case 'mastodon':
+          return 'mastodon'
+        case 'pleroma':
+          return 'pleroma'
+        case 'sharkey':
+          return 'mastodon'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
@@ -107,20 +115,24 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
     case NODEINFO_21: {
       const res = await axios.get<Nodeinfo21>(link.href, options)
       switch (res.data.software.name) {
-        case 'pleroma':
-          return 'pleroma'
         case 'akkoma':
           return 'pleroma'
-        case 'mastodon':
-          return 'mastodon'
-        case 'friendica':
-          return 'friendica'
         case 'firefish':
           return 'firefish'
-        case 'iceshrimp':
-          return 'firefish'
+        case 'friendica':
+          return 'friendica'
         case 'gotosocial':
           return 'gotosocial'
+        case 'hometown':
+          return 'mastodon'
+        case 'iceshrimp':
+          return 'firefish'
+        case 'mastodon':
+          return 'mastodon'
+        case 'pleroma':
+          return 'pleroma'
+        case 'sharkey':
+          return 'mastodon'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
