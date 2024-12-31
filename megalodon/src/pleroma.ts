@@ -460,13 +460,16 @@ export default class Pleroma implements MegalodonInterface {
   }
 
   /**
-   * POST /api/v1/pleroma/accounts/:id/subscribe
+   * POST /api/v1/accounts/:id/follow
    *
    * @param id Target account ID.
    * @return Relationship.
    */
   public async subscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/subscribe`).then(res => {
+    const params = {
+      notify: true
+    }
+    return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.relationship(res.data)
       })
@@ -474,13 +477,16 @@ export default class Pleroma implements MegalodonInterface {
   }
 
   /**
-   * POST /api/v1/pleroma/accounts/:id/unsubscribe
+   * POST /api/v1/accounts/:id/follow
    *
    * @param id Target account ID.
    * @return Relationship.
    */
   public async unsubscribeAccount(id: string): Promise<Response<Entity.Relationship>> {
-    return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/pleroma/accounts/${id}/unsubscribe`).then(res => {
+    const params = {
+      notify: false
+    }
+    return this.client.post<PleromaAPI.Entity.Relationship>(`/api/v1/accounts/${id}/follow`, params).then(res => {
       return Object.assign(res, {
         data: PleromaAPI.Converter.relationship(res.data)
       })
