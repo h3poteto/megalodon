@@ -3069,44 +3069,26 @@ export default class Pixelfed implements MegalodonInterface {
   }
 
   public async userStreaming(): Promise<WebSocketInterface> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
-      reject(err)
-    })
+    return this.client.socket()
   }
 
   public async publicStreaming(): Promise<WebSocketInterface> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
-      reject(err)
-    })
+    return this.client.socket()
   }
 
   public async localStreaming(): Promise<WebSocketInterface> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
-      reject(err)
-    })
+    return this.client.socket()
   }
 
   public async tagStreaming(_tag: string): Promise<WebSocketInterface> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
-      reject(err)
-    })
+    return this.client.socket()
   }
 
   public async listStreaming(_list_id: string): Promise<WebSocketInterface> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
-      reject(err)
-    })
+    return this.client.socket()
   }
 
   public async directStreaming(): Promise<WebSocketInterface> {
-    return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
-      reject(err)
-    })
+    return this.client.socket()
   }
 }
