@@ -8,6 +8,7 @@ import PixelfedEntity from './entity'
 import MegalodonEntity from '../entity'
 import NotificationType, { UnknownNotificationTypeError } from '../notification'
 import PixelfedNotificationType from './notification'
+import Streaming from './web_socket'
 
 namespace PixelfedAPI {
   /**
@@ -23,6 +24,7 @@ namespace PixelfedAPI {
     postForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
+    socket(): Streaming
   }
 
   /**
@@ -358,6 +360,10 @@ namespace PixelfedAPI {
      */
     public cancel(): void {
       return this.abortController.abort()
+    }
+
+    public socket(): Streaming {
+      return new Streaming()
     }
   }
 
