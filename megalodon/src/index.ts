@@ -5,6 +5,7 @@ import generator, { MegalodonInterface, WebSocketInterface } from './megalodon'
 import { detector } from './detector'
 import Mastodon from './mastodon'
 import Pleroma from './pleroma'
+import Pixelfed from './pixelfed'
 import Firefish from './firefish'
 import Gotosocial from './gotosocial'
 import Entity from './entity'
@@ -23,6 +24,7 @@ export {
   FilterContext,
   Mastodon,
   Pleroma,
+  Pixelfed,
   Firefish,
   Gotosocial,
   Entity

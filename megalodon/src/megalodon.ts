@@ -6,6 +6,7 @@ import Entity from './entity'
 import Friendica from './friendica'
 import Firefish from './firefish'
 import Gotosocial from './gotosocial'
+import Pixelfed from './pixelfed'
 
 export interface WebSocketInterface {
   start(): void
@@ -1436,14 +1437,14 @@ export class NodeinfoError extends Error {
 /**
  * Get client for each SNS according to megalodon interface.
  *
- * @param sns Name of your SNS, `mastodon`, `pleroma`, `firefish`, or `gotosocial`.
+ * @param sns Name of your SNS, `mastodon`, `pleroma`, `firefish`, `gotosocial`, or `pixelfed`.
  * @param baseUrl hostname or base URL.
  * @param accessToken access token from OAuth2 authorization
  * @param userAgent UserAgent is specified in header on request.
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial',
+  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null
@@ -1468,6 +1469,10 @@ const generator = (
     case 'gotosocial': {
       const gotosocial = new Gotosocial(baseUrl, accessToken, userAgent)
       return gotosocial
+    }
+    case 'pixelfed': {
+      const pixelfed = new Pixelfed(baseUrl, accessToken, userAgent)
+      return pixelfed
     }
   }
 }
