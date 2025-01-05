@@ -27,7 +27,7 @@ export default class Streaming extends EventEmitter implements WebSocketInterfac
   private _pongWaiting: boolean = false
 
   /**
-   * @param url Full url of websocket: e.g. https://mastodon.social/api/v1/streaming
+   * @param url Full url of websocket: e.g. https://pixelfed.social/api/v1/streaming
    * @param stream Stream name
    * @param accessToken The access token.
    * @param userAgent The specified User Agent.

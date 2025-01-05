@@ -65,6 +65,14 @@ describe('detector', () => {
     })
   })
 
+  describe('pixelfed.social', () => {
+    const url = 'https://pixelfed.social'
+    it('should be pixelfed', async () => {
+      const pixelfed = await detector(url)
+      expect(pixelfed).toEqual('pixelfed')
+    })
+  })
+
   describe('unknown', () => {
     const url = 'https://google.com'
     it('should be null', async () => {

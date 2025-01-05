@@ -1,16 +1,15 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
-import Streaming from './web_socket'
 import Response from '../response'
 import { RequestCanceledError } from '../cancel'
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
-import MastodonEntity from './entity'
+import PixelfedEntity from './entity'
 import MegalodonEntity from '../entity'
 import NotificationType, { UnknownNotificationTypeError } from '../notification'
-import MastodonNotificationType from './notification'
+import PixelfedNotificationType from './notification'
 
-namespace MastodonAPI {
+namespace PixelfedAPI {
   /**
    * Interface
    */
@@ -24,22 +23,20 @@ namespace MastodonAPI {
     postForm<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     del<T = any>(path: string, params?: any, headers?: { [key: string]: string }): Promise<Response<T>>
     cancel(): void
-    socket(url: string, stream: string, params?: string): Streaming
   }
 
   /**
-   * Mastodon API client.
+   * Pixelfed API client.
    *
    * Using axios for request, you will handle promises.
    */
   export class Client implements Interface {
     static DEFAULT_SCOPE = DEFAULT_SCOPE
-    static DEFAULT_URL = 'https://mastodon.social'
+    static DEFAULT_URL = 'https://pixelfed.social'
     static NO_REDIRECT = NO_REDIRECT
 
     private accessToken: string | null
     private baseUrl: string
-    private userAgent: string
     private abortController: AbortController
 
     /**
@@ -47,16 +44,15 @@ namespace MastodonAPI {
      * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
      */
-    constructor(baseUrl: string, accessToken: string | null = null, userAgent: string = DEFAULT_UA) {
+    constructor(baseUrl: string, accessToken: string | null = null, _userAgent: string = DEFAULT_UA) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
-      this.userAgent = userAgent
       this.abortController = new AbortController()
       axios.defaults.signal = this.abortController.signal
     }
 
     /**
-     * GET request to mastodon REST API.
+     * GET request to pixelfed REST API.
      * @param path relative path from baseUrl
      * @param params Query parameters
      * @param headers Request header object
@@ -101,7 +97,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * PUT request to mastodon REST API.
+     * PUT request to pixelfed REST API.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
      * @param headers Request header object
@@ -140,7 +136,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * PUT request to mastodon REST API for multipart.
+     * PUT request to pixelfed REST API for multipart.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
      * @param headers Request header object
@@ -179,7 +175,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * PATCH request to mastodon REST API.
+     * PATCH request to pixelfed REST API.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
      * @param headers Request header object
@@ -218,7 +214,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * PATCH request to mastodon REST API for multipart.
+     * PATCH request to pixelfed REST API for multipart.
      * @param path relative path from baseUrl
      * @param params Form data. If you want to post file, please use FormData()
      * @param headers Request header object
@@ -257,7 +253,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * POST request to mastodon REST API.
+     * POST request to pixelfed REST API.
      * @param path relative path from baseUrl
      * @param params Form data
      * @param headers Request header object
@@ -287,7 +283,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * POST request to mastodon REST API for multipart.
+     * POST request to pixelfed REST API for multipart.
      * @param path relative path from baseUrl
      * @param params Form data
      * @param headers Request header object
@@ -317,7 +313,7 @@ namespace MastodonAPI {
     }
 
     /**
-     * DELETE request to mastodon REST API.
+     * DELETE request to pixelfed REST API.
      * @param path relative path from baseUrl
      * @param params Form data
      * @param headers Request header object
@@ -363,126 +359,105 @@ namespace MastodonAPI {
     public cancel(): void {
       return this.abortController.abort()
     }
-
-    /**
-     * Get connection and receive websocket connection for Pleroma API.
-     *
-     * @param url Streaming url.
-     * @param stream Stream name
-     * @returns WebSocket, which inherits from EventEmitter
-     */
-    public socket(url: string, stream: string, params?: string): Streaming {
-      if (!this.accessToken) {
-        throw new Error('accessToken is required')
-      }
-      const streaming = new Streaming(url, stream, params, this.accessToken, this.userAgent)
-
-      streaming.start()
-      return streaming
-    }
   }
 
   export namespace Entity {
-    export type Account = MastodonEntity.Account
-    export type Activity = MastodonEntity.Activity
-    export type Announcement = MastodonEntity.Announcement
-    export type Application = MastodonEntity.Application
+    export type Account = PixelfedEntity.Account
+    export type Announcement = PixelfedEntity.Announcement
+    export type Application = PixelfedEntity.Application
     export type AsyncAttachment = MegalodonEntity.AsyncAttachment
-    export type Attachment = MastodonEntity.Attachment
-    export type Card = MastodonEntity.Card
-    export type Context = MastodonEntity.Context
-    export type Conversation = MastodonEntity.Conversation
-    export type Emoji = MastodonEntity.Emoji
-    export type FeaturedTag = MastodonEntity.FeaturedTag
-    export type Field = MastodonEntity.Field
-    export type Filter = MastodonEntity.Filter
-    export type History = MastodonEntity.History
-    export type IdentityProof = MastodonEntity.IdentityProof
-    export type Instance = MastodonEntity.Instance
-    export type List = MastodonEntity.List
-    export type Marker = MastodonEntity.Marker
-    export type Mention = MastodonEntity.Mention
-    export type Notification = MastodonEntity.Notification
-    export type Poll = MastodonEntity.Poll
-    export type PollOption = MastodonEntity.PollOption
-    export type Preferences = MastodonEntity.Preferences
-    export type PushSubscription = MastodonEntity.PushSubscription
-    export type Relationship = MastodonEntity.Relationship
-    export type Report = MastodonEntity.Report
-    export type Results = MastodonEntity.Results
-    export type Role = MastodonEntity.Role
-    export type ScheduledStatus = MastodonEntity.ScheduledStatus
-    export type Source = MastodonEntity.Source
-    export type Stats = MastodonEntity.Stats
-    export type Status = MastodonEntity.Status
-    export type StatusParams = MastodonEntity.StatusParams
-    export type StatusSource = MastodonEntity.StatusSource
-    export type Tag = MastodonEntity.Tag
-    export type Token = MastodonEntity.Token
-    export type URLs = MastodonEntity.URLs
+    export type Attachment = PixelfedEntity.Attachment
+    export type Context = PixelfedEntity.Context
+    export type Conversation = PixelfedEntity.Conversation
+    export type Emoji = PixelfedEntity.Emoji
+    export type Field = PixelfedEntity.Field
+    export type Filter = PixelfedEntity.Filter
+    export type History = PixelfedEntity.History
+    export type Instance = PixelfedEntity.Instance
+    export type Marker = PixelfedEntity.Marker
+    export type Mention = PixelfedEntity.Mention
+    export type Notification = PixelfedEntity.Notification
+    export type Poll = PixelfedEntity.Poll
+    export type PollOption = PixelfedEntity.PollOption
+    export type Preferences = PixelfedEntity.Preferences
+    export type Relationship = PixelfedEntity.Relationship
+    export type Report = PixelfedEntity.Report
+    export type Results = PixelfedEntity.Results
+    export type ScheduledStatus = PixelfedEntity.ScheduledStatus
+    export type Source = PixelfedEntity.Source
+    export type Stats = PixelfedEntity.Stats
+    export type Status = PixelfedEntity.Status
+    export type StatusParams = PixelfedEntity.StatusParams
+    export type Tag = PixelfedEntity.Tag
+    export type Token = PixelfedEntity.Token
   }
 
   export namespace Converter {
     export const encodeNotificationType = (
       t: MegalodonEntity.NotificationType
-    ): MastodonEntity.NotificationType | UnknownNotificationTypeError => {
+    ): PixelfedEntity.NotificationType | UnknownNotificationTypeError => {
       switch (t) {
         case NotificationType.Follow:
-          return MastodonNotificationType.Follow
+          return PixelfedNotificationType.Follow
         case NotificationType.Favourite:
-          return MastodonNotificationType.Favourite
+          return PixelfedNotificationType.Favourite
         case NotificationType.Reblog:
-          return MastodonNotificationType.Reblog
+          return PixelfedNotificationType.Reblog
         case NotificationType.Mention:
-          return MastodonNotificationType.Mention
+          return PixelfedNotificationType.Mention
         case NotificationType.FollowRequest:
-          return MastodonNotificationType.FollowRequest
-        case NotificationType.Status:
-          return MastodonNotificationType.Status
-        case NotificationType.PollExpired:
-          return MastodonNotificationType.Poll
-        case NotificationType.Update:
-          return MastodonNotificationType.Update
-        case NotificationType.AdminSignup:
-          return MastodonNotificationType.AdminSignup
-        case NotificationType.AdminReport:
-          return MastodonNotificationType.AdminReport
+          return PixelfedNotificationType.FollowRequest
         default:
           return new UnknownNotificationTypeError()
       }
     }
 
     export const decodeNotificationType = (
-      t: MastodonEntity.NotificationType
+      t: PixelfedEntity.NotificationType
     ): MegalodonEntity.NotificationType | UnknownNotificationTypeError => {
       switch (t) {
-        case MastodonNotificationType.Follow:
+        case PixelfedNotificationType.Follow:
           return NotificationType.Follow
-        case MastodonNotificationType.Favourite:
+        case PixelfedNotificationType.Favourite:
           return NotificationType.Favourite
-        case MastodonNotificationType.Mention:
+        case PixelfedNotificationType.Mention:
           return NotificationType.Mention
-        case MastodonNotificationType.Reblog:
+        case PixelfedNotificationType.Reblog:
           return NotificationType.Reblog
-        case MastodonNotificationType.FollowRequest:
+        case PixelfedNotificationType.FollowRequest:
           return NotificationType.FollowRequest
-        case MastodonNotificationType.Status:
-          return NotificationType.Status
-        case MastodonNotificationType.Poll:
-          return NotificationType.PollExpired
-        case MastodonNotificationType.Update:
-          return NotificationType.Update
-        case MastodonNotificationType.AdminSignup:
-          return NotificationType.AdminSignup
-        case MastodonNotificationType.AdminReport:
-          return NotificationType.AdminReport
         default:
           return new UnknownNotificationTypeError()
       }
     }
 
-    export const account = (a: Entity.Account): MegalodonEntity.Account => a
-    export const activity = (a: Entity.Activity): MegalodonEntity.Activity => a
+    export const account = (a: Entity.Account): MegalodonEntity.Account => ({
+      id: a.id,
+      username: a.username,
+      acct: a.acct,
+      display_name: a.display_name,
+      locked: a.locked,
+      discoverable: a.discoverable,
+      group: null,
+      noindex: null,
+      suspended: null,
+      limited: null,
+      created_at: a.created_at,
+      followers_count: a.followers_count,
+      following_count: a.following_count,
+      statuses_count: a.statuses_count,
+      note: a.note,
+      url: a.url,
+      avatar: a.avatar,
+      avatar_static: a.avatar_static,
+      header: a.header,
+      header_static: a.header_static,
+      emojis: a.emojis,
+      moved: null,
+      fields: a.fields,
+      bot: null,
+      source: a.source
+    })
     export const announcement = (a: Entity.Announcement): MegalodonEntity.Announcement => a
     export const application = (a: Entity.Application): MegalodonEntity.Application => a
     export const attachment = (a: Entity.Attachment): MegalodonEntity.Attachment => a
@@ -503,7 +478,6 @@ namespace MastodonAPI {
         return a as MegalodonEntity.AsyncAttachment
       }
     }
-    export const card = (c: Entity.Card): MegalodonEntity.Card => c
     export const context = (c: Entity.Context): MegalodonEntity.Context => ({
       ancestors: Array.isArray(c.ancestors) ? c.ancestors.map(a => status(a)) : [],
       descendants: Array.isArray(c.descendants) ? c.descendants.map(d => status(d)) : []
@@ -515,13 +489,37 @@ namespace MastodonAPI {
       unread: c.unread
     })
     export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => e
-    export const featured_tag = (e: Entity.FeaturedTag): MegalodonEntity.FeaturedTag => e
     export const field = (f: Entity.Field): MegalodonEntity.Field => f
     export const filter = (f: Entity.Filter): MegalodonEntity.Filter => f
     export const history = (h: Entity.History): MegalodonEntity.History => h
-    export const identity_proof = (i: Entity.IdentityProof): MegalodonEntity.IdentityProof => i
-    export const instance = (i: Entity.Instance): MegalodonEntity.Instance => i
-    export const list = (l: Entity.List): MegalodonEntity.List => l
+    export const instance = (i: Entity.Instance): MegalodonEntity.Instance => ({
+      uri: i.uri,
+      title: i.title,
+      description: i.description,
+      email: i.email,
+      version: i.version,
+      thumbnail: i.thumbnail,
+      urls: null,
+      stats: stats(i.stats),
+      languages: i.languages,
+      registrations: i.registrations,
+      approval_required: i.approval_required,
+      configuration: {
+        statuses: {
+          max_characters: i.configuration.statuses.max_characters,
+          max_media_attachments: i.configuration.statuses.max_media_attachments,
+          characters_reserved_per_url: i.configuration.statuses.characters_reserved_per_url
+        },
+        polls: {
+          max_options: i.configuration.polls.max_options,
+          max_characters_per_option: i.configuration.polls.max_characters_per_option,
+          min_expiration: i.configuration.polls.min_expiration,
+          max_expiration: i.configuration.polls.max_expiration
+        }
+      },
+      contact_account: account(i.contact_account),
+      rules: i.rules
+    })
     export const marker = (m: Entity.Marker | Record<never, never>): MegalodonEntity.Marker | Record<never, never> => m
     export const mention = (m: Entity.Mention): MegalodonEntity.Mention => m
     export const notification = (n: Entity.Notification): MegalodonEntity.Notification | UnknownNotificationTypeError => {
@@ -547,9 +545,18 @@ namespace MastodonAPI {
     export const poll = (p: Entity.Poll): MegalodonEntity.Poll => p
     export const poll_option = (p: Entity.PollOption): MegalodonEntity.PollOption => p
     export const preferences = (p: Entity.Preferences): MegalodonEntity.Preferences => p
-    export const push_subscription = (p: Entity.PushSubscription): MegalodonEntity.PushSubscription => p
     export const relationship = (r: Entity.Relationship): MegalodonEntity.Relationship => r
-    export const report = (r: Entity.Report): MegalodonEntity.Report => r
+    export const report = (r: Entity.Report): MegalodonEntity.Report => ({
+      id: r.id,
+      action_taken: r.action_taken,
+      action_taken_at: r.action_taken_at,
+      status_ids: r.status_ids,
+      rule_ids: r.rule_ids,
+      category: r.category,
+      comment: r.comment,
+      forwarded: r.forwarded,
+      target_account: account(r.target_account)
+    })
     export const results = (r: Entity.Results): MegalodonEntity.Results => ({
       accounts: Array.isArray(r.accounts) ? r.accounts.map(a => account(a)) : [],
       statuses: Array.isArray(r.statuses) ? r.statuses.map(s => status(s)) : [],
@@ -565,7 +572,7 @@ namespace MastodonAPI {
       account: account(s.account),
       in_reply_to_id: s.in_reply_to_id,
       in_reply_to_account_id: s.in_reply_to_account_id,
-      reblog: s.reblog ? status(s.reblog) : s.quote ? status(s.quote) : null,
+      reblog: s.reblog ? status(s.reblog) : null,
       content: s.content,
       plain_content: null,
       created_at: s.created_at,
@@ -583,21 +590,18 @@ namespace MastodonAPI {
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
       tags: s.tags,
-      card: s.card ? card(s.card) : null,
+      card: null,
       poll: s.poll ? poll(s.poll) : null,
       application: s.application ? application(s.application) : null,
       language: s.language,
-      pinned: s.pinned,
+      pinned: false,
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      // Now quote is supported only fedibird.com.
-      quote: s.quote !== undefined && s.quote !== null
+      quote: false
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
-    export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
-    export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
   }
 }
-export default MastodonAPI
+export default PixelfedAPI
