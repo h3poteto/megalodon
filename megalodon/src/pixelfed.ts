@@ -2154,7 +2154,8 @@ export default class Pixelfed implements MegalodonInterface {
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
     let params = {
-      local: false
+      local: false,
+      remote: true
     }
     if (options) {
       if (options.only_media !== undefined) {
