@@ -18,6 +18,7 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 - [x] Friendica
 - [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
 - [x] Gotosocial
+- [x] Pixelfed
 - [x] Akkoma (Unofficial)
 - [x] Sharkey (Unofficial)
 - [x] Hometown (Unofficial)
