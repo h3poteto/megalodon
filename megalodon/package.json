@@ -74,8 +74,6 @@
     "ws": "8.18.0"
   },
   "devDependencies": {
-    "@types/core-js": "^2.5.8",
-    "@types/form-data": "^2.5.2",
     "@types/jest": "^29.5.14",
     "@types/object-assign-deep": "^0.4.3",
     "@types/uuid": "^10.0.0",
