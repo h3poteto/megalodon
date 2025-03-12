@@ -1201,13 +1201,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/core-js@npm:^2.5.8":
-  version: 2.5.8
-  resolution: "@types/core-js@npm:2.5.8"
-  checksum: 10/58c4b86102b13b778d3631d38913c788ef7f688d99fbd741f6241a9cedc7e986e670011bdccd58b32e28e97b9c0fa6fffedef6ba0f670a005b321788a5a01a65
-  languageName: node
-  linkType: hard
-
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.7
   resolution: "@types/eslint-scope@npm:3.7.7"
@@ -1239,15 +1232,6 @@ __metadata:
   version: 1.0.6
   resolution: "@types/estree@npm:1.0.6"
   checksum: 10/9d35d475095199c23e05b431bcdd1f6fec7380612aed068b14b2a08aa70494de8a9026765a5a91b1073f636fb0368f6d8973f518a31391d519e20c59388ed88d
-  languageName: node
-  linkType: hard
-
-"@types/form-data@npm:^2.5.2":
-  version: 2.5.2
-  resolution: "@types/form-data@npm:2.5.2"
-  dependencies:
-    form-data: "npm:*"
-  checksum: 10/fb38ae90b671dc912152a01143d7342aac273650c0efa6c866d490913fc83d32e8b96e87bd2d6a737e2c8975cc3d63322d702f77935f68fb838c32662dc616fb
   languageName: node
   linkType: hard
 
@@ -3128,7 +3112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:*, form-data@npm:^4.0.0":
+"form-data@npm:^4.0.0":
   version: 4.0.0
   resolution: "form-data@npm:4.0.0"
   dependencies:
@@ -4579,8 +4563,6 @@ __metadata:
   resolution: "megalodon@workspace:megalodon"
   dependencies:
     "@badgateway/oauth2-client": "npm:^2.4.2"
-    "@types/core-js": "npm:^2.5.8"
-    "@types/form-data": "npm:^2.5.2"
     "@types/jest": "npm:^29.5.14"
     "@types/object-assign-deep": "npm:^0.4.3"
     "@types/uuid": "npm:^10.0.0"
