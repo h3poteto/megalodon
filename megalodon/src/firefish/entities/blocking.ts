@@ -1,4 +1,4 @@
-import { UserDetail } from './userDetail'
+import { UserDetail } from './userDetail.js'
 
 export type Blocking = {
   id: string

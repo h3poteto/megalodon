@@ -1,16 +1,16 @@
 import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
-import { parseLinkHeader } from './parse_link_header'
+import { parseLinkHeader } from './parse_link_header.js'
 
-import FriendicaAPI from './friendica/api_client'
-import WebSocket from './friendica/web_socket'
-import { MegalodonInterface, NotImplementedError } from './megalodon'
-import Response from './response'
-import Entity from './entity'
-import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
-import OAuth from './oauth'
-import * as FriendicaOAuth from './friendica/oauth'
-import { UnknownNotificationTypeError } from './notification'
+import FriendicaAPI from './friendica/api_client.js'
+import WebSocket from './friendica/web_socket.js'
+import { MegalodonInterface, NotImplementedError } from './megalodon.js'
+import Response from './response.js'
+import Entity from './entity.js'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default.js'
+import OAuth from './oauth.js'
+import * as FriendicaOAuth from './friendica/oauth.js'
+import { UnknownNotificationTypeError } from './notification.js'
 
 export default class Friendica implements MegalodonInterface {
   public client: FriendicaAPI.Interface

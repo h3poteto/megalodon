@@ -1,6 +1,6 @@
-import { Account } from './account'
-import { Status } from './status'
-import { Tag } from './tag'
+import { Account } from './account.js'
+import { Status } from './status.js'
+import { Tag } from './tag.js'
 
 export type Results = {
   accounts: Array<Account>

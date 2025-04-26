@@ -1,4 +1,4 @@
-import { StatusVisibility } from './status'
+import { StatusVisibility } from './status.js'
 
 export type Preferences = {
   'posting:default:visibility': StatusVisibility

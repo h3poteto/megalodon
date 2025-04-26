@@ -1,4 +1,4 @@
-import { Account } from './account'
+import { Account } from './account.js'
 
 export type Reaction = {
   count: number

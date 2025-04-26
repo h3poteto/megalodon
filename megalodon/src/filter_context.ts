@@ -1,4 +1,4 @@
-import Entity from './entity'
+import Entity from './entity.js'
 
 namespace FilterContext {
   export const Home: Entity.FilterContext = 'home'

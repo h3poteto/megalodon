@@ -1,4 +1,4 @@
-import { detector } from '../../src/index'
+import { detector } from '../../src/index.js'
 
 describe('detector', () => {
   describe('mastodon', () => {

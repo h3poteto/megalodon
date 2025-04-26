@@ -1,5 +1,5 @@
-import { Account } from './account'
-import { Status } from './status'
+import { Account } from './account.js'
+import { Status } from './status.js'
 
 export type Notification = {
   account: Account

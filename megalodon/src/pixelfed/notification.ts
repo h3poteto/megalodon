@@ -1,4 +1,4 @@
-import PixelfedEntity from './entity'
+import PixelfedEntity from './entity.js'
 
 namespace PixelfedNotificationType {
   export const Mention: PixelfedEntity.NotificationType = 'mention'

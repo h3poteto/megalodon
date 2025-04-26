@@ -1,5 +1,5 @@
-import { Emoji } from './emoji'
-import { Field } from './field'
+import { Emoji } from './emoji.js'
+import { Field } from './field.js'
 
 export type FollowRequest = {
   id: number

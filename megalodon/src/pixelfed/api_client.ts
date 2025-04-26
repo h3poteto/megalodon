@@ -1,14 +1,14 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
-import Response from '../response'
-import { RequestCanceledError } from '../cancel'
-import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
-import PixelfedEntity from './entity'
-import MegalodonEntity from '../entity'
-import NotificationType, { UnknownNotificationTypeError } from '../notification'
-import PixelfedNotificationType from './notification'
-import Streaming from './web_socket'
+import Response from '../response.js'
+import { RequestCanceledError } from '../cancel.js'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default.js'
+import PixelfedEntity from './entity.js'
+import MegalodonEntity from '../entity.js'
+import NotificationType, { UnknownNotificationTypeError } from '../notification.js'
+import PixelfedNotificationType from './notification.js'
+import Streaming from './web_socket.js'
 
 namespace PixelfedAPI {
   /**

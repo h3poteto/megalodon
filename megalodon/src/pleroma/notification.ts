@@ -1,4 +1,4 @@
-import PleromaEntity from './entity'
+import PleromaEntity from './entity.js'
 
 namespace PleromaNotificationType {
   export const Mention: PleromaEntity.NotificationType = 'mention'

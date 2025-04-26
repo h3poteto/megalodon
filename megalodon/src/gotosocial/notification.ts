@@ -1,4 +1,4 @@
-import GotosocialEntity from './entity'
+import GotosocialEntity from './entity.js'
 
 namespace GotosocialNotificationType {
   export const Follow: GotosocialEntity.NotificationType = 'follow'

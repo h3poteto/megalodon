@@ -2,10 +2,10 @@ import WS from 'isomorphic-ws'
 import dayjs, { Dayjs } from 'dayjs'
 import { v4 as uuid } from 'uuid'
 import { EventEmitter } from 'events'
-import { WebSocketInterface } from '../megalodon'
-import FirefishAPI from './api_client'
-import { UnknownNotificationTypeError } from '../notification'
-import { isBrowser } from '../default'
+import { WebSocketInterface } from '../megalodon.js'
+import FirefishAPI from './api_client.js'
+import { UnknownNotificationTypeError } from '../notification.js'
+import { isBrowser } from '../default.js'
 
 /**
  * WebSocket

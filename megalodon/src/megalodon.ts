@@ -1,12 +1,12 @@
-import Response from './response'
-import OAuth from './oauth'
-import Pleroma from './pleroma'
-import Mastodon from './mastodon'
-import Entity from './entity'
-import Friendica from './friendica'
-import Firefish from './firefish'
-import Gotosocial from './gotosocial'
-import Pixelfed from './pixelfed'
+import Response from './response.js'
+import OAuth from './oauth.js'
+import Pleroma from './pleroma.js'
+import Mastodon from './mastodon.js'
+import Entity from './entity.js'
+import Friendica from './friendica.js'
+import Firefish from './firefish.js'
+import Gotosocial from './gotosocial.js'
+import Pixelfed from './pixelfed.js'
 
 export interface WebSocketInterface {
   start(): void

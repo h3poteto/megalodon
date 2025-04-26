@@ -1,11 +1,11 @@
-import { Account } from './account'
-import { Application } from './application'
-import { Emoji } from './emoji'
-import { Attachment } from './attachment'
-import { Mention } from './mention'
-import { Reaction } from './reaction'
-import { Card } from './card'
-import { Poll } from './poll'
+import { Account } from './account.js'
+import { Application } from './application.js'
+import { Emoji } from './emoji.js'
+import { Attachment } from './attachment.js'
+import { Mention } from './mention.js'
+import { Reaction } from './reaction.js'
+import { Card } from './card.js'
+import { Poll } from './poll.js'
 
 export type Status = {
   id: string

@@ -2,13 +2,13 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import dayjs from 'dayjs'
 import FormData from 'form-data'
 
-import { DEFAULT_UA } from '../default'
-import Response from '../response'
-import FirefishEntity from './entity'
-import MegalodonEntity from '../entity'
-import WebSocket from './web_socket'
-import FirefishNotificationType from './notification'
-import NotificationType, { UnknownNotificationTypeError } from '../notification'
+import { DEFAULT_UA } from '../default.js'
+import Response from '../response.js'
+import FirefishEntity from './entity.js'
+import MegalodonEntity from '../entity.js'
+import WebSocket from './web_socket.js'
+import FirefishNotificationType from './notification.js'
+import NotificationType, { UnknownNotificationTypeError } from '../notification.js'
 
 namespace FirefishAPI {
   export namespace Entity {

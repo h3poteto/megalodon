@@ -1,4 +1,4 @@
-import { Status } from './status'
+import { Status } from './status.js'
 
 export type Context = {
   ancestors: Array<Status>

@@ -1,6 +1,6 @@
-import { Emoji } from './emoji'
-import { Field } from './field'
-import { Source } from './source'
+import { Emoji } from './emoji.js'
+import { Field } from './field.js'
+import { Source } from './source.js'
 
 export type Account = {
   id: string

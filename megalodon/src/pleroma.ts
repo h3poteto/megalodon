@@ -1,16 +1,16 @@
 import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
 
-import PleromaAPI from './pleroma/api_client'
-import WebSocket from './pleroma/web_socket'
-import { MegalodonInterface, NotImplementedError, ArgumentError } from './megalodon'
-import Response from './response'
-import Entity from './entity'
+import PleromaAPI from './pleroma/api_client.js'
+import WebSocket from './pleroma/web_socket.js'
+import { MegalodonInterface, NotImplementedError, ArgumentError } from './megalodon.js'
+import Response from './response.js'
+import Entity from './entity.js'
 
-import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default'
-import OAuth from './oauth'
-import * as PleromaOAuth from './pleroma/oauth'
-import { UnknownNotificationTypeError } from './notification'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default.js'
+import OAuth from './oauth.js'
+import * as PleromaOAuth from './pleroma/oauth.js'
+import { UnknownNotificationTypeError } from './notification.js'
 
 export default class Pleroma implements MegalodonInterface {
   public client: PleromaAPI.Interface

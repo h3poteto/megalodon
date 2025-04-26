@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { NodeinfoError } from './megalodon'
+import { NodeinfoError } from './megalodon.js'
 
 const NODEINFO_10 = 'http://nodeinfo.diaspora.software/ns/schema/1.0'
 const NODEINFO_20 = 'http://nodeinfo.diaspora.software/ns/schema/2.0'

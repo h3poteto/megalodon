@@ -1,6 +1,6 @@
-import { Account } from './account'
-import { Status } from './status'
-import { Reaction } from './reaction'
+import { Account } from './account.js'
+import { Status } from './status.js'
+import { Reaction } from './reaction.js'
 
 export type Notification = {
   account: Account | null
