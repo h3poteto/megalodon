@@ -2899,18 +2899,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"example@workspace:example/typescript":
-  version: 0.0.0-use.local
-  resolution: "example@workspace:example/typescript"
-  dependencies:
-    "@types/node": "npm:^22.9.1"
-    eslint: "npm:^9.23.0"
-    log4js: "npm:^6.9.1"
-    megalodon: "npm:*"
-    typescript: "npm:5.4.5"
-  languageName: unknown
-  linkType: soft
-
 "execa@npm:^5.0.0":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
@@ -4909,6 +4897,30 @@ __metadata:
   checksum: 10/1a7948fea86f2b33ec766bc899c88796a51ba76a4afc9026764aedc6e7cde692a09067031e4a1bf6db4f978ccd99e7f5b6c03fe47ad9865c3d4f99050d67e002
   languageName: node
   linkType: hard
+
+"node-cjs@workspace:example/node-cjs":
+  version: 0.0.0-use.local
+  resolution: "node-cjs@workspace:example/node-cjs"
+  dependencies:
+    "@types/node": "npm:^22.9.1"
+    eslint: "npm:^9.23.0"
+    log4js: "npm:^6.9.1"
+    megalodon: "npm:*"
+    typescript: "npm:5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"node-esm@workspace:example/node-esm":
+  version: 0.0.0-use.local
+  resolution: "node-esm@workspace:example/node-esm"
+  dependencies:
+    "@types/node": "npm:^22.9.1"
+    eslint: "npm:^9.23.0"
+    log4js: "npm:^6.9.1"
+    megalodon: "npm:*"
+    typescript: "npm:5.4.5"
+  languageName: unknown
+  linkType: soft
 
 "node-gyp@npm:latest":
   version: 10.0.1
