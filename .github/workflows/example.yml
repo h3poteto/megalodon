@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  typescript:
+  node-cjs:
     runs-on: ubuntu-latest
 
     strategy:
@@ -29,18 +29,19 @@ jobs:
       - name: Build
         run: |
           yarn workspace megalodon run build
-      - name: Typescript example
+      - name: Node CJS example
         env:
           MASTODON_URL: https://fedibird.com
           PLEROMA_URL: https://pleroma.io
           FIREFISH_URL: https://cybre.club
           FRIENDICA_URL: https://squeet.me
         run: |
-          yarn workspace example run build
-          node example/typescript/dist/mastodon/instance.js
-          node example/typescript/dist/pleroma/instance.js
-          node example/typescript/dist/firefish/instance.js
-          node example/typescript/dist/friendica/instance.js
+          yarn workspace node-cjs run build
+          node example/node-cjs/dist/mastodon/instance.js
+          node example/node-cjs/dist/pleroma/instance.js
+          node example/node-cjs/dist/firefish/instance.js
+          node example/node-cjs/dist/friendica/instance.js
+
   webpack:
     runs-on: ubuntu-latest
 
