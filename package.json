@@ -3,6 +3,7 @@
   "workspaces": [
     "megalodon",
     "example/node-cjs",
+    "example/node-esm",
     "example/webpack",
     "example/vite"
   ],

@@ -42,6 +42,29 @@ jobs:
           node example/node-cjs/dist/firefish/instance.js
           node example/node-cjs/dist/friendica/instance.js
 
+  node-esm:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          yarn install
+      - name: Build
+        run: |
+          yarn workspace megalodon run build
+      - name: Node ESM example
+        run: |
+          yarn workspace node-esm run build
+
   webpack:
     runs-on: ubuntu-latest
 
