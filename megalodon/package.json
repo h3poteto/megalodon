@@ -2,11 +2,11 @@
   "name": "megalodon",
   "version": "10.1.1",
   "description": "Fediverse API client for node.js and browser",
-  "main": "./lib/src/index.js",
-  "typings": "./lib/src/index.d.ts",
-  "module": "./lib/esm/src/index.js",
+  "main": "./lib/cjs/index.js",
+  "typings": "./lib/cjs/index.d.ts",
+  "module": "./lib/esm/index.js",
   "scripts": {
-    "build": "tsc -p ./ && tsc -p tsconfig.mjs.json",
+    "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
     "lint": "eslint src --ext .ts,.js",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
@@ -15,8 +15,7 @@
     "node": ">=22.11.0"
   },
   "files": [
-    "/lib/src/**",
-    "/lib/esm/**"
+    "/lib/**"
   ],
   "repository": {
     "type": "git",
@@ -54,7 +53,7 @@
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.json"
+          "tsconfig": "tsconfig.test.json"
         }
       ]
     },
