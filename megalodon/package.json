@@ -55,6 +55,9 @@
       "ts",
       "js"
     ],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
     "moduleNameMapper": {
       "^@/(.+)": "<rootDir>/src/$1",
       "^~/(.+)": "<rootDir>/$1"
@@ -67,11 +70,13 @@
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
         {
+          "useESM": true,
           "tsconfig": "tsconfig.test.json"
         }
       ]
     },
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "resolver": "ts-jest-resolver"
   },
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
@@ -103,6 +108,7 @@
     "lodash": "^4.17.21",
     "prettier": "^3.4.2",
     "ts-jest": "^29.2.5",
+    "ts-jest-resolver": "^2.0.1",
     "typedoc": "^0.26.11",
     "typescript": "5.4.5"
   }
