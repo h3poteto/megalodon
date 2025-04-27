@@ -36,7 +36,7 @@ export default defineConfig([{
         sourceType: "module",
 
         parserOptions: {
-            project: "./tsconfig.cjs.json",
+            project: "./tsconfig.esm.json",
         },
     },
 
