@@ -1,5 +1,6 @@
 node_modules
 lib
+dist
 example/typescript/dist
 example/webpack/dist
 example/vite/dist
