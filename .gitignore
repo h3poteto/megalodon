@@ -1,5 +1,6 @@
 node_modules
 lib
+!lib/**/package.json
 dist
 example/typescript/dist
 example/webpack/dist
