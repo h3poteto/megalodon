@@ -3,12 +3,13 @@
   "version": "10.1.1",
   "description": "Fediverse API client for node.js and browser",
   "type": "module",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && renamer --find .js --replace .cjs lib/**/*.js",
+    "build:esm": "tsc -p tsconfig.esm.json && renamer --find .js --replace .mjs lib/**/*.js",
     "lint": "eslint src --ext .ts,.js",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
@@ -22,12 +23,10 @@
   "exports": {
     ".": {
       "require": {
-        "types": "./lib/cjs/index.d.ts",
-        "default": "./lib/cjs/index.js"
+        "default": "./lib/index.cjs"
       },
       "import": {
-        "types": "./lib/esm/index.d.ts",
-        "default": "./lib/esm/index.js"
+        "default": "./lib/index.mjs"
       }
     }
   },
@@ -107,6 +106,7 @@
     "jest-worker": "^29.7.0",
     "lodash": "^4.17.21",
     "prettier": "^3.4.2",
+    "renamer": "^5.0.2",
     "ts-jest": "^29.2.5",
     "ts-jest-resolver": "^2.0.1",
     "typedoc": "^0.26.11",
