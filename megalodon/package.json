@@ -7,9 +7,10 @@
   "module": "./lib/index.mjs",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "tsc -p tsconfig.cjs.json && renamer --find .js --replace .cjs lib/**/*.js",
-    "build:esm": "tsc -p tsconfig.esm.json && renamer --find .js --replace .mjs lib/**/*.js",
+    "build": "yarn clean && yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json && renamer -f .js -r .cjs lib/**/*.js -s",
+    "build:esm": "tsc -p tsconfig.esm.json && renamer -f .js -r .mjs lib/**/*.js -s",
+    "clean": "rm -rf lib",
     "lint": "eslint src --ext .ts,.js",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
