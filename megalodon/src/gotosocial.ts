@@ -569,8 +569,8 @@ export default class Gotosocial implements MegalodonInterface {
         converted = Object.assign({}, converted, {
           data: [...converted.data, ...nextRes.data.map(a => GotosocialAPI.Converter.account(a))]
         })
-        if (nextRes.headers.link === undefined){
-          break;
+        if (nextRes.headers.link === undefined) {
+          break
         }
         parsed = parseLinkHeader(nextRes.headers.link)
         if (sleep_ms) {

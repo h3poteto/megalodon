@@ -1184,7 +1184,7 @@ export default class Firefish implements MegalodonInterface {
     const context: Entity.Context = {
       ancestors: (await ancestorsPromise).data.map(n => FirefishAPI.Converter.note(n)).reverse(),
       descendants: descendantsRes.data.map(n => FirefishAPI.Converter.note(n))
-    };
+    }
 
     return {
       ...descendantsRes,
