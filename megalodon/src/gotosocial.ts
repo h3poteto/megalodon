@@ -709,7 +709,7 @@ export default class Gotosocial implements MegalodonInterface {
         comment: note
       })
     }
-    return this.client.post<GotosocialAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`).then(res => {
+    return this.client.post<GotosocialAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`, params).then(res => {
       return Object.assign(res, {
         data: GotosocialAPI.Converter.relationship(res.data)
       })

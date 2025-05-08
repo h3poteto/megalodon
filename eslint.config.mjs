@@ -45,11 +45,13 @@ export default defineConfig([{
         "generator-star-spacing": 0,
         "no-debugger": 0,
         "no-unused-vars": "off",
-
+        "@typescript-eslint/no-empty-object-type": [
+            "error",
+            { "allowObjectTypes": "always" }
+        ],
         "@typescript-eslint/no-unused-vars": ["error", {
             argsIgnorePattern: "^_",
         }],
-
         camelcase: "off",
         "@typescript-eslint/camelcase": "off",
         "space-before-function-paren": "off",

@@ -1178,8 +1178,8 @@ export default class Firefish implements MegalodonInterface {
       }
     }
 
-    let ancestorsPromise = this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/children', paramsAncestors)
-    let descendantsRes = await this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/conversation', paramsDescendants)
+    const ancestorsPromise = this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/children', paramsAncestors)
+    const descendantsRes = await this.client.post<Array<FirefishAPI.Entity.Note>>('/api/notes/conversation', paramsDescendants)
 
     const context: Entity.Context = {
       ancestors: (await ancestorsPromise).data.map(n => FirefishAPI.Converter.note(n)).reverse(),
