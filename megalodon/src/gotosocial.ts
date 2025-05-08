@@ -569,8 +569,8 @@ export default class Gotosocial implements MegalodonInterface {
         converted = Object.assign({}, converted, {
           data: [...converted.data, ...nextRes.data.map(a => GotosocialAPI.Converter.account(a))]
         })
-        if (nextRes.headers.link === undefined){
-          break;
+        if (nextRes.headers.link === undefined) {
+          break
         }
         parsed = parseLinkHeader(nextRes.headers.link)
         if (sleep_ms) {
@@ -709,7 +709,7 @@ export default class Gotosocial implements MegalodonInterface {
         comment: note
       })
     }
-    return this.client.post<GotosocialAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`).then(res => {
+    return this.client.post<GotosocialAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`, params).then(res => {
       return Object.assign(res, {
         data: GotosocialAPI.Converter.relationship(res.data)
       })

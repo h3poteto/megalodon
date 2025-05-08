@@ -744,7 +744,7 @@ export default class Mastodon implements MegalodonInterface {
         comment: note
       })
     }
-    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`).then(res => {
+    return this.client.post<MastodonAPI.Entity.Relationship>(`/api/v1/accounts/${id}/note`, params).then(res => {
       return Object.assign(res, {
         data: MastodonAPI.Converter.relationship(res.data)
       })
