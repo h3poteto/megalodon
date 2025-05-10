@@ -2,11 +2,14 @@
   "name": "megalodon",
   "version": "10.1.1",
   "description": "Fediverse API client for node.js and browser",
-  "main": "./lib/src/index.js",
-  "typings": "./lib/src/index.d.ts",
-  "module": "./lib/esm/src/index.js",
+  "type": "module",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
-    "build": "tsc -p ./ && tsc -p tsconfig.mjs.json",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
     "lint": "eslint src --ext .ts,.js",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
@@ -15,9 +18,20 @@
     "node": ">=22.11.0"
   },
   "files": [
-    "/lib/src/**",
-    "/lib/esm/**"
+    "/lib"
   ],
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./lib/cjs/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      },
+      "import": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/esm/index.js"
+      }
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/h3poteto/megalodon.git"
@@ -42,6 +56,9 @@
       "ts",
       "js"
     ],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
     "moduleNameMapper": {
       "^@/(.+)": "<rootDir>/src/$1",
       "^~/(.+)": "<rootDir>/$1"
@@ -54,11 +71,13 @@
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.json"
+          "useESM": true,
+          "tsconfig": "tsconfig.test.json"
         }
       ]
     },
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "resolver": "ts-jest-resolver"
   },
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
@@ -90,6 +109,7 @@
     "lodash": "^4.17.21",
     "prettier": "^3.4.2",
     "ts-jest": "^29.2.5",
+    "ts-jest-resolver": "^2.0.1",
     "typedoc": "^0.26.11",
     "typescript": "5.4.5"
   }

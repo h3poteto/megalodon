@@ -1,7 +1,7 @@
-import { User } from './user'
-import { Emoji } from './emoji'
-import { File } from './file'
-import { Poll } from './poll'
+import { User } from './user.js'
+import { Emoji } from './emoji.js'
+import { File } from './file.js'
+import { Poll } from './poll.js'
 
 export type Note = {
   id: string

@@ -1,4 +1,4 @@
-import FirefishEntity from './entity'
+import FirefishEntity from './entity.js'
 
 namespace FirefishNotificationType {
   export const Follow: FirefishEntity.NotificationType = 'follow'

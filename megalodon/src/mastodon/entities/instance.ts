@@ -1,6 +1,6 @@
-import { URLs } from './urls'
-import { Stats } from './stats'
-import { Account } from './account'
+import { URLs } from './urls.js'
+import { Stats } from './stats.js'
+import { Account } from './account.js'
 
 export type Instance = {
   uri: string

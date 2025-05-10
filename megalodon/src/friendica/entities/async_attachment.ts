@@ -1,4 +1,4 @@
-import { Meta } from './attachment'
+import { Meta } from './attachment.js'
 
 export type AsyncAttachment = {
   id: string

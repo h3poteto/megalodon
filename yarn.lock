@@ -2899,18 +2899,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"example@workspace:example/typescript":
-  version: 0.0.0-use.local
-  resolution: "example@workspace:example/typescript"
-  dependencies:
-    "@types/node": "npm:^22.9.1"
-    eslint: "npm:^9.23.0"
-    log4js: "npm:^6.9.1"
-    megalodon: "npm:*"
-    typescript: "npm:5.4.5"
-  languageName: unknown
-  linkType: soft
-
 "execa@npm:^5.0.0":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
@@ -4068,7 +4056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-resolve@npm:^29.7.0":
+"jest-resolve@npm:^29.5.0, jest-resolve@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-resolve@npm:29.7.0"
   dependencies:
@@ -4605,6 +4593,7 @@ __metadata:
     object-assign-deep: "npm:^0.4.0"
     prettier: "npm:^3.4.2"
     ts-jest: "npm:^29.2.5"
+    ts-jest-resolver: "npm:^2.0.1"
     typedoc: "npm:^0.26.11"
     typescript: "npm:5.4.5"
     uuid: "npm:^11.0.3"
@@ -4909,6 +4898,30 @@ __metadata:
   checksum: 10/1a7948fea86f2b33ec766bc899c88796a51ba76a4afc9026764aedc6e7cde692a09067031e4a1bf6db4f978ccd99e7f5b6c03fe47ad9865c3d4f99050d67e002
   languageName: node
   linkType: hard
+
+"node-cjs@workspace:example/node-cjs":
+  version: 0.0.0-use.local
+  resolution: "node-cjs@workspace:example/node-cjs"
+  dependencies:
+    "@types/node": "npm:^22.9.1"
+    eslint: "npm:^9.23.0"
+    log4js: "npm:^6.9.1"
+    megalodon: "npm:*"
+    typescript: "npm:5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"node-esm@workspace:example/node-esm":
+  version: 0.0.0-use.local
+  resolution: "node-esm@workspace:example/node-esm"
+  dependencies:
+    "@types/node": "npm:^22.9.1"
+    eslint: "npm:^9.23.0"
+    log4js: "npm:^6.9.1"
+    megalodon: "npm:*"
+    typescript: "npm:5.4.5"
+  languageName: unknown
+  linkType: soft
 
 "node-gyp@npm:latest":
   version: 10.0.1
@@ -5983,6 +5996,15 @@ __metadata:
   peerDependencies:
     typescript: ">=4.8.4"
   checksum: 10/485bdf8bbba98d58712243d958f4fd44742bbe49e559cd77882fb426d866eec6dd05c67ef91935dc4f8a3c776f235859735e1f05be399e4dc9e7ffd580120974
+  languageName: node
+  linkType: hard
+
+"ts-jest-resolver@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "ts-jest-resolver@npm:2.0.1"
+  dependencies:
+    jest-resolve: "npm:^29.5.0"
+  checksum: 10/0845b9ab6a7d5c7b872e7573550607e9da1a2281c4db7a9d900c52b518bf5237ca265d56356b2ebb6d5aad705613e55e406c0eb66cad60ab2a303d17e6b0844e
   languageName: node
   linkType: hard
 

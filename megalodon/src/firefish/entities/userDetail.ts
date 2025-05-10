@@ -1,6 +1,6 @@
-import { Emoji } from './emoji'
-import { Note } from './note'
-import { Field } from './field'
+import { Emoji } from './emoji.js'
+import { Note } from './note.js'
+import { Field } from './field.js'
 
 export type UserDetail = {
   id: string

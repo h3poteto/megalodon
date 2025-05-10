@@ -1,14 +1,14 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
-import WebSocket from './web_socket'
-import Response from '../response'
-import { RequestCanceledError } from '../cancel'
-import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
-import FriendicaEntity from './entity'
-import MegalodonEntity from '../entity'
-import NotificationType, { UnknownNotificationTypeError } from '../notification'
-import FriendicaNotificationType from './notification'
+import WebSocket from './web_socket.js'
+import Response from '../response.js'
+import { RequestCanceledError } from '../cancel.js'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default.js'
+import FriendicaEntity from './entity.js'
+import MegalodonEntity from '../entity.js'
+import NotificationType, { UnknownNotificationTypeError } from '../notification.js'
+import FriendicaNotificationType from './notification.js'
 
 namespace FriendicaAPI {
   /**

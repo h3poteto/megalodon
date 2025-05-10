@@ -1,5 +1,5 @@
-import { User } from './user'
-import { Note } from './note'
+import { User } from './user.js'
+import { Note } from './note.js'
 
 export type Notification = {
   id: string

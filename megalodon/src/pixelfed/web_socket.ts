@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import { WebSocketInterface } from '../megalodon'
+import { WebSocketInterface } from '../megalodon.js'
 
 /**
  * Streaming

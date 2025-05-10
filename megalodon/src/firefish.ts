@@ -1,12 +1,12 @@
 import FormData from 'form-data'
-import FirefishAPI from './firefish/api_client'
-import { DEFAULT_UA } from './default'
-import OAuth from './oauth'
-import * as FirefishOAuth from './firefish/oauth'
-import Response from './response'
-import { MegalodonInterface, WebSocketInterface, NotImplementedError, ArgumentError, UnexpectedError } from './megalodon'
-import { UnknownNotificationTypeError } from './notification'
-import Entity from './entity'
+import FirefishAPI from './firefish/api_client.js'
+import { DEFAULT_UA } from './default.js'
+import OAuth from './oauth.js'
+import * as FirefishOAuth from './firefish/oauth.js'
+import Response from './response.js'
+import { MegalodonInterface, WebSocketInterface, NotImplementedError, ArgumentError, UnexpectedError } from './megalodon.js'
+import { UnknownNotificationTypeError } from './notification.js'
+import Entity from './entity.js'
 
 export default class Firefish implements MegalodonInterface {
   public client: FirefishAPI.Interface

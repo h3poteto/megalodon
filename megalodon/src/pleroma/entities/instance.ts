@@ -1,5 +1,5 @@
-import { URLs } from './urls'
-import { Stats } from './stats'
+import { URLs } from './urls.js'
+import { Stats } from './stats.js'
 
 export type Instance = {
   uri: string

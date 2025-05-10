@@ -1,0 +1,21 @@
+{
+  "name": "node-esm",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p ./",
+    "lint": "eslint --ext .js,.ts src"
+  },
+  "author": "h3poteto",
+  "license": "MIT",
+  "dependencies": {
+    "megalodon": "*",
+    "typescript": "5.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.1",
+    "eslint": "^9.23.0",
+    "log4js": "^6.9.1"
+  }
+}

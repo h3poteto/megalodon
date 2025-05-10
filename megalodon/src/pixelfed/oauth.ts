@@ -1,4 +1,4 @@
-import OAuth from '@/oauth'
+import OAuth from '@/oauth.js'
 
 export type AppDataFromServer = {
   id: string

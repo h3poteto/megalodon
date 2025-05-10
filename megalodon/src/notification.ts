@@ -1,4 +1,4 @@
-import Entity from './entity'
+import Entity from './entity.js'
 
 namespace NotificationType {
   export const Follow: Entity.NotificationType = 'follow'

@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "megalodon",
-    "example/typescript",
+    "example/node-cjs",
+    "example/node-esm",
     "example/webpack",
     "example/vite"
   ],

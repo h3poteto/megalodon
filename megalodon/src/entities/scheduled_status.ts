@@ -1,5 +1,5 @@
-import { StatusParams } from './status_params'
-import { Attachment } from './attachment'
+import { StatusParams } from './status_params.js'
+import { Attachment } from './attachment.js'
 
 export type ScheduledStatus = {
   id: string

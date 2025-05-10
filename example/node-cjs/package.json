@@ -1,7 +1,8 @@
 {
-  "name": "example",
+  "name": "node-cjs",
   "version": "4.0.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "build": "tsc -p ./",
     "lint": "eslint --ext .js,.ts src"

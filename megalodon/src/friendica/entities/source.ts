@@ -1,4 +1,4 @@
-import { Field } from './field'
+import { Field } from './field.js'
 
 export type Source = {
   privacy: string | null

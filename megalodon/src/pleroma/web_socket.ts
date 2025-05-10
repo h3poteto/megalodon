@@ -2,10 +2,10 @@ import WS from 'isomorphic-ws'
 import dayjs, { Dayjs } from 'dayjs'
 import { EventEmitter } from 'events'
 
-import { WebSocketInterface } from '../megalodon'
-import PleromaAPI from './api_client'
-import { UnknownNotificationTypeError } from '../notification'
-import { isBrowser } from '../default'
+import { WebSocketInterface } from '../megalodon.js'
+import PleromaAPI from './api_client.js'
+import { UnknownNotificationTypeError } from '../notification.js'
+import { isBrowser } from '../default.js'
 
 /**
  * WebSocket

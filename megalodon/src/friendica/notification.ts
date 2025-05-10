@@ -1,4 +1,4 @@
-import FriendicaEntity from './entity'
+import FriendicaEntity from './entity.js'
 
 namespace FriendicaNotificationType {
   export const Mention: FriendicaEntity.NotificationType = 'mention'

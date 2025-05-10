@@ -1,14 +1,14 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
-import MegalodonEntity from '../entity'
-import PleromaEntity from './entity'
-import Response from '../response'
-import { RequestCanceledError } from '../cancel'
-import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default'
-import WebSocket from './web_socket'
-import NotificationType, { UnknownNotificationTypeError } from '../notification'
-import PleromaNotificationType from './notification'
+import MegalodonEntity from '../entity.js'
+import PleromaEntity from './entity.js'
+import Response from '../response.js'
+import { RequestCanceledError } from '../cancel.js'
+import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from '../default.js'
+import WebSocket from './web_socket.js'
+import NotificationType, { UnknownNotificationTypeError } from '../notification.js'
+import PleromaNotificationType from './notification.js'
 
 namespace PleromaAPI {
   export namespace Entity {
