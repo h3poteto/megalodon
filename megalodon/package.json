@@ -110,7 +110,7 @@
     "prettier": "^3.4.2",
     "ts-jest": "^29.2.5",
     "ts-jest-resolver": "^2.0.1",
-    "typedoc": "^0.26.11",
+    "typedoc": "^0.28.5",
     "typescript": "5.4.5"
   }
 }
