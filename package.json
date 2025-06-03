@@ -7,9 +7,9 @@
     "example/webpack",
     "example/vite"
   ],
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.9.2",
   "engines": {
     "npm": "use yarn instead",
-    "yarn": "4.6.0"
+    "yarn": "4.9.2"
   }
 }
