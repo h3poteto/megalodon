@@ -1,6 +1,6 @@
 {
   "name": "megalodon",
-  "version": "10.1.1",
+  "version": "10.1.2",
   "description": "Fediverse API client for node.js and browser",
   "type": "module",
   "main": "./lib/cjs/index.js",
