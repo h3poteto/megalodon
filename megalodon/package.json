@@ -11,7 +11,7 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "lint": "eslint src --ext .ts,.js",
-    "doc": "typedoc --out ../docs ./src",
+    "doc": "typedoc --out ../docs ./src --tsconfig tsconfig.cjs.json",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
   },
   "engines": {
