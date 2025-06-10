@@ -14,7 +14,7 @@
     "typescript": "5.4.5"
   },
   "devDependencies": {
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.15.31",
     "eslint": "^9.23.0",
     "log4js": "^6.9.1"
   }
