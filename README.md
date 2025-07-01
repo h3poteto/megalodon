@@ -162,9 +162,7 @@ let clientSecret: string
 
 const client = generator('mastodon', BASE_URL)
 
-client.registerApp('Test App', {
-  scopes: ['read', 'write', 'follow']
-})
+client.registerApp('Test App', {})
   .then(appData => {
     clientId = appData.client_id
     clientSecret = appData.client_secret
