@@ -62,4 +62,4 @@ export type StatusTag = {
   url: string
 }
 
-export type StatusVisibility = 'public' | 'unlisted' | 'private' | 'direct'
+export type StatusVisibility = 'public' | 'unlisted' | 'private' | 'direct' | 'local'

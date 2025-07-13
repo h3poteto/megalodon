@@ -415,6 +415,7 @@ namespace MastodonAPI {
     export type Source = MastodonEntity.Source
     export type Stats = MastodonEntity.Stats
     export type Status = MastodonEntity.Status
+    export type StatusVisibility = MastodonEntity.StatusVisibility
     export type StatusParams = MastodonEntity.StatusParams
     export type StatusSource = MastodonEntity.StatusSource
     export type Tag = MastodonEntity.Tag
@@ -478,6 +479,34 @@ namespace MastodonAPI {
           return NotificationType.AdminReport
         default:
           return new UnknownNotificationTypeError()
+      }
+    }
+
+    export const visibility = (v: MastodonAPI.Entity.StatusVisibility): MegalodonEntity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+        case 'direct':
+          return 'direct'
+      }
+    }
+
+    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): MastodonAPI.Entity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+        case 'direct':
+          return 'direct'
+        case 'local':
+          return 'public'
       }
     }
 
@@ -579,7 +608,7 @@ namespace MastodonAPI {
       muted: s.muted,
       sensitive: s.sensitive,
       spoiler_text: s.spoiler_text,
-      visibility: s.visibility,
+      visibility: visibility(s.visibility),
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
       tags: s.tags,

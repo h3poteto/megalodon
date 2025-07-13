@@ -393,6 +393,7 @@ namespace PixelfedAPI {
     export type Source = PixelfedEntity.Source
     export type Stats = PixelfedEntity.Stats
     export type Status = PixelfedEntity.Status
+    export type StatusVisibility = PixelfedEntity.StatusVisibility
     export type StatusParams = PixelfedEntity.StatusParams
     export type Tag = PixelfedEntity.Tag
     export type Token = PixelfedEntity.Token
@@ -434,6 +435,34 @@ namespace PixelfedAPI {
           return NotificationType.FollowRequest
         default:
           return new UnknownNotificationTypeError()
+      }
+    }
+
+    export const visibility = (v: PixelfedAPI.Entity.StatusVisibility): MegalodonEntity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+        case 'direct':
+          return 'direct'
+      }
+    }
+
+    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): PixelfedAPI.Entity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+        case 'direct':
+          return 'direct'
+        case 'local':
+          return 'public'
       }
     }
 
@@ -592,7 +621,7 @@ namespace PixelfedAPI {
       muted: s.muted,
       sensitive: s.sensitive,
       spoiler_text: s.spoiler_text,
-      visibility: s.visibility,
+      visibility: visibility(s.visibility),
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
       tags: s.tags,
