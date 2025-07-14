@@ -82,7 +82,7 @@
   "homepage": "https://github.com/h3poteto/megalodon#readme",
   "dependencies": {
     "@badgateway/oauth2-client": "^2.4.2",
-    "@types/ws": "^8.5.13",
+    "@types/ws": "^8.18.1",
     "axios": "1.10.0",
     "dayjs": "^1.11.13",
     "events": "^3.3.0",
@@ -90,7 +90,7 @@
     "isomorphic-ws": "^5.0.0",
     "object-assign-deep": "^0.4.0",
     "uuid": "^11.1.0",
-    "ws": "8.18.0"
+    "ws": "8.18.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
