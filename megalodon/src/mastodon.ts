@@ -1607,7 +1607,7 @@ export default class Mastodon implements MegalodonInterface {
       }
       if (options.visibility) {
         params = Object.assign(params, {
-          visibility: options.visibility
+          visibility: MastodonAPI.Converter.encodeVisibility(options.visibility)
         })
       }
       if (options.scheduled_at && dayjs(options.scheduled_at).diff(dayjs(), 'seconds') > 300) {

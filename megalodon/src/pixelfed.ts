@@ -1577,7 +1577,7 @@ export default class Pixelfed implements MegalodonInterface {
       }
       if (options.visibility) {
         params = Object.assign(params, {
-          visibility: options.visibility
+          visibility: PixelfedAPI.Converter.encodeVisibility(options.visibility)
         })
       }
       if (options.scheduled_at && dayjs(options.scheduled_at).diff(dayjs(), 'seconds') > 300) {

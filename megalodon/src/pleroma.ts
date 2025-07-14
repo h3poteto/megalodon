@@ -1582,7 +1582,7 @@ export default class Pleroma implements MegalodonInterface {
       }
       if (options.visibility) {
         params = Object.assign(params, {
-          visibility: options.visibility
+          visibility: PleromaAPI.Converter.encodeVisibility(options.visibility)
         })
       }
       if (options.scheduled_at) {

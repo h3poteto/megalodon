@@ -474,6 +474,17 @@ namespace FriendicaAPI {
       }
     }
 
+    export const visibility = (v: FriendicaAPI.Entity.StatusVisibility): MegalodonEntity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+      }
+    }
+
     export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): FriendicaAPI.Entity.StatusVisibility => {
       switch (v) {
         case 'public':
@@ -483,6 +494,8 @@ namespace FriendicaAPI {
         case 'direct':
         case 'private':
           return 'private'
+        default:
+          return 'public'
       }
     }
 
@@ -690,7 +703,7 @@ namespace FriendicaAPI {
       muted: s.muted,
       sensitive: s.sensitive,
       spoiler_text: s.spoiler_text,
-      visibility: s.visibility,
+      visibility: visibility(s.visibility),
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
       tags: s.tags,
@@ -710,7 +723,7 @@ namespace FriendicaAPI {
         media_ids: s.media_ids,
         sensitive: s.sensitive,
         spoiler_text: s.spoiler_text,
-        visibility: s.visibility,
+        visibility: s.visibility ? visibility(s.visibility) : null,
         scheduled_at: s.scheduled_at,
         application_id: parseInt(s.application_id)
       }

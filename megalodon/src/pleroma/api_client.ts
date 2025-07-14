@@ -44,6 +44,7 @@ namespace PleromaAPI {
     export type Source = PleromaEntity.Source
     export type Stats = PleromaEntity.Stats
     export type Status = PleromaEntity.Status
+    export type StatusVisibility = PleromaEntity.StatusVisibility
     export type StatusParams = PleromaEntity.StatusParams
     export type StatusSource = PleromaEntity.StatusSource
     export type Tag = PleromaEntity.Tag
@@ -106,6 +107,36 @@ namespace PleromaAPI {
           return PleromaNotificationType.Status
         default:
           return new UnknownNotificationTypeError()
+      }
+    }
+
+    export const visibility = (v: PleromaAPI.Entity.StatusVisibility): MegalodonEntity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+        case 'direct':
+          return 'direct'
+        case 'local':
+          return 'local'
+      }
+    }
+
+    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): PleromaAPI.Entity.StatusVisibility => {
+      switch (v) {
+        case 'public':
+          return 'public'
+        case 'unlisted':
+          return 'unlisted'
+        case 'private':
+          return 'private'
+        case 'direct':
+          return 'direct'
+        case 'local':
+          return 'local'
       }
     }
 
@@ -399,7 +430,7 @@ namespace PleromaAPI {
       muted: s.muted,
       sensitive: s.sensitive,
       spoiler_text: s.spoiler_text,
-      visibility: s.visibility,
+      visibility: visibility(s.visibility),
       media_attachments: Array.isArray(s.media_attachments) ? s.media_attachments.map(m => attachment(m)) : [],
       mentions: Array.isArray(s.mentions) ? s.mentions.map(m => mention(m)) : [],
       tags: s.tags,
@@ -419,7 +450,7 @@ namespace PleromaAPI {
         media_ids: Array.isArray(s.media_ids) ? s.media_ids : null,
         sensitive: s.sensitive,
         spoiler_text: s.spoiler_text,
-        visibility: s.visibility,
+        visibility: s.visibility ? visibility(s.visibility) : null,
         scheduled_at: s.scheduled_at,
         application_id: null
       }

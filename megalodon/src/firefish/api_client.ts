@@ -179,7 +179,7 @@ namespace FirefishAPI {
         case 'specified':
           return 'direct'
         case 'hidden':
-          return 'direct'
+          return 'local'
         default:
           return 'public'
       }
@@ -195,6 +195,8 @@ namespace FirefishAPI {
           return 'followers'
         case 'direct':
           return 'specified'
+        case 'local':
+          return 'hidden'
       }
     }
 
