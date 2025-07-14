@@ -623,10 +623,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@badgateway/oauth2-client@npm:^2.4.2":
-  version: 2.4.2
-  resolution: "@badgateway/oauth2-client@npm:2.4.2"
-  checksum: 10/ae897202a4701fefcbfdcb173a3d58b418eafdd91f14630dc99e16e8ba066b45a060afff69dd299f223798fe79aa0be9c29f8e62b6b484b70f0bbacc347f45ce
+"@badgateway/oauth2-client@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@badgateway/oauth2-client@npm:3.2.0"
+  checksum: 10/321f35b410062de01ea71b0c6b5090c2844d0735a4b91cb450a65f97dd195c214cc561b719c5f441050cf69ce9ea0c461f3b70c5e04caca0ed6bedfdb17bf525
   languageName: node
   linkType: hard
 
@@ -5389,7 +5389,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "megalodon@workspace:megalodon"
   dependencies:
-    "@badgateway/oauth2-client": "npm:^2.4.2"
+    "@badgateway/oauth2-client": "npm:^3.2.0"
     "@eslint/eslintrc": "npm:^3.3.1"
     "@eslint/js": "npm:^9.31.0"
     "@types/jest": "npm:^30.0.0"
