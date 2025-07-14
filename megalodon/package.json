@@ -108,7 +108,7 @@
     "jest-worker": "^29.7.0",
     "lodash": "^4.17.21",
     "prettier": "^3.6.2",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.4.0",
     "ts-jest-resolver": "^2.0.1",
     "typedoc": "^0.26.11",
     "typescript": "5.4.5"
