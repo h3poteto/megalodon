@@ -3926,10 +3926,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^16.3.0":
-  version: 16.3.0
-  resolution: "globals@npm:16.3.0"
-  checksum: 10/accb0939d993a1c461df8d961ce9911a9a96120929e0a61057ae8e75b7df0a8bf8089da0f4e3a476db0211156416fbd26e222a56f74b389a140b34481c0a72b0
+"globals@npm:^16.5.0":
+  version: 16.5.0
+  resolution: "globals@npm:16.5.0"
+  checksum: 10/f9e8a2a13f50222c127030a619e283e7bbfe32966316bdde0715af1d15a7e40cb9c24ff52cad59671f97762ed8b515353c2f8674f560c63d9385f19ee26735a6
   languageName: node
   linkType: hard
 
@@ -5301,7 +5301,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.2.1"
     events: "npm:^3.3.0"
     form-data: "npm:^4.0.3"
-    globals: "npm:^16.3.0"
+    globals: "npm:^16.5.0"
     isomorphic-ws: "npm:^5.0.0"
     jest: "npm:^30.0.4"
     jest-worker: "npm:^30.0.2"
