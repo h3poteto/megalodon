@@ -1342,6 +1342,7 @@ export default class Gotosocial implements MegalodonInterface {
    * @param options.scheduled_at ISO 8601 Datetime at which to schedule a status.
    * @param options.language ISO 639 language code for this status.
    * @param options.quote_id ID of the status being quoted to, if status is a quote.
+   * @param options.content_type Content type to use when parsing this status.
    * @return Status. When options.scheduled_at is present, ScheduledStatus is returned instead.
    */
   public async postStatus(
@@ -1356,6 +1357,7 @@ export default class Gotosocial implements MegalodonInterface {
       scheduled_at?: string
       language?: string
       quote_id?: string
+      content_type?: string
     }
   ): Promise<Response<Entity.Status | Entity.ScheduledStatus>> {
     let params = {
@@ -1416,6 +1418,11 @@ export default class Gotosocial implements MegalodonInterface {
       if (options.language) {
         params = Object.assign(params, {
           language: options.language
+        })
+      }
+      if (options.content_type) {
+        params = Object.assign(params, {
+          content_type: options.content_type
         })
       }
     }
