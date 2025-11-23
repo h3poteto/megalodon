@@ -6,6 +6,8 @@ import { Mention } from './mention.js'
 import { Reaction } from './reaction.js'
 import { Card } from './card.js'
 import { Poll } from './poll.js'
+import { QuotedStatus } from './quote.js'
+import { QuoteApproval } from './quote_approval.js'
 
 export type Status = {
   id: string
@@ -38,7 +40,8 @@ export type Status = {
   language: string | null
   pinned: boolean | null
   emoji_reactions: Array<Reaction>
-  quote: boolean
+  quote: QuotedStatus | null
+  quote_approval: QuoteApproval
   bookmarked: boolean
 }
 
