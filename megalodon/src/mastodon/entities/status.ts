@@ -5,6 +5,8 @@ import { Mention } from './mention.js'
 import { Emoji } from './emoji.js'
 import { Card } from './card.js'
 import { Poll } from './poll.js'
+import { QuotedStatus } from './quote.js'
+import { QuoteApproval } from './quote_approval.js'
 
 export type Status = {
   id: string
@@ -35,10 +37,9 @@ export type Status = {
   application: Application | null
   language: string | null
   pinned: boolean | null
+  quote: QuotedStatus | null
+  quote_approval: QuoteApproval
   bookmarked?: boolean
-  // These parameters are unique parameters in fedibird.com for quote.
-  quote_id?: string
-  quote?: Status | null
 }
 
 export type StatusTag = {

@@ -421,6 +421,10 @@ namespace MastodonAPI {
     export type Tag = MastodonEntity.Tag
     export type Token = MastodonEntity.Token
     export type URLs = MastodonEntity.URLs
+    export type ShallowQuote = MastodonEntity.ShallowQuote
+    export type QuotedStatus = MastodonEntity.QuotedStatus
+    export type Quote = MastodonEntity.Quote
+    export type QuoteApproval = MastodonEntity.QuoteApproval
   }
 
   export namespace Converter {
@@ -594,7 +598,7 @@ namespace MastodonAPI {
       account: account(s.account),
       in_reply_to_id: s.in_reply_to_id,
       in_reply_to_account_id: s.in_reply_to_account_id,
-      reblog: s.reblog ? status(s.reblog) : s.quote ? status(s.quote) : null,
+      reblog: s.reblog ? status(s.reblog) : null,
       content: s.content,
       plain_content: null,
       created_at: s.created_at,
@@ -619,14 +623,27 @@ namespace MastodonAPI {
       pinned: s.pinned,
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      // Now quote is supported only fedibird.com.
-      quote: s.quote !== undefined && s.quote !== null
+      quote: s.quote ? quote(s.quote) : null,
+      quote_approval: s.quote_approval
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
     export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
+    export const quote = (q: Entity.QuotedStatus): MegalodonEntity.QuotedStatus => {
+      if ('quoted_status' in q) {
+        return {
+          state: q.state,
+          quoted_status: q.quoted_status ? status(q.quoted_status) : null
+        }
+      } else {
+        return {
+          state: q.state,
+          quoted_status_id: q.quoted_status_id
+        }
+      }
+    }
   }
 }
 export default MastodonAPI
