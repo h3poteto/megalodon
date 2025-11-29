@@ -54,6 +54,9 @@ export type Status = {
     parent_visible?: boolean
     pinned_at?: string
     thread_muted?: boolean
+    quote: Status | null
+    quote_url: string | null
+    quote_id: string | null
   }
 }
 

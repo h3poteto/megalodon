@@ -441,7 +441,12 @@ namespace PleromaAPI {
       pinned: s.pinned,
       emoji_reactions: Array.isArray(s.pleroma.emoji_reactions) ? s.pleroma.emoji_reactions.map(r => reaction(r)) : [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      quote: s.reblog !== null && s.reblog.content !== s.content
+      quote: quote(s),
+      quote_approval: {
+        automatic: ['unsupported_policy'],
+        manual: [],
+        current_user: 'automatic'
+      }
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => {
       return {
@@ -459,6 +464,21 @@ namespace PleromaAPI {
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => t
     export const token = (t: Entity.Token): MegalodonEntity.Token => t
     export const urls = (u: Entity.URLs): MegalodonEntity.URLs => u
+    export const quote = (s: Entity.Status): MegalodonEntity.QuotedStatus | null => {
+      if (s.pleroma.quote) {
+        return {
+          state: 'accepted',
+          quoted_status: status(s.pleroma.quote)
+        }
+      } else if (s.pleroma.quote_id) {
+        return {
+          state: 'accepted',
+          quoted_status_id: s.pleroma.quote_id
+        }
+      } else {
+        return null
+      }
+    }
   }
 
   /**

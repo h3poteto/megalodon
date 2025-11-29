@@ -35,9 +35,6 @@ export type Status = {
   language: string | null
   pinned: boolean | null
   bookmarked?: boolean
-  // These parameters are unique parameters in fedibird.com for quote.
-  quote_id?: string
-  quote?: Status | null
 }
 
 export type StatusTag = {

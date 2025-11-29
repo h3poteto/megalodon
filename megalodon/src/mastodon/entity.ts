@@ -34,6 +34,8 @@ import * as status_source from './entities/status_source.js'
 import * as tag from './entities/tag.js'
 import * as token from './entities/token.js'
 import * as urls from './entities/urls.js'
+import * as quote from './entities/quote.js'
+import * as quote_approval from './entities/quote_approval.js'
 
 export namespace Entity {
   export type Account = account.Account
@@ -76,6 +78,11 @@ export namespace Entity {
   export type Tag = tag.Tag
   export type Token = token.Token
   export type URLs = urls.URLs
+  export type Quote = quote.Quote
+  export type ShallowQuote = quote.ShallowQuote
+  export type QuotedStatus = quote.QuotedStatus
+  export type QuoteState = quote.QuoteState
+  export type QuoteApproval = quote_approval.QuoteApproval
 }
 
 export default Entity

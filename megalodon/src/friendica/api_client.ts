@@ -689,7 +689,7 @@ namespace FriendicaAPI {
       account: account(s.account),
       in_reply_to_id: s.in_reply_to_id,
       in_reply_to_account_id: s.in_reply_to_account_id,
-      reblog: s.reblog ? status(s.reblog) : s.quote ? status(s.quote) : null,
+      reblog: s.reblog ? status(s.reblog) : null,
       content: s.content,
       plain_content: null,
       created_at: s.created_at,
@@ -714,7 +714,12 @@ namespace FriendicaAPI {
       pinned: s.pinned,
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      quote: false
+      quote: null,
+      quote_approval: {
+        automatic: ['unsupported_policy'],
+        manual: [],
+        current_user: 'automatic'
+      }
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => {
       return {

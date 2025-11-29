@@ -325,7 +325,23 @@ namespace FirefishAPI {
         // Use emojis list to provide URLs for emoji reactions.
         emoji_reactions: mapReactions(n.emojis ? n.emojis : [], n.reactions, n.myReaction),
         bookmarked: false,
-        quote: n.renote !== undefined && n.text !== null
+        quote: quote(n),
+        quote_approval: {
+          automatic: ['unsupported_policy'],
+          manual: [],
+          current_user: 'automatic'
+        }
+      }
+    }
+
+    export const quote = (n: Entity.Note): MegalodonEntity.QuotedStatus | null => {
+      if (n.renote !== undefined && n.text !== null) {
+        return {
+          state: 'accepted',
+          quoted_status: note(n.renote)
+        }
+      } else {
+        return null
       }
     }
 
