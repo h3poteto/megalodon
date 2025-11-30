@@ -72,7 +72,10 @@ const status: PleromaEntity.Status = {
   pinned: null,
   bookmarked: false,
   pleroma: {
-    local: false
+    local: false,
+    quote: null,
+    quote_url: null,
+    quote_id: null
   }
 }
 
