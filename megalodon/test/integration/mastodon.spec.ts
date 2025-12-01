@@ -71,7 +71,13 @@ const status: MastodonEntity.Status = {
   } as MastodonEntity.Application,
   language: null,
   pinned: null,
-  bookmarked: false
+  bookmarked: false,
+  quote: null,
+  quote_approval: {
+    automatic: [],
+    manual: [],
+    current_user: 'denied'
+  }
 }
 
 const follow: MastodonEntity.Notification = {

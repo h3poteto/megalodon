@@ -683,7 +683,12 @@ namespace GotosocialAPI {
       pinned: s.pinned,
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
-      quote: false
+      quote: null,
+      quote_approval: {
+        automatic: ['unsupported_policy'],
+        manual: [],
+        current_user: 'automatic'
+      }
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const tag = (t: Entity.Tag): MegalodonEntity.Tag => ({

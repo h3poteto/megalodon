@@ -61,7 +61,12 @@ const status: Entity.Status = {
   pinned: null,
   emoji_reactions: [],
   bookmarked: false,
-  quote: false
+  quote: null,
+  quote_approval: {
+    automatic: [],
+    manual: [],
+    current_user: 'denied'
+  }
 }
 
 const notification: Entity.Notification = {

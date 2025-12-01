@@ -179,7 +179,10 @@ describe('api_client', () => {
             content: {
               'text/plain': plainContent
             },
-            local: false
+            local: false,
+            quote: null,
+            quote_url: null,
+            quote_id: null
           }
         }
         const megalodonStatus = PleromaAPI.Converter.status(pleromaStatus)
@@ -224,7 +227,10 @@ describe('api_client', () => {
           pinned: null,
           bookmarked: false,
           pleroma: {
-            local: false
+            local: false,
+            quote: null,
+            quote_url: null,
+            quote_id: null
           }
         }
         const megalodonStatus = PleromaAPI.Converter.status(pleromaStatus)
