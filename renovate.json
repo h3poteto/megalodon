@@ -12,15 +12,5 @@
     "rangeStrategy": "update-lockfile",
     "commitMessagePrefix": "[SECURITY]"
   },
-  "packageRules": [
-    {
-      "matchVulnerabilityAlerts": true,
-      "prPriority": 100
-    },
-    {
-      "matchVulnerabilityAlerts": false,
-      "prPriority": 1,
-      "prConcurrentLimit": 20
-    }
-  ]
+  "osvVulnerabilityAlerts": true
 }
