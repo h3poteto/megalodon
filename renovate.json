@@ -2,5 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "prConcurrentLimit": 20,
-  "prHourlyLimit": 0
+  "prHourlyLimit": 0,
+  "osvVulnerabilityAlerts": true
 }
