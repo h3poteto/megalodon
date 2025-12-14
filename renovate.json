@@ -1,16 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "rangeStrategy": "bump",
   "prConcurrentLimit": 20,
-  "prHourlyLimit": 0,
-  "vulnerabilityAlerts": {
-    "enabled": true,
-    "labels": ["security"],
-    "schedule": ["at any time"],
-    "prConcurrentLimit": null,
-    "rangeStrategy": "update-lockfile",
-    "commitMessagePrefix": "[SECURITY]"
-  },
-  "osvVulnerabilityAlerts": true
+  "prHourlyLimit": 0
 }
