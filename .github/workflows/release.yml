@@ -9,29 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js 22.x
-      uses: actions/setup-node@v6
-      with:
-        node-version: '22.21.1'
-        registry-url: 'https://registry.npmjs.org'
-    - name: Copy README
-      run: |
-        cp README.md ./megalodon/
-        cp LICENSE.txt ./megalodon/
-    - name: Install dependencies
-      run: |
-        yarn install
-    - name: Build
-      run: |
-        yarn workspace megalodon run build
-    # refs: https://github.com/actions/setup-node/issues/942#issuecomment-1920476219
-    - name: Authentication
-      run: |
-        echo npmAuthToken: "$NODE_AUTH_TOKEN" >> ./.yarnrc.yml
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-    - name: Publish
-      run: |
-        yarn workspace megalodon npm publish
-
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.21.1'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Copy README
+        run: |
+          cp README.md ./megalodon/
+          cp LICENSE.txt ./megalodon/
+      - name: Install dependencies
+        run: |
+          yarn install
+      - name: Build
+        run: |
+          yarn workspace megalodon run build
+      - name: Publish
+        run: |
+          yarn workspace megalodon npm publish --provenance --access public
