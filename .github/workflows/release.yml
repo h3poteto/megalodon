@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   release:
     runs-on: ubuntu-latest
