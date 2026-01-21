@@ -105,7 +105,7 @@
     "globals": "^16.5.0",
     "jest": "^30.0.4",
     "jest-worker": "^30.0.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.0",
     "ts-jest-resolver": "^2.0.1",
