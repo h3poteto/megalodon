@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios'
 import objectAssignDeep from 'object-assign-deep'
 
 import Streaming from './web_socket.js'
@@ -41,18 +41,24 @@ namespace GotosocialAPI {
     private baseUrl: string
     private userAgent: string
     private abortController: AbortController
+    private axios: AxiosInstance
 
     /**
      * @param baseUrl hostname or base URL
      * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
+     * @param axiosInstance Optional custom axios instance for custom adapters.
      */
-    constructor(baseUrl: string, accessToken: string | null = null, userAgent: string = DEFAULT_UA) {
+    constructor(baseUrl: string, accessToken: string | null = null, userAgent: string = DEFAULT_UA, axiosInstance?: AxiosInstance) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
       this.abortController = new AbortController()
-      axios.defaults.signal = this.abortController.signal
+      this.axios = axiosInstance || axios.create()
+      // Set the signal only if not already configured by the user
+      if (!this.axios.defaults.signal) {
+        this.axios.defaults.signal = this.abortController.signal
+      }
     }
 
     /**
@@ -80,7 +86,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios
+      return this.axios
         .get<T>((pathIsFullyQualified ? '' : this.baseUrl) + path, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {
@@ -119,7 +125,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios
+      return this.axios
         .put<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {
@@ -158,7 +164,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios
+      return this.axios
         .putForm<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {
@@ -197,7 +203,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios
+      return this.axios
         .patch<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {
@@ -236,7 +242,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios
+      return this.axios
         .patchForm<T>(this.baseUrl + path, params, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {
@@ -275,7 +281,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
+      return this.axios.post<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
           status: resp.status,
@@ -305,7 +311,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios.postForm<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
+      return this.axios.postForm<T>(this.baseUrl + path, params, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
           status: resp.status,
@@ -336,7 +342,7 @@ namespace GotosocialAPI {
           }
         })
       }
-      return axios
+      return this.axios
         .delete(this.baseUrl + path, options)
         .catch((err: Error) => {
           if (axios.isCancel(err)) {

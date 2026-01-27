@@ -1,3 +1,5 @@
+import { AxiosInstance } from 'axios'
+
 import Response from './response.js'
 import OAuth from './oauth.js'
 import Pleroma from './pleroma.js'
@@ -1441,37 +1443,39 @@ export class NodeinfoError extends Error {
  * @param baseUrl hostname or base URL.
  * @param accessToken access token from OAuth2 authorization
  * @param userAgent UserAgent is specified in header on request.
+ * @param axiosInstance Optional custom axios instance for custom adapters.
  * @return Client instance for each SNS you specified.
  */
 const generator = (
   sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed',
   baseUrl: string,
   accessToken: string | null = null,
-  userAgent: string | null = null
+  userAgent: string | null = null,
+  axiosInstance?: AxiosInstance
 ): MegalodonInterface => {
   switch (sns) {
     case 'pleroma': {
-      const pleroma = new Pleroma(baseUrl, accessToken, userAgent)
+      const pleroma = new Pleroma(baseUrl, accessToken, userAgent, axiosInstance)
       return pleroma
     }
     case 'friendica': {
-      const friendica = new Friendica(baseUrl, accessToken, userAgent)
+      const friendica = new Friendica(baseUrl, accessToken, userAgent, axiosInstance)
       return friendica
     }
     case 'mastodon': {
-      const mastodon = new Mastodon(baseUrl, accessToken, userAgent)
+      const mastodon = new Mastodon(baseUrl, accessToken, userAgent, axiosInstance)
       return mastodon
     }
     case 'firefish': {
-      const firefish = new Firefish(baseUrl, accessToken, userAgent)
+      const firefish = new Firefish(baseUrl, accessToken, userAgent, axiosInstance)
       return firefish
     }
     case 'gotosocial': {
-      const gotosocial = new Gotosocial(baseUrl, accessToken, userAgent)
+      const gotosocial = new Gotosocial(baseUrl, accessToken, userAgent, axiosInstance)
       return gotosocial
     }
     case 'pixelfed': {
-      const pixelfed = new Pixelfed(baseUrl, accessToken, userAgent)
+      const pixelfed = new Pixelfed(baseUrl, accessToken, userAgent, axiosInstance)
       return pixelfed
     }
   }

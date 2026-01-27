@@ -1,6 +1,7 @@
 import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
 import dayjs from 'dayjs'
+import { AxiosInstance } from 'axios'
 
 import { parseLinkHeader } from './parse_link_header.js'
 import GotosocialAPI from './gotosocial/api_client.js'
@@ -21,8 +22,14 @@ export default class Gotosocial implements MegalodonInterface {
    * @param baseUrl hostname or base URL
    * @param accessToken access token from OAuth2 authorization
    * @param userAgent UserAgent is specified in header on request.
+   * @param axiosInstance Optional custom axios instance for custom adapters.
    */
-  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA) {
+  constructor(
+    baseUrl: string,
+    accessToken: string | null = null,
+    userAgent: string | null = DEFAULT_UA,
+    axiosInstance?: AxiosInstance
+  ) {
     let token: string = ''
     if (accessToken) {
       token = accessToken
@@ -31,7 +38,7 @@ export default class Gotosocial implements MegalodonInterface {
     if (userAgent) {
       agent = userAgent
     }
-    this.client = new GotosocialAPI.Client(baseUrl, token, agent)
+    this.client = new GotosocialAPI.Client(baseUrl, token, agent, axiosInstance)
     this.baseUrl = baseUrl
   }
 
