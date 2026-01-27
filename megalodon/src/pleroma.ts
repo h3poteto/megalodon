@@ -7,7 +7,6 @@ import WebSocket from './pleroma/web_socket.js'
 import { MegalodonInterface, NotImplementedError, ArgumentError } from './megalodon.js'
 import Response from './response.js'
 import Entity from './entity.js'
-
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default.js'
 import OAuth from './oauth.js'
 import * as PleromaOAuth from './pleroma/oauth.js'
@@ -23,12 +22,7 @@ export default class Pleroma implements MegalodonInterface {
    * @param userAgent UserAgent is specified in header on request.
    * @param axiosInstance Optional custom axios instance for custom adapters.
    */
-  constructor(
-    baseUrl: string,
-    accessToken: string | null = null,
-    userAgent: string | null = DEFAULT_UA,
-    axiosInstance?: AxiosInstance
-  ) {
+  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA, axiosInstance?: AxiosInstance) {
     let token: string = ''
     if (accessToken) {
       token = accessToken

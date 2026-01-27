@@ -24,12 +24,7 @@ export default class Gotosocial implements MegalodonInterface {
    * @param userAgent UserAgent is specified in header on request.
    * @param axiosInstance Optional custom axios instance for custom adapters.
    */
-  constructor(
-    baseUrl: string,
-    accessToken: string | null = null,
-    userAgent: string | null = DEFAULT_UA,
-    axiosInstance?: AxiosInstance
-  ) {
+  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA, axiosInstance?: AxiosInstance) {
     let token: string = ''
     if (accessToken) {
       token = accessToken
