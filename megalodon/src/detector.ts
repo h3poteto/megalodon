@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { NodeinfoError } from './megalodon.js'
 
 const NODEINFO_10 = 'http://nodeinfo.diaspora.software/ns/schema/1.0'
@@ -45,19 +45,24 @@ type Metadata = {
  *
  * @param url Base URL of SNS.
  * @param proxyConfig Proxy setting, or set false if don't use proxy.
+ * @param axiosInstance Optional custom axios instance for custom adapters.
  * @return SNS name.
  */
-export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed'> => {
-  const options: AxiosRequestConfig = {
-    timeout: 20000
-  }
-
-  const res = await axios.get<Links>(url + '/.well-known/nodeinfo', options)
+export const detector = async (
+  url: string,
+  axiosInstance?: AxiosInstance
+): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed'> => {
+  const instance =
+    axiosInstance ||
+    axios.create({
+      timeout: 20000
+    })
+  const res = await instance.get<Links>(url + '/.well-known/nodeinfo')
   const link = res.data.links.find(l => l.rel === NODEINFO_20 || l.rel === NODEINFO_21)
   if (!link) throw new NodeinfoError('Could not find nodeinfo')
   switch (link.rel) {
     case NODEINFO_10: {
-      const res = await axios.get<Nodeinfo10>(link.href, options)
+      const res = await instance.get<Nodeinfo10>(link.href)
       switch (res.data.software.name) {
         case 'akkoma':
           return 'pleroma'
@@ -87,7 +92,7 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
       }
     }
     case NODEINFO_20: {
-      const res = await axios.get<Nodeinfo20>(link.href, options)
+      const res = await instance.get<Nodeinfo20>(link.href)
       switch (res.data.software.name) {
         case 'akkoma':
           return 'pleroma'
@@ -117,7 +122,7 @@ export const detector = async (url: string): Promise<'mastodon' | 'pleroma' | 'f
       }
     }
     case NODEINFO_21: {
-      const res = await axios.get<Nodeinfo21>(link.href, options)
+      const res = await instance.get<Nodeinfo21>(link.href)
       switch (res.data.software.name) {
         case 'akkoma':
           return 'pleroma'
