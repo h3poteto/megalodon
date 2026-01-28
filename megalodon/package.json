@@ -90,7 +90,7 @@
     "isomorphic-ws": "^5.0.0",
     "object-assign-deep": "^0.4.0",
     "uuid": "^11.1.0",
-    "ws": "8.18.3"
+    "ws": "8.19.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
