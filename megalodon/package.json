@@ -1,6 +1,6 @@
 {
   "name": "megalodon",
-  "version": "10.2.0",
+  "version": "10.2.1",
   "description": "Fediverse API client for node.js and browser",
   "type": "module",
   "main": "./lib/cjs/index.js",
@@ -17,9 +17,7 @@
   "engines": {
     "node": ">=22.21.1"
   },
-  "files": [
-    "/lib"
-  ],
+  "files": ["/lib"],
   "exports": {
     ".": {
       "require": {
@@ -36,36 +34,20 @@
     "type": "git",
     "url": "git+https://github.com/h3poteto/megalodon.git"
   },
-  "keywords": [
-    "mastodon",
-    "client",
-    "api",
-    "streaming",
-    "rest",
-    "activitypub",
-    "federated",
-    "fediverse"
-  ],
+  "keywords": ["mastodon", "client", "api", "streaming", "rest", "activitypub", "federated", "fediverse"],
   "author": "h3poteto",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/h3poteto/megalodon/issues"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ],
+    "moduleFileExtensions": ["ts", "js"],
+    "extensionsToTreatAsEsm": [".ts"],
     "moduleNameMapper": {
       "^@/(.+)": "<rootDir>/src/$1",
       "^~/(.+)": "<rootDir>/$1"
     },
-    "testMatch": [
-      "**/test/**/*.spec.ts"
-    ],
+    "testMatch": ["**/test/**/*.spec.ts"],
     "preset": "ts-jest/presets/default",
     "transform": {
       "^.+\\.(ts|tsx)$": [
