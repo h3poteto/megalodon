@@ -7,6 +7,25 @@ import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosHeaders } from '
 
 jest.mock('axios')
 
+const mockGet = jest.fn()
+const mockPost = jest.fn()
+const mockPut = jest.fn()
+const mockPatch = jest.fn()
+const mockDelete = jest.fn()
+
+const mockAxiosInstance = {
+  defaults: {
+    signal: undefined
+  },
+  get: mockGet,
+  post: mockPost,
+  put: mockPut,
+  patch: mockPatch,
+  delete: mockDelete
+}
+
+;(axios.create as any) = jest.fn(() => mockAxiosInstance)
+
 const account: MastodonEntity.Account = {
   id: '1',
   username: 'h3poteto',
@@ -203,7 +222,7 @@ describe('getNotifications', () => {
         headers: {},
         config: config
       }
-      ;(axios.get as any).mockResolvedValue(mockResponse)
+      mockGet.mockResolvedValue(mockResponse)
       const res = await client.getNotifications()
       expect(res.data[0].type).toEqual(c.expected)
     })
@@ -219,7 +238,7 @@ describe('getNotifications', () => {
       headers: {},
       config: config
     }
-    ;(axios.get as any).mockResolvedValue(mockResponse)
+    mockGet.mockResolvedValue(mockResponse)
     const res = await client.getNotifications()
     expect(res.data).toEqual([])
   })
