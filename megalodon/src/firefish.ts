@@ -1,4 +1,5 @@
 import FormData from 'form-data'
+import { AxiosInstance } from 'axios'
 import FirefishAPI from './firefish/api_client.js'
 import { DEFAULT_UA } from './default.js'
 import OAuth from './oauth.js'
@@ -16,8 +17,9 @@ export default class Firefish implements MegalodonInterface {
    * @param baseUrl hostname or base URL
    * @param accessToken access token from OAuth2 authorization
    * @param userAgent UserAgent is specified in header on request.
+   * @param axiosInstance Optional custom axios instance for custom adapters.
    */
-  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA) {
+  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA, axiosInstance?: AxiosInstance) {
     let token: string = ''
     if (accessToken) {
       token = accessToken
@@ -26,7 +28,7 @@ export default class Firefish implements MegalodonInterface {
     if (userAgent) {
       agent = userAgent
     }
-    this.client = new FirefishAPI.Client(baseUrl, token, agent)
+    this.client = new FirefishAPI.Client(baseUrl, token, agent, axiosInstance)
     this.baseUrl = baseUrl
   }
 

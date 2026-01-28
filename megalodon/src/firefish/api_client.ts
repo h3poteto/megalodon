@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios'
 import dayjs from 'dayjs'
 import FormData from 'form-data'
 
@@ -645,18 +645,24 @@ namespace FirefishAPI {
     private baseUrl: string
     private userAgent: string
     private abortController: AbortController
+    private axios: AxiosInstance
 
     /**
      * @param baseUrl hostname or base URL
      * @param accessToken access token from OAuth2 authorization
      * @param userAgent UserAgent is specified in header on request.
+     * @param axiosInstance Optional custom axios instance for custom adapters.
      */
-    constructor(baseUrl: string, accessToken: string | null, userAgent: string = DEFAULT_UA) {
+    constructor(baseUrl: string, accessToken: string | null, userAgent: string = DEFAULT_UA, axiosInstance?: AxiosInstance) {
       this.accessToken = accessToken
       this.baseUrl = baseUrl
       this.userAgent = userAgent
       this.abortController = new AbortController()
-      axios.defaults.signal = this.abortController.signal
+      this.axios = axiosInstance || axios.create()
+      // Set the signal only if not already configured by the user
+      if (!this.axios.defaults.signal) {
+        this.axios.defaults.signal = this.abortController.signal
+      }
     }
 
     /**
@@ -669,7 +675,7 @@ namespace FirefishAPI {
         maxContentLength: Infinity,
         maxBodyLength: Infinity
       }
-      return axios.get<T>(this.baseUrl + path, options).then((resp: AxiosResponse<T>) => {
+      return this.axios.get<T>(this.baseUrl + path, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
           status: resp.status,
@@ -702,7 +708,7 @@ namespace FirefishAPI {
           })
         }
       }
-      return axios.post<T>(this.baseUrl + path, bodyParams, options).then((resp: AxiosResponse<T>) => {
+      return this.axios.post<T>(this.baseUrl + path, bodyParams, options).then((resp: AxiosResponse<T>) => {
         const res: Response<T> = {
           data: resp.data,
           status: resp.status,

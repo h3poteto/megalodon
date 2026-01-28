@@ -1,12 +1,12 @@
 import { OAuth2Client } from '@badgateway/oauth2-client'
 import FormData from 'form-data'
+import { AxiosInstance } from 'axios'
 
 import PleromaAPI from './pleroma/api_client.js'
 import WebSocket from './pleroma/web_socket.js'
 import { MegalodonInterface, NotImplementedError, ArgumentError } from './megalodon.js'
 import Response from './response.js'
 import Entity from './entity.js'
-
 import { NO_REDIRECT, DEFAULT_SCOPE, DEFAULT_UA } from './default.js'
 import OAuth from './oauth.js'
 import * as PleromaOAuth from './pleroma/oauth.js'
@@ -20,8 +20,9 @@ export default class Pleroma implements MegalodonInterface {
    * @param baseUrl hostname or base URL
    * @param accessToken access token from OAuth2 authorization
    * @param userAgent UserAgent is specified in header on request.
+   * @param axiosInstance Optional custom axios instance for custom adapters.
    */
-  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA) {
+  constructor(baseUrl: string, accessToken: string | null = null, userAgent: string | null = DEFAULT_UA, axiosInstance?: AxiosInstance) {
     let token: string = ''
     if (accessToken) {
       token = accessToken
@@ -30,7 +31,7 @@ export default class Pleroma implements MegalodonInterface {
     if (userAgent) {
       agent = userAgent
     }
-    this.client = new PleromaAPI.Client(baseUrl, token, agent)
+    this.client = new PleromaAPI.Client(baseUrl, token, agent, axiosInstance)
     this.baseUrl = baseUrl
   }
 

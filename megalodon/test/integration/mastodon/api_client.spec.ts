@@ -5,6 +5,25 @@ import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosHeaders } from '
 
 jest.mock('axios')
 
+const mockGet = jest.fn()
+const mockPost = jest.fn()
+const mockPut = jest.fn()
+const mockPatch = jest.fn()
+const mockDelete = jest.fn()
+
+const mockAxiosInstance = {
+  defaults: {
+    signal: undefined
+  },
+  get: mockGet,
+  post: mockPost,
+  put: mockPut,
+  patch: mockPatch,
+  delete: mockDelete
+}
+
+;(axios.create as any) = jest.fn(() => mockAxiosInstance)
+
 const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
@@ -96,7 +115,8 @@ const config: InternalAxiosRequestConfig<any> = {
 }
 
 describe('get', () => {
-  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
+  const axiosInstance = axios.create()
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1', 'TestAgent', axiosInstance)
   const mockResponse: AxiosResponse<Array<Entity.Status>> = {
     data: [status],
     status: 200,
@@ -105,14 +125,15 @@ describe('get', () => {
     config: config
   }
   it('should be responsed', async () => {
-    ;(axios.get as any).mockResolvedValue(mockResponse)
+    mockGet.mockResolvedValue(mockResponse)
     const response: Response<Array<Entity.Status>> = await client.get<Array<Entity.Status>>('/timelines/home')
     expect(response.data).toEqual([status])
   })
 })
 
 describe('put', () => {
-  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
+  const axiosInstance = axios.create()
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1', 'TestAgent', axiosInstance)
   const mockResponse: AxiosResponse<Entity.Account> = {
     data: account,
     status: 200,
@@ -121,7 +142,7 @@ describe('put', () => {
     config: config
   }
   it('should be responsed', async () => {
-    ;(axios.put as any).mockResolvedValue(mockResponse)
+    mockPut.mockResolvedValue(mockResponse)
     const response: Response<Entity.Account> = await client.put<Entity.Account>('/accounts/update_credentials', {
       display_name: 'hoge'
     })
@@ -130,7 +151,8 @@ describe('put', () => {
 })
 
 describe('patch', () => {
-  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
+  const axiosInstance = axios.create()
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1', 'TestAgent', axiosInstance)
   const mockResponse: AxiosResponse<Entity.Account> = {
     data: account,
     status: 200,
@@ -139,7 +161,7 @@ describe('patch', () => {
     config: config
   }
   it('should be responsed', async () => {
-    ;(axios.patch as any).mockResolvedValue(mockResponse)
+    mockPatch.mockResolvedValue(mockResponse)
     const response: Response<Entity.Account> = await client.patch<Entity.Account>('/accounts/update_credentials', {
       display_name: 'hoge'
     })
@@ -148,7 +170,8 @@ describe('patch', () => {
 })
 
 describe('post', () => {
-  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
+  const axiosInstance = axios.create()
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1', 'TestAgent', axiosInstance)
   const mockResponse: AxiosResponse<Entity.Status> = {
     data: status,
     status: 200,
@@ -157,7 +180,7 @@ describe('post', () => {
     config: config
   }
   it('should be responsed', async () => {
-    ;(axios.post as any).mockResolvedValue(mockResponse)
+    mockPost.mockResolvedValue(mockResponse)
     const response: Response<Entity.Status> = await client.post<Entity.Status>('/statuses', {
       status: 'hoge'
     })
@@ -166,7 +189,8 @@ describe('post', () => {
 })
 
 describe('del', () => {
-  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1')
+  const axiosInstance = axios.create()
+  const client = new MastodonAPI.Client('testToken', 'https://pleroma.io/api/v1', 'TestAgent', axiosInstance)
   const mockResponse: AxiosResponse<{}> = {
     data: {},
     status: 200,
@@ -175,7 +199,7 @@ describe('del', () => {
     config: config
   }
   it('should be responsed', async () => {
-    ;(axios.delete as any).mockResolvedValue(mockResponse)
+    mockDelete.mockResolvedValue(mockResponse)
     const response: Response<{}> = await client.del<{}>('/statuses/12asdf34')
     expect(response.data).toEqual({})
   })

@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.esm.json",
   "compilerOptions": {
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "module": "ESNext",
+    "moduleResolution": "bundler"
   },
   "include": ["./test", "../src"]
 }
