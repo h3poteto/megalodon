@@ -1625,7 +1625,7 @@ export default class Mastodon implements MegalodonInterface {
       }
       if (options.quote_id) {
         params = Object.assign(params, {
-          quote_id: options.quote_id
+          quoted_status_id: options.quote_id
         })
       }
     }
