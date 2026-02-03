@@ -691,9 +691,9 @@ namespace GotosocialAPI {
       bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: null,
       quote_approval: {
-        automatic: ['unsupported_policy'],
+        automatic: [],
         manual: [],
-        current_user: 'automatic'
+        current_user: 'unknown'
       }
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
