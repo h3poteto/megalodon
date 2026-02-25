@@ -38,7 +38,7 @@ export type Status = {
   language: string | null
   pinned: boolean | null
   quote: QuotedStatus | null
-  quote_approval: QuoteApproval
+  quote_approval?: QuoteApproval
   bookmarked?: boolean
 }
 

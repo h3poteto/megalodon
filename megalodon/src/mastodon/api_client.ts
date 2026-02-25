@@ -630,7 +630,7 @@ namespace MastodonAPI {
       emoji_reactions: [],
       bookmarked: s.bookmarked ? s.bookmarked : false,
       quote: s.quote ? quote(s.quote) : null,
-      quote_approval: s.quote_approval
+      quote_approval: s.quote_approval ?? { automatic: [], manual: [], current_user: 'unknown' }
     })
     export const status_params = (s: Entity.StatusParams): MegalodonEntity.StatusParams => s
     export const status_source = (s: Entity.StatusSource): MegalodonEntity.StatusSource => s
