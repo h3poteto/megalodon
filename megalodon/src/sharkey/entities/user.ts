@@ -1,0 +1,18 @@
+import { Emoji } from './emoji.js'
+
+export type User = {
+  id: string
+  name: string | null
+  username: string
+  host: string | null
+  avatarUrl: string | null
+  avatarBlurhash: string | null
+  isAdmin?: boolean
+  isModerator?: boolean
+  isBot?: boolean
+  isCat?: boolean
+  isIndexable?: boolean
+  speakAsCat?: boolean
+  emojis: Emoji
+  onlineStatus?: string | null
+}

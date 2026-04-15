@@ -51,7 +51,7 @@ type Metadata = {
 export const detector = async (
   url: string,
   axiosInstance?: AxiosInstance
-): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed'> => {
+): Promise<'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed' | 'sharkey'> => {
   const instance =
     axiosInstance ||
     axios.create({
@@ -83,7 +83,7 @@ export const detector = async (
         case 'pleroma':
           return 'pleroma'
         case 'sharkey':
-          return 'mastodon'
+          return 'sharkey'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
@@ -113,7 +113,7 @@ export const detector = async (
         case 'pleroma':
           return 'pleroma'
         case 'sharkey':
-          return 'mastodon'
+          return 'sharkey'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'
@@ -143,7 +143,7 @@ export const detector = async (
         case 'pleroma':
           return 'pleroma'
         case 'sharkey':
-          return 'mastodon'
+          return 'sharkey'
         default:
           if (res.data.metadata.upstream?.name && res.data.metadata.upstream.name.toLowerCase() === 'mastodon') {
             return 'mastodon'

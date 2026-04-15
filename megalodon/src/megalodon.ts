@@ -9,6 +9,7 @@ import Friendica from './friendica.js'
 import Firefish from './firefish.js'
 import Gotosocial from './gotosocial.js'
 import Pixelfed from './pixelfed.js'
+import Sharkey from './sharkey.js'
 
 export interface WebSocketInterface {
   start(): void
@@ -1439,7 +1440,7 @@ export class NodeinfoError extends Error {
 /**
  * Get client for each SNS according to megalodon interface.
  *
- * @param sns Name of your SNS, `mastodon`, `pleroma`, `firefish`, `gotosocial`, or `pixelfed`.
+ * @param sns Name of your SNS, `mastodon`, `pleroma`, `firefish`, `sharkey`, `gotosocial`, or `pixelfed`.
  * @param baseUrl hostname or base URL.
  * @param accessToken access token from OAuth2 authorization
  * @param userAgent UserAgent is specified in header on request.
@@ -1447,7 +1448,7 @@ export class NodeinfoError extends Error {
  * @return Client instance for each SNS you specified.
  */
 const generator = (
-  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed',
+  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'gotosocial' | 'pixelfed' | 'sharkey',
   baseUrl: string,
   accessToken: string | null = null,
   userAgent: string | null = null,
@@ -1477,6 +1478,10 @@ const generator = (
     case 'pixelfed': {
       const pixelfed = new Pixelfed(baseUrl, accessToken, userAgent, axiosInstance)
       return pixelfed
+    }
+    case 'sharkey': {
+      const sharkey = new Sharkey(baseUrl, accessToken, userAgent, axiosInstance)
+      return sharkey
     }
   }
 }
