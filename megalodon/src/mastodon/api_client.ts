@@ -458,6 +458,10 @@ namespace MastodonAPI {
           return MastodonNotificationType.AdminSignup
         case NotificationType.AdminReport:
           return MastodonNotificationType.AdminReport
+        case NotificationType.Quote:
+          return MastodonNotificationType.Quote
+        case NotificationType.QuotedUpdate:
+          return MastodonNotificationType.QuotedUpdate
         default:
           return new UnknownNotificationTypeError()
       }
@@ -487,6 +491,10 @@ namespace MastodonAPI {
           return NotificationType.AdminSignup
         case MastodonNotificationType.AdminReport:
           return NotificationType.AdminReport
+        case MastodonNotificationType.Quote:
+          return NotificationType.Quote
+        case MastodonNotificationType.QuotedUpdate:
+          return NotificationType.QuotedUpdate
         default:
           return new UnknownNotificationTypeError()
       }

@@ -4,42 +4,42 @@ import FormData from 'form-data'
 
 import { DEFAULT_UA } from '../default.js'
 import Response from '../response.js'
-import FirefishEntity from './entity.js'
+import SharkeyEntity from './entity.js'
 import MegalodonEntity from '../entity.js'
 import WebSocket from './web_socket.js'
-import FirefishNotificationType from './notification.js'
+import SharkeyNotificationType from './notification.js'
 import NotificationType, { UnknownNotificationTypeError } from '../notification.js'
 
-namespace FirefishAPI {
+namespace SharkeyAPI {
   export namespace Entity {
-    export type Announcement = FirefishEntity.Announcement
-    export type App = FirefishEntity.App
-    export type Blocking = FirefishEntity.Blocking
-    export type Choice = FirefishEntity.Choice
-    export type CreatedNote = FirefishEntity.CreatedNote
-    export type Emoji = FirefishEntity.Emoji
-    export type Favorite = FirefishEntity.Favorite
-    export type File = FirefishEntity.File
-    export type Follow = FirefishEntity.Follow
-    export type FollowRequest = FirefishEntity.FollowRequest
-    export type Hashtag = FirefishEntity.Hashtag
-    export type List = FirefishEntity.List
-    export type Meta = FirefishEntity.Meta
-    export type Mute = FirefishEntity.Mute
-    export type Note = FirefishEntity.Note
-    export type NoteVisibility = FirefishEntity.NoteVisibility
-    export type Notification = FirefishEntity.Notification
-    export type Poll = FirefishEntity.Poll
-    export type Reaction = FirefishEntity.Reaction
-    export type Relation = FirefishEntity.Relation
-    export type User = FirefishEntity.User
-    export type UserDetail = FirefishEntity.UserDetail
-    export type UserDetailMe = FirefishEntity.UserDetailMe
-    export type Session = FirefishEntity.Session
-    export type Stats = FirefishEntity.Stats
-    export type Instance = FirefishEntity.Instance
-    export type AccountEmoji = FirefishEntity.AccountEmoji
-    export type Field = FirefishEntity.Field
+    export type Announcement = SharkeyEntity.Announcement
+    export type App = SharkeyEntity.App
+    export type Blocking = SharkeyEntity.Blocking
+    export type Choice = SharkeyEntity.Choice
+    export type CreatedNote = SharkeyEntity.CreatedNote
+    export type CustomEmoji = SharkeyEntity.CustomEmoji
+    export type CustomEmojiResponse = SharkeyEntity.CustomEmojiResponse
+    export type Emoji = SharkeyEntity.Emoji
+    export type Favorite = SharkeyEntity.Favorite
+    export type File = SharkeyEntity.File
+    export type Follow = SharkeyEntity.Follow
+    export type FollowRequest = SharkeyEntity.FollowRequest
+    export type Hashtag = SharkeyEntity.Hashtag
+    export type List = SharkeyEntity.List
+    export type Mute = SharkeyEntity.Mute
+    export type Note = SharkeyEntity.Note
+    export type NoteVisibility = SharkeyEntity.NoteVisibility
+    export type Notification = SharkeyEntity.Notification
+    export type Poll = SharkeyEntity.Poll
+    export type Reaction = SharkeyEntity.Reaction
+    export type Relation = SharkeyEntity.Relation
+    export type User = SharkeyEntity.User
+    export type UserDetail = SharkeyEntity.UserDetail
+    export type UserDetailMe = SharkeyEntity.UserDetailMe
+    export type Session = SharkeyEntity.Session
+    export type Stats = SharkeyEntity.Stats
+    export type Instance = SharkeyEntity.Instance
+    export type Field = SharkeyEntity.Field
   }
 
   export namespace Converter {
@@ -60,7 +60,17 @@ namespace FirefishAPI {
       reactions: []
     })
 
-    export const emoji = (e: Entity.Emoji): MegalodonEntity.Emoji => {
+    export const emojis = (e: Entity.Emoji): Array<MegalodonEntity.Emoji> => {
+      if (!e) return []
+      return Object.entries(e).map(([name, url]) => ({
+        shortcode: name,
+        static_url: url,
+        url: url,
+        visible_in_picker: true
+      }))
+    }
+
+    export const customEmoji = (e: Entity.CustomEmoji): MegalodonEntity.Emoji => {
       return {
         shortcode: e.name,
         static_url: e.url,
@@ -92,10 +102,10 @@ namespace FirefishAPI {
         note: '',
         url: acct,
         avatar: u.avatarUrl ?? '',
-        avatar_static: u.avatarColor ?? '',
+        avatar_static: '',
         header: '',
         header_static: '',
-        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
+        emojis: emojis(u.emojis ?? {}),
         moved: null,
         fields: [],
         bot: null
@@ -124,10 +134,10 @@ namespace FirefishAPI {
         note: u.description ?? '',
         url: acct,
         avatar: u.avatarUrl ?? '',
-        avatar_static: u.avatarColor ?? '',
+        avatar_static: '',
         header: u.bannerUrl ?? '',
-        header_static: u.bannerColor ?? '',
-        emojis: Array.isArray(u.emojis) ? u.emojis.map(e => emoji(e)) : [],
+        header_static: '',
+        emojis: emojis(u.emojis ?? {}),
         moved: null,
         fields: u.fields.map(f => field(f)),
         bot: u.isBot !== undefined ? u.isBot : null,
@@ -156,7 +166,7 @@ namespace FirefishAPI {
     }
 
     export const userPreferences = (
-      u: FirefishAPI.Entity.UserDetailMe,
+      u: SharkeyAPI.Entity.UserDetailMe,
       v: MegalodonEntity.StatusVisibility
     ): MegalodonEntity.Preferences => {
       return {
@@ -168,7 +178,7 @@ namespace FirefishAPI {
       }
     }
 
-    export const visibility = (v: FirefishAPI.Entity.NoteVisibility): MegalodonEntity.StatusVisibility => {
+    export const visibility = (v: SharkeyAPI.Entity.NoteVisibility): MegalodonEntity.StatusVisibility => {
       switch (v) {
         case 'public':
           return v
@@ -185,7 +195,7 @@ namespace FirefishAPI {
       }
     }
 
-    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): FirefishAPI.Entity.NoteVisibility => {
+    export const encodeVisibility = (v: MegalodonEntity.StatusVisibility): SharkeyAPI.Entity.NoteVisibility => {
       switch (v) {
         case 'public':
           return v
@@ -303,8 +313,7 @@ namespace FirefishAPI {
         plain_content: n.text ? n.text : null,
         created_at: n.createdAt,
         edited_at: null,
-        // Remove reaction emojis with names containing @ from the emojis list.
-        emojis: Array.isArray(n.emojis) ? n.emojis.filter(e => !e.name.includes('@')).map(e => emoji(e)) : [],
+        emojis: emojis(n.emojis ?? {}),
         replies_count: n.repliesCount,
         reblogs_count: n.renoteCount,
         favourites_count: 0,
@@ -322,8 +331,7 @@ namespace FirefishAPI {
         application: null,
         language: null,
         pinned: null,
-        // Use emojis list to provide URLs for emoji reactions.
-        emoji_reactions: mapReactions(n.emojis ? n.emojis : [], n.reactions, n.myReaction),
+        emoji_reactions: mapReactions(n.reactionEmojis ?? {}, n.reactions, n.myReaction),
         bookmarked: false,
         quote: quote(n),
         quote_approval: {
@@ -346,17 +354,15 @@ namespace FirefishAPI {
     }
 
     export const mapReactions = (
-      emojis: Array<FirefishEntity.Emoji>,
+      reactionEmojis: { [key: string]: string },
       r: { [key: string]: number },
       myReaction?: string | null
     ): Array<MegalodonEntity.Reaction> => {
-      // Map of emoji shortcodes to image URLs.
-      const emojiUrls = new Map<string, string>(emojis.map(e => [e.name, e.url]))
       return Object.keys(r).map(key => {
         // Strip colons from custom emoji reaction names to match emoji shortcodes.
         const shortcode = key.replace(/:/g, '')
         // If this is a custom emoji (vs. a Unicode emoji), find its image URL.
-        const url = emojiUrls.get(shortcode)
+        const url = reactionEmojis[shortcode]
         // Finally, remove trailing @. from local custom emoji reaction names.
         const name = shortcode.replace('@.', '')
 
@@ -409,47 +415,57 @@ namespace FirefishAPI {
 
     export const encodeNotificationType = (
       e: MegalodonEntity.NotificationType
-    ): FirefishEntity.NotificationType | UnknownNotificationTypeError => {
+    ): SharkeyEntity.NotificationType | UnknownNotificationTypeError => {
       switch (e) {
         case NotificationType.Follow:
-          return FirefishNotificationType.Follow
+          return SharkeyNotificationType.Follow
         case NotificationType.Mention:
-          return FirefishNotificationType.Reply
+          return SharkeyNotificationType.Reply
         case NotificationType.Favourite:
         case NotificationType.Reaction:
-          return FirefishNotificationType.Reaction
+          return SharkeyNotificationType.Reaction
         case NotificationType.Reblog:
-          return FirefishNotificationType.Renote
-        case NotificationType.PollVote:
-          return FirefishNotificationType.PollVote
+          return SharkeyNotificationType.Renote
+        case NotificationType.Quote:
+          return SharkeyNotificationType.Quote
+        case NotificationType.PollExpired:
+          return SharkeyNotificationType.PollEnded
         case NotificationType.FollowRequest:
-          return FirefishNotificationType.ReceiveFollowRequest
+          return SharkeyNotificationType.ReceiveFollowRequest
+        case NotificationType.Status:
+          return SharkeyNotificationType.Note
+        case NotificationType.Update:
+          return SharkeyNotificationType.Edited
         default:
           return new UnknownNotificationTypeError()
       }
     }
 
     export const decodeNotificationType = (
-      e: FirefishEntity.NotificationType
+      e: SharkeyEntity.NotificationType
     ): MegalodonEntity.NotificationType | UnknownNotificationTypeError => {
       switch (e) {
-        case FirefishNotificationType.Follow:
+        case SharkeyNotificationType.Follow:
           return NotificationType.Follow
-        case FirefishNotificationType.Mention:
-        case FirefishNotificationType.Reply:
+        case SharkeyNotificationType.Mention:
+        case SharkeyNotificationType.Reply:
           return NotificationType.Mention
-        case FirefishNotificationType.Renote:
+        case SharkeyNotificationType.Renote:
           return NotificationType.Reblog
-        case FirefishNotificationType.Quote:
+        case SharkeyNotificationType.Quote:
           return NotificationType.Quote
-        case FirefishNotificationType.Reaction:
+        case SharkeyNotificationType.Reaction:
           return NotificationType.Reaction
-        case FirefishNotificationType.PollVote:
-          return NotificationType.PollVote
-        case FirefishNotificationType.ReceiveFollowRequest:
+        case SharkeyNotificationType.PollEnded:
+          return NotificationType.PollExpired
+        case SharkeyNotificationType.ReceiveFollowRequest:
           return NotificationType.FollowRequest
-        case FirefishNotificationType.FollowRequestAccepted:
+        case SharkeyNotificationType.FollowRequestAccepted:
           return NotificationType.Follow
+        case SharkeyNotificationType.Note:
+          return NotificationType.Status
+        case SharkeyNotificationType.Edited:
+          return NotificationType.Update
         default:
           return new UnknownNotificationTypeError()
       }
@@ -472,10 +488,10 @@ namespace FirefishAPI {
         })
       }
       if (n.reaction) {
-        const reactions = mapReactions(n.note?.emojis ?? [], { [n.reaction]: 1 })
-        if (reactions.length > 0) {
+        const reactionList = mapReactions(n.note?.reactionEmojis ?? {}, { [n.reaction]: 1 })
+        if (reactionList.length > 0) {
           notification = Object.assign(notification, {
-            reaction: reactions[0]
+            reaction: reactionList[0]
           })
         }
       }
@@ -487,48 +503,6 @@ namespace FirefishAPI {
         user_count: s.usersCount,
         status_count: s.notesCount,
         domain_count: s.instances
-      }
-    }
-
-    export const meta = (m: Entity.Meta, s: Entity.Stats): MegalodonEntity.Instance => {
-      const wss = m.uri.replace(/^https:\/\//, 'wss://')
-      return {
-        uri: m.uri,
-        title: m.name,
-        description: m.description ? m.description : '',
-        email: m.maintainerEmail ? m.maintainerEmail : '',
-        version: m.version,
-        thumbnail: m.bannerUrl,
-        urls: {
-          streaming_api: `${wss}/streaming`
-        },
-        stats: stats(s),
-        languages: m.langs,
-        registrations: !m.disableRegistration,
-        approval_required: false,
-        configuration: {
-          statuses: {
-            max_characters: m.maxNoteTextLength
-          }
-        }
-      }
-    }
-
-    const account_emoji = (e: Entity.AccountEmoji): MegalodonEntity.Emoji => {
-      return {
-        shortcode: e.shortcode,
-        static_url: e.static_url,
-        url: e.url,
-        visible_in_picker: e.visible_in_picker
-      }
-    }
-
-    const field = (f: Entity.Field): MegalodonEntity.Field => {
-      return {
-        name: f.name,
-        value: f.value,
-        verified: f.verified,
-        verified_at: null
       }
     }
 
@@ -562,32 +536,16 @@ namespace FirefishAPI {
             min_expiration: i.configuration.polls.min_expiration,
             max_expiration: i.configuration.polls.max_expiration
           }
-        },
-        contact_account: {
-          id: i.contact_account.id,
-          username: i.contact_account.username,
-          acct: i.contact_account.acct,
-          display_name: i.contact_account.display_name,
-          locked: i.contact_account.locked,
-          group: null,
-          noindex: null,
-          suspended: null,
-          limited: null,
-          created_at: i.contact_account.created_at,
-          followers_count: i.contact_account.followers_count,
-          following_count: i.contact_account.following_count,
-          statuses_count: i.contact_account.statuses_count,
-          note: i.contact_account.note,
-          url: i.contact_account.url,
-          avatar: i.contact_account.avatar,
-          avatar_static: i.contact_account.avatar_static,
-          header: i.contact_account.header,
-          header_static: i.contact_account.header_static,
-          emojis: i.contact_account.emojis.map(e => account_emoji(e)),
-          moved: null,
-          fields: i.contact_account.fields.map(f => field(f)),
-          bot: i.contact_account.bot
         }
+      }
+    }
+
+    const field = (f: Entity.Field): MegalodonEntity.Field => {
+      return {
+        name: f.name,
+        value: f.value,
+        verified: f.verified,
+        verified_at: null
       }
     }
 
@@ -637,9 +595,9 @@ namespace FirefishAPI {
   }
 
   /**
-   * Firefish API client.
+   * Sharkey API client.
    *
-   * Usign axios for request, you will handle promises.
+   * Using axios for request, you will handle promises.
    */
   export class Client implements Interface {
     private accessToken: string | null
@@ -667,7 +625,7 @@ namespace FirefishAPI {
     }
 
     /**
-     * GET request to firefish API.
+     * GET request to sharkey API.
      **/
     public async get<T>(path: string, params: any = {}, headers: { [key: string]: string } = {}): Promise<Response<T>> {
       const options: AxiosRequestConfig = {
@@ -688,7 +646,7 @@ namespace FirefishAPI {
     }
 
     /**
-     * POST request to firefish REST API.
+     * POST request to sharkey REST API.
      * @param path relative path from baseUrl
      * @param params Form data
      * @param headers Request header object
@@ -729,7 +687,7 @@ namespace FirefishAPI {
     }
 
     /**
-     * Get connection and receive websocket connection for Firefish API.
+     * Get connection and receive websocket connection for Sharkey API.
      *
      * @param url Streaming url.
      * @param channel Channel name is user, localTimeline, hybridTimeline, globalTimeline, conversation or list.
@@ -751,4 +709,4 @@ namespace FirefishAPI {
   }
 }
 
-export default FirefishAPI
+export default SharkeyAPI

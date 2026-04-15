@@ -11,6 +11,8 @@ namespace MastodonNotificationType {
   export const Update: MastodonEntity.NotificationType = 'update'
   export const AdminSignup: MastodonEntity.NotificationType = 'admin.sign_up'
   export const AdminReport: MastodonEntity.NotificationType = 'admin.report'
+  export const Quote: MastodonEntity.NotificationType = 'quote'
+  export const QuotedUpdate: MastodonEntity.NotificationType = 'quoted_update'
 }
 
 export default MastodonNotificationType

@@ -14,6 +14,8 @@ namespace NotificationType {
   export const Move: Entity.NotificationType = 'move'
   export const AdminSignup: Entity.NotificationType = 'admin.sign_up'
   export const AdminReport: Entity.NotificationType = 'admin.report'
+  export const Quote: Entity.NotificationType = 'quote'
+  export const QuotedUpdate: Entity.NotificationType = 'quoted_update'
 }
 
 export class UnknownNotificationTypeError extends Error {
