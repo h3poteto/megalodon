@@ -1490,7 +1490,9 @@ export default class Sharkey implements MegalodonInterface {
     since_id?: string
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
+    let params = {
+      allowPartial: true
+    }
     if (options) {
       if (options.only_media !== undefined) {
         params = Object.assign(params, {
@@ -1533,7 +1535,9 @@ export default class Sharkey implements MegalodonInterface {
     since_id?: string
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
-    let params = {}
+    let params = {
+      allowPartial: true
+    }
     if (options) {
       if (options.only_media !== undefined) {
         params = Object.assign(params, {
@@ -1581,7 +1585,8 @@ export default class Sharkey implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {
-      tag: hashtag
+      tag: hashtag,
+      allowPartial: true
     }
     if (options) {
       if (options.only_media !== undefined) {
@@ -1625,8 +1630,14 @@ export default class Sharkey implements MegalodonInterface {
     since_id?: string
     min_id?: string
   }): Promise<Response<Array<Entity.Status>>> {
+    // https://github.com/misskey-dev/misskey/blob/86092f2faf62a748b555b2aacec4629c5594d044/packages/backend/src/server/api/endpoints/notes/timeline.ts#L47
+    // true is recommended but for compatibility false by default
+    // https://github.com/misskey-dev/misskey/blob/86092f2faf62a748b555b2aacec4629c5594d044/packages/backend/src/core/FanoutTimelineEndpointService.ts#L184
+    // allowPartial: If the number of statuses is less than the limit, this logic will attempt to retrieve statuses from Redis until the limit is reached.
+    // So, this should be true in case there are too few statuses on the timeline.
     let params = {
-      withFiles: false
+      withFiles: false,
+      allowPartial: true
     }
     if (options) {
       if (options.limit) {
@@ -1669,7 +1680,8 @@ export default class Sharkey implements MegalodonInterface {
   ): Promise<Response<Array<Entity.Status>>> {
     let params = {
       listId: list_id,
-      withFiles: false
+      withFiles: false,
+      allowPartial: true
     }
     if (options) {
       if (options.limit) {
@@ -1711,7 +1723,8 @@ export default class Sharkey implements MegalodonInterface {
     min_id?: string
   }): Promise<Response<Array<Entity.Conversation>>> {
     let params = {
-      visibility: 'specified'
+      visibility: 'specified',
+      allowPartial: true
     }
     if (options) {
       if (options.limit) {
