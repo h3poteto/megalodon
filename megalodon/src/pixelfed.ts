@@ -433,7 +433,7 @@ export default class Pixelfed implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getAccountFavourites')
       reject(err)
     })
   }
@@ -585,7 +585,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getAccountLists(_id: string): Promise<Response<Array<Entity.List>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getAccountLists')
       reject(err)
     })
   }
@@ -598,7 +598,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getIdentityProof(_id: string): Promise<Response<Array<Entity.IdentityProof>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getIdentityProof')
       reject(err)
     })
   }
@@ -709,7 +709,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support pinAccount')
       reject(err)
     })
   }
@@ -722,7 +722,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support unpinAccount')
       reject(err)
     })
   }
@@ -736,7 +736,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async setAccountNote(_id: string, _note?: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support setAccountNote')
       reject(err)
     })
   }
@@ -839,7 +839,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async lookupAccount(_acct: string): Promise<Response<Entity.Account>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support lookupAccount')
       reject(err)
     })
   }
@@ -1365,7 +1365,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getFeaturedTags')
       reject(err)
     })
   }
@@ -1378,7 +1378,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support createFeaturedTag')
       reject(err)
     })
   }
@@ -1391,7 +1391,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public deleteFeaturedTag(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support deleteFeaturedTag')
       reject(err)
     })
   }
@@ -1403,7 +1403,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getSuggestedTags')
       reject(err)
     })
   }
@@ -1451,7 +1451,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getSuggestions(_limit?: number): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getSuggestions')
       reject(err)
     })
   }
@@ -1749,7 +1749,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getStatusSource(_id: string): Promise<Response<Entity.StatusSource>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getStatusSource')
       reject(err)
     })
   }
@@ -1874,7 +1874,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async muteStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support muteStatus')
       reject(err)
     })
   }
@@ -1887,7 +1887,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async unmuteStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support unmuteStatus')
       reject(err)
     })
   }
@@ -1899,7 +1899,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async pinStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support pinStatus')
       reject(err)
     })
   }
@@ -1912,7 +1912,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async unpinStatus(_id: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support unpinStatus')
       reject(err)
     })
   }
@@ -2375,7 +2375,7 @@ export default class Pixelfed implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getListTimeline')
       reject(err)
     })
   }
@@ -2475,7 +2475,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getList(_id: string): Promise<Response<Entity.List>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getList')
       reject(err)
     })
   }
@@ -2488,7 +2488,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async createList(_title: string): Promise<Response<Entity.List>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support createList')
       reject(err)
     })
   }
@@ -2502,7 +2502,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async updateList(_id: string, _title: string): Promise<Response<Entity.List>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support updateList')
       reject(err)
     })
   }
@@ -2514,7 +2514,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public deleteList(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support deleteList')
       reject(err)
     })
   }
@@ -2538,7 +2538,7 @@ export default class Pixelfed implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getAccountsInList')
       reject(err)
     })
   }
@@ -2551,7 +2551,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public addAccountsToList(_id: string, _account_ids: Array<string>): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support addAccountsToList')
       reject(err)
     })
   }
@@ -2564,7 +2564,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public deleteAccountsFromList(_id: string, _account_ids: Array<string>): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support deleteAccountsFromList')
       reject(err)
     })
   }
@@ -2695,7 +2695,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getNotification(_id: string): Promise<Response<Entity.Notification>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getNotification')
       reject(err)
     })
   }
@@ -2705,7 +2705,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public dismissNotifications(): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support dismissNotifications')
       reject(err)
     })
   }
@@ -2717,14 +2717,14 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public dismissNotification(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support dismissNotification')
       reject(err)
     })
   }
 
   public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support readNotifications')
       reject(err)
     })
   }
@@ -2750,7 +2750,7 @@ export default class Pixelfed implements MegalodonInterface {
     _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
   ): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support subscribePushNotification')
       reject(err)
     })
   }
@@ -2762,7 +2762,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getPushSubscription')
       reject(err)
     })
   }
@@ -2781,7 +2781,7 @@ export default class Pixelfed implements MegalodonInterface {
     _data?: { alerts: { follow?: boolean; favourite?: boolean; reblog?: boolean; mention?: boolean; poll?: boolean } } | null
   ): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support updatePushSubscription')
       reject(err)
     })
   }
@@ -2791,7 +2791,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public deletePushSubscription(): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support deletePushSubscription')
       reject(err)
     })
   }
@@ -2910,7 +2910,7 @@ export default class Pixelfed implements MegalodonInterface {
    */
   public async getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getInstanceActivity')
       reject(err)
     })
   }
@@ -2956,7 +2956,7 @@ export default class Pixelfed implements MegalodonInterface {
     local?: boolean
   }): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getInstanceDirectory')
       reject(err)
     })
   }
@@ -3027,28 +3027,28 @@ export default class Pixelfed implements MegalodonInterface {
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support createEmojiReaction')
       reject(err)
     })
   }
 
   public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support deleteEmojiReaction')
       reject(err)
     })
   }
 
   public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getEmojiReactions')
       reject(err)
     })
   }
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Pixelfed does not support this method')
+      const err = new NotImplementedError('Pixelfed does not support getEmojiReaction')
       reject(err)
     })
   }
