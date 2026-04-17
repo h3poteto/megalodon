@@ -434,7 +434,7 @@ export default class Mastodon implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
+      const err = new NotImplementedError('Mastodon does not support getAccountFavourites')
       reject(err)
     })
   }
@@ -2810,7 +2810,7 @@ export default class Mastodon implements MegalodonInterface {
 
   public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
+      const err = new NotImplementedError('Mastodon does not support readNotifications')
       reject(err)
     })
   }
@@ -3152,28 +3152,28 @@ export default class Mastodon implements MegalodonInterface {
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
+      const err = new NotImplementedError('Mastodon does not support createEmojiReaction')
       reject(err)
     })
   }
 
   public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
+      const err = new NotImplementedError('Mastodon does not support deleteEmojiReaction')
       reject(err)
     })
   }
 
   public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
+      const err = new NotImplementedError('Mastodon does not support getEmojiReactions')
       reject(err)
     })
   }
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Mastodon does not support this method')
+      const err = new NotImplementedError('Mastodon does not support getEmojiReaction')
       reject(err)
     })
   }

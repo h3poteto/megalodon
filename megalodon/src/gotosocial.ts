@@ -130,7 +130,7 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public verifyAppCredentials(): Promise<Response<Entity.Application>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support verifyAppCredentials')
       reject(err)
     })
   }
@@ -439,7 +439,7 @@ export default class Gotosocial implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getAccountFavourites')
       reject(err)
     })
   }
@@ -599,7 +599,7 @@ export default class Gotosocial implements MegalodonInterface {
 
   public async getIdentityProof(_id: string): Promise<Response<Array<Entity.IdentityProof>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getIdentityProof')
       reject(err)
     })
   }
@@ -671,28 +671,28 @@ export default class Gotosocial implements MegalodonInterface {
 
   public async muteAccount(_id: string, _notifications: boolean = true): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support muteAccount')
       reject(err)
     })
   }
 
   public async unmuteAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support unmuteAccount')
       reject(err)
     })
   }
 
   public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support pinAccount')
       reject(err)
     })
   }
 
   public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support unpinAccount')
       reject(err)
     })
   }
@@ -756,7 +756,7 @@ export default class Gotosocial implements MegalodonInterface {
 
   public async searchAccount(_q: string): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support searchAccount')
       reject(err)
     })
   }
@@ -941,21 +941,21 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getDomainBlocks(): Promise<Response<Array<string>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getDomainBlocks')
       reject(err)
     })
   }
 
   public blockDomain(_domain: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support blockDomain')
       reject(err)
     })
   }
 
   public unblockDomain(_domain: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support unblockDomain')
       reject(err)
     })
   }
@@ -1223,7 +1223,7 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getEndorsements(): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getEndorsements')
       reject(err)
     })
   }
@@ -1249,21 +1249,21 @@ export default class Gotosocial implements MegalodonInterface {
 
   public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support createFeaturedTag')
       reject(err)
     })
   }
 
   public deleteFeaturedTag(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support deleteFeaturedTag')
       reject(err)
     })
   }
 
   public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getSuggestedTags')
       reject(err)
     })
   }
@@ -1289,7 +1289,7 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getFollowedTags')
       reject(err)
     })
   }
@@ -1299,7 +1299,7 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getSuggestions(): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getSuggestions')
       reject(err)
     })
   }
@@ -1309,21 +1309,21 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getTag')
       reject(err)
     })
   }
 
   public async followTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support followTag')
       reject(err)
     })
   }
 
   public async unfollowTag(_id: string): Promise<Response<Entity.Tag>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support unfollowTag')
       reject(err)
     })
   }
@@ -1867,28 +1867,28 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getScheduledStatuses(): Promise<Response<Array<Entity.ScheduledStatus>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getScheduledStatuses')
       reject(err)
     })
   }
 
   public async getScheduledStatus(_id: string): Promise<Response<Entity.ScheduledStatus>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getScheduledStatus')
       reject(err)
     })
   }
 
   public async scheduleStatus(_id: string): Promise<Response<Entity.ScheduledStatus>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support scheduleStatus')
       reject(err)
     })
   }
 
   public cancelScheduledStatus(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support cancelScheduledStatus')
       reject(err)
     })
   }
@@ -2173,21 +2173,21 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getConversationTimeline(): Promise<Response<Array<Entity.Conversation>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getConversationTimeline')
       reject(err)
     })
   }
 
   public deleteConversation(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support deleteConversation')
       reject(err)
     })
   }
 
   public async readConversation(_id: string): Promise<Response<Entity.Conversation>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support readConversation')
       reject(err)
     })
   }
@@ -2477,14 +2477,14 @@ export default class Gotosocial implements MegalodonInterface {
 
   public dismissNotification(_id: string): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support dismissNotification')
       reject(err)
     })
   }
 
   public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support readNotifications')
       reject(err)
     })
   }
@@ -2497,28 +2497,28 @@ export default class Gotosocial implements MegalodonInterface {
     keys: { p256dh: string; auth: string }
   }): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support subscribePushNotification')
       reject(err)
     })
   }
 
   public async getPushSubscription(): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getPushSubscription')
       reject(err)
     })
   }
 
   public async updatePushSubscription(): Promise<Response<Entity.PushSubscription>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support updatePushSubscription')
       reject(err)
     })
   }
 
   public deletePushSubscription(): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support deletePushSubscription')
       reject(err)
     })
   }
@@ -2634,7 +2634,7 @@ export default class Gotosocial implements MegalodonInterface {
 
   public async getInstanceActivity(): Promise<Response<Array<Entity.Activity>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getInstanceActivity')
       reject(err)
     })
   }
@@ -2644,7 +2644,7 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getInstanceTrends(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getInstanceTrends')
       reject(err)
     })
   }
@@ -2654,7 +2654,7 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getInstanceDirectory(): Promise<Response<Array<Entity.Account>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getInstanceDirectory')
       reject(err)
     })
   }
@@ -2680,28 +2680,28 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async getInstanceAnnouncements(): Promise<Response<Array<Entity.Announcement>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getInstanceAnnouncements')
       reject(err)
     })
   }
 
   public async dismissInstanceAnnouncement(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support dismissInstanceAnnouncement')
       reject(err)
     })
   }
 
   public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support addReactionToAnnouncement')
       reject(err)
     })
   }
 
   public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support removeReactionFromAnnouncement')
       reject(err)
     })
   }
@@ -2711,28 +2711,28 @@ export default class Gotosocial implements MegalodonInterface {
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support createEmojiReaction')
       reject(err)
     })
   }
 
   public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support deleteEmojiReaction')
       reject(err)
     })
   }
 
   public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getEmojiReactions')
       reject(err)
     })
   }
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Gotosocial does not support this method')
+      const err = new NotImplementedError('Gotosocial does not support getEmojiReaction')
       reject(err)
     })
   }

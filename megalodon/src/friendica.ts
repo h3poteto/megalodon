@@ -216,7 +216,7 @@ export default class Friendica implements MegalodonInterface {
     _reason?: string | null
   ): Promise<Response<Entity.Token>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support registerAccount')
       reject(err)
     })
   }
@@ -250,7 +250,7 @@ export default class Friendica implements MegalodonInterface {
     fields_attributes?: Array<{ name: string; value: string }>
   }): Promise<Response<Entity.Account>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support updateCredentials')
       reject(err)
     })
   }
@@ -391,7 +391,7 @@ export default class Friendica implements MegalodonInterface {
     }
   ): Promise<Response<Array<Entity.Status>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getAccountFavourites')
       reject(err)
     })
   }
@@ -635,7 +635,7 @@ export default class Friendica implements MegalodonInterface {
    */
   public async pinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support pinAccount')
       reject(err)
     })
   }
@@ -648,14 +648,14 @@ export default class Friendica implements MegalodonInterface {
    */
   public async unpinAccount(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support unpinAccount')
       reject(err)
     })
   }
 
   public async setAccountNote(_id: string): Promise<Response<Entity.Relationship>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support setAccountNote')
       reject(err)
     })
   }
@@ -752,7 +752,7 @@ export default class Friendica implements MegalodonInterface {
 
   public async lookupAccount(_acct: string): Promise<Response<Entity.Account>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support lookupAccount')
       reject(err)
     })
   }
@@ -921,21 +921,21 @@ export default class Friendica implements MegalodonInterface {
   // ======================================
   public async getDomainBlocks(_options?: { limit?: number; max_id?: string; min_id?: string }): Promise<Response<Array<string>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getDomainBlocks')
       reject(err)
     })
   }
 
   public blockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support blockDomain')
       reject(err)
     })
   }
 
   public unblockDomain(_domain: string): Promise<Response<Record<string, unknown>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support unblockDomain')
       reject(err)
     })
   }
@@ -958,7 +958,7 @@ export default class Friendica implements MegalodonInterface {
 
   public async getFilter(_id: string): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getFilter')
       reject(err)
     })
   }
@@ -973,7 +973,7 @@ export default class Friendica implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support createFilter')
       reject(err)
     })
   }
@@ -989,14 +989,14 @@ export default class Friendica implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support updateFilter')
       reject(err)
     })
   }
 
   public async deleteFilter(_id: string): Promise<Response<Entity.Filter>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support deleteFilter')
       reject(err)
     })
   }
@@ -1015,7 +1015,7 @@ export default class Friendica implements MegalodonInterface {
     }
   ): Promise<Response<Entity.Report>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support report')
       reject(err)
     })
   }
@@ -1119,28 +1119,28 @@ export default class Friendica implements MegalodonInterface {
   // ======================================
   public async getFeaturedTags(): Promise<Response<Array<Entity.FeaturedTag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getFeaturedTags')
       reject(err)
     })
   }
 
   public async createFeaturedTag(_name: string): Promise<Response<Entity.FeaturedTag>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support createFeaturedTag')
       reject(err)
     })
   }
 
   public deleteFeaturedTag(_id: string): Promise<Response<Record<string, unknown>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support deleteFeaturedTag')
       reject(err)
     })
   }
 
   public async getSuggestedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getSuggestedTags')
       reject(err)
     })
   }
@@ -1166,7 +1166,7 @@ export default class Friendica implements MegalodonInterface {
   // ======================================
   public async getFollowedTags(): Promise<Response<Array<Entity.Tag>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getFollowedTags')
       reject(err)
     })
   }
@@ -1765,7 +1765,7 @@ export default class Friendica implements MegalodonInterface {
 
   public async votePoll(_id: string, _choices: Array<number>): Promise<Response<Entity.Poll>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support votePoll')
       reject(err)
     })
   }
@@ -1834,7 +1834,7 @@ export default class Friendica implements MegalodonInterface {
 
   public async scheduleStatus(_id: string, _scheduled_at?: string | null): Promise<Response<Entity.ScheduledStatus>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support scheduleStatus')
       reject(err)
     })
   }
@@ -2466,7 +2466,7 @@ export default class Friendica implements MegalodonInterface {
 
   public readNotifications(_options: { id?: string; max_id?: string }): Promise<Response<{}>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support readNotifications')
       reject(err)
     })
   }
@@ -2784,7 +2784,7 @@ export default class Friendica implements MegalodonInterface {
    */
   public async dismissInstanceAnnouncement(_id: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support dismissInstanceAnnouncement')
       reject(err)
     })
   }
@@ -2797,7 +2797,7 @@ export default class Friendica implements MegalodonInterface {
    */
   public async addReactionToAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support addReactionToAnnouncement')
       reject(err)
     })
   }
@@ -2810,7 +2810,7 @@ export default class Friendica implements MegalodonInterface {
    */
   public async removeReactionFromAnnouncement(_id: string, _name: string): Promise<Response<Record<never, never>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support removeReactionFromAnnouncement')
       reject(err)
     })
   }
@@ -2820,28 +2820,28 @@ export default class Friendica implements MegalodonInterface {
   // ======================================
   public async createEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support createEmojiReaction')
       reject(err)
     })
   }
 
   public async deleteEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Status>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support deleteEmojiReaction')
       reject(err)
     })
   }
 
   public async getEmojiReactions(_id: string): Promise<Response<Array<Entity.Reaction>>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getEmojiReactions')
       reject(err)
     })
   }
 
   public async getEmojiReaction(_id: string, _emoji: string): Promise<Response<Entity.Reaction>> {
     return new Promise((_, reject) => {
-      const err = new NotImplementedError('Friendica does not support this method')
+      const err = new NotImplementedError('Friendica does not support getEmojiReaction')
       reject(err)
     })
   }
