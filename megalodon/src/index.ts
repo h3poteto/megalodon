@@ -8,7 +8,6 @@ import Pleroma from './pleroma.js'
 import Pixelfed from './pixelfed.js'
 import Firefish from './firefish.js'
 import Gotosocial from './gotosocial.js'
-import Sharkey from './sharkey.js'
 import Entity from './entity.js'
 import NotificationType from './notification.js'
 import FilterContext from './filter_context.js'
@@ -28,7 +27,6 @@ export {
   Pixelfed,
   Firefish,
   Gotosocial,
-  Sharkey,
   Entity
 }
 

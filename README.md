@@ -13,14 +13,13 @@ The Rust version is [megalodon-rs](https://github.com/h3poteto/megalodon-rs).
 
 ## Supports
 
-- [x] Mastodon <img src="https://cdn.simpleicons.org/mastodon" alt="Mastodon" width=16 height=16>
-- [x] Pleroma <img src="https://cdn.simpleicons.org/pleroma" alt="Pleroma" width=16 height=16>
+- [x] Mastodon
+- [x] Pleroma
 - [x] Friendica
-- [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
+- [x] Firefish
 - [x] Gotosocial
 - [x] Pixelfed
 - [x] Akkoma (Unofficial)
-- [x] Sharkey (Unofficial)
 - [x] Hometown (Unofficial)
 - [x] Iceshrimp (Unofficial)
 
