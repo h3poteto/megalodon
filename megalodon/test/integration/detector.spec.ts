@@ -49,6 +49,14 @@ describe('detector', () => {
     })
   })
 
+  describe('sharkey', () => {
+    const url = 'https://sakurajima.social'
+    it('should be sharkey', async () => {
+      const sharkey = await detector(url)
+      expect(sharkey).toEqual('sharkey')
+    })
+  })
+
   describe('gotosocial', () => {
     const url = 'https://scg.owu.one'
     it('should be gotosocial', async () => {
