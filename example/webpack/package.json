@@ -13,7 +13,7 @@
     "megalodon": "*"
   },
   "devDependencies": {
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "http-server": "^14.1.1",
     "ts-loader": "^9.5.1",
     "typescript": "5.4.5",
