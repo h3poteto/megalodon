@@ -5644,7 +5644,7 @@ __metadata:
     typedoc: "npm:^0.28.14"
     typescript: "npm:5.4.5"
     uuid: "npm:^11.1.0"
-    ws: "npm:8.22.0"
+    ws: "npm:8.23.0"
   languageName: unknown
   linkType: soft
 
@@ -7643,9 +7643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.22.0":
-  version: 8.22.0
-  resolution: "ws@npm:8.22.0"
+"ws@npm:8.23.0":
+  version: 8.23.0
+  resolution: "ws@npm:8.23.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -7654,7 +7654,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10/ed771c2766bdb5724a66872f60ffc1a39f06e1a5bc8849f453c273e97c91a40ed5a224f06dc0e22f44b4a9e03938bf746fc5938d6887433cc0f4c416237d3b10
+  checksum: 10/b9e8e16346288769bc945595e4dbb79e94f921e944e798ff7319e422efa05b10f670b2724b34729223689f4b9678e3089998392d236f10cbeccd5465a1b32c0a
   languageName: node
   linkType: hard
 
